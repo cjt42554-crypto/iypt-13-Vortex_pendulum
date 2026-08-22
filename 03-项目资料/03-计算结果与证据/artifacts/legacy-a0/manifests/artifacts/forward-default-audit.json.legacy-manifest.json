@@ -1,0 +1,13 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.795Z",
+  "source": {
+    "path": "artifacts/forward-default-audit.json",
+    "bytes": 1876232,
+    "sha256": "568bfabe694d380da32b177c3074c57c2ca154cc120e0d68fa99660ddd30b3da"
+  },
+  "legacyStatus": "historical-frozen-no-automatic-evidence-upgrade",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

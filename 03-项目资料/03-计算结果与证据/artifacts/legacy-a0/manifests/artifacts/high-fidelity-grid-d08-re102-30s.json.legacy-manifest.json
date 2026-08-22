@@ -1,0 +1,22 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:33.023Z",
+  "source": {
+    "path": "artifacts/high-fidelity-grid-d08-re102-30s.json",
+    "bytes": 2799597,
+    "sha256": "0b0f70f3d5ecd82cc6cf8cff0a1b2e3e8e0a2f12ce8d4bc96f053336518fe36f"
+  },
+  "legacyStatus": "legacy-exploratory-invalidated-for-load-validation",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "physicalLoadValidation": "withdrawn",
+  "apparatusTrendEvidence": "withdrawn",
+  "knownDefects": [
+    "applied-and-diagnostic-load-time-level-mismatch",
+    "incomplete-stress-contour-diagnostic",
+    "explicit-weak-fsi-when-applicable",
+    "representative-strip-replication-when-applicable",
+    "unclosed-load-convergence"
+  ],
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

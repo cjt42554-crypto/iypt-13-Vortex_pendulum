@@ -1,0 +1,13 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.800Z",
+  "source": {
+    "path": "artifacts/gui-monochrome.png",
+    "bytes": 299329,
+    "sha256": "72cd606ef24e3a055fa6005ea6816bd98044e5bc62c0c38415b6cd0148f0515e"
+  },
+  "legacyStatus": "historical-frozen-no-automatic-evidence-upgrade",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

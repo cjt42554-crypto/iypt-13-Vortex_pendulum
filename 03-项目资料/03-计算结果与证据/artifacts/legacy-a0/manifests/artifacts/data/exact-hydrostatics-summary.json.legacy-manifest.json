@@ -1,0 +1,13 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.788Z",
+  "source": {
+    "path": "artifacts/data/exact-hydrostatics-summary.json",
+    "bytes": 961,
+    "sha256": "2f0dfd8cd6620a297551e3da01a5471c6da8c65b78065d00cd911f9d9d65727a"
+  },
+  "legacyStatus": "historical-frozen-no-automatic-evidence-upgrade",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

@@ -1,0 +1,20 @@
+{
+  "geometry": {
+    "radius_m": 0.025,
+    "pivot_height_m": 0.1,
+    "s_top_m": 0.0,
+    "s_bottom_m": 0.72
+  },
+  "plot_quadrature": "adaptive Gauss-Kronrod with waterline breakpoints",
+  "small_angle_rad": 0.0001,
+  "exact_linear_buoyancy_torque_coefficient_Nm_per_rad": 4.882886685712155,
+  "slender_linear_buoyancy_torque_coefficient_Nm_per_rad": 4.88588991269429,
+  "numerical_linear_buoyancy_torque_coefficient_Nm_per_rad": 4.882886676827981,
+  "relative_symbolic_numeric_error": 1.8194510683498516e-09,
+  "waterplane_second_moment_m4": 3.067961575771283e-07,
+  "closed_form_validity": "waterline transition lies wholly on the lateral surface; neither end cap intersects the transition band",
+  "volume_identity": "V_exact = V_axis",
+  "max_abs_volume_identity_residual_m3": 4.336808689942018e-19,
+  "torque_correction_formula": "Q_exact-Q_axis=-rho*g*I_wp*sin(theta)*(1+tan(theta)^2/2)",
+  "max_abs_torque_formula_residual_Nm": 3.40729397821371e-13
+}

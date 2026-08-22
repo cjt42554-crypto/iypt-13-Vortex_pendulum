@@ -1,0 +1,9 @@
+VP-TREND-CONFLICT-A1-CURRENT-2026-08-23
+
+a53a9cf92967d71e076501109d0c798f1620c5fd57f7742eb8a2ac733129d661  pro-review-trend-conflict-a1-current-2026-08-23.zip
+
+bytes: 4156760
+identity: outer ZIP SHA-256; inner files are bound by SHA256SUMS inside the archive
+gitHead: none (repository has no commits yet)
+apparatusTrend: NO-GO
+

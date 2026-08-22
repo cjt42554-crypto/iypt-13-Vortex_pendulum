@@ -1,0 +1,13 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.799Z",
+  "source": {
+    "path": "artifacts/gui-cfd-stable.png",
+    "bytes": 29717,
+    "sha256": "a83065d12a2f6ce9c8a9ae8d782ffc850b14ca45323e2ead2d5479f6fa95ddbd"
+  },
+  "legacyStatus": "historical-frozen-no-automatic-evidence-upgrade",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

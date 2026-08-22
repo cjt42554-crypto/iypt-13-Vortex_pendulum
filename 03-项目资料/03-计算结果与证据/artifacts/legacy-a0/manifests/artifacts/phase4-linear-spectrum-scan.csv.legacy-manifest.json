@@ -1,0 +1,13 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:33.045Z",
+  "source": {
+    "path": "artifacts/phase4-linear-spectrum-scan.csv",
+    "bytes": 75137,
+    "sha256": "f446fd821958a5b02c1e0055c723963fab38590465bda41ce3ed5404fb2fcac7"
+  },
+  "legacyStatus": "historical-frozen-no-automatic-evidence-upgrade",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

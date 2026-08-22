@@ -1,0 +1,4 @@
+runId,time,theta,displacement,sigma
+experiment-001,0.000,0.0100,0.00350,0.00020
+experiment-001,0.020,0.0108,0.00378,0.00020
+experiment-001,0.040,0.0121,0.00423,0.00020

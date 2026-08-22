@@ -1,0 +1,20 @@
+{
+  "format": "VP-CFD2D-A1-BRINKMAN-WORK-AUDIT-v1",
+  "createdAt": "2026-08-22T16:18:09.088Z",
+  "status": "PASS",
+  "forceContractId": "VP-CFD2D-RAW-BRINKMAN-A1-v1",
+  "testScope": "moving diffuse circular body in deterministic periodic nonuniform flow",
+  "steps": 192,
+  "threshold": "abs(residual) <= 100*epsilon*sum(abs(work terms))",
+  "allAppliedReactionsExact": true,
+  "allIdentitiesPass": true,
+  "maximumAbsoluteResidual": 1.3877787807814457e-17,
+  "maximumRelativeResidual": 6.359154022664429e-16,
+  "csv": "/home/cjt/Documents/ChatGPT/iypt 13 涡流摆/artifacts/a1/brinkman-work-identity.csv",
+  "claimsNotEstablished": [
+    "physical-hydrodynamic-force",
+    "virtual-internal-fluid-correction",
+    "control-volume-force-agreement",
+    "apparatus-trend"
+  ]
+}

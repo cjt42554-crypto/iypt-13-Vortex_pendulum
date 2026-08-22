@@ -1,0 +1,22 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.787Z",
+  "source": {
+    "path": "artifacts/cross-layer/hf-prescribed-response.json",
+    "bytes": 120003,
+    "sha256": "2676d3128abf6a03f6aca95851b6d2753c10385da6cd74c87780b1ce0411ab37"
+  },
+  "legacyStatus": "legacy-exploratory-invalidated-for-load-validation",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "physicalLoadValidation": "withdrawn",
+  "apparatusTrendEvidence": "withdrawn",
+  "knownDefects": [
+    "applied-and-diagnostic-load-time-level-mismatch",
+    "incomplete-stress-contour-diagnostic",
+    "explicit-weak-fsi-when-applicable",
+    "representative-strip-replication-when-applicable",
+    "unclosed-load-convergence"
+  ],
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

@@ -1,0 +1,22 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:33.036Z",
+  "source": {
+    "path": "artifacts/high-fidelity-smoke.csv",
+    "bytes": 7601,
+    "sha256": "9ea498d364d54af5a5cf7255af25c22d868b708e65c9226fe82bf2d72906e04c"
+  },
+  "legacyStatus": "legacy-exploratory-invalidated-for-load-validation",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "physicalLoadValidation": "withdrawn",
+  "apparatusTrendEvidence": "withdrawn",
+  "knownDefects": [
+    "applied-and-diagnostic-load-time-level-mismatch",
+    "incomplete-stress-contour-diagnostic",
+    "explicit-weak-fsi-when-applicable",
+    "representative-strip-replication-when-applicable",
+    "unclosed-load-convergence"
+  ],
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

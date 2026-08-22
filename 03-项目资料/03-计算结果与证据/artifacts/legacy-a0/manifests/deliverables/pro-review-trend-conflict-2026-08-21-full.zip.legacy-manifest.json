@@ -1,0 +1,13 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:33.073Z",
+  "source": {
+    "path": "deliverables/pro-review-trend-conflict-2026-08-21-full.zip",
+    "bytes": 12193428,
+    "sha256": "584e0e57f0929485ea464bbdd1d388b324cbb3c159bdb065bf365635e15f5056"
+  },
+  "legacyStatus": "historical-frozen-no-automatic-evidence-upgrade",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

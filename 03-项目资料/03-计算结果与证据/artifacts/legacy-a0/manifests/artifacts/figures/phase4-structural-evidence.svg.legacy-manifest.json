@@ -1,0 +1,19 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.792Z",
+  "source": {
+    "path": "artifacts/figures/phase4-structural-evidence.svg",
+    "bytes": 139731,
+    "sha256": "83f9de0c6abb4725a075f88064721805aaad4b847f6f3eeb38884dcd4535753c"
+  },
+  "legacyStatus": "mixed-evidence-contains-invalidated-cfd-load-path",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "physicalLoadValidation": "withdrawn",
+  "retainedNonCfdEvidence": "historical-only-no-automatic-upgrade",
+  "apparatusTrendEvidence": "withdrawn",
+  "knownDefects": [
+    "contains-or-displays-legacy-cfd2d-load-evidence"
+  ],
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

@@ -1,0 +1,158 @@
+{
+  "auditId": "VP-HF-CFD2D-v1-component-verification",
+  "createdAt": "2026-08-20T20:29:49.370Z",
+  "evidenceLevel": "verified-component",
+  "scope": "A-00/A-02/A-03/A-08-power-sign/A-10-short-replay components only",
+  "explicitNonClaims": [
+    "not A-00 through A-14 complete acceptance",
+    "not a fixed-cylinder benchmark validation",
+    "not grid/time/domain/Mach converged cylinder loads",
+    "not three-dimensional free-surface DNS",
+    "not a canonical apparatus prediction"
+  ],
+  "checks": {
+    "constantFlow": true,
+    "zeroFlow": true,
+    "taylorGreen": true,
+    "checkpoint": true,
+    "fixedEntry": true,
+    "prescribedPower": true
+  },
+  "constantAndZeroFlow": {
+    "uniform": {
+      "latticeSteps": 80,
+      "relativeMassError": 0,
+      "maximumVelocityError": 6.947562107041945e-17,
+      "minimumDensity": 0.9999999999999993,
+      "maximumDensity": 0.9999999999999993
+    },
+    "zeroFlowBody": {
+      "latticeSteps": 40,
+      "penaltyForceMagnitude": 0,
+      "stressForceMagnitude": 8.815143566332672e-32
+    }
+  },
+  "taylorGreen": {
+    "cases": [
+      {
+        "cells": 24,
+        "latticeSteps": 15,
+        "physicalTime": 1.0280837917801413,
+        "latticeAmplitude": 0.02617993877991494,
+        "relativeVelocityL2": 0.007751793209238541,
+        "maximumVelocityError": 0.0006453594401585883,
+        "relativeMassError": 1.1842378929335002e-15
+      },
+      {
+        "cells": 32,
+        "latticeSteps": 26,
+        "physicalTime": 1.0023816969856378,
+        "latticeAmplitude": 0.019634954084936207,
+        "relativeVelocityL2": 0.004285404532148924,
+        "maximumVelocityError": 0.0003474011491506612,
+        "relativeMassError": 5.551115123125781e-16
+      },
+      {
+        "cells": 48,
+        "latticeSteps": 58,
+        "physicalTime": 0.9938143320541366,
+        "latticeAmplitude": 0.01308996938995747,
+        "relativeVelocityL2": 0.0019720872569212234,
+        "maximumVelocityError": 0.00016682440993819048,
+        "relativeMassError": 0
+      },
+      {
+        "cells": 64,
+        "latticeSteps": 104,
+        "physicalTime": 1.0023816969856378,
+        "latticeAmplitude": 0.009817477042468103,
+        "relativeVelocityL2": 0.0010698049846957606,
+        "maximumVelocityError": 0.00008848469711067453,
+        "relativeMassError": 9.325873406851315e-15
+      }
+    ],
+    "observedSpatialOrder": 2.003831384161808,
+    "designExpectation": "approximately second order in the smooth periodic low-Mach limit"
+  },
+  "checkpointReplay": {
+    "comparedPopulations": 7776,
+    "maximumAbsoluteDifference": 0
+  },
+  "unifiedBackendSmoke": {
+    "fixed": {
+      "terminationCode": "COMPLETED",
+      "complete": true,
+      "samples": 11,
+      "finalTime": 0.08,
+      "maximumPowerIdentityError": 0,
+      "lattice": {
+        "steps": 46,
+        "cells": 5376,
+        "diameterCells": 8,
+        "physicalTimeStep": 0.0017391304347826088,
+        "relaxationTime": 0.5093124637681159,
+        "shearRelaxationRate": 1.9634312355161379,
+        "latticeMach": 0.06827794487807748,
+        "initialMass": 5376.000000000001,
+        "finalMass": 5471.681186884814,
+        "cumulativeBoundaryMassInput": 92.52208241842568,
+        "massBalanceResidual": 3.159104466387859,
+        "relativeMassBalanceResidual": 0.0005876310391346463,
+        "relativeMassDrift": 0.017797839822323944,
+        "maximumDensityDeviation": 0.07064469232438375,
+        "minimumDensity": 0.9999999999999992,
+        "maximumDensity": 1.0706446923243838,
+        "maximumSpeed": 0.039422946742075166,
+        "maximumMach": 0.06828254674135611,
+        "maximumForcePathDifference": 0.9482899430957699,
+        "collision": "D2Q9-MRT",
+        "obstacle": "analytic-diffuse-Brinkman",
+        "outerBoundary": "Zou-He-velocity-inlet-pressure-outlet-periodic-crossflow"
+      }
+    },
+    "prescribed": {
+      "terminationCode": "COMPLETED",
+      "complete": true,
+      "samples": 11,
+      "finalTime": 0.08,
+      "maximumPowerIdentityError": 2.710505431213761e-20,
+      "lattice": {
+        "steps": 46,
+        "cells": 5376,
+        "diameterCells": 8,
+        "physicalTimeStep": 0.0017391304347826088,
+        "relaxationTime": 0.5093124637681159,
+        "shearRelaxationRate": 1.9634312355161379,
+        "latticeMach": 0.06827794487807748,
+        "initialMass": 5376.000000000001,
+        "finalMass": 5471.681186886642,
+        "cumulativeBoundaryMassInput": 92.5220824184836,
+        "massBalanceResidual": 3.1591044681571105,
+        "relativeMassBalanceResidual": 0.0005876310394637482,
+        "relativeMassDrift": 0.017797839822663822,
+        "maximumDensityDeviation": 0.07192466509233264,
+        "minimumDensity": 0.9910838012531689,
+        "maximumDensity": 1.0719246650923326,
+        "maximumSpeed": 0.04014303182444569,
+        "maximumMach": 0.06952977068979428,
+        "maximumForcePathDifference": 1.9913817646829104,
+        "collision": "D2Q9-MRT",
+        "obstacle": "analytic-diffuse-Brinkman",
+        "outerBoundary": "Zou-He-velocity-inlet-pressure-outlet-periodic-crossflow"
+      }
+    }
+  },
+  "missingHardGates": [
+    "A-04",
+    "A-05-converged",
+    "A-06",
+    "A-07",
+    "A-08-literature",
+    "A-09",
+    "A-13",
+    "A-L01",
+    "A-L02",
+    "A-L03",
+    "A-L04"
+  ]
+}

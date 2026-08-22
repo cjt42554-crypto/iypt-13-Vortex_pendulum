@@ -1,0 +1,1280 @@
+{
+  "analysisId": "VP-STRUCT-CROSS-FORWARD-MEMORY-v1",
+  "createdAt": "2026-08-20T20:31:48.405Z",
+  "evidenceLevel": "mechanism-calculation-under-uncalibrated-prior",
+  "phaseBoundary": "phase-4 transient/visibility study consuming VP-FWD-P0-SL1-v1 through the phase-2 integrator",
+  "source": {
+    "modelId": "VP-FWD-P0-SL1-v1",
+    "coefficientSetId": "illustrative-literature-prior-v1",
+    "coefficientSource": "literature-prior",
+    "baseConfigPath": "/home/cjt/Documents/ChatGPT/iypt 13 涡流摆/public/examples/vortex-pendulum-default.json",
+    "baseConfigHash": "fnv1a64-eff705c688203c1b",
+    "integrationSettings": {
+      "duration": 300,
+      "maximumStep": 0.02,
+      "outputInterval": 0.04,
+      "tolerances": {
+        "relative": 0.000001,
+        "theta": 1e-9,
+        "omega": 1e-8,
+        "wake": 1e-8
+      }
+    },
+    "initialConditionProtocol": "theta=1e-4 rad; cold |A|=1e-3; hot |A|=isolated SL saturation when supercritical, otherwise 0.25"
+  },
+  "entries": [
+    {
+      "case": {
+        "id": "u0p0080-cold",
+        "speed": 0.008,
+        "start": "cold",
+        "initialWakeAmplitude": 0.001,
+        "frozenWakeGrowthRate": -0.029349814820180117,
+        "isolatedWakeSaturationAmplitude": null,
+        "frozenWakeCubicReal": 0.16497389114235633
+      },
+      "configHash": "fnv1a64-7f657a70de3d19f2",
+      "summary": {
+        "runId": "phase4-forward-u0p0080-cold",
+        "complete": true,
+        "terminationCode": "COMPLETED",
+        "finalTime": 300,
+        "sampleCount": 7501,
+        "maximumAbsoluteAngle": 0.0001,
+        "maximumDisplacementOverDiameter": 0.002166666663055556,
+        "finalWakeAmplitude": 4.0449527138681867e-7,
+        "effectiveEarlyWakeLogSlope": {
+          "sampleCount": 2376,
+          "window": [
+            5,
+            100
+          ],
+          "fit": {
+            "slope": -0.029374154856694153,
+            "intercept": -6.920796603861701,
+            "rSquared": 0.9988400495805708
+          },
+          "interpretation": "This is an effective coupled-trajectory log slope, not an independent estimate of the fixed-body Landau coefficient mu."
+        },
+        "visibility": {
+          "declaredDisplacementThresholdOverDiameter": 0.01,
+          "firstDisplacementThresholdTime": null,
+          "declaredWakeThreshold": 0.05,
+          "firstWakeThresholdTime": null
+        },
+        "snapshots": [
+          {
+            "requestedTime": 12,
+            "actualTime": 12,
+            "displacementOverDiameter": 0.0017861303766977415,
+            "wakeAmplitude": 0.0007024455739570879
+          },
+          {
+            "requestedTime": 60,
+            "actualTime": 60,
+            "displacementOverDiameter": 0.0003128393868436258,
+            "wakeAmplitude": 0.00016681376197659188
+          },
+          {
+            "requestedTime": 120,
+            "actualTime": 120,
+            "displacementOverDiameter": -0.00033810723572528275,
+            "wakeAmplitude": 0.000025682181833385536
+          },
+          {
+            "requestedTime": 300,
+            "actualTime": 300,
+            "displacementOverDiameter": 0.000037384950427055444,
+            "wakeAmplitude": 4.0449527138681867e-7
+          }
+        ],
+        "lateFrequency": {
+          "window": [
+            150,
+            300
+          ],
+          "mechanicalCrossingFrequency": 0.503300076672663,
+          "wakePhaseFrequency": 0.27370388338479146,
+          "relativeDifference": 0.4561815185996815
+        },
+        "strictStationarityAudit": {
+          "protocol": "five consecutive 20-cycle blocks; displacement-amplitude drift <1%; mechanical-frequency drift <0.2%",
+          "requiredDuration": 198.68862460960472,
+          "availableDuration": 300,
+          "blocks": [
+            {
+              "start": 101.31137539039528,
+              "end": 141.04910031231623,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.000546148348051176,
+              "meanWakeAmplitude": 0.000029792406172172727,
+              "mechanicalCrossingFrequency": 0.5033002864607979,
+              "meanFluidPower": -1.0385393983139633e-13,
+              "meanDampingPower": 5.925471423668023e-14
+            },
+            {
+              "start": 141.04910031231623,
+              "end": 180.78682523423717,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.0003188313755326564,
+              "meanWakeAmplitude": 0.00000933065032082066,
+              "mechanicalCrossingFrequency": 0.5033000720974533,
+              "meanFluidPower": -3.5444649140631194e-14,
+              "meanDampingPower": 2.025058132831033e-14
+            },
+            {
+              "start": 180.78682523423717,
+              "end": 220.5245501561581,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.00018649734174466345,
+              "meanWakeAmplitude": 0.0000029871671624464317,
+              "mechanicalCrossingFrequency": 0.50330021156545,
+              "meanFluidPower": -1.2094215666571792e-14,
+              "meanDampingPower": 6.907073416219421e-15
+            },
+            {
+              "start": 220.5245501561581,
+              "end": 260.262275078079,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.00010882715559392715,
+              "meanWakeAmplitude": 9.72577252826264e-7,
+              "mechanicalCrossingFrequency": 0.503300103776566,
+              "meanFluidPower": -4.133437049765241e-15,
+              "meanDampingPower": 2.360533596129992e-15
+            },
+            {
+              "start": 260.262275078079,
+              "end": 300,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.00006367435039246423,
+              "meanWakeAmplitude": 3.955295710551923e-7,
+              "mechanicalCrossingFrequency": 0.5033002126628713,
+              "meanFluidPower": -1.409618801407336e-15,
+              "meanDampingPower": 8.051269601417566e-16
+            }
+          ],
+          "amplitudeDrifts": [
+            0.4162183650827764,
+            0.41505963322119344,
+            0.41646806021007965,
+            0.41490384412824416
+          ],
+          "frequencyDrifts": [
+            4.259154035813136e-7,
+            2.7710697015854084e-7,
+            2.1416419378277769e-7,
+            2.1634464394419964e-7
+          ],
+          "amplitudeGate": false,
+          "frequencyGate": true,
+          "plvGate": "NOT-EVALUATED",
+          "periodicEnergyGate": "NOT-EVALUATED",
+          "floquetGate": "NOT-EVALUATED",
+          "finalStatus": "NOT-MET"
+        },
+        "phase4StateLabel": "U",
+        "labelReason": "A time trajectory cannot be upgraded to S0 or L1 without all predeclared stationarity/stability gates; this run is retained as a transient/visibility probe.",
+        "numerical": {
+          "method": "Dormand-Prince-5(4)",
+          "acceptedSteps": 15002,
+          "rejectedSteps": 0,
+          "rhsEvaluations": 105014,
+          "minimumAcceptedStep": 0.001,
+          "maximumAcceptedStep": 0.020000000000038654,
+          "maximumAcceptedErrorNorm": 0.00004037100138234776,
+          "finalEnergyBalanceResidual": -2.8370305617931204e-16,
+          "terminationCode": "COMPLETED"
+        },
+        "applicability": {
+          "status": "exploratory-extrapolation",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "FORWARD-COEFFICIENTS-PRIOR",
+              "message": "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。"
+            }
+          ],
+          "interpretation": "方程与数值实现可用于机制检查和趋势探索；文献先验系数不能替代本装置标定，输出不是未测装置的定量预报。"
+        },
+        "isolatedLandauPrediction": {
+          "assumptions": "fixed body, no mechanical feedback, frozen constant-flow Stuart-Landau radial equation",
+          "predictedFinalWakeAmplitude": 1.499892014906265e-7,
+          "predictedTimeToWakeAmplitude005": null
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "u0p0080-hot",
+        "speed": 0.008,
+        "start": "hot",
+        "initialWakeAmplitude": 0.25,
+        "frozenWakeGrowthRate": -0.029349814820180117,
+        "isolatedWakeSaturationAmplitude": null,
+        "frozenWakeCubicReal": 0.16497389114235633
+      },
+      "configHash": "fnv1a64-a0c65c0b9c65bc20",
+      "summary": {
+        "runId": "phase4-forward-u0p0080-hot",
+        "complete": true,
+        "terminationCode": "COMPLETED",
+        "finalTime": 300,
+        "sampleCount": 7501,
+        "maximumAbsoluteAngle": 0.0001,
+        "maximumDisplacementOverDiameter": 0.002166666663055556,
+        "finalWakeAmplitude": 0.000032410246932966604,
+        "effectiveEarlyWakeLogSlope": {
+          "sampleCount": 2352,
+          "window": [
+            5.96,
+            100
+          ],
+          "fit": {
+            "slope": -0.03007827925428447,
+            "intercept": -1.4810716282633782,
+            "rSquared": 0.9997322865467656
+          },
+          "interpretation": "This is an effective coupled-trajectory log slope, not an independent estimate of the fixed-body Landau coefficient mu."
+        },
+        "visibility": {
+          "declaredDisplacementThresholdOverDiameter": 0.01,
+          "firstDisplacementThresholdTime": null,
+          "declaredWakeThreshold": 0.05,
+          "firstWakeThresholdTime": 0
+        },
+        "snapshots": [
+          {
+            "requestedTime": 12,
+            "actualTime": 12,
+            "displacementOverDiameter": 0.0014752130811753383,
+            "wakeAmplitude": 0.161981029085323
+          },
+          {
+            "requestedTime": 60,
+            "actualTime": 60,
+            "displacementOverDiameter": 0.0003189321828636468,
+            "wakeAmplitude": 0.0370959086217347
+          },
+          {
+            "requestedTime": 120,
+            "actualTime": 120,
+            "displacementOverDiameter": -0.00024533480239627214,
+            "wakeAmplitude": 0.006348460261574436
+          },
+          {
+            "requestedTime": 300,
+            "actualTime": 300,
+            "displacementOverDiameter": 0.00002872773334002321,
+            "wakeAmplitude": 0.000032410246932966604
+          }
+        ],
+        "lateFrequency": {
+          "window": [
+            150,
+            300
+          ],
+          "mechanicalCrossingFrequency": 0.5032841907795519,
+          "wakePhaseFrequency": 0.266667772765273,
+          "relativeDifference": 0.47014474594915584
+        },
+        "strictStationarityAudit": {
+          "protocol": "five consecutive 20-cycle blocks; displacement-amplitude drift <1%; mechanical-frequency drift <0.2%",
+          "requiredDuration": 198.6948961085128,
+          "availableDuration": 300,
+          "blocks": [
+            {
+              "start": 101.30510389148719,
+              "end": 141.04408311318974,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.0004320202149303095,
+              "meanWakeAmplitude": 0.006488575359319119,
+              "mechanicalCrossingFrequency": 0.5033716861798436,
+              "meanFluidPower": -7.871649732106578e-14,
+              "meanDampingPower": 3.489368966031222e-14
+            },
+            {
+              "start": 141.04408311318974,
+              "end": 180.78306233489232,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.00024280663735919223,
+              "meanWakeAmplitude": 0.0020203866488023854,
+              "mechanicalCrossingFrequency": 0.5032405191753739,
+              "meanFluidPower": -1.8679175755015212e-14,
+              "meanDampingPower": 1.190308963122207e-14
+            },
+            {
+              "start": 180.78306233489232,
+              "end": 220.5220415565949,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.0001443315388896035,
+              "meanWakeAmplitude": 0.000629339791668971,
+              "mechanicalCrossingFrequency": 0.503332445216108,
+              "meanFluidPower": -7.198810995617355e-15,
+              "meanDampingPower": 4.065937262736289e-15
+            },
+            {
+              "start": 220.5220415565949,
+              "end": 260.26102077829745,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.00008330090181806687,
+              "meanWakeAmplitude": 0.00019597164462837544,
+              "mechanicalCrossingFrequency": 0.5032885977527001,
+              "meanFluidPower": -2.4793255620963766e-15,
+              "meanDampingPower": 1.388178835082379e-15
+            },
+            {
+              "start": 260.26102077829745,
+              "end": 300,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.0000487988343718415,
+              "meanWakeAmplitude": 0.00006105423668185528,
+              "mechanicalCrossingFrequency": 0.5033010168599604,
+              "meanFluidPower": -8.122037669691852e-16,
+              "meanDampingPower": 4.736600882571277e-16
+            }
+          ],
+          "amplitudeDrifts": [
+            0.43797389805391373,
+            0.4055700434741869,
+            0.42285031768571263,
+            0.41418600151027807
+          ],
+          "frequencyDrifts": [
+            0.00026057684226368446,
+            0.0001826348402685989,
+            0.00008711431942179448,
+            0.000024675307309797313
+          ],
+          "amplitudeGate": false,
+          "frequencyGate": true,
+          "plvGate": "NOT-EVALUATED",
+          "periodicEnergyGate": "NOT-EVALUATED",
+          "floquetGate": "NOT-EVALUATED",
+          "finalStatus": "NOT-MET"
+        },
+        "phase4StateLabel": "U",
+        "labelReason": "A time trajectory cannot be upgraded to S0 or L1 without all predeclared stationarity/stability gates; this run is retained as a transient/visibility probe.",
+        "numerical": {
+          "method": "Dormand-Prince-5(4)",
+          "acceptedSteps": 15002,
+          "rejectedSteps": 0,
+          "rhsEvaluations": 105014,
+          "minimumAcceptedStep": 0.001,
+          "maximumAcceptedStep": 0.020000000000038654,
+          "maximumAcceptedErrorNorm": 0.000252640612910094,
+          "finalEnergyBalanceResidual": -5.701614292420242e-14,
+          "terminationCode": "COMPLETED"
+        },
+        "applicability": {
+          "status": "exploratory-extrapolation",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "FORWARD-COEFFICIENTS-PRIOR",
+              "message": "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。"
+            }
+          ],
+          "interpretation": "方程与数值实现可用于机制检查和趋势探索；文献先验系数不能替代本装置标定，输出不是未测装置的定量预报。"
+        },
+        "isolatedLandauPrediction": {
+          "assumptions": "fixed body, no mechanical feedback, frozen constant-flow Stuart-Landau radial equation",
+          "predictedFinalWakeAmplitude": 0.00003225698793059389,
+          "predictedTimeToWakeAmplitude005": 49.945055783950004
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "u0p0096-cold",
+        "speed": 0.0096,
+        "start": "cold",
+        "initialWakeAmplitude": 0.001,
+        "frozenWakeGrowthRate": 0.00047553998054714053,
+        "isolatedWakeSaturationAmplitude": 0.048895861386659085,
+        "frozenWakeCubicReal": 0.1989036867014755
+      },
+      "configHash": "fnv1a64-f5f58c52cb738373",
+      "summary": {
+        "runId": "phase4-forward-u0p0096-cold",
+        "complete": true,
+        "terminationCode": "COMPLETED",
+        "finalTime": 300,
+        "sampleCount": 7501,
+        "maximumAbsoluteAngle": 0.0001,
+        "maximumDisplacementOverDiameter": 0.002166666663055556,
+        "finalWakeAmplitude": 0.0011315231589455487,
+        "effectiveEarlyWakeLogSlope": {
+          "sampleCount": 2376,
+          "window": [
+            5,
+            100
+          ],
+          "fit": {
+            "slope": 0.00046937172106691636,
+            "intercept": -6.924651970033794,
+            "rSquared": 0.7906818136439068
+          },
+          "interpretation": "This is an effective coupled-trajectory log slope, not an independent estimate of the fixed-body Landau coefficient mu."
+        },
+        "visibility": {
+          "declaredDisplacementThresholdOverDiameter": 0.01,
+          "firstDisplacementThresholdTime": null,
+          "declaredWakeThreshold": 0.05,
+          "firstWakeThresholdTime": null
+        },
+        "snapshots": [
+          {
+            "requestedTime": 12,
+            "actualTime": 12,
+            "displacementOverDiameter": 0.0017502724700876715,
+            "wakeAmplitude": 0.0009871828125446707
+          },
+          {
+            "requestedTime": 60,
+            "actualTime": 60,
+            "displacementOverDiameter": 0.000284261258337064,
+            "wakeAmplitude": 0.0010152814636385128
+          },
+          {
+            "requestedTime": 120,
+            "actualTime": 120,
+            "displacementOverDiameter": -0.0002774069884875708,
+            "wakeAmplitude": 0.001042817975731978
+          },
+          {
+            "requestedTime": 300,
+            "actualTime": 300,
+            "displacementOverDiameter": 0.00002631164630997916,
+            "wakeAmplitude": 0.0011315231589455487
+          }
+        ],
+        "lateFrequency": {
+          "window": [
+            150,
+            300
+          ],
+          "mechanicalCrossingFrequency": 0.5033856326003,
+          "wakePhaseFrequency": 0.3200026276616079,
+          "relativeDifference": 0.36429924309004363
+        },
+        "strictStationarityAudit": {
+          "protocol": "five consecutive 20-cycle blocks; displacement-amplitude drift <1%; mechanical-frequency drift <0.2%",
+          "requiredDuration": 198.65485529143487,
+          "availableDuration": 300,
+          "blocks": [
+            {
+              "start": 101.34514470856513,
+              "end": 141.0761157668521,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.00045593768004307774,
+              "meanWakeAmplitude": 0.0010407443417970624,
+              "mechanicalCrossingFrequency": 0.503330516993435,
+              "meanFluidPower": -7.971343729239016e-14,
+              "meanDampingPower": 3.958422381867255e-14
+            },
+            {
+              "start": 141.0761157668521,
+              "end": 180.8070868251391,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.00025292749573203844,
+              "meanWakeAmplitude": 0.0010602136381545277,
+              "mechanicalCrossingFrequency": 0.5033075292798218,
+              "meanFluidPower": -2.5174467090478337e-14,
+              "meanDampingPower": 1.1794058484333446e-14
+            },
+            {
+              "start": 180.8070868251391,
+              "end": 220.53805788342606,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.00013659364674283624,
+              "meanWakeAmplitude": 0.001080025242060946,
+              "mechanicalCrossingFrequency": 0.5031705546970052,
+              "meanFluidPower": -8.321757331840564e-15,
+              "meanDampingPower": 3.5116514702093155e-15
+            },
+            {
+              "start": 220.53805788342606,
+              "end": 260.26902894171303,
+              "sampleCount": 993,
+              "displacementAmplitudeOverDiameter": 0.0000747337816142942,
+              "meanWakeAmplitude": 0.0011002801991720729,
+              "mechanicalCrossingFrequency": 0.5033707357521973,
+              "meanFluidPower": -1.841812533461813e-15,
+              "meanDampingPower": 1.0453619927267071e-15
+            },
+            {
+              "start": 260.26902894171303,
+              "end": 300,
+              "sampleCount": 994,
+              "displacementAmplitudeOverDiameter": 0.00004335315503069975,
+              "meanWakeAmplitude": 0.0011209130604559277,
+              "mechanicalCrossingFrequency": 0.5036471815893161,
+              "meanFluidPower": -4.3431883527440156e-16,
+              "meanDampingPower": 3.151058294284114e-16
+            }
+          ],
+          "amplitudeDrifts": [
+            0.44525862458189147,
+            0.4599493963774146,
+            0.4528751270914167,
+            0.41989881825533554
+          ],
+          "frequencyDrifts": [
+            0.00004567120974605685,
+            0.00027214888482312275,
+            0.0003976811542151024,
+            0.0005488878866481023
+          ],
+          "amplitudeGate": false,
+          "frequencyGate": true,
+          "plvGate": "NOT-EVALUATED",
+          "periodicEnergyGate": "NOT-EVALUATED",
+          "floquetGate": "NOT-EVALUATED",
+          "finalStatus": "NOT-MET"
+        },
+        "phase4StateLabel": "U",
+        "labelReason": "A time trajectory cannot be upgraded to S0 or L1 without all predeclared stationarity/stability gates; this run is retained as a transient/visibility probe.",
+        "numerical": {
+          "method": "Dormand-Prince-5(4)",
+          "acceptedSteps": 15002,
+          "rejectedSteps": 0,
+          "rhsEvaluations": 105014,
+          "minimumAcceptedStep": 0.001,
+          "maximumAcceptedStep": 0.020000000000038654,
+          "maximumAcceptedErrorNorm": 0.000040506044953059356,
+          "finalEnergyBalanceResidual": -3.961840579186056e-16,
+          "terminationCode": "COMPLETED"
+        },
+        "applicability": {
+          "status": "exploratory-extrapolation",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "FORWARD-COEFFICIENTS-PRIOR",
+              "message": "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。"
+            }
+          ],
+          "interpretation": "方程与数值实现可用于机制检查和趋势探索；文献先验系数不能替代本装置标定，输出不是未测装置的定量预报。"
+        },
+        "isolatedLandauPrediction": {
+          "assumptions": "fixed body, no mechanical feedback, frozen constant-flow Stuart-Landau radial equation",
+          "predictedFinalWakeAmplitude": 0.001153260264807002,
+          "predictedTimeToWakeAmplitude005": null
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "u0p0096-hot",
+        "speed": 0.0096,
+        "start": "hot",
+        "initialWakeAmplitude": 0.048895861386659085,
+        "frozenWakeGrowthRate": 0.00047553998054714053,
+        "isolatedWakeSaturationAmplitude": 0.048895861386659085,
+        "frozenWakeCubicReal": 0.1989036867014755
+      },
+      "configHash": "fnv1a64-e61d8b0046866167",
+      "summary": {
+        "runId": "phase4-forward-u0p0096-hot",
+        "complete": true,
+        "terminationCode": "COMPLETED",
+        "finalTime": 300,
+        "sampleCount": 7501,
+        "maximumAbsoluteAngle": 0.0001,
+        "maximumDisplacementOverDiameter": 0.002166666663055556,
+        "finalWakeAmplitude": 0.048781703069744504,
+        "effectiveEarlyWakeLogSlope": {
+          "sampleCount": 0,
+          "window": null,
+          "fit": null,
+          "interpretation": "This is an effective coupled-trajectory log slope, not an independent estimate of the fixed-body Landau coefficient mu."
+        },
+        "visibility": {
+          "declaredDisplacementThresholdOverDiameter": 0.01,
+          "firstDisplacementThresholdTime": null,
+          "declaredWakeThreshold": 0.05,
+          "firstWakeThresholdTime": null
+        },
+        "snapshots": [
+          {
+            "requestedTime": 12,
+            "actualTime": 12,
+            "displacementOverDiameter": 0.0017024034043853103,
+            "wakeAmplitude": 0.04887419894167921
+          },
+          {
+            "requestedTime": 60,
+            "actualTime": 60,
+            "displacementOverDiameter": 0.0003163003980658149,
+            "wakeAmplitude": 0.048861618953874024
+          },
+          {
+            "requestedTime": 120,
+            "actualTime": 120,
+            "displacementOverDiameter": -0.00039046004621305603,
+            "wakeAmplitude": 0.048839957413841596
+          },
+          {
+            "requestedTime": 300,
+            "actualTime": 300,
+            "displacementOverDiameter": 0.000192526641674044,
+            "wakeAmplitude": 0.048781703069744504
+          }
+        ],
+        "lateFrequency": {
+          "window": [
+            150,
+            300
+          ],
+          "mechanicalCrossingFrequency": 0.3421719345439167,
+          "wakePhaseFrequency": 0.3199875108394667,
+          "relativeDifference": 0.06483414174227871
+        },
+        "strictStationarityAudit": {
+          "protocol": "five consecutive 20-cycle blocks; displacement-amplitude drift <1%; mechanical-frequency drift <0.2%",
+          "requiredDuration": 292.25073685043947,
+          "availableDuration": 300,
+          "blocks": [
+            {
+              "start": 7.749263149560534,
+              "end": 66.19941051964842,
+              "sampleCount": 1461,
+              "displacementAmplitudeOverDiameter": 0.0018265056141038571,
+              "meanWakeAmplitude": 0.04886670526820446,
+              "mechanicalCrossingFrequency": 0.5032638078633548,
+              "meanFluidPower": -6.360130622822024e-13,
+              "meanDampingPower": 4.700988239377297e-13
+            },
+            {
+              "start": 66.19941051964842,
+              "end": 124.64955788973631,
+              "sampleCount": 1462,
+              "displacementAmplitudeOverDiameter": 0.0008215593801158513,
+              "meanWakeAmplitude": 0.048845659141057526,
+              "mechanicalCrossingFrequency": 0.504982988000724,
+              "meanFluidPower": -1.8835024765365947e-13,
+              "meanDampingPower": 8.164604903397858e-14
+            },
+            {
+              "start": 124.64955788973631,
+              "end": 183.0997052598242,
+              "sampleCount": 1461,
+              "displacementAmplitudeOverDiameter": 0.00043975899094287653,
+              "meanWakeAmplitude": 0.04882605798152043,
+              "mechanicalCrossingFrequency": 0.4668232785551404,
+              "meanFluidPower": -6.358309488320722e-14,
+              "meanDampingPower": 1.7245900684050616e-14
+            },
+            {
+              "start": 183.0997052598242,
+              "end": 241.5498526299121,
+              "sampleCount": 1461,
+              "displacementAmplitudeOverDiameter": 0.00028083732376186707,
+              "meanWakeAmplitude": 0.04880745279584703,
+              "mechanicalCrossingFrequency": 0.32178947413345566,
+              "meanFluidPower": 9.808816146438305e-15,
+              "meanDampingPower": 6.182954459519026e-15
+            },
+            {
+              "start": 241.5498526299121,
+              "end": 300,
+              "sampleCount": 1462,
+              "displacementAmplitudeOverDiameter": 0.00021551648701277517,
+              "meanWakeAmplitude": 0.04878981806479415,
+              "mechanicalCrossingFrequency": 0.32011045189084064,
+              "meanFluidPower": 1.6289194157582283e-14,
+              "meanDampingPower": 4.135612822300341e-15
+            }
+          ],
+          "amplitudeDrifts": [
+            0.5502015576782473,
+            0.4647264682427892,
+            0.3613835542970239,
+            0.23259314635999018
+          ],
+          "frequencyDrifts": [
+            0.0034044317892285205,
+            0.07556632669282902,
+            0.3106824596891939,
+            0.005217766203001013
+          ],
+          "amplitudeGate": false,
+          "frequencyGate": false,
+          "plvGate": "NOT-EVALUATED",
+          "periodicEnergyGate": "NOT-EVALUATED",
+          "floquetGate": "NOT-EVALUATED",
+          "finalStatus": "NOT-MET"
+        },
+        "phase4StateLabel": "U",
+        "labelReason": "A time trajectory cannot be upgraded to S0 or L1 without all predeclared stationarity/stability gates; this run is retained as a transient/visibility probe.",
+        "numerical": {
+          "method": "Dormand-Prince-5(4)",
+          "acceptedSteps": 15002,
+          "rejectedSteps": 0,
+          "rhsEvaluations": 105014,
+          "minimumAcceptedStep": 0.001,
+          "maximumAcceptedStep": 0.020000000000038654,
+          "maximumAcceptedErrorNorm": 0.00019087267429968995,
+          "finalEnergyBalanceResidual": -1.7602215696949984e-14,
+          "terminationCode": "COMPLETED"
+        },
+        "applicability": {
+          "status": "exploratory-extrapolation",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "FORWARD-COEFFICIENTS-PRIOR",
+              "message": "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。"
+            }
+          ],
+          "interpretation": "方程与数值实现可用于机制检查和趋势探索；文献先验系数不能替代本装置标定，输出不是未测装置的定量预报。"
+        },
+        "isolatedLandauPrediction": {
+          "assumptions": "fixed body, no mechanical feedback, frozen constant-flow Stuart-Landau radial equation",
+          "predictedFinalWakeAmplitude": 0.048895861386659085,
+          "predictedTimeToWakeAmplitude005": null
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "u0p0110-cold",
+        "speed": 0.011,
+        "start": "cold",
+        "initialWakeAmplitude": 0.001,
+        "frozenWakeGrowthRate": 0.02915255740791617,
+        "isolatedWakeSaturationAmplitude": 0.3571905088221524,
+        "frozenWakeCubicReal": 0.2284950722365035
+      },
+      "configHash": "fnv1a64-c00629a88334d7c8",
+      "summary": {
+        "runId": "phase4-forward-u0p0110-cold",
+        "complete": true,
+        "terminationCode": "COMPLETED",
+        "finalTime": 300,
+        "sampleCount": 7501,
+        "maximumAbsoluteAngle": 0.0001,
+        "maximumDisplacementOverDiameter": 0.002166666663055556,
+        "finalWakeAmplitude": 0.3564797200434502,
+        "effectiveEarlyWakeLogSlope": {
+          "sampleCount": 2376,
+          "window": [
+            5,
+            100
+          ],
+          "fit": {
+            "slope": 0.02911248120639787,
+            "intercept": -6.928418815621549,
+            "rSquared": 0.9999669749165799
+          },
+          "interpretation": "This is an effective coupled-trajectory log slope, not an independent estimate of the fixed-body Landau coefficient mu."
+        },
+        "visibility": {
+          "declaredDisplacementThresholdOverDiameter": 0.01,
+          "firstDisplacementThresholdTime": null,
+          "declaredWakeThreshold": 0.05,
+          "firstWakeThresholdTime": 135.36
+        },
+        "snapshots": [
+          {
+            "requestedTime": 12,
+            "actualTime": 12,
+            "displacementOverDiameter": 0.0017095226900651938,
+            "wakeAmplitude": 0.0013839185734549628
+          },
+          {
+            "requestedTime": 60,
+            "actualTime": 60,
+            "displacementOverDiameter": 0.0002928909710706866,
+            "wakeAmplitude": 0.005616021247774381
+          },
+          {
+            "requestedTime": 120,
+            "actualTime": 120,
+            "displacementOverDiameter": -0.00004002044346510796,
+            "wakeAmplitude": 0.032145608816713446
+          },
+          {
+            "requestedTime": 300,
+            "actualTime": 300,
+            "displacementOverDiameter": 0.0017492960135283267,
+            "wakeAmplitude": 0.3564797200434502
+          }
+        ],
+        "lateFrequency": {
+          "window": [
+            150,
+            300
+          ],
+          "mechanicalCrossingFrequency": 0.36641537368836863,
+          "wakePhaseFrequency": 0.36603762365854964,
+          "relativeDifference": 0.0010309338989151202
+        },
+        "strictStationarityAudit": {
+          "protocol": "five consecutive 20-cycle blocks; displacement-amplitude drift <1%; mechanical-frequency drift <0.2%",
+          "requiredDuration": 272.9143130469429,
+          "availableDuration": 300,
+          "blocks": [
+            {
+              "start": 27.08568695305712,
+              "end": 81.66854956244569,
+              "sampleCount": 1364,
+              "displacementAmplitudeOverDiameter": 0.001353129068623277,
+              "meanWakeAmplitude": 0.005288000920131191,
+              "mechanicalCrossingFrequency": 0.5031365343443769,
+              "meanFluidPower": -6.360478357080789e-13,
+              "meanDampingPower": 2.7880430086996034e-13
+            },
+            {
+              "start": 81.66854956244569,
+              "end": 136.25141217183426,
+              "sampleCount": 1365,
+              "displacementAmplitudeOverDiameter": 0.0005635355508751325,
+              "meanWakeAmplitude": 0.025831691100491095,
+              "mechanicalCrossingFrequency": 0.489886755732094,
+              "meanFluidPower": -1.3668416176093705e-13,
+              "meanDampingPower": 4.8762605698112786e-14
+            },
+            {
+              "start": 136.25141217183426,
+              "end": 190.83427478122286,
+              "sampleCount": 1364,
+              "displacementAmplitudeOverDiameter": 0.0012499475550969655,
+              "meanWakeAmplitude": 0.11624737887618845,
+              "mechanicalCrossingFrequency": 0.36711855976360397,
+              "meanFluidPower": 1.030861322293613e-12,
+              "meanDampingPower": 9.98461677231853e-14
+            },
+            {
+              "start": 190.83427478122286,
+              "end": 245.41713739061143,
+              "sampleCount": 1365,
+              "displacementAmplitudeOverDiameter": 0.002014522242894811,
+              "meanWakeAmplitude": 0.2921631166778027,
+              "mechanicalCrossingFrequency": 0.3659252264187905,
+              "meanFluidPower": 1.6801379202954145e-12,
+              "meanDampingPower": 5.057933053586493e-13
+            },
+            {
+              "start": 245.41713739061143,
+              "end": 300,
+              "sampleCount": 1365,
+              "displacementAmplitudeOverDiameter": 0.002096559468844102,
+              "meanWakeAmplitude": 0.3528128578727198,
+              "mechanicalCrossingFrequency": 0.3658082266985304,
+              "meanFluidPower": 7.447532250711943e-13,
+              "meanDampingPower": 7.19906124099638e-13
+            }
+          ],
+          "amplitudeDrifts": [
+            0.5835315610738492,
+            0.5491526435831815,
+            0.37953151944312785,
+            0.039129453358420926
+          ],
+          "frequencyDrifts": [
+            0.026334359975564676,
+            0.25060525628014463,
+            0.0032505394049864677,
+            0.0003197366888452168
+          ],
+          "amplitudeGate": false,
+          "frequencyGate": false,
+          "plvGate": "NOT-EVALUATED",
+          "periodicEnergyGate": "NOT-EVALUATED",
+          "floquetGate": "NOT-EVALUATED",
+          "finalStatus": "NOT-MET"
+        },
+        "phase4StateLabel": "U",
+        "labelReason": "A time trajectory cannot be upgraded to S0 or L1 without all predeclared stationarity/stability gates; this run is retained as a transient/visibility probe.",
+        "numerical": {
+          "method": "Dormand-Prince-5(4)",
+          "acceptedSteps": 15002,
+          "rejectedSteps": 0,
+          "rhsEvaluations": 105014,
+          "minimumAcceptedStep": 0.001,
+          "maximumAcceptedStep": 0.020000000000038654,
+          "maximumAcceptedErrorNorm": 0.0015780284748640055,
+          "finalEnergyBalanceResidual": 3.6719923976693396e-14,
+          "terminationCode": "COMPLETED"
+        },
+        "applicability": {
+          "status": "exploratory-extrapolation",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "FORWARD-COEFFICIENTS-PRIOR",
+              "message": "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。"
+            }
+          ],
+          "interpretation": "方程与数值实现可用于机制检查和趋势探索；文献先验系数不能替代本装置标定，输出不是未测装置的定量预报。"
+        },
+        "isolatedLandauPrediction": {
+          "assumptions": "fixed body, no mechanical feedback, frozen constant-flow Stuart-Landau radial equation",
+          "predictedFinalWakeAmplitude": 0.3566148851635469,
+          "predictedTimeToWakeAmplitude005": 134.5306923979613
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "u0p0110-hot",
+        "speed": 0.011,
+        "start": "hot",
+        "initialWakeAmplitude": 0.3571905088221524,
+        "frozenWakeGrowthRate": 0.02915255740791617,
+        "isolatedWakeSaturationAmplitude": 0.3571905088221524,
+        "frozenWakeCubicReal": 0.2284950722365035
+      },
+      "configHash": "fnv1a64-1b6e02cfeb1849eb",
+      "summary": {
+        "runId": "phase4-forward-u0p0110-hot",
+        "complete": true,
+        "terminationCode": "COMPLETED",
+        "finalTime": 300,
+        "sampleCount": 7501,
+        "maximumAbsoluteAngle": 0.0001,
+        "maximumDisplacementOverDiameter": 0.002166666663055556,
+        "finalWakeAmplitude": 0.35708136320432926,
+        "effectiveEarlyWakeLogSlope": {
+          "sampleCount": 0,
+          "window": null,
+          "fit": null,
+          "interpretation": "This is an effective coupled-trajectory log slope, not an independent estimate of the fixed-body Landau coefficient mu."
+        },
+        "visibility": {
+          "declaredDisplacementThresholdOverDiameter": 0.01,
+          "firstDisplacementThresholdTime": null,
+          "declaredWakeThreshold": 0.05,
+          "firstWakeThresholdTime": 0
+        },
+        "snapshots": [
+          {
+            "requestedTime": 12,
+            "actualTime": 12,
+            "displacementOverDiameter": -0.0015196429868736489,
+            "wakeAmplitude": 0.35713746657879086
+          },
+          {
+            "requestedTime": 60,
+            "actualTime": 60,
+            "displacementOverDiameter": 0.0019514094010446088,
+            "wakeAmplitude": 0.35708964381057035
+          },
+          {
+            "requestedTime": 120,
+            "actualTime": 120,
+            "displacementOverDiameter": 0.0015699683770301978,
+            "wakeAmplitude": 0.35708588796596474
+          },
+          {
+            "requestedTime": 300,
+            "actualTime": 300,
+            "displacementOverDiameter": -0.00038215527211130513,
+            "wakeAmplitude": 0.35708136320432926
+          }
+        ],
+        "lateFrequency": {
+          "window": [
+            150,
+            300
+          ],
+          "mechanicalCrossingFrequency": 0.36574373809933713,
+          "wakePhaseFrequency": 0.36574420382875705,
+          "relativeDifference": 0.0000012733747111860182
+        },
+        "strictStationarityAudit": {
+          "protocol": "five consecutive 20-cycle blocks; displacement-amplitude drift <1%; mechanical-frequency drift <0.2%",
+          "requiredDuration": 273.41548079447824,
+          "availableDuration": 300,
+          "blocks": [
+            {
+              "start": 26.584519205521758,
+              "end": 81.26761536441741,
+              "sampleCount": 1367,
+              "displacementAmplitudeOverDiameter": 0.002134144726484002,
+              "meanWakeAmplitude": 0.35709070999812154,
+              "mechanicalCrossingFrequency": 0.36579628817590987,
+              "meanFluidPower": 8.036437661189968e-13,
+              "meanDampingPower": 7.367729374622961e-13
+            },
+            {
+              "start": 81.26761536441741,
+              "end": 135.95071152331306,
+              "sampleCount": 1367,
+              "displacementAmplitudeOverDiameter": 0.002102558352660544,
+              "meanWakeAmplitude": 0.35708435249816495,
+              "mechanicalCrossingFrequency": 0.36572183484858517,
+              "meanFluidPower": 7.806493042581127e-13,
+              "meanDampingPower": 7.340377531349543e-13
+            },
+            {
+              "start": 135.95071152331306,
+              "end": 190.63380768220873,
+              "sampleCount": 1367,
+              "displacementAmplitudeOverDiameter": 0.0020948901921423145,
+              "meanWakeAmplitude": 0.3570840979604448,
+              "mechanicalCrossingFrequency": 0.36575370420124015,
+              "meanFluidPower": 7.822622487756702e-13,
+              "meanDampingPower": 7.349566735590335e-13
+            },
+            {
+              "start": 190.63380768220873,
+              "end": 245.31690384110436,
+              "sampleCount": 1367,
+              "displacementAmplitudeOverDiameter": 0.0020885419239875997,
+              "meanWakeAmplitude": 0.3570840845256268,
+              "mechanicalCrossingFrequency": 0.3657402071494358,
+              "meanFluidPower": 7.879516903631951e-13,
+              "meanDampingPower": 7.345591385831505e-13
+            },
+            {
+              "start": 245.31690384110436,
+              "end": 300,
+              "sampleCount": 1368,
+              "displacementAmplitudeOverDiameter": 0.0020883789883364185,
+              "meanWakeAmplitude": 0.3570840829746749,
+              "mechanicalCrossingFrequency": 0.36574583456398235,
+              "meanFluidPower": 7.368927401780299e-13,
+              "meanDampingPower": 7.351964573013653e-13
+            }
+          ],
+          "amplitudeDrifts": [
+            0.014800483505866283,
+            0.003647061927449649,
+            0.0030303584304926276,
+            0.0000780140677617693
+          ],
+          "frequencyDrifts": [
+            0.00020353767856958938,
+            0.0000871333695022368,
+            0.00003690202354571749,
+            0.000015386134344579513
+          ],
+          "amplitudeGate": false,
+          "frequencyGate": true,
+          "plvGate": "NOT-EVALUATED",
+          "periodicEnergyGate": "NOT-EVALUATED",
+          "floquetGate": "NOT-EVALUATED",
+          "finalStatus": "NOT-MET"
+        },
+        "phase4StateLabel": "U",
+        "labelReason": "A time trajectory cannot be upgraded to S0 or L1 without all predeclared stationarity/stability gates; this run is retained as a transient/visibility probe.",
+        "numerical": {
+          "method": "Dormand-Prince-5(4)",
+          "acceptedSteps": 15002,
+          "rejectedSteps": 0,
+          "rhsEvaluations": 105014,
+          "minimumAcceptedStep": 0.001,
+          "maximumAcceptedStep": 0.020000000000038654,
+          "maximumAcceptedErrorNorm": 0.0015998757547002565,
+          "finalEnergyBalanceResidual": -1.8881475328535197e-13,
+          "terminationCode": "COMPLETED"
+        },
+        "applicability": {
+          "status": "exploratory-extrapolation",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "FORWARD-COEFFICIENTS-PRIOR",
+              "message": "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。"
+            }
+          ],
+          "interpretation": "方程与数值实现可用于机制检查和趋势探索；文献先验系数不能替代本装置标定，输出不是未测装置的定量预报。"
+        },
+        "isolatedLandauPrediction": {
+          "assumptions": "fixed body, no mechanical feedback, frozen constant-flow Stuart-Landau radial equation",
+          "predictedFinalWakeAmplitude": 0.35719050882215236,
+          "predictedTimeToWakeAmplitude005": null
+        }
+      }
+    }
+  ],
+  "coldHotPairs": [
+    {
+      "speed": 0.008,
+      "reynolds": 47.808764940239044,
+      "spectralAbscissa": -0.013521782127787403,
+      "frozenWakeGrowthRate": -0.029349814820180117,
+      "isolatedWakeSaturationAmplitude": null,
+      "coldCaseId": "u0p0080-cold",
+      "hotCaseId": "u0p0080-hot",
+      "snapshotComparisons": [
+        {
+          "time": 12,
+          "coldWakeAmplitude": 0.0007024455739570879,
+          "hotWakeAmplitude": 0.161981029085323,
+          "wakeAmplitudeRatioHotOverCold": 230.59584271110853,
+          "coldAbsoluteDisplacementOverDiameter": 0.0017861303766977415,
+          "hotAbsoluteDisplacementOverDiameter": 0.0014752130811753383
+        },
+        {
+          "time": 60,
+          "coldWakeAmplitude": 0.00016681376197659188,
+          "hotWakeAmplitude": 0.0370959086217347,
+          "wakeAmplitudeRatioHotOverCold": 222.37918611859004,
+          "coldAbsoluteDisplacementOverDiameter": 0.0003128393868436258,
+          "hotAbsoluteDisplacementOverDiameter": 0.0003189321828636468
+        },
+        {
+          "time": 120,
+          "coldWakeAmplitude": 0.000025682181833385536,
+          "hotWakeAmplitude": 0.006348460261574436,
+          "wakeAmplitudeRatioHotOverCold": 247.1931825247713,
+          "coldAbsoluteDisplacementOverDiameter": 0.00033810723572528275,
+          "hotAbsoluteDisplacementOverDiameter": 0.00024533480239627214
+        },
+        {
+          "time": 300,
+          "coldWakeAmplitude": 4.0449527138681867e-7,
+          "hotWakeAmplitude": 0.000032410246932966604,
+          "wakeAmplitudeRatioHotOverCold": 80.12515652370308,
+          "coldAbsoluteDisplacementOverDiameter": 0.000037384950427055444,
+          "hotAbsoluteDisplacementOverDiameter": 0.00002872773334002321
+        }
+      ],
+      "finalWakeAmplitudeRelativeDifference": 0.9875195251605633,
+      "interpretation": "Any cold/hot difference is finite-time initial-condition memory, not evidence of coexisting stationary attractors."
+    },
+    {
+      "speed": 0.0096,
+      "reynolds": 57.370517928286844,
+      "spectralAbscissa": 0.0004674812476383294,
+      "frozenWakeGrowthRate": 0.00047553998054714053,
+      "isolatedWakeSaturationAmplitude": 0.048895861386659085,
+      "coldCaseId": "u0p0096-cold",
+      "hotCaseId": "u0p0096-hot",
+      "snapshotComparisons": [
+        {
+          "time": 12,
+          "coldWakeAmplitude": 0.0009871828125446707,
+          "hotWakeAmplitude": 0.04887419894167921,
+          "wakeAmplitudeRatioHotOverCold": 49.50876202523797,
+          "coldAbsoluteDisplacementOverDiameter": 0.0017502724700876715,
+          "hotAbsoluteDisplacementOverDiameter": 0.0017024034043853103
+        },
+        {
+          "time": 60,
+          "coldWakeAmplitude": 0.0010152814636385128,
+          "hotWakeAmplitude": 0.048861618953874024,
+          "wakeAmplitudeRatioHotOverCold": 48.12618047685643,
+          "coldAbsoluteDisplacementOverDiameter": 0.000284261258337064,
+          "hotAbsoluteDisplacementOverDiameter": 0.0003163003980658149
+        },
+        {
+          "time": 120,
+          "coldWakeAmplitude": 0.001042817975731978,
+          "hotWakeAmplitude": 0.048839957413841596,
+          "wakeAmplitudeRatioHotOverCold": 46.83459486739256,
+          "coldAbsoluteDisplacementOverDiameter": 0.0002774069884875708,
+          "hotAbsoluteDisplacementOverDiameter": 0.00039046004621305603
+        },
+        {
+          "time": 300,
+          "coldWakeAmplitude": 0.0011315231589455487,
+          "hotWakeAmplitude": 0.048781703069744504,
+          "wakeAmplitudeRatioHotOverCold": 43.111537474145486,
+          "coldAbsoluteDisplacementOverDiameter": 0.00002631164630997916,
+          "hotAbsoluteDisplacementOverDiameter": 0.000192526641674044
+        }
+      ],
+      "finalWakeAmplitudeRelativeDifference": 0.976804353113138,
+      "interpretation": "Any cold/hot difference is finite-time initial-condition memory, not evidence of coexisting stationary attractors."
+    },
+    {
+      "speed": 0.011,
+      "reynolds": 65.73705179282868,
+      "spectralAbscissa": 0.029136339346348062,
+      "frozenWakeGrowthRate": 0.02915255740791617,
+      "isolatedWakeSaturationAmplitude": 0.3571905088221524,
+      "coldCaseId": "u0p0110-cold",
+      "hotCaseId": "u0p0110-hot",
+      "snapshotComparisons": [
+        {
+          "time": 12,
+          "coldWakeAmplitude": 0.0013839185734549628,
+          "hotWakeAmplitude": 0.35713746657879086,
+          "wakeAmplitudeRatioHotOverCold": 258.06248534347986,
+          "coldAbsoluteDisplacementOverDiameter": 0.0017095226900651938,
+          "hotAbsoluteDisplacementOverDiameter": 0.0015196429868736489
+        },
+        {
+          "time": 60,
+          "coldWakeAmplitude": 0.005616021247774381,
+          "hotWakeAmplitude": 0.35708964381057035,
+          "wakeAmplitudeRatioHotOverCold": 63.58409771901848,
+          "coldAbsoluteDisplacementOverDiameter": 0.0002928909710706866,
+          "hotAbsoluteDisplacementOverDiameter": 0.0019514094010446088
+        },
+        {
+          "time": 120,
+          "coldWakeAmplitude": 0.032145608816713446,
+          "hotWakeAmplitude": 0.35708588796596474,
+          "wakeAmplitudeRatioHotOverCold": 11.108387773956402,
+          "coldAbsoluteDisplacementOverDiameter": 0.00004002044346510796,
+          "hotAbsoluteDisplacementOverDiameter": 0.0015699683770301978
+        },
+        {
+          "time": 300,
+          "coldWakeAmplitude": 0.3564797200434502,
+          "hotWakeAmplitude": 0.35708136320432926,
+          "wakeAmplitudeRatioHotOverCold": 1.0016877346088742,
+          "coldAbsoluteDisplacementOverDiameter": 0.0017492960135283267,
+          "hotAbsoluteDisplacementOverDiameter": 0.00038215527211130513
+        }
+      ],
+      "finalWakeAmplitudeRelativeDifference": 0.0016848909600885565,
+      "interpretation": "Any cold/hot difference is finite-time initial-condition memory, not evidence of coexisting stationary attractors."
+    }
+  ],
+  "allowedConclusions": [
+    "The same frozen equations can remain observably dependent on initial wake amplitude for hundreds of seconds near a weak spectral crossing.",
+    "A finite-duration visibility threshold can differ materially from the zero-state spectral threshold even without true multistability.",
+    "Cold/hot comparisons are a necessary diagnostic before interpreting an up/down sweep as a branch fold."
+  ],
+  "prohibitedConclusions": [
+    "Do not interpret a cold/hot difference before the stationarity gates as hysteresis or multiple attractors.",
+    "Do not quote these speeds as apparatus thresholds because the coefficient package is an illustrative literature prior.",
+    "Do not promote frequency proximity to L1 without bounded phase, power, periodic-orbit, and Floquet evidence."
+  ],
+  "isolatedWakeFiniteTimeVisibilityBoundary": {
+    "initialWakeAmplitude": 0.001,
+    "declaredVisibleWakeAmplitude": 0.05,
+    "fixedWakeGrowthBoundary": 0.009575473330914974,
+    "infiniteTimeFiniteDetectionBoundary": 0.009601122318684631,
+    "infiniteTimeFiniteDetectionShift": 0.000025648987769657378,
+    "points": [
+      {
+        "observationTime": 12,
+        "flowSpeed": 0.020201307271826674,
+        "reynolds": 120.72494385553789,
+        "shiftAboveFixedWakeBoundary": 0.0106258339409117,
+        "upperSearchAmplitude": 1.1842447099805262
+      },
+      {
+        "observationTime": 60,
+        "flowSpeed": 0.012554077997452947,
+        "reynolds": 75.02437050270684,
+        "shiftAboveFixedWakeBoundary": 0.0029786046665379734,
+        "upperSearchAmplitude": 1.1847901849158688
+      },
+      {
+        "observationTime": 120,
+        "flowSpeed": 0.011161242080160973,
+        "reynolds": 66.70064988144009,
+        "shiftAboveFixedWakeBoundary": 0.0015857687492459999,
+        "upperSearchAmplitude": 1.1847901849158688
+      },
+      {
+        "observationTime": 300,
+        "flowSpeed": 0.010236120523593729,
+        "reynolds": 61.17203500155615,
+        "shiftAboveFixedWakeBoundary": 0.0006606471926787552,
+        "upperSearchAmplitude": 1.1847901849158688
+      }
+    ],
+    "exactRadialSolution": "r(t)^{-2}=beta/mu+[r(0)^{-2}-beta/mu] exp(-2 mu t), with the continuous mu->0 limit",
+    "limitOrder": "At fixed nonzero detection amplitude, T->infinity solves mu=beta*r_det^2 rather than mu=0. The spectral boundary is recovered only with the additional r_det->0 limit.",
+    "interpretation": "This is the isolated frozen-prior wake visibility boundary V_obs(T), not the coupled mechanical visibility boundary and not an apparatus prediction."
+  }
+}

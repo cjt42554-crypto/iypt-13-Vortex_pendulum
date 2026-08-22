@@ -1,0 +1,19 @@
+{
+  "format": "VP-TREND-CONFLICT-LEGACY-ARTIFACT-v1",
+  "frozenAt": "2026-08-21T16:09:32.756Z",
+  "source": {
+    "path": "artifacts/cross-layer/forward-initial-memory.json",
+    "bytes": 52112,
+    "sha256": "7eecc2e41aa57fa7d1c973f57f7ad8e2cd8a53a83812ed7859f0b5ab212e674f"
+  },
+  "legacyStatus": "mixed-evidence-contains-invalidated-cfd-load-path",
+  "validAsExecuted": true,
+  "executionReproducibility": "valid-as-executed",
+  "physicalLoadValidation": "withdrawn",
+  "retainedNonCfdEvidence": "historical-only-no-automatic-upgrade",
+  "apparatusTrendEvidence": "withdrawn",
+  "knownDefects": [
+    "contains-or-displays-legacy-cfd2d-load-evidence"
+  ],
+  "replacementPolicy": "preserve-original-create-new-model-and-force-contract-artifacts"
+}

@@ -1,0 +1,50 @@
+{
+  "format": "VP-CFD2D-A1-LEGACY-REGRESSION-v1",
+  "createdAt": "2026-08-22T16:43:32.791Z",
+  "baseline": "/home/cjt/Documents/ChatGPT/iypt 13 涡流摆/artifacts/legacy-a0/a1-legacy-baseline.json",
+  "status": "PASS",
+  "comparisons": [
+    {
+      "id": "cfd-weak-fsi-d08-12s",
+      "exact": true,
+      "expectedTraceSha256": "a39cd6abecdddc1091701ebe00218a9b964439f87a4eeb0da710941155b99a51",
+      "actualTraceSha256": "a39cd6abecdddc1091701ebe00218a9b964439f87a4eeb0da710941155b99a51",
+      "appliedLegacyReactionExact": true
+    },
+    {
+      "id": "cfd-weak-fsi-d12-default-12s",
+      "exact": true,
+      "expectedTraceSha256": "c98d580904abaecb2eb8abc4eb4158e228d8f5d1c4461b1fc27da74d939784f9",
+      "actualTraceSha256": "c98d580904abaecb2eb8abc4eb4158e228d8f5d1c4461b1fc27da74d939784f9",
+      "appliedLegacyReactionExact": true
+    },
+    {
+      "id": "cfd-weak-fsi-d16-12s",
+      "exact": true,
+      "expectedTraceSha256": "f0cd8f87267201eeb9e79039e5f57b7d1d09e179120a9fa892429dd6cccc9a2b",
+      "actualTraceSha256": "f0cd8f87267201eeb9e79039e5f57b7d1d09e179120a9fa892429dd6cccc9a2b",
+      "appliedLegacyReactionExact": true
+    },
+    {
+      "id": "cfd-weak-fsi-d12-low-mach-12s",
+      "exact": true,
+      "expectedTraceSha256": "a846c7019ebc11741430f7a7b684ec6d821953ddb45f8df0ca2c1b9fa5f70d24",
+      "actualTraceSha256": "a846c7019ebc11741430f7a7b684ec6d821953ddb45f8df0ca2c1b9fa5f70d24",
+      "appliedLegacyReactionExact": true
+    },
+    {
+      "id": "cfd-weak-fsi-d12-seed2028-12s",
+      "exact": true,
+      "expectedTraceSha256": "3e8bf73be8d97b340b94e65e7842c5d6e11b0e2548a928819b7b3fee8d0e29c4",
+      "actualTraceSha256": "3e8bf73be8d97b340b94e65e7842c5d6e11b0e2548a928819b7b3fee8d0e29c4",
+      "appliedLegacyReactionExact": true
+    },
+    {
+      "id": "cfd-weak-fsi-quiescent-control-6s",
+      "exact": true,
+      "expectedTraceSha256": "eb09964e9c9f96301f9dc700ee1489df8fa50616b739aac18922d8211f0ca8ce",
+      "actualTraceSha256": "eb09964e9c9f96301f9dc700ee1489df8fa50616b739aac18922d8211f0ca8ce",
+      "appliedLegacyReactionExact": true
+    }
+  ]
+}
