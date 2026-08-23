@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_CONFIG } from "../../02-模拟程序/src/core/config";
+import { DEFAULT_CONFIG } from "../../../../02-模拟程序/src/core/config";
 import {
   DEFAULT_EQUILIBRIUM_SOLVE_OPTIONS,
   finiteDifferenceJacobian,
