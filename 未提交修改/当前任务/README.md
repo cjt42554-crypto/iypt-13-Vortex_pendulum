@@ -6,6 +6,7 @@
 - 候选实现提交来源：`69a06a64821865cc29faa7dca210f4af9f0c5f7f`
 - 第二轮审查归档来源：`abe1cced41fe09eb72d6286af87baaf94b4f5e04`
 - 当前且唯一工作分支：`main`
+- 当前本地仓库根：`/home/cjt/Desktop/iypt/13 涡流摆`
 - 成熟目录修改授权：无
 - 装置定量预测资格：未建立
 
