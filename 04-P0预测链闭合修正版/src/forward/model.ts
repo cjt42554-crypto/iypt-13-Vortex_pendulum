@@ -152,7 +152,7 @@ export function evaluateForwardP0(
     config.rom.liftOutputReal * state.wakeReal
     - config.rom.liftOutputImaginary * state.wakeImaginary
   );
-  const liftTorque = Math.abs(flowSpeed) > 0
+  const liftTorque = !wetting.isDry && Math.abs(flowSpeed) > 0
     ? 0.5
       * config.fluid.density
       * flowSpeed ** 2
@@ -162,12 +162,14 @@ export function evaluateForwardP0(
         return relativeSpeed > 0 ? radius * Math.abs(flowSpeed) / relativeSpeed : 0;
       })
     : 0;
-  const dragTorque = -0.5
-    * config.fluid.density
-    * config.rom.sectionalDragCoefficient
-    * state.omega
-    * integrateWetProjection(state.theta, p0, (radius) =>
-      radius * radius * Math.hypot(flowSpeed, radius * state.omega));
+  const dragTorque = wetting.isDry
+    ? 0
+    : -0.5
+      * config.fluid.density
+      * config.rom.sectionalDragCoefficient
+      * state.omega
+      * integrateWetProjection(state.theta, p0, (radius) =>
+        radius * radius * Math.hypot(flowSpeed, radius * state.omega));
 
   // The baseline coefficient package has no independently calibrated C_M.
   const pitchingTorque = 0;
