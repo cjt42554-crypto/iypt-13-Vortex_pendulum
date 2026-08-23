@@ -1,0 +1,186 @@
+{
+  "format": "VP-LOCAL-REVIEW-EVIDENCE-v1",
+  "reviewDate": "2026-08-23",
+  "timezone": "Asia/Singapore",
+  "repository": {
+    "name": "cjt42554-crypto/iypt-13-Vortex_pendulum",
+    "localRoot": "/home/cjt/Documents/ChatGPT/iypt 13 涡流摆",
+    "branch": "main",
+    "reviewedCommit": "fa9ef6771605a02a0fde4cd27ef595251617b27d",
+    "originMainAtReview": "fa9ef6771605a02a0fde4cd27ef595251617b27d",
+    "sourceBaseline": "8f08d5c30544318e217984e1600b5b272c0a7319",
+    "reviewedDirectory": "04-P0预测链闭合修正版",
+    "commitDelta": {
+      "filesChanged": 16,
+      "insertions": 1548,
+      "deletions": 0,
+      "allChangesConfinedToReviewedDirectory": true,
+      "originalDirectoriesModified": false
+    }
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "resolvedVitest": "3.2.7",
+    "candidateHasLockfile": false
+  },
+  "verdict": {
+    "candidateImplementation": "PARTIAL_PASS",
+    "formalP0Integration": "NO_GO",
+    "apparatusQuantitativePrediction": "NOT_ESTABLISHED",
+    "summary": "The deterministic dry-wet Boolean wake jump is algebraically corrected, but applicability and degenerate strip-wetting gates remain defective and the candidate is not integrated into the formal runtime."
+  },
+  "verification": [
+    {
+      "id": "V-01",
+      "name": "Candidate typecheck and tests",
+      "status": "PASS",
+      "command": "cd 04-P0预测链闭合修正版 && npm run validate",
+      "result": {
+        "typecheck": "PASS",
+        "testFilesPassed": 4,
+        "testFilesTotal": 4,
+        "testsPassed": 10,
+        "testsTotal": 10
+      }
+    },
+    {
+      "id": "V-02",
+      "name": "Original project full validation",
+      "status": "PASS",
+      "command": "cd 02-模拟程序 && npm run validate",
+      "result": {
+        "testFilesPassed": 9,
+        "testFilesTotal": 9,
+        "testsPassed": 47,
+        "testsTotal": 47,
+        "typescriptBuild": "PASS",
+        "viteBuild": "PASS",
+        "desktopCheck": "PASS",
+        "e2e": "PASS",
+        "docsCheck": "PASS"
+      }
+    },
+    {
+      "id": "V-03",
+      "name": "Dry-wet wake onset adversarial check",
+      "status": "PASS_FOR_CANDIDATE_CONTINUITY",
+      "result": {
+        "theta": 1e-9,
+        "wetFraction": 5.357142857072719e-12,
+        "candidateActivation": 1.1508290816025183e-20,
+        "originalSheddingAngularFrequency": 3.560471674068433,
+        "candidateSheddingAngularFrequency": 4.0974943467399557e-20,
+        "originalWakeRealDerivative": 0.03958434592419626,
+        "candidateWakeRealDerivative": -0.04
+      }
+    },
+    {
+      "id": "V-04",
+      "name": "Random strip-area cross-check against exact diskSegment kernel",
+      "status": "PASS",
+      "result": {
+        "samples": 100000,
+        "deterministicSeed": "0x1234abcd",
+        "maximumAbsoluteError": 3.3306690738754696e-16
+      }
+    },
+    {
+      "id": "V-05",
+      "name": "Biased zero-flow equilibrium solve",
+      "status": "PASS",
+      "result": {
+        "iterations": 2,
+        "representativeResidualNorm": 1.1013841907744182e-15,
+        "nonzeroEquilibriumAngle": true
+      }
+    },
+    {
+      "id": "V-06",
+      "name": "Bundled adversarial reproduction scripts",
+      "status": "PASS_AS_REPRODUCTION",
+      "result": {
+        "scriptsExecuted": 5,
+        "scriptsExitedZero": 5,
+        "strictTypecheck": "PASS",
+        "interpretation": "The scripts reproduce both passing properties and the three open findings; zero exit means reproducible execution, not that the open findings are fixed."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "MAJOR",
+      "status": "OPEN",
+      "title": "Equilibrium linearization returns a spectrum outside the coefficient applicability domain",
+      "location": {
+        "path": "04-P0预测链闭合修正版/src/structure/equilibrium.ts",
+        "lineStart": 270,
+        "lineEnd": 299
+      },
+      "reproduction": {
+        "flowSpeed": 0.05,
+        "reynolds": 298.804780876494,
+        "coefficientMaxReynolds": 250,
+        "coefficientOutOfDomainMargin": -48.80478087649402,
+        "equilibriumResidualNorm": 0,
+        "returnedFiniteCharacteristicPolynomial": true
+      },
+      "requiredFix": "Validate the frozen config, the solved equilibrium and every finite-difference stencil point against all applicable forward guards before returning a Jacobian or spectrum."
+    },
+    {
+      "id": "F-02",
+      "severity": "MAJOR_MODERATE",
+      "status": "OPEN",
+      "title": "A strip coplanar with the free surface is classified as fully submerged",
+      "location": {
+        "path": "04-P0预测链闭合修正版/src/highFidelity/strip-wetting.ts",
+        "lineStart": 30,
+        "lineEnd": 57
+      },
+      "reproduction": {
+        "radius": 0.003,
+        "pivotHeight": 0.07,
+        "stripAxialCoordinate": 0.07,
+        "thetaZeroWetFraction": 1,
+        "thetaZeroSupported": true,
+        "theta2eMinus12WetFraction": 0.5,
+        "theta2eMinus12Supported": false
+      },
+      "requiredFix": "Classify full immersion with a dimensional strict submergence-clearance condition, separate touching from full and do not promote a genuinely partial section to full solely through an area-fraction tolerance."
+    },
+    {
+      "id": "F-03",
+      "severity": "MINOR",
+      "status": "OPEN",
+      "title": "A finite positive activationFraction can produce NaN through square overflow",
+      "location": {
+        "path": "04-P0预测链闭合修正版/src/wetting.ts",
+        "lineStart": 41,
+        "lineEnd": 55
+      },
+      "reproduction": {
+        "wetFraction": 0.5,
+        "activationFraction": 1e200,
+        "result": "NaN"
+      },
+      "requiredFix": "Constrain the fraction scale to 0 < activationFraction <= 1 and assert a finite return value, or use a numerically stable formulation if a broader domain is intentionally supported."
+    }
+  ],
+  "integrationState": {
+    "candidateConnectedToGui": false,
+    "candidateConnectedToWorker": false,
+    "candidateConnectedToDopriRuntime": false,
+    "candidateStripGateConnectedToCfdRuntime": false,
+    "formalSchemaUpdated": false,
+    "formalProvenanceUpdated": false,
+    "originalRuntimeBehaviorChangedByReviewedCommit": false
+  },
+  "limitations": [
+    "The review does not establish that activationFraction=0.05 is a physically correct or uniquely identifiable closure parameter.",
+    "The review does not establish apparatus calibration, uncertainty propagation or blind validation.",
+    "The review does not establish grid, Mach, domain, Brinkman-penalty or force-path convergence for CFD2D.",
+    "The review does not establish 3-D free-surface finite-cylinder forces, torques, lock-in boundaries or amplitudes.",
+    "The review does not establish formal-runtime regression after integration because integration has not occurred."
+  ]
+}
