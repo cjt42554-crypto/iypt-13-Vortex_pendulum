@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
-"""Check project Markdown math syntax for GitHub/Codex-compatible rendering."""
+"""Check Markdown math syntax used by the project."""
 
 from __future__ import annotations
 
 from pathlib import Path
 import re
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIRS = {".git", "node_modules", "dist", "coverage"}
-SKIP_PREFIXES = (
-    Path("03_项目资料/04-审查与交付归档"),
-    Path("90_候选工作区/current/审查与复现/历史审查"),
-    Path("90_候选工作区/current/审查与复现/当前审查/原始同步包"),
-)
 FENCE_RE = re.compile(r"^\s{0,3}(`{3,}|~{3,})")
 DISPLAY_RE = re.compile(r"^\s*\$\$\s*$")
 LEGACY_RE = re.compile(r"\\[()\[\]]")
@@ -27,16 +21,11 @@ def markdown_files() -> list[Path]:
         path
         for path in ROOT.rglob("*.md")
         if not any(part in SKIP_DIRS for part in path.relative_to(ROOT).parts)
-        and not any(
-            path.relative_to(ROOT).is_relative_to(prefix)
-            for prefix in SKIP_PREFIXES
-        )
     )
 
 
 def outside_code_spans(line: str) -> list[str]:
-    """Return portions of a line that are not enclosed by matching backticks."""
-
+    """Return portions of a line outside matched backtick spans."""
     result: list[str] = []
     cursor = 0
     while cursor < len(line):
@@ -45,20 +34,19 @@ def outside_code_spans(line: str) -> list[str]:
             result.append(line[cursor:])
             break
         result.append(line[cursor:opening])
-        run = 1
-        while opening + run < len(line) and line[opening + run] == "`":
-            run += 1
-        marker = "`" * run
-        closing = line.find(marker, opening + run)
+        width = 1
+        while opening + width < len(line) and line[opening + width] == "`":
+            width += 1
+        marker = "`" * width
+        closing = line.find(marker, opening + width)
         if closing < 0:
-            # An unmatched backtick is ordinary Markdown text.
             result.append(line[opening:])
             break
-        cursor = closing + run
+        cursor = closing + width
     return result or [""]
 
 
-def dollar_positions(text: str) -> list[int]:
+def unescaped_dollars(text: str) -> list[int]:
     positions: list[int] = []
     for index, char in enumerate(text):
         if char != "$":
@@ -108,9 +96,7 @@ def main() -> int:
                     display_has_content = False
                 else:
                     if not display_has_content:
-                        errors.append(
-                            f"{relative}:{display_start}: empty display-math block"
-                        )
+                        errors.append(f"{relative}:{display_start}: empty display-math block")
                     display_formulas += 1
                     display_start = None
                 continue
@@ -122,14 +108,12 @@ def main() -> int:
                 if collision:
                     errors.append(
                         f"{relative}:{line_number}: TeX delimiter command "
-                        f"{collision.group(0)!r} consumes the following symbol; "
-                        "insert a space"
+                        f"{collision.group(0)!r} consumes the following symbol"
                     )
                 if re.fullmatch(r"[=-]+", line.strip()):
                     errors.append(
-                        f"{relative}:{line_number}: standalone {line.strip()!r} "
-                        "inside display math is ambiguous with a Markdown heading; "
-                        "join it to an adjacent formula line"
+                        f"{relative}:{line_number}: ambiguous standalone marker "
+                        "inside display math"
                     )
                 continue
 
@@ -141,7 +125,7 @@ def main() -> int:
                         f"{legacy.group(0)!r}; use $ or $$"
                     )
 
-                positions = dollar_positions(segment)
+                positions = unescaped_dollars(segment)
                 if len(positions) % 2:
                     errors.append(
                         f"{relative}:{line_number}: unpaired inline-math dollar delimiter"
@@ -154,20 +138,16 @@ def main() -> int:
                     outside_parts.append(segment[cursor:opening])
                     formula = segment[opening + 1 : closing]
                     if not formula.strip():
-                        errors.append(
-                            f"{relative}:{line_number}: empty inline-math span"
-                        )
+                        errors.append(f"{relative}:{line_number}: empty inline-math span")
                     collision = TEX_BAR_COLLISION_RE.search(formula)
                     if collision:
                         errors.append(
                             f"{relative}:{line_number}: TeX delimiter command "
-                            f"{collision.group(0)!r} consumes the following symbol; "
-                            "insert a space"
+                            f"{collision.group(0)!r} consumes the following symbol"
                         )
                     if line.lstrip().startswith("|") and "|" in formula:
                         errors.append(
-                            f"{relative}:{line_number}: literal | inside table math; "
-                            "use \\lvert/\\rvert or \\mid"
+                            f"{relative}:{line_number}: literal | inside table math"
                         )
                     inline_formulas += 1
                     cursor = closing + 1
@@ -176,16 +156,14 @@ def main() -> int:
                 raw_tex = TEX_COMMAND_RE.search("".join(outside_parts))
                 if raw_tex:
                     errors.append(
-                        f"{relative}:{line_number}: TeX command {raw_tex.group(0)!r} "
-                        "is outside a math span"
+                        f"{relative}:{line_number}: TeX command "
+                        f"{raw_tex.group(0)!r} is outside a math span"
                     )
 
         if fence is not None:
             errors.append(f"{relative}: unclosed fenced code block")
         if display_start is not None:
-            errors.append(
-                f"{relative}:{display_start}: unclosed display-math block"
-            )
+            errors.append(f"{relative}:{display_start}: unclosed display-math block")
 
     if errors:
         print("MARKDOWN MATH FAIL")
