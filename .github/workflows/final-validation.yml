@@ -1,0 +1,87 @@
+name: Final repository validation
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: 02_模拟程序/package-lock.json
+      - name: Validate final repository state
+        run: |
+          set +e
+          log=/tmp/final-validation.log
+          summary=/tmp/final-validation-summary.txt
+          : > "$log"
+          : > "$summary"
+          failed=0
+
+          run_step() {
+            label="$1"
+            shift
+            printf '\n[%s]\n$' "$label" >> "$log"
+            printf ' %q' "$@" >> "$log"
+            printf '\n' >> "$log"
+            "$@" >> "$log" 2>&1
+            status=$?
+            printf '%s=%s\n' "$label" "$status" >> "$summary"
+            if (( status != 0 )); then
+              failed=1
+            fi
+          }
+
+          run_step policy python3 tools/check_repository_policy.py
+          run_step markdown_math python3 tools/check_markdown_math.py
+          run_step plot_compile python3 -m py_compile "02_模拟程序/scripts/plot-structure.py"
+          run_step docs_shell_syntax bash -n "02_模拟程序/scripts/check-docs.sh"
+          run_step git_diff_check git diff --check
+          run_step npm_ci npm --prefix "02_模拟程序" ci
+          run_step playwright_browser npx --prefix "02_模拟程序" playwright install --with-deps chromium
+          run_step validate npm --prefix "02_模拟程序" run validate
+          run_step audit_forward npm --prefix "02_模拟程序" run audit:forward-convergence
+          run_step sweep_forward npm --prefix "02_模拟程序" run sweep:forward
+          run_step audit_high_fidelity npm --prefix "02_模拟程序" run audit:high-fidelity
+          run_step analyze_high_fidelity_grid npm --prefix "02_模拟程序" run analyze:high-fidelity-grid
+          run_step analyze_structure npm --prefix "02_模拟程序" run analyze:structure
+          run_step plot_structure npm --prefix "02_模拟程序" run plot:structure
+          run_step analyze_cross_layer_forward npm --prefix "02_模拟程序" run analyze:cross-layer:forward
+          run_step analyze_cross_layer_hf npm --prefix "02_模拟程序" run analyze:cross-layer:hf
+
+          status=PASS
+          if (( failed != 0 )); then status=FAIL; fi
+          result="90_候选工作区/current/final-validation-result.txt"
+          mkdir -p "$(dirname "$result")"
+          {
+            printf 'status=%s\n' "$status"
+            printf 'source_sha=%s\n' "$GITHUB_SHA"
+            cat "$summary"
+            printf 'log_gzip_base64='
+            gzip -c "$log" | base64 -w0
+            printf '\n'
+          } > "$result"
+
+          rm -rf "90_候选工作区/current/验证与复现"
+          rm -f .github/workflows/final-validation.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- .github/workflows/final-validation.yml "$result"
+          git commit -m "Record final repository validation"
+          git push
+          exit "$failed"
