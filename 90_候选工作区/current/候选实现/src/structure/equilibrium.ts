@@ -1,5 +1,5 @@
-import type { SimulationConfig } from "../../../../../02-模拟程序/src/core/types";
-import { validateConfig } from "../../../../../02-模拟程序/src/core/config";
+import type { SimulationConfig } from "../../../../../02_模拟程序/src/core/types";
+import { validateConfig } from "../../../../../02_模拟程序/src/core/config";
 import {
   DEFAULT_FORWARD_REVISION_OPTIONS,
   evaluateForwardGuardsP0,
