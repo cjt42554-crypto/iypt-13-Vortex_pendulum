@@ -2,22 +2,22 @@ import {
   deriveParameters,
   flowSpeedAt,
   flowSpeedDerivativeAt,
-} from "../../../../../02-模拟程序/src/core/config";
+} from "../../../../../02_模拟程序/src/core/config";
 import type {
   DerivedParameters,
   SimulationConfig,
   SimulationSample,
   TerminationCode,
-} from "../../../../../02-模拟程序/src/core/types";
+} from "../../../../../02_模拟程序/src/core/types";
 import {
   cylinderMidpoint,
   cylinderSupport,
   integrateWetProjection,
-} from "../../../../../02-模拟程序/src/problems/vortex-pendulum/geometry";
+} from "../../../../../02_模拟程序/src/problems/vortex-pendulum/geometry";
 import {
   evaluateMechanics,
   type MechanicalEvaluation,
-} from "../../../../../02-模拟程序/src/problems/vortex-pendulum/mechanics";
+} from "../../../../../02_模拟程序/src/problems/vortex-pendulum/mechanics";
 import {
   DEFAULT_WETTING_ACTIVATION_OPTIONS,
   wettingStateFromProjectedArea,
