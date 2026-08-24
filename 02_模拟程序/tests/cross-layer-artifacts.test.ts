@@ -2,11 +2,11 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const highFidelity = JSON.parse(readFileSync(
-  new URL("../../03-项目资料/03-计算结果与证据/artifacts/cross-layer/hf-prescribed-response.json", import.meta.url),
+  new URL("../../03_项目资料/03-计算结果与证据/artifacts/cross-layer/hf-prescribed-response.json", import.meta.url),
   "utf8",
 )) as any;
 const forward = JSON.parse(readFileSync(
-  new URL("../../03-项目资料/03-计算结果与证据/artifacts/cross-layer/forward-initial-memory.json", import.meta.url),
+  new URL("../../03_项目资料/03-计算结果与证据/artifacts/cross-layer/forward-initial-memory.json", import.meta.url),
   "utf8",
 )) as any;
 
