@@ -127,17 +127,14 @@ function maximumMaskOnBoundary(state: D2Q9StateView, cv: InternalControlVolume):
     }
     maximum = Math.max(maximum, value);
   };
-  for (let y = cv.yMin; y <= cv.yMax; y += 1) {
-    visit(cv.xMin - 1, y);
-    visit(cv.xMin, y);
-    visit(cv.xMax, y);
-    visit(cv.xMax + 1, y);
-  }
-  for (let x = cv.xMin; x <= cv.xMax; x += 1) {
-    visit(x, cv.yMin - 1);
-    visit(x, cv.yMin);
-    visit(x, cv.yMax);
-    visit(x, cv.yMax + 1);
+  // Inspect the full one-cell outer halo plus the CV's own boundary cells.
+  // The four diagonal halo corners matter for D2Q9 diagonal populations.
+  for (let y = cv.yMin - 1; y <= cv.yMax + 1; y += 1) {
+    for (let x = cv.xMin - 1; x <= cv.xMax + 1; x += 1) {
+      const inBoundaryBand = x <= cv.xMin || x >= cv.xMax
+        || y <= cv.yMin || y >= cv.yMax;
+      if (inBoundaryBand) visit(x, y);
+    }
   }
   return maximum;
 }
@@ -164,6 +161,9 @@ export function captureControlVolumeSnapshot(
       const cell = x + state.nx * y;
       const momentum = cellMomentum(state.distributions, cell);
       const chi = finite(state.mask[cell] ?? 0, `mask(${x},${y})`);
+      if (chi < -1e-12 || chi > 1 + 1e-12) {
+        throw new RangeError(`mask(${x},${y})=${chi} lies outside [0,1]`);
+      }
       const rho = finite(state.rho[cell] ?? 0, `rho(${x},${y})`);
       const ux = finite(state.ux[cell] ?? 0, `ux(${x},${y})`);
       const uy = finite(state.uy[cell] ?? 0, `uy(${x},${y})`);
