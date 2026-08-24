@@ -1,5 +1,5 @@
-import type { SimulationConfig } from "../../../../../02-模拟程序/src/core/types";
-import { integrateWetProjection } from "../../../../../02-模拟程序/src/problems/vortex-pendulum/geometry";
+import type { SimulationConfig } from "../../../../../02_模拟程序/src/core/types";
+import { integrateWetProjection } from "../../../../../02_模拟程序/src/problems/vortex-pendulum/geometry";
 
 export type SectionWetState = "dry" | "partial" | "touching" | "full";
 
