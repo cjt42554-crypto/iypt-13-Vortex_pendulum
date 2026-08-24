@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-model_doc="../01-最终理论/01-前向预测理论.md"
-numeric_doc="../01-最终理论/02-前向预测理论的数值计算理论.md"
-structure_doc="../01-最终理论/03-结构性理论.md"
+model_doc="../01_最终理论/01-前向预测理论.md"
+numeric_doc="../01_最终理论/02-前向预测理论的数值计算理论.md"
+structure_doc="../01_最终理论/03-结构性理论.md"
 high_fidelity_doc="文档/二维截面流体参考程序.md"
 theory_docs=("$model_doc" "$numeric_doc" "$structure_doc")
 
@@ -119,14 +119,19 @@ fi
 
 # Display-math delimiters and equation tags must remain mechanically sound.
 for document in "${theory_docs[@]}" "$high_fidelity_doc"; do
-  open_math="$(grep -Ec '^[[:space:]]*\\\[[[:space:]]*$' "$document" || true)"
-  close_math="$(grep -Ec '^[[:space:]]*\\\][[:space:]]*$' "$document" || true)"
-  [[ "$open_math" == "$close_math" ]] || \
-    fail "unbalanced display-math delimiters in $document: $open_math opens, $close_math closes"
+  display_delimiters="$(grep -Ec '^[[:space:]]*\$\$[[:space:]]*$' "$document" || true)"
+  (( display_delimiters % 2 == 0 )) || \
+    fail "unbalanced display-math delimiters in $document: $display_delimiters delimiters"
+
+  if grep -Eq '\\\(|\\\)|^[[:space:]]*\\\[[[:space:]]*$|^[[:space:]]*\\\][[:space:]]*$' "$document"; then
+    fail "legacy backslash math delimiter remains in $document"
+  fi
 
   duplicate_tags="$(grep -oE '\\tag\{[^}]+\}' "$document" | sort | uniq -d || true)"
   [[ -z "$duplicate_tags" ]] || \
     fail "duplicate equation tag in $document: $duplicate_tags"
 done
+
+python3 ../tools/check_markdown_math.py
 
 echo "DOCS PASS: final theory boundaries, forward input/system ordering, equation namespaces, tags and math delimiters are valid."

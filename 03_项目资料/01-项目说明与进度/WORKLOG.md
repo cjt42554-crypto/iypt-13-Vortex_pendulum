@@ -40,11 +40,11 @@
 | 2026-08-21 | 阶段 4 谱与长时审计 | `artifacts/phase4-structural-baseline.json`、`phase4-linear-spectrum-scan.csv`、`phase4-prior-long-run.json` | 301 点四状态谱根最大残差 4.09e-13；示例先验谱零点只作机制计算 |
 | 2026-08-21 | 阶段 4 稳态反例 | 240 s 示例先验长运行；尾流幅约 0.74963，后半段频差约 0.157%，最后两块摆幅仍变 2.28% | 1% 稳态门未过，标签 `U`；没有冒充已验收锁频周期轨道 |
 | 2026-08-21 | 阶段 4 结构证据图 | `artifacts/figures/phase4-structural-evidence.svg/.png` | 实际重绘通过；图中先验/二维 CFD 的证据边界已明示 |
-| 2026-08-21 | 阶段 4 前向冷热启动 | `artifacts/cross-layer/forward-initial-memory.json/.csv`；\(U=0.008,0.0096,0.011\) 各冷/热初值 300 s | 6 条均 `COMPLETED`；近临界 43.1 倍差异保守解释为有限时间记忆，全部标签仍为 `U` |
+| 2026-08-21 | 阶段 4 前向冷热启动 | `artifacts/cross-layer/forward-initial-memory.json/.csv`；$U=0.008,0.0096,0.011$ 各冷/热初值 300 s | 6 条均 `COMPLETED`；近临界 43.1 倍差异保守解释为有限时间记忆，全部标签仍为 `U` |
 | 2026-08-21 | 本地桌面入口 | `scripts/desktop.mjs`、桌面菜单安装/卸载脚本；复用既有 Vite/Worker/Canvas GUI | 轻量 Chrome app-mode 外壳；仅绑定 `127.0.0.1`，无新桌面运行时依赖，不改变四层理论或求解器 |
 | 2026-08-21 | GUI 白底黑字主题 | `src/styles.css`、`src/ui/visuals.ts`、`public/favicon.svg`、`scripts/e2e.mjs` | 控件、状态和诊断图为白底黑字灰阶；仅物理场景保留蓝色水体/流场与橙色摆锤；像素级 E2E 门通过 |
 | 2026-08-21 | GUI 可视化参数与 CFD 防闪烁 | `src/ui/parameter-form.ts`、`src/main.ts`、`src/ui/visuals.ts`、`tests/parameter-form.test.ts`、`scripts/e2e.mjs` | 68 个参数按合同分组手填并与 JSON 双向同步；无效输入阻止运行；CFD 场帧缓存使模式序列稳定为 `waiting-cfd → cfd` |
-| 2026-08-21 | 阶段 4 精确可见面 | 孤立 SL 精确径向解；12/60/120/300 s 的 \(V_{\rm obs}\) | \(U=0.011\) 的 0.05 越门预测 134.53 s、前向实算 135.36 s；只核验冻结先验的机制 |
+| 2026-08-21 | 阶段 4 精确可见面 | 孤立 SL 精确径向解；12/60/120/300 s 的 $V_{\rm obs}$ | $U=0.011$ 的 0.05 越门预测 134.53 s、前向实算 135.36 s；只核验冻结先验的机制 |
 | 2026-08-21 | 阶段 4 二维规定运动 | `artifacts/cross-layer/hf-prescribed-response.json/.csv`；7 条 30 s + 2 条 60 s | 0.44 Hz 两窗正功候选；0.56 Hz 功率变号且残余约 0.44 Hz；载荷/网格门未过，证据保持 `exploratory-component` |
 | 2026-08-21 | 阶段 4 相位病态审计 | 亚格点相位种子复算、式 (ST-16.9) | 力幅差 3.26%、相位差 4.38°、功率差 26.36%；相位条件数领先估计 25.34% |
 | 2026-08-21 | 阶段 4 跨层证据图 | `artifacts/figures/phase4-cross-layer-evidence.svg/.png` | 实际重绘并目视检查通过；不是实验状态图 |
@@ -54,18 +54,18 @@
 
 - 适用对象：固定顺流轴的一自由度刚性旋转摆；未扰动自由表面为平面；水线过渡带完全位于圆柱侧面而不触及两端盖。
 - 在该分支中，有限半径圆柱与中心轴模型的排水体积满足积分恒等式
-  \(V_{\rm exact}=V_{\rm axis}\)；自适应积分最大绝对残差为
-  \(4.34\times10^{-19}\,\mathrm{m^3}\)。
+  $V_{\rm exact}=V_{\rm axis}$；自适应积分最大绝对残差为
+  $4.34\times10^{-19}\,\mathrm{m^3}$。
 - 有限半径效应保留在浮力矩：
-  \[
+  $$
   Q_{B,\rm exact}-Q_{B,\rm axis}
   =-\rho g I_{wp}\sin\theta\left(1+\frac12\tan^2\theta\right),
   \qquad I_{wp}=\frac{\pi R^4}{4}.
-  \]
+  $$
   闭式与带水线断点的自适应 Gauss–Kronrod 积分最大绝对残差为
-  \(3.41\times10^{-13}\,\mathrm{N\,m}\)。
-- 小角浮力矩切线相对细长轴线近似少 \(\rho gI_{wp}\)。根代理的有限截面推导与独立变分代理使用静水势能二阶变分得到相同符号和系数；后者的另一组几何数值复核相对误差为 \(2.4\times10^{-9}\)。
-- 早先固定节点 Gauss 求积没有解析 \(O(R|\theta|)\) 水线层，产生约 \(4.8\times10^{-4}\) 的伪误差；当前实现显式加入水线断点并使用自适应积分。该失败被保留为数值验收反例。
+  $3.41\times10^{-13}\,\mathrm{N\,m}$。
+- 小角浮力矩切线相对细长轴线近似少 $\rho gI_{wp}$。根代理的有限截面推导与独立变分代理使用静水势能二阶变分得到相同符号和系数；后者的另一组几何数值复核相对误差为 $2.4\times10^{-9}$。
+- 早先固定节点 Gauss 求积没有解析 $O(R|\theta|)$ 水线层，产生约 $4.8\times10^{-4}$ 的伪误差；当前实现显式加入水线断点并使用自适应积分。该失败被保留为数值验收反例。
 
 ### 2026-08-20 17:11 候选 ROM 代数核验记录
 
