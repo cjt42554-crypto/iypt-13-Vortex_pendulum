@@ -1,0 +1,169 @@
+name: Fix optional analysis inputs
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make optional high-fidelity evidence fail closed without crashing
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          grid_path = Path("02_模拟程序/scripts/analyze-high-fidelity-grid.ts")
+          text = grid_path.read_text(encoding="utf-8")
+          text = text.replace(
+              'import { mkdir, readFile, writeFile } from "node:fs/promises";',
+              'import { access, mkdir, readFile, writeFile } from "node:fs/promises";',
+          )
+          start = text.index("const entries: GridEntry[] = [];")
+          end = text.index("\nconst values =", start)
+          replacement = '''const inputPaths = DIAMETERS.map((diameterCells) => {
+  const suffix = String(diameterCells).padStart(2, "0");
+  return resolve(
+    `../90_候选工作区/current/验证与复现/artifacts/high-fidelity-grid-d${suffix}-re102-30s.json`,
+  );
+});
+const outputPath = resolve(
+  process.argv[2]
+    ?? "../90_候选工作区/current/验证与复现/artifacts/phase3-fixed-cylinder-grid-study.json",
+);
+const missingInputs: string[] = [];
+for (const path of inputPaths) {
+  try {
+    await access(path);
+  } catch {
+    missingInputs.push(path);
+  }
+}
+if (missingInputs.length > 0) {
+  const report = {
+    auditId: "VP-HF-CFD2D-v1-fixed-cylinder-grid-study-Re101.59",
+    createdAt: new Date().toISOString(),
+    verdict: "NOT_RUN_MISSING_INPUTS",
+    entries: [],
+    convergence: null,
+    missingInputs,
+    allowedConclusion: "No grid-convergence conclusion is available because required long-duration simulations are absent.",
+    prohibitedConclusion: "Do not infer grid convergence, drag/lift uncertainty, Strouhal number, apparatus torque, or pendulum prediction from this report.",
+  };
+  await mkdir(dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, `${JSON.stringify(report, null, 2)}\\n`, "utf8");
+  process.stdout.write(`${JSON.stringify({ outputPath, verdict: report.verdict, missingInputs }, null, 2)}\\n`);
+  process.exit(0);
+}
+
+const entries: GridEntry[] = [];
+for (const [index, diameterCells] of DIAMETERS.entries()) {
+  const path = inputPaths[index];
+  if (path === undefined) throw new Error("internal grid-input indexing error");
+  const bytes = await readFile(path);
+  const result = JSON.parse(bytes.toString("utf8")) as SimulationResult;
+  entries.push({
+    diameterCells,
+    path,
+    sha256: sha256(bytes),
+    configHash: result.provenance.configHash,
+    completed: result.complete,
+    terminationCode: result.terminationCode,
+    nx: result.config.cfd2d.nx,
+    ny: result.config.cfd2d.ny,
+    penalizationTimeSteps: result.config.cfd2d.penalizationTimeSteps,
+    nondimensionalPenalizationTime: result.config.cfd2d.penalizationTimeSteps
+      * result.numerical.lattice!.latticeMach / Math.sqrt(3)
+      / result.config.cfd2d.cylinderCells,
+    relaxationTime: result.numerical.lattice?.relaxationTime,
+    nominalMach: result.numerical.lattice?.latticeMach,
+    maximumMach: result.numerical.lattice?.maximumMach,
+    relativeMassBalanceResidual: result.numerical.lattice?.relativeMassBalanceResidual,
+    qoi: qois(result),
+  });
+}'''
+          text = text[:start] + replacement + text[end:]
+          duplicate = '''const outputPath = resolve(
+  process.argv[2]
+    ?? "../90_候选工作区/current/验证与复现/artifacts/phase3-fixed-cylinder-grid-study.json",
+);
+'''
+          if text.count(duplicate) != 1:
+              raise SystemExit(f"unexpected outputPath block count: {text.count(duplicate)}")
+          text = text.replace(duplicate, "")
+          grid_path.write_text(text, encoding="utf-8")
+
+          structure_path = Path("02_模拟程序/scripts/analyze-structure.ts")
+          text = structure_path.read_text(encoding="utf-8")
+          text = text.replace(
+              'import { readFile, writeFile } from "node:fs/promises";',
+              'import { mkdir, readFile, writeFile } from "node:fs/promises";',
+          )
+          old = 'const grid = JSON.parse(await readFile(gridPath, "utf8")) as GridStudy;'
+          new = '''let grid: GridStudy;
+try {
+  grid = JSON.parse(await readFile(gridPath, "utf8")) as GridStudy;
+} catch (error) {
+  const code = (error as NodeJS.ErrnoException).code;
+  if (code !== "ENOENT") throw error;
+  grid = { verdict: "NOT_RUN_MISSING_INPUTS", entries: [] };
+}'''
+          if old not in text:
+              raise SystemExit("grid read marker not found")
+          text = text.replace(old, new)
+          old = '''const strouhalValues = grid.entries.map((entry) => entry.qoi.strouhal);
+const minimumStrouhal = Math.min(...strouhalValues);
+const maximumStrouhal = Math.max(...strouhalValues);'''
+          new = '''const strouhalValues = grid.entries
+  .map((entry) => entry.qoi.strouhal)
+  .filter((value) => Number.isFinite(value));
+const minimumStrouhal = strouhalValues.length > 0 ? Math.min(...strouhalValues) : null;
+const maximumStrouhal = strouhalValues.length > 0 ? Math.max(...strouhalValues) : null;'''
+          if old not in text:
+              raise SystemExit("strouhal marker not found")
+          text = text.replace(old, new)
+          old = '''    cfdGridStrouhalRange: [minimumStrouhal, maximumStrouhal],
+    correspondingOneToOneReducedVelocityRange: [1 / maximumStrouhal, 1 / minimumStrouhal],
+    cfdVerdict: grid.verdict,
+    interpretation: "The CFD range is a nonconverged discriminator, not a calibrated replacement coefficient. Its mismatch with the ROM prior quantifies a model-form uncertainty that must be resolved by accepted CFD or fixed-body experiment.",'''
+          new = '''    cfdGridStrouhalRange: minimumStrouhal !== null && maximumStrouhal !== null
+      ? [minimumStrouhal, maximumStrouhal]
+      : null,
+    correspondingOneToOneReducedVelocityRange: minimumStrouhal !== null && maximumStrouhal !== null
+      ? [1 / maximumStrouhal, 1 / minimumStrouhal]
+      : null,
+    cfdVerdict: grid.verdict,
+    interpretation: minimumStrouhal !== null && maximumStrouhal !== null
+      ? "The CFD range is a nonconverged discriminator, not a calibrated replacement coefficient. Its mismatch with the ROM prior quantifies a model-form uncertainty that must be resolved by accepted CFD or fixed-body experiment."
+      : "No CFD frequency discriminator is available; the structural result remains conditional on the ROM prior.",'''
+          if old not in text:
+              raise SystemExit("cross-backend marker not found")
+          text = text.replace(old, new)
+          text = text.replace(
+              '"The independent 2-D CFD study supplies a useful but unresolved Strouhal discriminator.",',
+              'grid.entries.length > 0\n      ? "The independent 2-D CFD study supplies a useful but unresolved Strouhal discriminator."\n      : "No independent CFD Strouhal discriminator is available in the current candidate workspace.",',
+          )
+          text = text.replace(
+              '    "The frozen equations admit distinct fixed-wake, coupled-equilibrium, synchronization, and visibility boundaries.",',
+              '    "The implemented equations admit distinct fixed-wake, coupled-equilibrium, synchronization, and visibility boundaries.",',
+          )
+          marker = 'const config = JSON.parse(await readFile(configPath, "utf8")) as SimulationConfig;'
+          text = text.replace(marker, 'await mkdir(artifactRoot, { recursive: true });\n' + marker)
+          structure_path.write_text(text, encoding="utf-8")
+          PY
+
+          rm -f .github/workflows/fix-optional-analysis-inputs.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            "02_模拟程序/scripts/analyze-high-fidelity-grid.ts" \
+            "02_模拟程序/scripts/analyze-structure.ts" \
+            .github/workflows/fix-optional-analysis-inputs.yml
+          git commit -m "Handle absent optional analysis evidence explicitly"
+          git push
