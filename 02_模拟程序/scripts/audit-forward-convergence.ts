@@ -36,7 +36,7 @@ function difference(
 
 const outputPath = resolve(
   process.argv[2]
-    ?? "../03-项目资料/03-计算结果与证据/artifacts/phase2-forward-convergence.json",
+    ?? "../90_候选工作区/current/验证与复现/artifacts/phase2-forward-convergence.json",
 );
 const makeConfig = (
   relativeTolerance: number,

@@ -140,7 +140,7 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const configPath = resolve(root, "public/examples/vortex-pendulum-default.json");
 const artifactRoot = resolve(
   root,
-  "../03-项目资料/03-计算结果与证据/artifacts",
+  "../90_候选工作区/current/验证与复现/artifacts",
 );
 const gridPath = resolve(artifactRoot, "phase3-fixed-cylinder-grid-study.json");
 const outputPath = resolve(artifactRoot, "phase4-structural-baseline.json");

@@ -138,7 +138,7 @@ const entries: GridEntry[] = [];
 for (const diameterCells of DIAMETERS) {
   const suffix = String(diameterCells).padStart(2, "0");
   const path = resolve(
-    `../03-项目资料/03-计算结果与证据/artifacts/high-fidelity-grid-d${suffix}-re102-30s.json`,
+    `../90_候选工作区/current/验证与复现/artifacts/high-fidelity-grid-d${suffix}-re102-30s.json`,
   );
   const bytes = await readFile(path);
   const result = JSON.parse(bytes.toString("utf8")) as SimulationResult;
@@ -199,7 +199,7 @@ const report = {
 };
 const outputPath = resolve(
   process.argv[2]
-    ?? "../03-项目资料/03-计算结果与证据/artifacts/phase3-fixed-cylinder-grid-study.json",
+    ?? "../90_候选工作区/current/验证与复现/artifacts/phase3-fixed-cylinder-grid-study.json",
 );
 await mkdir(dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");

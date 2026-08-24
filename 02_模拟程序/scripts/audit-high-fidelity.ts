@@ -208,7 +208,7 @@ async function unifiedSmoke(mode: "fixed" | "prescribed") {
 
 const outputPath = resolve(
   process.argv[2]
-    ?? "../03-项目资料/03-计算结果与证据/artifacts/phase3-high-fidelity-component-audit.json",
+    ?? "../90_候选工作区/current/验证与复现/artifacts/phase3-high-fidelity-component-audit.json",
 );
 const elementary = uniformAndZeroFlow();
 const taylorGreenCases = [24, 32, 48, 64].map(taylorGreen);
