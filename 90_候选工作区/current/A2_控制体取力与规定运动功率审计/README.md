@@ -12,6 +12,9 @@
 - `tests/control-volume-force.test.ts`：制造解和离散守恒测试；
 - `验证与复现/验证记录.md`：本轮真实执行边界；
 - `验证与复现/artifacts/control-volume-unit-tests.txt`：实际测试输出。
+- `验证与复现/artifacts/a2-prescribed-power-smoke.*`：完整仓库上的 smoke 输出；
+- `验证与复现/artifacts/a2-prescribed-power-research.*`：三网格三 Mach 的当前 v2 输出；
+- `验证与复现/artifacts/a2-prescribed-power-research-v1-pointwise-gate-stop.*`：保留的病态逐步相对残差门失败。
 
 ## 运行纯算法测试
 
@@ -73,6 +76,40 @@ npm exec vite-node -- \
 验证与复现/artifacts/a2-prescribed-power-research.json
 验证与复现/artifacts/a2-prescribed-power-research.md
 ```
+
+## raw 离散对账硬门
+
+设第 $n$ 步控制体与 A1 的反力差为矢量 $\boldsymbol r_n$，A1/控制体反力中较大的矢量模为 $q_n$。特征反力尺度定义为
+
+$$
+q_{\mathrm{rms}}=
+\sqrt{\frac{1}{N}\sum_{n=1}^{N}q_n^2}.
+$$
+
+raw 对账同时要求
+
+$$
+\frac{\max_n\lVert\boldsymbol r_n\rVert}{q_{\mathrm{rms}}}
+\le 10^{-9},
+$$
+
+$$
+\frac{\sqrt{N^{-1}\sum_n\lVert\boldsymbol r_n\rVert^2}}
+{q_{\mathrm{rms}}}
+\le 10^{-10}.
+$$
+
+程序仍输出每步瞬时相对残差的全程最大值和最坏步上下文，但它只是诊断量。当真实反力过零时，该逐步比值的分母退化，不能单独作为全程守恒硬门。
+
+## 当前实测状态
+
+- 纯算法和门函数测试：10/10 PASS；
+- smoke：`PASS-A2-COMPONENT-SMOKE-RESEARCH-MATRIX-NOT-RUN`；
+- research：`PASS-A2-2D-PRESCRIBED-POWER-SIGN-ONLY`；
+- 修正平均功率在九个网格–Mach 算例和三个控制体中均为负；
+- 载荷/功率幅值尚未完成 GCI、$Ma^2$ 外推和外部公开基准。
+
+后续公开基准已在同级 `A8_公开规定横移圆柱基准/` 中启动；当前固定圆柱文献门为 `NO-GO-A8-FIXED-REFERENCE-MISMATCH`，所以不能把 A2 的符号通过提升为载荷幅值验证。
 
 ## 解释边界
 

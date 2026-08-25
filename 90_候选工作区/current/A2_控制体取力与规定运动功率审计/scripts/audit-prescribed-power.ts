@@ -6,6 +6,10 @@ import {
   sameNonzeroTrend,
 } from "./audit-support.ts";
 import { runCase } from "./audit-case.ts";
+import {
+  DEFAULT_SCALE_AWARE_MAXIMUM_RELATIVE_TOLERANCE,
+  DEFAULT_SCALE_AWARE_RMS_RELATIVE_TOLERANCE,
+} from "../src/control-volume-force.ts";
 
 function renderMarkdown(report: any): string {
   const lines: string[] = [
@@ -18,21 +22,27 @@ function renderMarkdown(report: any): string {
     "",
     "## 硬门摘要",
     "",
-    `- raw 离散控制体与 A1 反力一致：${report.gates.rawDiscreteBalancePassed ? "PASS" : "FAIL"}`,
+    `- raw 离散控制体与 A1 反力特征尺度对账：${report.gates.rawDiscreteBalancePassed ? "PASS" : "FAIL"}`,
     `- 控制体边界无 Brinkman 源：${report.gates.boundaryIsolationPassed ? "PASS" : "FAIL"}`,
     `- 控制体位置下功率符号稳定：${report.gates.withinCaseControlVolumeSignStable ? "PASS" : "FAIL"}`,
     `- 网格–Mach 矩阵功率符号稳定：${report.gates.matrixPowerSignStable ? "PASS" : "FAIL/NOT-RUN"}`,
     "",
     "## 算例",
     "",
-    "| case | N_D | U_lu | Ma_ref | raw CV | CV 功率符号 | mean corrected power range (W/m) |",
-    "|---|---:|---:|---:|---|---|---:|",
+    "| case | N_D | U_lu | Ma_ref | raw max/RMS_ref | raw RMS/RMS_ref | raw CV | CV 功率符号 | mean corrected power range (W/m) |",
+    "|---|---:|---:|---:|---:|---:|---|---|---:|",
   ];
   for (const item of report.cases) {
     const powers = item.volumes.map((volume: any) => volume.correctedHalfForceMomentum.meanPower);
     const trends = [...new Set(item.volumes.map((volume: any) => volume.correctedHalfForceMomentum.powerTrend))].join(",");
+    const maximumScaleAwareResidual = Math.max(
+      ...item.volumes.map((volume: any) => volume.maximumRawResidualRelativeToReferenceRms),
+    );
+    const rmsScaleAwareResidual = Math.max(
+      ...item.volumes.map((volume: any) => volume.rmsRawResidualRelativeToReferenceRms),
+    );
     lines.push(
-      `| ${item.caseId} | ${item.numericalIdentity.diameterCells} | ${item.numericalIdentity.resolvedLatticeVelocity.toExponential(3)} | ${item.numericalIdentity.latticeMach.toExponential(3)} | ${item.gates.rawDiscreteBalancePassed ? "PASS" : "FAIL"} | ${trends} | ${Math.min(...powers).toExponential(6)} … ${Math.max(...powers).toExponential(6)} |`,
+      `| ${item.caseId} | ${item.numericalIdentity.diameterCells} | ${item.numericalIdentity.resolvedLatticeVelocity.toExponential(3)} | ${item.numericalIdentity.latticeMach.toExponential(3)} | ${maximumScaleAwareResidual.toExponential(3)} | ${rmsScaleAwareResidual.toExponential(3)} | ${item.gates.rawDiscreteBalancePassed ? "PASS" : "FAIL"} | ${trends} | ${Math.min(...powers).toExponential(6)} … ${Math.max(...powers).toExponential(6)} |`,
     );
   }
   lines.push(
@@ -42,7 +52,7 @@ function renderMarkdown(report: any): string {
     "本结果只审计二维单位跨长、规定运动条件下的动态取力与机械端口功率。即使全部硬门通过，也不等同于三维有限湿跨、自由表面、真实水槽或实物装置预测通过。",
     "",
   );
-  return `${lines.join("\n")}\n`;
+  return `${lines.join("\n").trimEnd()}\n`;
 }
 
 
@@ -73,7 +83,7 @@ let decisionCode: string;
 let interpretation: string;
 if (!rawDiscreteBalancePassed) {
   decisionCode = "STOP-A2-DISCRETE-MOMENTUM-BALANCE";
-  interpretation = "独立控制体无法复现 A1 raw 反力，先修正离散库存/穿越通量或时层定义，禁止解释物理功率。";
+  interpretation = "独立控制体在全程参考反力 RMS 尺度下无法复现 A1 raw 反力，先修正离散库存/穿越通量或时层定义，禁止解释物理功率。";
 } else if (!boundaryIsolationPassed) {
   decisionCode = "STOP-A2-CONTROL-VOLUME-CONTAMINATED";
   interpretation = "Brinkman 源触及控制体边界，控制体没有隔离全部体力源。";
@@ -90,7 +100,7 @@ if (!rawDiscreteBalancePassed) {
 }
 
 const report = {
-  format: "VP-CFD2D-A2-CONTROL-VOLUME-PRESCRIBED-POWER-v1",
+  format: "VP-CFD2D-A2-CONTROL-VOLUME-PRESCRIBED-POWER-v2",
   createdAt: new Date().toISOString(),
   profile: cli.profile,
   modelUnderAudit: "VP-HF-CFD2D-v1 / VP-CFD2D-RAW-BRINKMAN-A1-v1",
@@ -99,6 +109,8 @@ const report = {
     physicalCorrection: "raw-reaction-plus-time-derivative-of-diffuse-mask-fictitious-fluid-momentum",
     nativeUnits: "two-dimensional-line-force-and-line-power",
     nonInvasiveAccess: "public-checkpoint-copy-plus-macroscopicCopies",
+    rawBalanceGate: "maximum-and-rms-absolute-residuals-normalized-by-all-step-reference-reaction-rms",
+    pointwiseRelativeResidual: "diagnostic-only-because-the-denominator-is-singular-at-force-zero-crossings",
     caveat: "full-population checkpoint copying is correct but inefficient; formal integration should expose a narrow read-only CV probe",
   },
   requestedMotion: {
@@ -116,7 +128,10 @@ const report = {
     timeStaggeringSensitivityPassed,
   },
   thresholds: {
-    maximumRawRelativeResidual: 1e-9,
+    maximumRawResidualRelativeToReferenceRms:
+      DEFAULT_SCALE_AWARE_MAXIMUM_RELATIVE_TOLERANCE,
+    rmsRawResidualRelativeToReferenceRms:
+      DEFAULT_SCALE_AWARE_RMS_RELATIVE_TOLERANCE,
     maximumBoundaryMask: 1e-14,
     maximumWithinCasePowerSpread: 0.05,
     maximumBareVsHalfForceCorrectionSensitivity: 0.10,

@@ -60,6 +60,21 @@ export interface ControlVolumeStepBalance {
   boundaryMaskPassed: boolean;
 }
 
+export const DEFAULT_SCALE_AWARE_MAXIMUM_RELATIVE_TOLERANCE = 1e-9;
+export const DEFAULT_SCALE_AWARE_RMS_RELATIVE_TOLERANCE = 1e-10;
+
+export interface ScaleAwareResidualAssessment {
+  sampleCount: number;
+  maximumAbsoluteResidual: number;
+  residualRms: number;
+  referenceRms: number;
+  maximumResidualRelativeToReferenceRms: number;
+  rmsResidualRelativeToReferenceRms: number;
+  maximumTolerance: number;
+  rmsTolerance: number;
+  passed: boolean;
+}
+
 function finite(value: number, name: string): number {
   if (!Number.isFinite(value)) throw new RangeError(`${name} must be finite`);
   return value;
@@ -275,6 +290,65 @@ export function relativeVectorResidual(
   if (!(floor > 0) || !Number.isFinite(floor)) throw new RangeError("invalid residual floor");
   return Math.hypot(firstX - secondX, firstY - secondY)
     / Math.max(Math.hypot(firstX, firstY), Math.hypot(secondX, secondY), floor);
+}
+
+/**
+ * Assess a residual history against one characteristic, all-sample reference
+ * scale. A per-step relative maximum is ill-conditioned whenever the true
+ * reference vector crosses zero, so it remains a diagnostic rather than a
+ * hard gate.
+ */
+export function assessScaleAwareResidual(
+  maximumAbsoluteResidual: number,
+  squaredResidualSum: number,
+  squaredReferenceSum: number,
+  sampleCount: number,
+  options: {
+    maximumTolerance?: number;
+    rmsTolerance?: number;
+    referenceFloor?: number;
+  } = {},
+): ScaleAwareResidualAssessment {
+  const maximumTolerance = options.maximumTolerance
+    ?? DEFAULT_SCALE_AWARE_MAXIMUM_RELATIVE_TOLERANCE;
+  const rmsTolerance = options.rmsTolerance
+    ?? DEFAULT_SCALE_AWARE_RMS_RELATIVE_TOLERANCE;
+  const referenceFloor = options.referenceFloor ?? 1e-30;
+  for (const [name, value] of [
+    ["maximumAbsoluteResidual", maximumAbsoluteResidual],
+    ["squaredResidualSum", squaredResidualSum],
+    ["squaredReferenceSum", squaredReferenceSum],
+    ["maximumTolerance", maximumTolerance],
+    ["rmsTolerance", rmsTolerance],
+  ] as const) {
+    if (!(value >= 0) || !Number.isFinite(value)) {
+      throw new RangeError(`${name} must be finite and non-negative`);
+    }
+  }
+  if (!Number.isInteger(sampleCount) || sampleCount <= 0) {
+    throw new RangeError("sampleCount must be a positive integer");
+  }
+  if (!(referenceFloor > 0) || !Number.isFinite(referenceFloor)) {
+    throw new RangeError("referenceFloor must be finite and positive");
+  }
+  const residualRms = Math.sqrt(squaredResidualSum / sampleCount);
+  const referenceRms = Math.sqrt(squaredReferenceSum / sampleCount);
+  const characteristicScale = Math.max(referenceRms, referenceFloor);
+  const maximumResidualRelativeToReferenceRms = maximumAbsoluteResidual
+    / characteristicScale;
+  const rmsResidualRelativeToReferenceRms = residualRms / characteristicScale;
+  return {
+    sampleCount,
+    maximumAbsoluteResidual,
+    residualRms,
+    referenceRms,
+    maximumResidualRelativeToReferenceRms,
+    rmsResidualRelativeToReferenceRms,
+    maximumTolerance,
+    rmsTolerance,
+    passed: maximumResidualRelativeToReferenceRms <= maximumTolerance
+      && rmsResidualRelativeToReferenceRms <= rmsTolerance,
+  };
 }
 
 export function signedTrend(

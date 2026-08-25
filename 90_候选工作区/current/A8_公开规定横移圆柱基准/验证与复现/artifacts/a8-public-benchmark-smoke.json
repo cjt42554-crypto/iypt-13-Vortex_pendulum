@@ -1,0 +1,259 @@
+{
+  "format": "VP-CFD2D-A8-PUBLIC-OSCILLATING-CYLINDER-BENCHMARK-v1",
+  "createdAt": "2026-08-25T10:16:42.077Z",
+  "benchmarkId": "VP-CFD2D-A8-GUILMINEAU-RE185-v1",
+  "profile": "smoke",
+  "sourceContract": {
+    "primary": {
+      "citation": "Guilmineau and Queutey, Journal of Fluids and Structures 16 (2002) 773-794",
+      "doi": "10.1006/jfls.2002.0449"
+    },
+    "openReproduction": {
+      "citation": "Wang, Wu, Xu and Tan, Entropy 25 (2023) 432",
+      "doi": "10.3390/e25030432"
+    },
+    "reynolds": 185,
+    "naturalStrouhal": 0.195,
+    "amplitudeOverDiameter": 0.2,
+    "frequencyRatios": [
+      0.8
+    ],
+    "domainDiameters": [
+      23,
+      10
+    ],
+    "upstreamDiameters": 3.5,
+    "sourceFineResolutionCellsPerDiameter": 50,
+    "sourceInitialization": "stable-fixed-cylinder-wake-before-forced-motion"
+  },
+  "implementationDifferences": [
+    "uniform Cartesian grid instead of body-fitted/overset near-wall refinement",
+    "diffuse Brinkman cylinder instead of a sharp no-slip body-fitted surface",
+    "periodic cross-flow boundary instead of non-reflecting top and bottom boundaries",
+    "A2 corrected volume-penalty reaction instead of surface stress integration"
+  ],
+  "settings": {
+    "diameterCells": [
+      8
+    ],
+    "latticeVelocity": 0.05,
+    "fixedConvectiveDuration": 12,
+    "fixedDiscardConvectiveTime": 6,
+    "forcedConvectiveDuration": 12,
+    "forcedDiscardConvectiveTime": 6,
+    "frequencyRatios": [
+      0.8
+    ]
+  },
+  "gates": {
+    "numericalStabilityPassed": true,
+    "fixedMaturityPassed": true,
+    "fixedLiteraturePassed": false,
+    "forcedLiteraturePassed": false,
+    "gridScreeningPassed": false,
+    "sourceFineResolutionMatched": false,
+    "machMatrixRun": false,
+    "domainSensitivityRun": false,
+    "gridPhaseSensitivityRun": false,
+    "gciRun": false
+  },
+  "thresholds": {
+    "maximumDensityDeviation": 0.08,
+    "maximumObservedMach": 0.3,
+    "fixedHalfWindowMeanDragDrift": 0.05,
+    "fixedHalfWindowLiftRmsDrift": 0.1,
+    "middleToFineMetricDifference": 0.1,
+    "fixedLiterature": {
+      "meanDrag": 1.287,
+      "liftRms": 0.443,
+      "strouhal": 0.195,
+      "tolerance": {
+        "meanDrag": 0.05,
+        "liftRms": 0.04,
+        "strouhal": 0.005
+      }
+    },
+    "forcedLiterature": [
+      {
+        "frequencyRatio": 0.8,
+        "meanDrag": 1.195,
+        "dragRms": 0.036,
+        "liftRms": 0.08,
+        "tolerance": {
+          "meanDrag": 0.1,
+          "dragRms": 0.01,
+          "liftRms": 0.02
+        }
+      },
+      {
+        "frequencyRatio": 1.1,
+        "meanDrag": 1.42,
+        "dragRms": 0.149,
+        "liftRms": 0.897,
+        "tolerance": {
+          "meanDrag": 0.05,
+          "dragRms": 0.02,
+          "liftRms": 0.05
+        }
+      }
+    ]
+  },
+  "decision": {
+    "code": "PASS-A8-SMOKE-QUANTITATIVE-SCREENING-NOT-RUN",
+    "interpretation": "公开基准运动、成熟尾流分支和 A2 修正取力链可运行；smoke 时长不用于定量裁决。"
+  },
+  "explicitNonClaims": [
+    "not DFG 2D-2 because the geometry and boundary contract differ",
+    "not complete A9 grid-Mach-domain-GCI qualification",
+    "not a three-dimensional finite-span or free-surface validation",
+    "not weak-FSI or apparatus prediction acceptance",
+    "not experimental validation of the vortex-pendulum apparatus"
+  ],
+  "cases": [
+    {
+      "numericalIdentity": {
+        "diameterCells": 8,
+        "nx": 184,
+        "ny": 80,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.5064864864864865,
+        "penalizationTimeSteps": 1,
+        "etaHat": 0.00625
+      },
+      "fixed": {
+        "metrics": {
+          "samples": 960,
+          "meanDrag": 1.7186098470049758,
+          "meanLift": -0.009663598505719137,
+          "dragRms": 1.754243427625784,
+          "liftRms": 0.16949925293710646,
+          "dragFluctuationRms": 0.3517814621974733,
+          "liftFluctuationRms": 0.16922355512799453,
+          "strouhal": 0.171,
+          "spectralLiftAmplitude": 0.23506148360234091
+        },
+        "firstHalf": {
+          "samples": 480,
+          "meanDrag": 1.7065264364008896,
+          "meanLift": -0.083478710775976,
+          "dragRms": 1.759212116464512,
+          "liftRms": 0.17567764886915613,
+          "dragFluctuationRms": 0.4273111191865159,
+          "liftFluctuationRms": 0.154576651404329
+        },
+        "secondHalf": {
+          "samples": 480,
+          "meanDrag": 1.7306932576090628,
+          "meanLift": 0.0641515137645378,
+          "dragRms": 1.7492606255275298,
+          "liftRms": 0.1630869620180589,
+          "dragFluctuationRms": 0.254192022076811,
+          "liftFluctuationRms": 0.14993978945562825
+        },
+        "maturity": {
+          "meanDragHalfDrift": 0.013963665197124185,
+          "liftRmsHalfDrift": 0.07166925862307459,
+          "passed": true
+        },
+        "literature": {
+          "meanDragError": 0.43160984700497584,
+          "liftRmsError": 0.2735007470628935,
+          "strouhalError": 0.023999999999999994,
+          "meanDragPassed": false,
+          "liftRmsPassed": false,
+          "strouhalPassed": false,
+          "passed": false
+        },
+        "extrema": {
+          "minimumDensity": 0.9509054279440592,
+          "maximumDensity": 1.05265200980184,
+          "maximumSpeed": 0.09156143198109638,
+          "maximumMach": 0.1585890522050208,
+          "maximumDensityDeviation": 0.05265200980183993
+        }
+      },
+      "forced": [
+        {
+          "frequencyRatio": 0.8,
+          "excitationStrouhal": 0.15600000000000003,
+          "motion": {
+            "amplitudeOverDiameter": 0.2,
+            "maximumVelocityOverFreestream": 0.1960353815840031
+          },
+          "metrics": {
+            "samples": 960,
+            "meanDrag": 2.150215205095825,
+            "meanLift": 0.05121380811177227,
+            "dragRms": 2.159681514102923,
+            "liftRms": 0.28452709953581734,
+            "dragFluctuationRms": 0.20198716328668787,
+            "liftFluctuationRms": 0.27988000326739254
+          },
+          "firstHalf": {
+            "samples": 480,
+            "meanDrag": 2.1773275592463857,
+            "meanLift": -0.02593267587793098,
+            "dragRms": 2.18467130077418,
+            "liftRms": 0.3278881567671909,
+            "dragFluctuationRms": 0.17897874782364576,
+            "liftFluctuationRms": 0.3268610403061157
+          },
+          "secondHalf": {
+            "samples": 480,
+            "meanDrag": 2.1231028509452696,
+            "meanLift": 0.12836029210147554,
+            "dragRms": 2.1343991642355578,
+            "liftRms": 0.2332395708115237,
+            "dragFluctuationRms": 0.21930361738356124,
+            "liftFluctuationRms": 0.1947417079209476
+          },
+          "stationarity": {
+            "meanDragHalfDrift": 0.024904249280656803,
+            "dragFluctuationRmsHalfDrift": 0.18387690107905258,
+            "liftRmsHalfDrift": 0.28866119133076884
+          },
+          "literature": {
+            "comparisons": [
+              {
+                "metric": "meanDrag",
+                "actual": 2.150215205095825,
+                "target": 1.195,
+                "tolerance": 0.1,
+                "absoluteError": 0.9552152050958249,
+                "relativeError": 0.799343267862615,
+                "passed": false
+              },
+              {
+                "metric": "dragRms",
+                "actual": 0.20198716328668787,
+                "target": 0.036,
+                "tolerance": 0.01,
+                "absoluteError": 0.16598716328668786,
+                "relativeError": 4.6107545357413295,
+                "passed": false
+              },
+              {
+                "metric": "liftRms",
+                "actual": 0.28452709953581734,
+                "target": 0.08,
+                "tolerance": 0.02,
+                "absoluteError": 0.20452709953581732,
+                "relativeError": 2.5565887441977164,
+                "passed": false
+              }
+            ],
+            "passed": false
+          },
+          "extrema": {
+            "minimumDensity": 0.9841926268114171,
+            "maximumDensity": 1.00952116744804,
+            "maximumSpeed": 0.08567408901902268,
+            "maximumMach": 0.1483918750731261,
+            "maximumDensityDeviation": 0.01580737318858294
+          }
+        }
+      ]
+    }
+  ]
+}

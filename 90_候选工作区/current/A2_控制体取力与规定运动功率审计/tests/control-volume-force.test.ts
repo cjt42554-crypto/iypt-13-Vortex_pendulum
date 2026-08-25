@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  assessScaleAwareResidual,
   captureControlVolumeSnapshot,
   evaluateControlVolumeStep,
   type D2Q9StateView,
@@ -212,4 +213,34 @@ test("arbitrary D2Q9 streaming satisfies the discrete CV balance exactly", () =>
   );
   assertNear(balance.sourceImpulseOnFluidX, 0, 2e-15);
   assertNear(balance.sourceImpulseOnFluidY, 0, 2e-15);
+});
+
+test("scale-aware residual gate ignores a harmless pointwise zero-crossing spike", () => {
+  const sampleCount = 100;
+  const maximumAbsoluteResidual = 2e-13;
+  const squaredResidualSum = maximumAbsoluteResidual ** 2 + 99 * (1e-14) ** 2;
+  const squaredReferenceSum = sampleCount * (1e-3) ** 2;
+  const assessment = assessScaleAwareResidual(
+    maximumAbsoluteResidual,
+    squaredResidualSum,
+    squaredReferenceSum,
+    sampleCount,
+  );
+  assert.equal(assessment.passed, true);
+  assert.ok(assessment.maximumResidualRelativeToReferenceRms < 1e-9);
+  assert.ok(assessment.rmsResidualRelativeToReferenceRms < 1e-10);
+});
+
+test("scale-aware residual gate rejects a systematic reconstruction mismatch", () => {
+  const sampleCount = 100;
+  const residual = 2e-8;
+  const assessment = assessScaleAwareResidual(
+    residual,
+    sampleCount * residual ** 2,
+    sampleCount * (1e-3) ** 2,
+    sampleCount,
+  );
+  assert.equal(assessment.passed, false);
+  assert.ok(assessment.maximumResidualRelativeToReferenceRms > 1e-9);
+  assert.ok(assessment.rmsResidualRelativeToReferenceRms > 1e-10);
 });

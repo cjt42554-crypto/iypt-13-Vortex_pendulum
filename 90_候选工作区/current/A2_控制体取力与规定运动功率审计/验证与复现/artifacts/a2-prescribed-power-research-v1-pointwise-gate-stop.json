@@ -1,0 +1,3440 @@
+{
+  "format": "VP-CFD2D-A2-CONTROL-VOLUME-PRESCRIBED-POWER-v1",
+  "createdAt": "2026-08-25T09:48:21.126Z",
+  "profile": "research",
+  "modelUnderAudit": "VP-HF-CFD2D-v1 / VP-CFD2D-RAW-BRINKMAN-A1-v1",
+  "candidateMethod": {
+    "rawForce": "exact-discrete-internal-control-volume-momentum-balance",
+    "physicalCorrection": "raw-reaction-plus-time-derivative-of-diffuse-mask-fictitious-fluid-momentum",
+    "nativeUnits": "two-dimensional-line-force-and-line-power",
+    "nonInvasiveAccess": "public-checkpoint-copy-plus-macroscopicCopies",
+    "caveat": "full-population checkpoint copying is correct but inefficient; formal integration should expose a narrow read-only CV probe"
+  },
+  "requestedMotion": {
+    "amplitude": 0.03,
+    "frequency": 0.5,
+    "cycles": 8,
+    "discardCycles": 4
+  },
+  "gates": {
+    "rawDiscreteBalancePassed": false,
+    "boundaryIsolationPassed": true,
+    "withinCaseControlVolumeSignStable": true,
+    "matrixPowerSignStable": true,
+    "controlVolumePowerSpreadPassed": true,
+    "timeStaggeringSensitivityPassed": true
+  },
+  "thresholds": {
+    "maximumRawRelativeResidual": 1e-9,
+    "maximumBoundaryMask": 1e-14,
+    "maximumWithinCasePowerSpread": 0.05,
+    "maximumBareVsHalfForceCorrectionSensitivity": 0.1,
+    "powerSignDeadbandRelativeToFundamentalScale": 0.0001
+  },
+  "decision": {
+    "code": "STOP-A2-DISCRETE-MOMENTUM-BALANCE",
+    "interpretation": "独立控制体无法复现 A1 raw 反力，先修正离散库存/穿越通量或时层定义，禁止解释物理功率。"
+  },
+  "explicitNonClaims": [
+    "not a three-dimensional finite-wet-span load",
+    "not a free-surface or real-channel validation",
+    "not a weak-FSI or apparatus-trend acceptance",
+    "not experimental validation",
+    "not a ROM calibration until the research profile and external prescribed-motion benchmark gates pass"
+  ],
+  "cases": [
+    {
+      "caseId": "d08-u0050",
+      "configHash": "fnv1a64-4dca9c4a8a870c5e",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 128,
+        "ny": 64,
+        "diameterCells": 8,
+        "targetLatticeVelocity": 0.05,
+        "resolvedLatticeVelocity": 0.049995404834114514,
+        "latticeMach": 0.08659458131766098,
+        "relaxationTime": 0.5118106791655179,
+        "penalizationTimeSteps": 1.0000919117647058,
+        "etaHat": 0.0062499999999999995,
+        "physicalTimeStep": 0.0022056796250344637,
+        "latticeSteps": 7254,
+        "maximumDensityDeviation": 0.045509689676437315,
+        "maximumMach": 0.1899985056383854
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 30,
+            "xMax": 50,
+            "yMin": 16,
+            "yMax": 47
+          },
+          "steps": 7254,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.66876393961839e-11,
+          "rmsRawRelativeResidual": 9.62988468821079e-13,
+          "maximumRawAbsoluteResidualSi": 1.014677707042456e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002329990665925969,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000024091612085946663,
+            "forceRms": 0.0011454730496532567,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003932930681389133,
+              "imaginary": -0.0015531328485967615,
+              "amplitude": 0.0016021551369441132,
+              "phase": -1.8188085798393376
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -1.8188085798393376,
+            "fundamentalMeanPower": -0.000002409083854205744,
+            "powerScale": 0.000009813867532955293,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002329990665935196,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.000002409161208594783,
+            "forceRms": 0.0011454730496532758,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003932930681389334,
+              "imaginary": -0.0015531328485967773,
+              "amplitude": 0.0016021551369441336,
+              "phase": -1.8188085798393472
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -1.8188085798393472,
+            "fundamentalMeanPower": -0.0000024090838542058667,
+            "powerScale": 0.000009813867532955416,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.0000028538510106952915,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000023438020196226557,
+            "forceRms": 0.0004641429274245543,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.00038262300123756985,
+              "imaginary": -0.00046563088841537797,
+              "amplitude": 0.0006026711253432833,
+              "phase": -2.2586477093174504
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -2.2586477093174504,
+            "fundamentalMeanPower": -0.0000023437252502085772,
+            "powerScale": 0.000003691611663360656,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.0000028629557578097964,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.000002361853941611502,
+            "forceRms": 0.00046508630939994737,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.00038557006299655,
+              "imaginary": -0.0004651490345514773,
+              "amplitude": 0.0006041753866414412,
+              "phase": -2.2629227288598823
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -2.2629227288598823,
+            "fundamentalMeanPower": -0.000002361777230973208,
+            "powerScale": 0.0000037008258903569442,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.004877809041458403
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 26,
+            "xMax": 54,
+            "yMin": 12,
+            "yMax": 51
+          },
+          "steps": 7254,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 3.664943550948261e-11,
+          "rmsRawRelativeResidual": 2.2015810436836927e-12,
+          "maximumRawAbsoluteResidualSi": 2.2047016279937376e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002329990665925969,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000024091612085946663,
+            "forceRms": 0.0011454730496532567,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003932930681389133,
+              "imaginary": -0.0015531328485967615,
+              "amplitude": 0.0016021551369441132,
+              "phase": -1.8188085798393376
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -1.8188085798393376,
+            "fundamentalMeanPower": -0.000002409083854205744,
+            "powerScale": 0.000009813867532955293,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.0000023299906659398144,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.000002409161208594578,
+            "forceRms": 0.0011454730496532459,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003932930681388988,
+              "imaginary": -0.0015531328485967413,
+              "amplitude": 0.00160215513694409,
+              "phase": -1.8188085798393319
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -1.8188085798393319,
+            "fundamentalMeanPower": -0.0000024090838542056545,
+            "powerScale": 0.00000981386753295515,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002853851010700103,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.000002343802019622443,
+            "forceRms": 0.00046414292742452033,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.00038262300123753456,
+              "imaginary": -0.0004656308884153458,
+              "amplitude": 0.0006026711253432362,
+              "phase": -2.2586477093174393
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -2.2586477093174393,
+            "fundamentalMeanPower": -0.0000023437252502083612,
+            "powerScale": 0.000003691611663360367,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002862955757814616,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000023618539416112883,
+            "forceRms": 0.0004650863093999128,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003855700629965148,
+              "imaginary": -0.00046514903455144535,
+              "amplitude": 0.0006041753866413941,
+              "phase": -2.2629227288598712
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -2.2629227288598712,
+            "fundamentalMeanPower": -0.0000023617772309729924,
+            "powerScale": 0.0000037008258903566562,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0048778090414584386
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 22,
+            "xMax": 58,
+            "yMin": 8,
+            "yMax": 55
+          },
+          "steps": 7254,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 2.5312203217367988e-11,
+          "rmsRawRelativeResidual": 4.391142557373444e-12,
+          "maximumRawAbsoluteResidualSi": 5.1330337739760906e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002329990665925969,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000024091612085946663,
+            "forceRms": 0.0011454730496532567,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003932930681389133,
+              "imaginary": -0.0015531328485967615,
+              "amplitude": 0.0016021551369441132,
+              "phase": -1.8188085798393376
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -1.8188085798393376,
+            "fundamentalMeanPower": -0.000002409083854205744,
+            "powerScale": 0.000009813867532955293,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.000002329990665932522,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000024091612085946523,
+            "forceRms": 0.0011454730496532714,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.00039329306813891206,
+              "imaginary": -0.0015531328485967758,
+              "amplitude": 0.001602155136944127,
+              "phase": -1.8188085798393345
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -1.8188085798393345,
+            "fundamentalMeanPower": -0.0000024090838542057363,
+            "powerScale": 0.000009813867532955376,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.0000028538510106929567,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000023438020196225274,
+            "forceRms": 0.0004641429274245456,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003826230012375485,
+              "imaginary": -0.00046563088841537824,
+              "amplitude": 0.00060267112534327,
+              "phase": -2.258647709317423
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -2.258647709317423,
+            "fundamentalMeanPower": -0.0000023437252502084463,
+            "powerScale": 0.0000036916116633605743,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000071,
+            "meanForce": -0.0000028629557578072464,
+            "meanVelocity": -2.25734280443269e-19,
+            "meanPower": -0.0000023618539416113646,
+            "forceRms": 0.0004650863093999385,
+            "velocityRms": 0.008662647163337662,
+            "forceFundamental": {
+              "real": -0.0003855700629965276,
+              "imaginary": -0.0004651490345514771,
+              "amplitude": 0.0006041753866414268,
+              "phase": -2.262922728859854
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911328,
+              "imaginary": 3.080188990575933e-19,
+              "amplitude": 0.012250833026911328,
+              "phase": 2.514269016490308e-17
+            },
+            "forceVelocityPhaseDifference": -2.262922728859854,
+            "fundamentalMeanPower": -0.000002361777230973071,
+            "powerScale": 0.000003700825890356856,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.004877809041456001
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": true,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 9.055421057738334e-14,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0048778090414584386,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d08-u0035",
+      "configHash": "fnv1a64-5e3dbf70e89b1ade",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 128,
+        "ny": 64,
+        "diameterCells": 8,
+        "targetLatticeVelocity": 0.035,
+        "resolvedLatticeVelocity": 0.034999678311780226,
+        "latticeMach": 0.060621221084569854,
+        "relaxationTime": 0.5082681593000065,
+        "penalizationTimeSteps": 1.4285845588235293,
+        "etaHat": 0.00625,
+        "physicalTimeStep": 0.0015441034549314803,
+        "latticeSteps": 10362,
+        "maximumDensityDeviation": 0.02282068430812756,
+        "maximumMach": 0.11634441527724589
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 30,
+            "xMax": 50,
+            "yMin": 16,
+            "yMax": 47
+          },
+          "steps": 10362,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.6405989687710425e-9,
+          "rmsRawRelativeResidual": 1.7995734699692824e-11,
+          "maximumRawAbsoluteResidualSi": 1.5483004631084284e-14,
+          "rawDiscreteBalancePassed": false,
+          "rawA1": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.2726968095352457e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000018117332142824878,
+            "forceRms": 0.0012131150215474922,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.0002957609529164786,
+              "imaginary": -0.0016847986046508825,
+              "amplitude": 0.0017105615684632999,
+              "phase": -1.744572466555898
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -1.744572466555898,
+            "fundamentalMeanPower": -0.0000018116590250299188,
+            "powerScale": 0.000010477902078747354,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.272696809454753e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000018117332142825373,
+            "forceRms": 0.001213115021547495,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00029576095291648595,
+              "imaginary": -0.0016847986046508892,
+              "amplitude": 0.0017105615684633077,
+              "phase": -1.7445724665559015
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -1.7445724665559015,
+            "fundamentalMeanPower": -0.0000018116590250299639,
+            "powerScale": 0.000010477902078747402,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.753487773602289e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.000001736936545023737,
+            "forceRms": 0.000475261851281134,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00028355002042202023,
+              "imaginary": -0.0005950665675179331,
+              "amplitude": 0.0006591698065437334,
+              "phase": -2.015468913907938
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -2.015468913907938,
+            "fundamentalMeanPower": -0.0000017368619774836733,
+            "powerScale": 0.000004037689618174219,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.756629203807548e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.000001751965735219028,
+            "forceRms": 0.00047590918763015046,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00028600362189741237,
+              "imaginary": -0.0005949574209638772,
+              "amplitude": 0.0006601305965477029,
+              "phase": -2.018895429388582
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -2.018895429388582,
+            "fundamentalMeanPower": -0.0000017518913084784789,
+            "powerScale": 0.000004043574857130498,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.003716807707612546
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 26,
+            "xMax": 54,
+            "yMin": 12,
+            "yMax": 51
+          },
+          "steps": 10362,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.1594242470764258e-8,
+          "rmsRawRelativeResidual": 1.179279103930054e-10,
+          "maximumRawAbsoluteResidualSi": 3.286339351252078e-14,
+          "rawDiscreteBalancePassed": false,
+          "rawA1": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.2726968095352457e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000018117332142824878,
+            "forceRms": 0.0012131150215474922,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.0002957609529164786,
+              "imaginary": -0.0016847986046508825,
+              "amplitude": 0.0017105615684632999,
+              "phase": -1.744572466555898
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -1.744572466555898,
+            "fundamentalMeanPower": -0.0000018116590250299188,
+            "powerScale": 0.000010477902078747354,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.272696809816386e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000018117332142825778,
+            "forceRms": 0.001213115021547483,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.0002957609529164914,
+              "imaginary": -0.0016847986046508703,
+              "amplitude": 0.00171056156846329,
+              "phase": -1.7445724665559066
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -1.7445724665559066,
+            "fundamentalMeanPower": -0.0000018116590250299971,
+            "powerScale": 0.000010477902078747293,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.7534877739537676e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000017369365450237734,
+            "forceRms": 0.0004752618512811152,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00028355002042202614,
+              "imaginary": -0.0005950665675179207,
+              "amplitude": 0.0006591698065437247,
+              "phase": -2.015468913907954
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -2.015468913907954,
+            "fundamentalMeanPower": -0.0000017368619774837095,
+            "powerScale": 0.000004037689618174167,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.7566292041599653e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000017519657352190601,
+            "forceRms": 0.0004759091876301324,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00028600362189741725,
+              "imaginary": -0.0005949574209638657,
+              "amplitude": 0.0006601305965476947,
+              "phase": -2.0188954293885963
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -2.0188954293885963,
+            "fundamentalMeanPower": -0.0000017518913084785087,
+            "powerScale": 0.000004043574857130447,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0037168077076115452
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 22,
+            "xMax": 58,
+            "yMin": 8,
+            "yMax": 55
+          },
+          "steps": 10362,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.8136544375142868e-8,
+          "rmsRawRelativeResidual": 2.1489112912457324e-10,
+          "maximumRawAbsoluteResidualSi": 6.390259831003759e-14,
+          "rawDiscreteBalancePassed": false,
+          "rawA1": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.2726968095352457e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000018117332142824878,
+            "forceRms": 0.0012131150215474922,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.0002957609529164786,
+              "imaginary": -0.0016847986046508825,
+              "amplitude": 0.0017105615684632999,
+              "phase": -1.744572466555898
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -1.744572466555898,
+            "fundamentalMeanPower": -0.0000018116590250299188,
+            "powerScale": 0.000010477902078747354,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.2726968092945094e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000018117332142819895,
+            "forceRms": 0.0012131150215474917,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00029576095291639515,
+              "imaginary": -0.0016847986046508966,
+              "amplitude": 0.0017105615684632992,
+              "phase": -1.7445724665558484
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -1.7445724665558484,
+            "fundamentalMeanPower": -0.0000018116590250294078,
+            "powerScale": 0.00001047790207874735,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.753487773434594e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000017369365450231858,
+            "forceRms": 0.0004752618512811089,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.00028355002042193073,
+              "imaginary": -0.0005950665675179434,
+              "amplitude": 0.0006591698065437043,
+              "phase": -2.0154689139078084
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -2.0154689139078084,
+            "fundamentalMeanPower": -0.000001736861977483125,
+            "powerScale": 0.000004037689618174041,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000385,
+            "meanForce": -4.756629203643896e-7,
+            "meanVelocity": -2.0028094037826965e-18,
+            "meanPower": -0.0000017519657352184735,
+            "forceRms": 0.0004759091876301258,
+            "velocityRms": 0.00866264716333749,
+            "forceFundamental": {
+              "real": -0.0002860036218973205,
+              "imaginary": -0.0005949574209638889,
+              "amplitude": 0.0006601305965476737,
+              "phase": -2.0188954293884493
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026910901,
+              "imaginary": 9.354387024014727e-19,
+              "amplitude": 0.012250833026910901,
+              "phase": 7.635715059919867e-17
+            },
+            "forceVelocityPhaseDifference": -2.0188954293884493,
+            "fundamentalMeanPower": -0.000001751891308477916,
+            "powerScale": 0.000004043574857130318,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0037168077076119256
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": false,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 3.348069566556107e-13,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.003716807707612546,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d08-u0025",
+      "configHash": "fnv1a64-7b2b7552a2731281",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 128,
+        "ny": 64,
+        "diameterCells": 8,
+        "targetLatticeVelocity": 0.025,
+        "resolvedLatticeVelocity": 0.024999425564669928,
+        "latticeMach": 0.043300275238044576,
+        "relaxationTime": 0.505905746651042,
+        "penalizationTimeSteps": 2.0000459558823533,
+        "etaHat": 0.006250000000000001,
+        "physicalTimeStep": 0.001102915833735438,
+        "latticeSteps": 14507,
+        "maximumDensityDeviation": 0.01098593807367787,
+        "maximumMach": 0.08482134983420478
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 30,
+            "xMax": 50,
+            "yMin": 16,
+            "yMax": 47
+          },
+          "steps": 14507,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 7.208398838933021e-11,
+          "rmsRawRelativeResidual": 1.891184691983461e-12,
+          "maximumRawAbsoluteResidualSi": 1.9381249565583763e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.999448542083229,
+            "meanForce": -3.7694824335391236e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000016564563803489847,
+            "forceRms": 0.001254942092171065,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002704094134882973,
+              "imaginary": -0.0017477323148740538,
+              "amplitude": 0.0017685274935262114,
+              "phase": -1.7242993352317044
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.724299454683812,
+            "fundamentalMeanPower": -0.0000016562573546138717,
+            "powerScale": 0.000010832220553114682,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.999448542083229,
+            "meanForce": -3.769482433442128e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000016564563803490628,
+            "forceRms": 0.0012549420921710987,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00027040941348830804,
+              "imaginary": -0.0017477323148741128,
+              "amplitude": 0.0017685274935262715,
+              "phase": -1.7242993352317053
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.7242994546838128,
+            "fundamentalMeanPower": -0.0000016562573546139375,
+            "powerScale": 0.00001083222055311505,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -2.5595962136722094e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000015755840315835995,
+            "forceRms": 0.0005100049188055775,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00025720671270482284,
+              "imaginary": -0.0006574909735920488,
+              "amplitude": 0.0007060096836555724,
+              "phase": -1.9436885989461026
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9436887183982101,
+            "fundamentalMeanPower": -0.0000015753900918743408,
+            "powerScale": 0.000004324305182693809,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -2.624728143141242e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000015874859323711356,
+            "forceRms": 0.0005104667123829891,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00025914976411592236,
+              "imaginary": -0.0006574722569693605,
+              "amplitude": 0.0007067024613836596,
+              "phase": -1.946258762391304
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9462588818434114,
+            "fundamentalMeanPower": -0.0000015872912703880467,
+            "powerScale": 0.000004328548442226044,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0027496286448893802
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 26,
+            "xMax": 54,
+            "yMin": 12,
+            "yMax": 51
+          },
+          "steps": 14507,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 4.8262425977992267e-11,
+          "rmsRawRelativeResidual": 4.347311925555945e-12,
+          "maximumRawAbsoluteResidualSi": 5.257077785309379e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.999448542083229,
+            "meanForce": -3.7694824335391236e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000016564563803489847,
+            "forceRms": 0.001254942092171065,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002704094134882973,
+              "imaginary": -0.0017477323148740538,
+              "amplitude": 0.0017685274935262114,
+              "phase": -1.7242993352317044
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.724299454683812,
+            "fundamentalMeanPower": -0.0000016562573546138717,
+            "powerScale": 0.000010832220553114682,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.999448542083229,
+            "meanForce": -3.7694824327715916e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000016564563803494611,
+            "forceRms": 0.0012549420921710147,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002704094134883722,
+              "imaginary": -0.0017477323148739666,
+              "amplitude": 0.0017685274935261368,
+              "phase": -1.7242993352317537
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.7242994546838613,
+            "fundamentalMeanPower": -0.0000016562573546143306,
+            "powerScale": 0.000010832220553114226,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -2.559596213004305e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.000001575584031584,
+            "forceRms": 0.0005100049188055166,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002572067127048882,
+              "imaginary": -0.0006574909735919087,
+              "amplitude": 0.0007060096836554659,
+              "phase": -1.9436885989462611
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9436887183983687,
+            "fundamentalMeanPower": -0.0000015753900918747412,
+            "powerScale": 0.000004324305182693156,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -2.6247281424736473e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000015874859323715392,
+            "forceRms": 0.0005104667123829289,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002591497641159867,
+              "imaginary": -0.0006574722569692189,
+              "amplitude": 0.0007067024613835515,
+              "phase": -1.946258762391462
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9462588818435695,
+            "fundamentalMeanPower": -0.0000015872912703884408,
+            "powerScale": 0.000004328548442225382,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0027496286448905343
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 22,
+            "xMax": 58,
+            "yMin": 8,
+            "yMax": 55
+          },
+          "steps": 14507,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 3.98440995137798e-11,
+          "rmsRawRelativeResidual": 8.534069583659755e-12,
+          "maximumRawAbsoluteResidualSi": 9.657999515146156e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.999448542083229,
+            "meanForce": -3.7694824335391236e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000016564563803489847,
+            "forceRms": 0.001254942092171065,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002704094134882973,
+              "imaginary": -0.0017477323148740538,
+              "amplitude": 0.0017685274935262114,
+              "phase": -1.7242993352317044
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.724299454683812,
+            "fundamentalMeanPower": -0.0000016562573546138717,
+            "powerScale": 0.000010832220553114682,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.999448542083229,
+            "meanForce": -3.769482434460239e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000016564563803490967,
+            "forceRms": 0.001254942092171171,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002704094134883138,
+              "imaginary": -0.0017477323148742045,
+              "amplitude": 0.0017685274935263628,
+              "phase": -1.7242993352317006
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.7242994546838082,
+            "fundamentalMeanPower": -0.0000016562573546139727,
+            "powerScale": 0.000010832220553115609,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -2.5595962146863535e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000015755840315836391,
+            "forceRms": 0.0005100049188056504,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00025720671270482805,
+              "imaginary": -0.0006574909735921424,
+              "amplitude": 0.0007060096836556616,
+              "phase": -1.943688598946061
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9436887183981686,
+            "fundamentalMeanPower": -0.0000015753900918743726,
+            "powerScale": 0.000004324305182694354,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -2.624728144153108e-7,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000015874859323711743,
+            "forceRms": 0.0005104667123830632,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0002591497641159274,
+              "imaginary": -0.0006574722569694545,
+              "amplitude": 0.0007067024613837489,
+              "phase": -1.9462587623912617
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9462588818433693,
+            "fundamentalMeanPower": -0.0000015872912703880776,
+            "powerScale": 0.000004328548442226591,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.002749628644888837
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": true,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 2.5424552818790707e-13,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0027496286448905343,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d12-u0050",
+      "configHash": "fnv1a64-07a7ad5c0fbad004",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 192,
+        "ny": 96,
+        "diameterCells": 12,
+        "targetLatticeVelocity": 0.05,
+        "resolvedLatticeVelocity": 0.05,
+        "latticeMach": 0.08660254037844385,
+        "relaxationTime": 0.5177176470588235,
+        "penalizationTimeSteps": 1.5000000000000002,
+        "etaHat": 0.006250000000000001,
+        "physicalTimeStep": 0.0014705882352941176,
+        "latticeSteps": 10880,
+        "maximumDensityDeviation": 0.046029569607210385,
+        "maximumMach": 0.19221570447090922
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 45,
+            "xMax": 75,
+            "yMin": 24,
+            "yMax": 71
+          },
+          "steps": 10880,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 5.0390884524479535e-11,
+          "rmsRawRelativeResidual": 2.5268504121716563e-12,
+          "maximumRawAbsoluteResidualSi": 2.334298297298714e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006653439976380575,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.000002917432602922785,
+            "forceRms": 0.0009787311695948191,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004762721663591745,
+              "imaginary": -0.0012776427668119918,
+              "amplitude": 0.0013635271233222548,
+              "phase": -1.9276141196900087
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -1.9276141196900087,
+            "fundamentalMeanPower": -0.0000029173653927154058,
+            "powerScale": 0.000008352171557741734,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006653439976379723,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.000002917432602922901,
+            "forceRms": 0.0009787311695948298,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004762721663591954,
+              "imaginary": -0.0012776427668120024,
+              "amplitude": 0.0013635271233222717,
+              "phase": -1.9276141196900203
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -1.9276141196900203,
+            "fundamentalMeanPower": -0.0000029173653927155337,
+            "powerScale": 0.000008352171557741838,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006702067565749353,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.0000028659304192153927,
+            "forceRms": 0.0004034170082648607,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.00046786435492797163,
+              "imaginary": -0.00019497355055250526,
+              "amplitude": 0.0005068646170598391,
+              "phase": -2.7467467730998356
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -2.7467467730998356,
+            "fundamentalMeanPower": -0.0000028658640457327007,
+            "powerScale": 0.0000031047568954243096,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006702217422411782,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.0000028772309001863075,
+            "forceRms": 0.0004042966168071345,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004697092021120342,
+              "imaginary": -0.0001943572991377835,
+              "amplitude": 0.0005083320708718442,
+              "phase": -2.749261833161776
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -2.749261833161776,
+            "fundamentalMeanPower": -0.0000028771645031387582,
+            "powerScale": 0.0000031137456612370984,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0036292241564858684
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 39,
+            "xMax": 81,
+            "yMin": 18,
+            "yMax": 77
+          },
+          "steps": 10880,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 7.992900505239296e-11,
+          "rmsRawRelativeResidual": 5.900415178953466e-12,
+          "maximumRawAbsoluteResidualSi": 5.994581671577881e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006653439976380575,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.000002917432602922785,
+            "forceRms": 0.0009787311695948191,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004762721663591745,
+              "imaginary": -0.0012776427668119918,
+              "amplitude": 0.0013635271233222548,
+              "phase": -1.9276141196900087
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -1.9276141196900087,
+            "fundamentalMeanPower": -0.0000029173653927154058,
+            "powerScale": 0.000008352171557741734,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006653439976379848,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.0000029174326029228904,
+            "forceRms": 0.0009787311695948228,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004762721663591914,
+              "imaginary": -0.0012776427668119948,
+              "amplitude": 0.0013635271233222632,
+              "phase": -1.9276141196900196
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -1.9276141196900196,
+            "fundamentalMeanPower": -0.0000029173653927155095,
+            "powerScale": 0.000008352171557741785,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006702067565749449,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.000002865930419215379,
+            "forceRms": 0.0004034170082648536,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004678643549279675,
+              "imaginary": -0.00019497355055249927,
+              "amplitude": 0.000506864617059833,
+              "phase": -2.746746773099843
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -2.746746773099843,
+            "fundamentalMeanPower": -0.0000028658640457326753,
+            "powerScale": 0.0000031047568954242724,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006702217422411931,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.0000028772309001862876,
+            "forceRms": 0.00040429661680712535,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004697092021120302,
+              "imaginary": -0.00019435729913777912,
+              "amplitude": 0.0005083320708718388,
+              "phase": -2.749261833161781
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -2.749261833161781,
+            "fundamentalMeanPower": -0.0000028771645031387337,
+            "powerScale": 0.000003113745661237065,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0036292241564838674
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 33,
+            "xMax": 87,
+            "yMin": 12,
+            "yMax": 83
+          },
+          "steps": 10880,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 9.718251464067613e-11,
+          "rmsRawRelativeResidual": 1.135123445274063e-11,
+          "maximumRawAbsoluteResidualSi": 9.988894146553168e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006653439976380575,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.000002917432602922785,
+            "forceRms": 0.0009787311695948191,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004762721663591745,
+              "imaginary": -0.0012776427668119918,
+              "amplitude": 0.0013635271233222548,
+              "phase": -1.9276141196900087
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -1.9276141196900087,
+            "fundamentalMeanPower": -0.0000029173653927154058,
+            "powerScale": 0.000008352171557741734,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006653439976380824,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.000002917432602922933,
+            "forceRms": 0.000978731169594834,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.00047627216635919944,
+              "imaginary": -0.0012776427668120143,
+              "amplitude": 0.0013635271233222845,
+              "phase": -1.92761411969002
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -1.92761411969002,
+            "fundamentalMeanPower": -0.0000029173653927155587,
+            "powerScale": 0.000008352171557741916,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006702067565750456,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.0000028659304192154258,
+            "forceRms": 0.0004034170082648528,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.0004678643549279768,
+              "imaginary": -0.00019497355055251854,
+              "amplitude": 0.000506864617059849,
+              "phase": -2.746746773099815
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -2.746746773099815,
+            "fundamentalMeanPower": -0.0000028658640457327325,
+            "powerScale": 0.00000310475689542437,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.00000000000118,
+            "meanForce": -0.00006702217422412875,
+            "meanVelocity": -1.3057012881923114e-18,
+            "meanPower": -0.0000028772309001863308,
+            "forceRms": 0.00040429661680712616,
+            "velocityRms": 0.008662647163337079,
+            "forceFundamental": {
+              "real": -0.00046970920211203816,
+              "imaginary": -0.000194357299137797,
+              "amplitude": 0.0005083320708718531,
+              "phase": -2.7492618331617544
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690971,
+              "imaginary": 8.105278124609906e-19,
+              "amplitude": 0.01225083302690971,
+              "phase": 6.616103661527476e-17
+            },
+            "forceVelocityPhaseDifference": -2.7492618331617544,
+            "fundamentalMeanPower": -0.0000028771645031387824,
+            "powerScale": 0.0000031137456612371526,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.003629224156482677
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": true,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 1.5013977608530392e-14,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0036292241564858684,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d12-u0035",
+      "configHash": "fnv1a64-7181b1eeaf136834",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 192,
+        "ny": 96,
+        "diameterCells": 12,
+        "targetLatticeVelocity": 0.035,
+        "resolvedLatticeVelocity": 0.034999678311780226,
+        "latticeMach": 0.060621221084569854,
+        "relaxationTime": 0.5124022389500097,
+        "penalizationTimeSteps": 2.1428768382352943,
+        "etaHat": 0.006250000000000001,
+        "physicalTimeStep": 0.0010294023032876537,
+        "latticeSteps": 15543,
+        "maximumDensityDeviation": 0.02330198151710694,
+        "maximumMach": 0.11762149671366305
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 45,
+            "xMax": 75,
+            "yMin": 24,
+            "yMax": 71
+          },
+          "steps": 15543,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.4737564022080077e-10,
+          "rmsRawRelativeResidual": 3.8242836354359065e-12,
+          "maximumRawAbsoluteResidualSi": 3.5013466161535175e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.00000245505731687527,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022792399597158677,
+            "forceRms": 0.001025770093621269,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00037208541214422004,
+              "imaginary": -0.001398286003190026,
+              "amplitude": 0.001446945507145197,
+              "phase": -1.8308706045770415
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -1.8308707086082199,
+            "fundamentalMeanPower": -0.0000022793256795684303,
+            "powerScale": 0.000008863714228954232,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.000002455057316853858,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022792399597160155,
+            "forceRms": 0.0010257700936212825,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00037208541214424546,
+              "imaginary": -0.0013982860031900453,
+              "amplitude": 0.0014469455071452221,
+              "phase": -1.8308706045770553
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -1.8308707086082336,
+            "fundamentalMeanPower": -0.000002279325679568586,
+            "powerScale": 0.000008863714228954386,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.00000251030661122329,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022186805081117157,
+            "forceRms": 0.0003469159058705926,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.0003621988190661473,
+              "imaginary": -0.0003134658684490424,
+              "amplitude": 0.0004790081786519141,
+              "phase": -2.4281957489723944
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -2.4281958530035728,
+            "fundamentalMeanPower": -0.0000022187615908555135,
+            "powerScale": 0.0000029343134125896065,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.0000025105372157084032,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.00000222810781666104,
+            "forceRms": 0.0003475610849587464,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.0003637378753319845,
+              "imaginary": -0.00031319450271069434,
+              "amplitude": 0.0004799958733981215,
+              "phase": -2.430721521647527
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -2.4307216256787054,
+            "fundamentalMeanPower": -0.0000022281895579801016,
+            "powerScale": 0.0000029403638436062482,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0032061707498627625
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 39,
+            "xMax": 81,
+            "yMin": 18,
+            "yMax": 77
+          },
+          "steps": 15543,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 9.725905370186142e-10,
+          "rmsRawRelativeResidual": 1.1227539420501968e-11,
+          "maximumRawAbsoluteResidualSi": 8.061725499123441e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.00000245505731687527,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022792399597158677,
+            "forceRms": 0.001025770093621269,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00037208541214422004,
+              "imaginary": -0.001398286003190026,
+              "amplitude": 0.001446945507145197,
+              "phase": -1.8308706045770415
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -1.8308707086082199,
+            "fundamentalMeanPower": -0.0000022793256795684303,
+            "powerScale": 0.000008863714228954232,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.0000024550573168461086,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.000002279239959716133,
+            "forceRms": 0.001025770093621278,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00037208541214426574,
+              "imaginary": -0.0013982860031900217,
+              "amplitude": 0.0014469455071452046,
+              "phase": -1.830870604577073
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -1.8308707086082514,
+            "fundamentalMeanPower": -0.0000022793256795687102,
+            "powerScale": 0.000008863714228954279,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.0000025103066112153677,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.000002218680508111845,
+            "forceRms": 0.0003469159058705919,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00036219881906616737,
+              "imaginary": -0.0003134658684490275,
+              "amplitude": 0.00047900817865191954,
+              "phase": -2.4281957489724455
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -2.428195853003624,
+            "fundamentalMeanPower": -0.0000022187615908556363,
+            "powerScale": 0.00000293431341258964,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.0000025105372157008007,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.000002228107816661159,
+            "forceRms": 0.00034756108495874493,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00036373787533200386,
+              "imaginary": -0.00031319450271067824,
+              "amplitude": 0.00047999587339812557,
+              "phase": -2.4307215216475786
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -2.430721625678757,
+            "fundamentalMeanPower": -0.0000022281895579802202,
+            "powerScale": 0.0000029403638436062732,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0032061707498592783
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 33,
+            "xMax": 87,
+            "yMin": 12,
+            "yMax": 83
+          },
+          "steps": 15543,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.6388095240807258e-9,
+          "rmsRawRelativeResidual": 1.9589733826736192e-11,
+          "maximumRawAbsoluteResidualSi": 1.4176314126485734e-13,
+          "rawDiscreteBalancePassed": false,
+          "rawA1": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.00000245505731687527,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022792399597158677,
+            "forceRms": 0.001025770093621269,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00037208541214422004,
+              "imaginary": -0.001398286003190026,
+              "amplitude": 0.001446945507145197,
+              "phase": -1.8308706045770415
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -1.8308707086082199,
+            "fundamentalMeanPower": -0.0000022793256795684303,
+            "powerScale": 0.000008863714228954232,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.000002455057316938162,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.000002279239959715918,
+            "forceRms": 0.0010257700936212972,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00037208541214423023,
+              "imaginary": -0.0013982860031900542,
+              "amplitude": 0.0014469455071452271,
+              "phase": -1.8308706045770435
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -1.8308707086082219,
+            "fundamentalMeanPower": -0.000002279325679568493,
+            "powerScale": 0.000008863714228954416,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.000002510306611307374,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022186805081116284,
+            "forceRms": 0.0003469159058706084,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.0003621988190661319,
+              "imaginary": -0.00031346586844905943,
+              "amplitude": 0.00047900817865191363,
+              "phase": -2.428195748972347
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -2.4281958530035253,
+            "fundamentalMeanPower": -0.000002218761590855419,
+            "powerScale": 0.0000029343134125896035,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000514701150927,
+            "meanForce": -0.000002510537215792683,
+            "meanVelocity": 7.882276987250549e-7,
+            "meanPower": -0.0000022281078166609503,
+            "forceRms": 0.00034756108495876146,
+            "velocityRms": 0.00866292593348095,
+            "forceFundamental": {
+              "real": -0.00036373787533196706,
+              "imaginary": -0.00031319450271071267,
+              "amplitude": 0.0004799958733981202,
+              "phase": -2.4307215216474742
+            },
+            "velocityFundamental": {
+              "real": 0.012251621343283572,
+              "imaginary": 1.2745506041412831e-9,
+              "amplitude": 0.012251621343283638,
+              "phase": 1.0403117827666104e-7
+            },
+            "forceVelocityPhaseDifference": -2.4307216256786526,
+            "fundamentalMeanPower": -0.000002228189557979995,
+            "powerScale": 0.00000294036384360624,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.003206170749861907
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": false,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 9.370893990716494e-14,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0032061707498627625,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d12-u0025",
+      "configHash": "fnv1a64-beef5b91390d4a9f",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 192,
+        "ny": 96,
+        "diameterCells": 12,
+        "targetLatticeVelocity": 0.025,
+        "resolvedLatticeVelocity": 0.025,
+        "latticeMach": 0.043301270189221926,
+        "relaxationTime": 0.5088588235294118,
+        "penalizationTimeSteps": 3.0000000000000004,
+        "etaHat": 0.006250000000000001,
+        "physicalTimeStep": 0.0007352941176470588,
+        "latticeSteps": 21760,
+        "maximumDensityDeviation": 0.011327985568626797,
+        "maximumMach": 0.08621432730413521
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 45,
+            "xMax": 75,
+            "yMin": 24,
+            "yMax": 71
+          },
+          "steps": 21760,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.353672377344027e-10,
+          "rmsRawRelativeResidual": 4.618630771792702e-12,
+          "maximumRawAbsoluteResidualSi": 4.906267881144051e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.0000020125103973993444,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000022300399555507226,
+            "forceRms": 0.0010547685565311402,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.0003640513359163323,
+              "imaginary": -0.0014414783797194993,
+              "amplitude": 0.001486739148062369,
+              "phase": -1.8181774401741084
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -1.8181774401741084,
+            "fundamentalMeanPower": -0.0000022299660647670256,
+            "powerScale": 0.000009106896528740317,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000002012510397423,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.000002230039955550612,
+            "forceRms": 0.0010547685565311146,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.00036405133591631484,
+              "imaginary": -0.0014414783797194787,
+              "amplitude": 0.0014867391480623449,
+              "phase": -1.8181774401741004
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -1.8181774401741004,
+            "fundamentalMeanPower": -0.0000022299660647669184,
+            "powerScale": 0.00000910689652874017,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000001915430553190365,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000021663261938196843,
+            "forceRms": 0.00036565371725609774,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.00035364975715906606,
+              "imaginary": -0.0003562987046362218,
+              "amplitude": 0.0005020128660344434,
+              "phase": -2.3524633247244737
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -2.3524633247244737,
+            "fundamentalMeanPower": -0.0000021662520624812713,
+            "powerScale": 0.000003075037899573936,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000001919727623834384,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000021736789769513912,
+            "forceRms": 0.0003661234653632134,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.00035485013728983687,
+              "imaginary": -0.0003561214867845973,
+              "amplitude": 0.0005027336603851866,
+              "phase": -2.354406306112108
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -2.354406306112108,
+            "fundamentalMeanPower": -0.000002173604890756717,
+            "powerScale": 0.0000030794530651927832,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0023876912477789622
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 39,
+            "xMax": 81,
+            "yMin": 18,
+            "yMax": 77
+          },
+          "steps": 21760,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.4620958249272363e-10,
+          "rmsRawRelativeResidual": 1.0050973717138089e-11,
+          "maximumRawAbsoluteResidualSi": 1.1621397394050903e-13,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.0000020125103973993444,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000022300399555507226,
+            "forceRms": 0.0010547685565311402,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.0003640513359163323,
+              "imaginary": -0.0014414783797194993,
+              "amplitude": 0.001486739148062369,
+              "phase": -1.8181774401741084
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -1.8181774401741084,
+            "fundamentalMeanPower": -0.0000022299660647670256,
+            "powerScale": 0.000009106896528740317,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000002012510397432644,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.000002230039955551035,
+            "forceRms": 0.0010547685565311777,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.00036405133591638146,
+              "imaginary": -0.001441478379719546,
+              "amplitude": 0.0014867391480624264,
+              "phase": -1.8181774401741329
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -1.8181774401741329,
+            "fundamentalMeanPower": -0.0000022299660647673267,
+            "powerScale": 0.000009106896528740668,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000001915430553199835,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000021663261938200884,
+            "forceRms": 0.0003656537172561718,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.00035364975715913665,
+              "imaginary": -0.0003562987046362958,
+              "amplitude": 0.0005020128660345456,
+              "phase": -2.3524633247244697
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -2.3524633247244697,
+            "fundamentalMeanPower": -0.0000021662520624817033,
+            "powerScale": 0.0000030750378995745625,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.0000019197276238434466,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000021736789769518164,
+            "forceRms": 0.0003661234653632875,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.0003548501372899075,
+              "imaginary": -0.0003561214867846739,
+              "amplitude": 0.0005027336603852907,
+              "phase": -2.3544063061121
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -2.3544063061121,
+            "fundamentalMeanPower": -0.0000021736048907571496,
+            "powerScale": 0.0000030794530651934206,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0023876912477853447
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 33,
+            "xMax": 87,
+            "yMin": 12,
+            "yMax": 83
+          },
+          "steps": 21760,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.253135255002803e-10,
+          "rmsRawRelativeResidual": 2.1233591591990516e-11,
+          "maximumRawAbsoluteResidualSi": 2.3034053545259087e-13,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.0000020125103973993444,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000022300399555507226,
+            "forceRms": 0.0010547685565311402,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.0003640513359163323,
+              "imaginary": -0.0014414783797194993,
+              "amplitude": 0.001486739148062369,
+              "phase": -1.8181774401741084
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -1.8181774401741084,
+            "fundamentalMeanPower": -0.0000022299660647670256,
+            "powerScale": 0.000009106896528740317,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000002012510397389232,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000022300399555504376,
+            "forceRms": 0.0010547685565311543,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.0003640513359162851,
+              "imaginary": -0.0014414783797195338,
+              "amplitude": 0.0014867391480623908,
+              "phase": -1.818177440174072
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -1.818177440174072,
+            "fundamentalMeanPower": -0.0000022299660647667363,
+            "powerScale": 0.000009106896528740451,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.0000019154305531565106,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.0000021663261938195175,
+            "forceRms": 0.00036565371725612555,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.0003536497571590371,
+              "imaginary": -0.00035629870463627826,
+              "amplitude": 0.000502012866034463,
+              "phase": -2.3524633247243534
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -2.3524633247243534,
+            "fundamentalMeanPower": -0.000002166252062481094,
+            "powerScale": 0.0000030750378995740564,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000001783,
+            "meanForce": -0.000001919727623800489,
+            "meanVelocity": -2.54745158886674e-19,
+            "meanPower": -0.000002173678976951231,
+            "forceRms": 0.0003661234653632398,
+            "velocityRms": 0.008662647163336751,
+            "forceFundamental": {
+              "real": -0.00035485013728981144,
+              "imaginary": -0.000356121486784655,
+              "amplitude": 0.0005027336603852095,
+              "phase": -2.3544063061119913
+            },
+            "velocityFundamental": {
+              "real": 0.01225083302690874,
+              "imaginary": -3.050505614293815e-19,
+              "amplitude": 0.01225083302690874,
+              "phase": -2.4900393365850573e-17
+            },
+            "forceVelocityPhaseDifference": -2.3544063061119913,
+            "fundamentalMeanPower": -0.0000021736048907565613,
+            "powerScale": 0.0000030794530651929234,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.002387691247781054
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": true,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 2.69266884741875e-13,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0023876912477853447,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d16-u0050",
+      "configHash": "fnv1a64-499b9243dfe754ef",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 256,
+        "ny": 128,
+        "diameterCells": 16,
+        "targetLatticeVelocity": 0.05,
+        "resolvedLatticeVelocity": 0.049998851129339855,
+        "latticeMach": 0.08660055047608915,
+        "relaxationTime": 0.5236229866041681,
+        "penalizationTimeSteps": 2.0000459558823533,
+        "etaHat": 0.006250000000000001,
+        "physicalTimeStep": 0.001102915833735438,
+        "latticeSteps": 14507,
+        "maximumDensityDeviation": 0.046115851352135806,
+        "maximumMach": 0.19225727885252056
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 60,
+            "xMax": 100,
+            "yMin": 33,
+            "yMax": 94
+          },
+          "steps": 14507,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 4.284296242265772e-11,
+          "rmsRawRelativeResidual": 4.370999833995316e-12,
+          "maximumRawAbsoluteResidualSi": 3.98787183762474e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006855039764332036,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000028041302071601764,
+            "forceRms": 0.0009034531907618976,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004577764923831246,
+              "imaginary": -0.0011716366991815796,
+              "amplitude": 0.0012578918363069633,
+              "phase": -1.943273196458565
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9432733159106725,
+            "fundamentalMeanPower": -0.000002803879195372779,
+            "powerScale": 0.000007704580139532623,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006855039764331403,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.000002804130207160186,
+            "forceRms": 0.0009034531907618918,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004577764923831261,
+              "imaginary": -0.0011716366991815668,
+              "amplitude": 0.001257891836306952,
+              "phase": -1.9432731964585699
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9432733159106774,
+            "fundamentalMeanPower": -0.0000028038791953727885,
+            "powerScale": 0.000007704580139532553,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006901550171220542,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.000002757296851968726,
+            "forceRms": 0.0003691736191076847,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00045013087591042327,
+              "imaginary": -0.00009010592061460989,
+              "amplitude": 0.0004590608700136521,
+              "phase": -2.9440267528644535
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -2.944026872316561,
+            "fundamentalMeanPower": -0.0000027570490479044374,
+            "powerScale": 0.0000028117451436266804,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006901539077586332,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.000002765828311228588,
+            "forceRms": 0.00036993580976922574,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00045152367411374037,
+              "imaginary": -0.00008961418806223309,
+              "amplitude": 0.00046033067569653063,
+              "phase": -2.9456680733833904
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -2.9456681928354977,
+            "fundamentalMeanPower": -0.00000276557992839302,
+            "powerScale": 0.0000028195226960067754,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0030258523089545866
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 52,
+            "xMax": 108,
+            "yMin": 25,
+            "yMax": 102
+          },
+          "steps": 14507,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 7.524400563837444e-10,
+          "rmsRawRelativeResidual": 1.1759456994821151e-11,
+          "maximumRawAbsoluteResidualSi": 8.844639639602522e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006855039764332036,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000028041302071601764,
+            "forceRms": 0.0009034531907618976,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004577764923831246,
+              "imaginary": -0.0011716366991815796,
+              "amplitude": 0.0012578918363069633,
+              "phase": -1.943273196458565
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9432733159106725,
+            "fundamentalMeanPower": -0.000002803879195372779,
+            "powerScale": 0.000007704580139532623,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006855039764331046,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000028041302071601193,
+            "forceRms": 0.0009034531907618771,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00045777649238311466,
+              "imaginary": -0.0011716366991815538,
+              "amplitude": 0.0012578918363069357,
+              "phase": -1.9432731964585652
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9432733159106728,
+            "fundamentalMeanPower": -0.000002803879195372718,
+            "powerScale": 0.000007704580139532453,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006901550171220302,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000027572968519686516,
+            "forceRms": 0.00036917361910767293,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.000450130875910411,
+              "imaginary": -0.00009010592061459425,
+              "amplitude": 0.00045906087001363715,
+              "phase": -2.944026752864482
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -2.944026872316589,
+            "fundamentalMeanPower": -0.0000027570490479043624,
+            "powerScale": 0.0000028117451436265885,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006901539077586025,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.000002765828311228505,
+            "forceRms": 0.0003699358097692147,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004515236741137294,
+              "imaginary": -0.00008961418806221752,
+              "amplitude": 0.00046033067569651686,
+              "phase": -2.945668073383419
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -2.945668192835526,
+            "fundamentalMeanPower": -0.0000027655799283929533,
+            "powerScale": 0.000002819522696006691,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0030258523089516727
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 44,
+            "xMax": 116,
+            "yMin": 17,
+            "yMax": 110
+          },
+          "steps": 14507,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 8.99368974926335e-10,
+          "rmsRawRelativeResidual": 2.228098550101469e-11,
+          "maximumRawAbsoluteResidualSi": 2.2237954318824503e-13,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006855039764332036,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000028041302071601764,
+            "forceRms": 0.0009034531907618976,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004577764923831246,
+              "imaginary": -0.0011716366991815796,
+              "amplitude": 0.0012578918363069633,
+              "phase": -1.943273196458565
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9432733159106725,
+            "fundamentalMeanPower": -0.000002803879195372779,
+            "powerScale": 0.000007704580139532623,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.0000685503976433157,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.000002804130207160035,
+            "forceRms": 0.000903453190761876,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.00045777649238310273,
+              "imaginary": -0.0011716366991815622,
+              "amplitude": 0.0012578918363069392,
+              "phase": -1.943273196458554
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -1.9432733159106614,
+            "fundamentalMeanPower": -0.0000028038791953726453,
+            "powerScale": 0.000007704580139532475,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.00006901550171220739,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000027572968519685715,
+            "forceRms": 0.00036917361910765976,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004501308759103997,
+              "imaginary": -0.00009010592061459956,
+              "amplitude": 0.00045906087001362696,
+              "phase": -2.9440267528644655
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -2.944026872316573,
+            "fundamentalMeanPower": -0.000002757049047904293,
+            "powerScale": 0.000002811745143626526,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.999448542083229,
+            "meanForce": -0.0000690153907758651,
+            "meanVelocity": -8.446305907221585e-7,
+            "meanPower": -0.0000027658283112284305,
+            "forceRms": 0.0003699358097691991,
+            "velocityRms": 0.008662348435394703,
+            "forceFundamental": {
+              "real": -0.0004515236741137167,
+              "imaginary": -0.00008961418806222257,
+              "amplitude": 0.0004603306756965054,
+              "phase": -2.945668073383403
+            },
+            "velocityFundamental": {
+              "real": 0.012249988301303229,
+              "imaginary": 1.4632869188253038e-9,
+              "amplitude": 0.012249988301303315,
+              "phase": 1.194521074497372e-7
+            },
+            "forceVelocityPhaseDifference": -2.94566819283551,
+            "fundamentalMeanPower": -0.0000027655799283928753,
+            "powerScale": 0.000002819522696006621,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.003025852308953701
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": true,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 5.696236731314554e-14,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0030258523089545866,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d16-u0035",
+      "configHash": "fnv1a64-9adaf3b31e88a0c5",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 256,
+        "ny": 128,
+        "diameterCells": 16,
+        "targetLatticeVelocity": 0.035,
+        "resolvedLatticeVelocity": 0.034999678311780226,
+        "latticeMach": 0.060621221084569854,
+        "relaxationTime": 0.5165363186000129,
+        "penalizationTimeSteps": 2.8571691176470586,
+        "etaHat": 0.00625,
+        "physicalTimeStep": 0.0007720517274657402,
+        "latticeSteps": 20724,
+        "maximumDensityDeviation": 0.023551105011144102,
+        "maximumMach": 0.11787796209669002
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 60,
+            "xMax": 100,
+            "yMin": 33,
+            "yMax": 94
+          },
+          "steps": 20724,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.2983274228351716e-10,
+          "rmsRawRelativeResidual": 5.948032249506141e-12,
+          "maximumRawAbsoluteResidualSi": 6.182186222297407e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000001965558397809925,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021933393428022397,
+            "forceRms": 0.0009433877422521987,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.00035806326864155214,
+              "imaginary": -0.0012820940487673971,
+              "amplitude": 0.0013311553080820621,
+              "phase": -1.8431372802536388
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -1.8431372802536388,
+            "fundamentalMeanPower": -0.0000021932866585993075,
+            "powerScale": 0.000008153880706101632,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.0000019655583978270303,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021933393428022156,
+            "forceRms": 0.0009433877422522122,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.0003580632686415463,
+              "imaginary": -0.0012820940487674169,
+              "amplitude": 0.0013311553080820795,
+              "phase": -1.8431372802536305
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -1.8431372802536305,
+            "fundamentalMeanPower": -0.0000021932866585992715,
+            "powerScale": 0.000008153880706101737,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000002025233628643419,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021382305142737903,
+            "forceRms": 0.0002915725299050574,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.0003490665195030534,
+              "imaginary": -0.00019847900405265434,
+              "amplitude": 0.0004015486895604431,
+              "phase": -2.6245819190660518
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -2.6245819190660518,
+            "fundamentalMeanPower": -0.000002138177822858918,
+            "powerScale": 0.0000024596529739905046,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000002025778220822487,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021452642093359935,
+            "forceRms": 0.00029216101326047446,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.000350214808069822,
+              "imaginary": -0.00019825016055716204,
+              "amplitude": 0.0004024345138681855,
+              "phase": -2.626486613220364
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -2.626486613220364,
+            "fundamentalMeanPower": -0.000002145211568608016,
+            "powerScale": 0.0000024650790168331713,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0028533345236288602
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 52,
+            "xMax": 108,
+            "yMin": 25,
+            "yMax": 102
+          },
+          "steps": 20724,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 2.076092731783142e-10,
+          "rmsRawRelativeResidual": 1.4217648266113712e-11,
+          "maximumRawAbsoluteResidualSi": 1.4310604296073492e-13,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000001965558397809925,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021933393428022397,
+            "forceRms": 0.0009433877422521987,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.00035806326864155214,
+              "imaginary": -0.0012820940487673971,
+              "amplitude": 0.0013311553080820621,
+              "phase": -1.8431372802536388
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -1.8431372802536388,
+            "fundamentalMeanPower": -0.0000021932866585993075,
+            "powerScale": 0.000008153880706101632,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000001965558397777667,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.000002193339342802871,
+            "forceRms": 0.0009433877422521986,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.0003580632686416535,
+              "imaginary": -0.0012820940487673672,
+              "amplitude": 0.0013311553080820604,
+              "phase": -1.8431372802537183
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -1.8431372802537183,
+            "fundamentalMeanPower": -0.0000021932866585999284,
+            "powerScale": 0.00000815388070610162,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.0000020252336285935182,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021382305142744375,
+            "forceRms": 0.0002915725299050985,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.00034906651950315976,
+              "imaginary": -0.00019847900405260845,
+              "amplitude": 0.0004015486895605129,
+              "phase": -2.624581919066282
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -2.624581919066282,
+            "fundamentalMeanPower": -0.00000213817782285957,
+            "powerScale": 0.0000024596529739909323,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000002025778220772517,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021452642093366334,
+            "forceRms": 0.0002921610132605161,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.0003502148080699266,
+              "imaginary": -0.0001982501605571166,
+              "amplitude": 0.00040243451386825417,
+              "phase": -2.6264866132205906
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -2.6264866132205906,
+            "fundamentalMeanPower": -0.000002145211568608657,
+            "powerScale": 0.0000024650790168335923,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.002853334523625452
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 44,
+            "xMax": 116,
+            "yMin": 17,
+            "yMax": 110
+          },
+          "steps": 20724,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 2.246483019468979e-10,
+          "rmsRawRelativeResidual": 2.5440943496104658e-11,
+          "maximumRawAbsoluteResidualSi": 2.434459958621072e-13,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000001965558397809925,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021933393428022397,
+            "forceRms": 0.0009433877422521987,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.00035806326864155214,
+              "imaginary": -0.0012820940487673971,
+              "amplitude": 0.0013311553080820621,
+              "phase": -1.8431372802536388
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -1.8431372802536388,
+            "fundamentalMeanPower": -0.0000021932866585993075,
+            "powerScale": 0.000008153880706101632,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.0000019655583978002603,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021933393428027924,
+            "forceRms": 0.0009433877422522272,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.0003580632686416409,
+              "imaginary": -0.001282094048767409,
+              "amplitude": 0.0013311553080820973,
+              "phase": -1.8431372802537005
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -1.8431372802537005,
+            "fundamentalMeanPower": -0.0000021932866585998513,
+            "powerScale": 0.000008153880706101847,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.000002025233628616472,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.000002138230514274377,
+            "forceRms": 0.0002915725299051171,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.0003490665195031458,
+              "imaginary": -0.00019847900405264645,
+              "amplitude": 0.0004015486895605195,
+              "phase": -2.6245819190661823
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -2.6245819190661823,
+            "fundamentalMeanPower": -0.000002138177822859484,
+            "powerScale": 0.000002459652973990973,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 7.9999999999985185,
+            "meanForce": -0.0000020257782207954875,
+            "meanVelocity": -2.2615779691694006e-18,
+            "meanPower": -0.0000021452642093365653,
+            "forceRms": 0.0002921610132605344,
+            "velocityRms": 0.008662647163338508,
+            "forceFundamental": {
+              "real": -0.00035021480806991627,
+              "imaginary": -0.00019825016055715418,
+              "amplitude": 0.00040243451386826366,
+              "phase": -2.6264866132204965
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026913741,
+              "imaginary": 6.999436907302506e-19,
+              "amplitude": 0.012250833026913741,
+              "phase": 5.713437520473512e-17
+            },
+            "forceVelocityPhaseDifference": -2.6264866132204965,
+            "fundamentalMeanPower": -0.0000021452115686085934,
+            "powerScale": 0.0000024650790168336503,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0028533345236222926
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": true,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 2.9830050250477377e-13,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.0028533345236288602,
+        "timeStaggeringSensitivityPassed": true
+      }
+    },
+    {
+      "caseId": "d16-u0025",
+      "configHash": "fnv1a64-7ca383177cf0f009",
+      "physicalInput": {
+        "reynolds": 101.59362549800798,
+        "amplitude": 0.03,
+        "frequency": 0.5,
+        "cycles": 8,
+        "discardCycles": 4,
+        "flowRampTime": 2
+      },
+      "numericalIdentity": {
+        "nx": 256,
+        "ny": 128,
+        "diameterCells": 16,
+        "targetLatticeVelocity": 0.025,
+        "resolvedLatticeVelocity": 0.024999425564669928,
+        "latticeMach": 0.043300275238044576,
+        "relaxationTime": 0.5118114933020841,
+        "penalizationTimeSteps": 4.000091911764707,
+        "etaHat": 0.006250000000000001,
+        "physicalTimeStep": 0.000551457916867719,
+        "latticeSteps": 29014,
+        "maximumDensityDeviation": 0.01154339085737055,
+        "maximumMach": 0.08647097680444821
+      },
+      "volumes": [
+        {
+          "id": "compact",
+          "controlVolume": {
+            "xMin": 60,
+            "xMax": 100,
+            "yMin": 33,
+            "yMax": 94
+          },
+          "steps": 29014,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 7.334483624674233e-10,
+          "rmsRawRelativeResidual": 9.764796394018801e-12,
+          "maximumRawAbsoluteResidualSi": 8.170603188669157e-14,
+          "rawDiscreteBalancePassed": true,
+          "rawA1": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000013523632988880923,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021917666164952855,
+            "forceRms": 0.0009693458246453125,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.00035780439432503354,
+              "imaginary": -0.0013189819907411327,
+              "amplitude": 0.0013666519222163868,
+              "phase": -1.8356944207060721
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -1.8356944207060721,
+            "fundamentalMeanPower": -0.0000021917009455855514,
+            "powerScale": 0.000008371312252490142,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.00000135236329884721,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021917666164953224,
+            "forceRms": 0.0009693458246453273,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003578043943250449,
+              "imaginary": -0.0013189819907411583,
+              "amplitude": 0.0013666519222164145,
+              "phase": -1.8356944207060752
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -1.8356944207060752,
+            "fundamentalMeanPower": -0.0000021917009455856213,
+            "powerScale": 0.000008371312252490312,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000012721601648214396,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.000002134697358574919,
+            "forceRms": 0.00030748433502836026,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.00034848751264546067,
+              "imaginary": -0.00023521934708937016,
+              "amplitude": 0.0004204422525329367,
+              "phase": -2.547862156408161
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -2.547862156408161,
+            "fundamentalMeanPower": -0.0000021346311646915844,
+            "powerScale": 0.000002575383916619735,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000012754201341040123,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021401244075034173,
+            "forceRms": 0.0003079053013802415,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003493735088428453,
+              "imaginary": -0.0002350601296302424,
+              "amplitude": 0.0004210880112553052,
+              "phase": -2.5493526900918075
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -2.5493526900918075,
+            "fundamentalMeanPower": -0.000002140058260429903,
+            "powerScale": 0.000002579339457761439,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.002104046023166077
+        },
+        {
+          "id": "standard",
+          "controlVolume": {
+            "xMin": 52,
+            "xMax": 108,
+            "yMin": 25,
+            "yMax": 102
+          },
+          "steps": 29014,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.2827872315496384e-9,
+          "rmsRawRelativeResidual": 2.2697519171882424e-11,
+          "maximumRawAbsoluteResidualSi": 1.9068345870589864e-13,
+          "rawDiscreteBalancePassed": false,
+          "rawA1": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000013523632988880923,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021917666164952855,
+            "forceRms": 0.0009693458246453125,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.00035780439432503354,
+              "imaginary": -0.0013189819907411327,
+              "amplitude": 0.0013666519222163868,
+              "phase": -1.8356944207060721
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -1.8356944207060721,
+            "fundamentalMeanPower": -0.0000021917009455855514,
+            "powerScale": 0.000008371312252490142,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000013523632989306826,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021917666164951305,
+            "forceRms": 0.0009693458246452167,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003578043943250141,
+              "imaginary": -0.001318981990740997,
+              "amplitude": 0.0013666519222162508,
+              "phase": -1.8356944207060844
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -1.8356944207060844,
+            "fundamentalMeanPower": -0.0000021917009455854324,
+            "powerScale": 0.000008371312252489309,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.000001272160164904782,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021346973585747453,
+            "forceRms": 0.00030748433502830166,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003484875126454283,
+              "imaginary": -0.00023521934708920793,
+              "amplitude": 0.00042044225253281913,
+              "phase": -2.5478621564084376
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -2.5478621564084376,
+            "fundamentalMeanPower": -0.0000021346311646913862,
+            "powerScale": 0.0000025753839166190147,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000012754201341873345,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.000002140124407503221,
+            "forceRms": 0.000307905301380183,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003493735088428139,
+              "imaginary": -0.00023506012963008183,
+              "amplitude": 0.00042108801125518956,
+              "phase": -2.5493526900920824
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -2.5493526900920824,
+            "fundamentalMeanPower": -0.0000021400582604297107,
+            "powerScale": 0.0000025793394577607308,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.0021040460231579526
+        },
+        {
+          "id": "expanded",
+          "controlVolume": {
+            "xMin": 44,
+            "xMax": 116,
+            "yMin": 17,
+            "yMax": 110
+          },
+          "steps": 29014,
+          "maximumBoundaryMask": 0,
+          "boundaryIsolationPassed": true,
+          "maximumRawRelativeResidual": 1.398953682252234e-9,
+          "rmsRawRelativeResidual": 4.231958068612362e-11,
+          "maximumRawAbsoluteResidualSi": 4.429292139504442e-13,
+          "rawDiscreteBalancePassed": false,
+          "rawA1": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000013523632988880923,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021917666164952855,
+            "forceRms": 0.0009693458246453125,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.00035780439432503354,
+              "imaginary": -0.0013189819907411327,
+              "amplitude": 0.0013666519222163868,
+              "phase": -1.8356944207060721
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -1.8356944207060721,
+            "fundamentalMeanPower": -0.0000021917009455855514,
+            "powerScale": 0.000008371312252490142,
+            "powerTrend": "negative"
+          },
+          "rawControlVolume": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000013523632988861303,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021917666164956493,
+            "forceRms": 0.0009693458246451746,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003578043943250939,
+              "imaginary": -0.00131898199074091,
+              "amplitude": 0.0013666519222161882,
+              "phase": -1.8356944207061574
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -1.8356944207061574,
+            "fundamentalMeanPower": -0.000002191700945585921,
+            "powerScale": 0.000008371312252488926,
+            "powerTrend": "negative"
+          },
+          "correctedBareMomentum": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000012721601648607968,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.000002134697358575271,
+            "forceRms": 0.00030748433502832015,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.00034848751264551537,
+              "imaginary": -0.00023521934708912448,
+              "amplitude": 0.0004204422525328445,
+              "phase": -2.5478621564087183
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -2.5478621564087183,
+            "fundamentalMeanPower": -0.0000021346311646919194,
+            "powerScale": 0.00000257538391661917,
+            "powerTrend": "negative"
+          },
+          "correctedHalfForceMomentum": {
+            "duration": 8.000000000000098,
+            "meanForce": -0.0000012754201341430627,
+            "meanVelocity": -1.0873785460376948e-19,
+            "meanPower": -0.0000021401244075037413,
+            "forceRms": 0.00030790530138020137,
+            "velocityRms": 0.008662647163337686,
+            "forceFundamental": {
+              "real": -0.0003493735088428962,
+              "imaginary": -0.00023506012962999683,
+              "amplitude": 0.0004210880112552104,
+              "phase": -2.549352690092359
+            },
+            "velocityFundamental": {
+              "real": 0.012250833026911271,
+              "imaginary": -1.064026823755017e-18,
+              "amplitude": 0.012250833026911271,
+              "phase": -8.685342632763673e-17
+            },
+            "forceVelocityPhaseDifference": -2.549352690092359,
+            "fundamentalMeanPower": -0.0000021400582604302147,
+            "powerScale": 0.0000025793394577608583,
+            "powerTrend": "negative"
+          },
+          "correctionTimeStaggeringSensitivity": 0.002104046023155714
+        }
+      ],
+      "gates": {
+        "rawDiscreteBalancePassed": false,
+        "boundaryIsolationPassed": true,
+        "controlVolumeSignStable": true,
+        "controlVolumePowerSpread": 2.4301308269305894e-13,
+        "controlVolumePowerSpreadPassed": true,
+        "timeStaggeringSensitivity": 0.002104046023166077,
+        "timeStaggeringSensitivityPassed": true
+      }
+    }
+  ]
+}

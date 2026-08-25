@@ -2,6 +2,7 @@ import { cloneConfig, hashConfig } from "../../../../02_模拟程序/src/core/co
 import type { SimulationConfig } from "../../../../02_模拟程序/src/core/types";
 import { HighFidelitySimulation } from "../../../../02_模拟程序/src/solvers/highFidelity/model";
 import {
+  assessScaleAwareResidual,
   captureControlVolumeSnapshot,
   evaluateControlVolumeStep,
   relativeVectorResidual,
@@ -31,6 +32,19 @@ interface VolumeAccumulator {
   maximumRawRelativeResidual: number;
   squaredRawRelativeResidualSum: number;
   maximumRawAbsoluteResidualSi: number;
+  squaredRawAbsoluteResidualSiSum: number;
+  squaredRawReferenceMagnitudeSiSum: number;
+  worstPointwiseRawRelativeResidual: {
+    latticeStep: number;
+    midpointTime: number;
+    relativeResidual: number;
+    absoluteResidualSi: number;
+    referenceMagnitudeSi: number;
+    rawControlVolumeLineForceX: number;
+    rawControlVolumeLineForceY: number;
+    rawA1LineForceX: number;
+    rawA1LineForceY: number;
+  } | null;
   rawA1: HarmonicAccumulator;
   rawCv: HarmonicAccumulator;
   correctedBare: HarmonicAccumulator;
@@ -47,6 +61,11 @@ interface FinalVolumeReport {
   maximumRawRelativeResidual: number;
   rmsRawRelativeResidual: number;
   maximumRawAbsoluteResidualSi: number;
+  rawResidualRmsSi: number;
+  rawReferenceRmsSi: number;
+  maximumRawResidualRelativeToReferenceRms: number;
+  rmsRawResidualRelativeToReferenceRms: number;
+  worstPointwiseRawRelativeResidual: VolumeAccumulator["worstPointwiseRawRelativeResidual"];
   rawDiscreteBalancePassed: boolean;
   rawA1: FinalHarmonic;
   rawControlVolume: FinalHarmonic;
@@ -124,6 +143,9 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
     maximumRawRelativeResidual: 0,
     squaredRawRelativeResidualSum: 0,
     maximumRawAbsoluteResidualSi: 0,
+    squaredRawAbsoluteResidualSiSum: 0,
+    squaredRawReferenceMagnitudeSiSum: 0,
+    worstPointwiseRawRelativeResidual: null,
     rawA1: makeAccumulator(),
     rawCv: makeAccumulator(),
     correctedBare: makeAccumulator(),
@@ -166,6 +188,18 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
         rawA1LatticeY,
         1e-24,
       );
+      const rawResidualMagnitudeLattice = Math.hypot(
+        balance.rawReactionImpulseX - rawA1LatticeX,
+        balance.rawReactionImpulseY - rawA1LatticeY,
+      );
+      const rawReferenceMagnitudeLattice = Math.max(
+        Math.hypot(balance.rawReactionImpulseX, balance.rawReactionImpulseY),
+        Math.hypot(rawA1LatticeX, rawA1LatticeY),
+      );
+      const rawAbsoluteResidualSi = rawResidualMagnitudeLattice
+        * simulation.mapping.lineForceScale;
+      const rawReferenceMagnitudeSi = rawReferenceMagnitudeLattice
+        * simulation.mapping.lineForceScale;
       accumulator.maximumRawRelativeResidual = Math.max(
         accumulator.maximumRawRelativeResidual,
         rawRelativeResidual,
@@ -173,11 +207,25 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
       accumulator.squaredRawRelativeResidualSum += rawRelativeResidual ** 2;
       accumulator.maximumRawAbsoluteResidualSi = Math.max(
         accumulator.maximumRawAbsoluteResidualSi,
-        Math.hypot(
-          balance.rawReactionImpulseX - rawA1LatticeX,
-          balance.rawReactionImpulseY - rawA1LatticeY,
-        ) * simulation.mapping.lineForceScale,
+        rawAbsoluteResidualSi,
       );
+      accumulator.squaredRawAbsoluteResidualSiSum += rawAbsoluteResidualSi ** 2;
+      accumulator.squaredRawReferenceMagnitudeSiSum += rawReferenceMagnitudeSi ** 2;
+      if (accumulator.worstPointwiseRawRelativeResidual === null
+        || rawRelativeResidual > accumulator.worstPointwiseRawRelativeResidual.relativeResidual) {
+        const scale = simulation.mapping.lineForceScale;
+        accumulator.worstPointwiseRawRelativeResidual = {
+          latticeStep: simulation.latticeStep,
+          midpointTime,
+          relativeResidual: rawRelativeResidual,
+          absoluteResidualSi: rawAbsoluteResidualSi,
+          referenceMagnitudeSi: rawReferenceMagnitudeSi,
+          rawControlVolumeLineForceX: balance.rawReactionImpulseX * scale,
+          rawControlVolumeLineForceY: balance.rawReactionImpulseY * scale,
+          rawA1LineForceX: rawA1LatticeX * scale,
+          rawA1LineForceY: rawA1LatticeY * scale,
+        };
+      }
 
       if (includeInAnalysis) {
         const scale = simulation.mapping.lineForceScale;
@@ -247,6 +295,12 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
       correctedBare.powerScale,
       1e-30,
     );
+    const rawBalance = assessScaleAwareResidual(
+      accumulator.maximumRawAbsoluteResidualSi,
+      accumulator.squaredRawAbsoluteResidualSiSum,
+      accumulator.squaredRawReferenceMagnitudeSiSum,
+      accumulator.steps,
+    );
     return {
       id: accumulator.id,
       controlVolume: accumulator.controlVolume,
@@ -258,7 +312,13 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
         accumulator.squaredRawRelativeResidualSum / Math.max(1, accumulator.steps),
       ),
       maximumRawAbsoluteResidualSi: accumulator.maximumRawAbsoluteResidualSi,
-      rawDiscreteBalancePassed: accumulator.maximumRawRelativeResidual <= 1e-9,
+      rawResidualRmsSi: rawBalance.residualRms,
+      rawReferenceRmsSi: rawBalance.referenceRms,
+      maximumRawResidualRelativeToReferenceRms:
+        rawBalance.maximumResidualRelativeToReferenceRms,
+      rmsRawResidualRelativeToReferenceRms: rawBalance.rmsResidualRelativeToReferenceRms,
+      worstPointwiseRawRelativeResidual: accumulator.worstPointwiseRawRelativeResidual,
+      rawDiscreteBalancePassed: rawBalance.passed,
       rawA1,
       rawControlVolume: rawCv,
       correctedBareMomentum: correctedBare,
@@ -306,7 +366,7 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
     },
     volumes,
     gates: {
-      rawDiscreteBalancePassed,
+      rawDiscreteBalancePassed: rawBalancePassed,
       boundaryIsolationPassed,
       controlVolumeSignStable,
       controlVolumePowerSpread,
@@ -316,4 +376,3 @@ export async function runCase(item: MatrixCase, cli: CliOptions) {
     },
   };
 }
-

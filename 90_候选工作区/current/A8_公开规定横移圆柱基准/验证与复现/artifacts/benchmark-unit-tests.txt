@@ -1,0 +1,15 @@
+> test
+> node --experimental-strip-types --test tests/*.test.ts
+
+✔ prescribed motion has the frozen amplitude and frequency (0.709968ms)
+✔ coefficient summary distinguishes RMS from fluctuation RMS (0.240269ms)
+✔ dominant Strouhal scan recovers a synthetic fixed-cylinder signal (26.570919ms)
+✔ literature gate accepts the frozen target and rejects a large mismatch (0.435234ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.508257
