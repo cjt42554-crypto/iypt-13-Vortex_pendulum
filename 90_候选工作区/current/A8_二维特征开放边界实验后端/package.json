@@ -1,0 +1,14 @@
+{
+  "name": "iypt13-a8-characteristic-open-boundary-candidate",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "qualify": "node --experimental-strip-types scripts/run-qualification.mjs",
+    "assert:artifact": "node scripts/assert-artifact.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
