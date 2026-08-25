@@ -1,15 +1,24 @@
 > test
 > node --experimental-strip-types --test tests/*.test.ts
 
-✔ prescribed motion has the frozen amplitude and frequency (0.709968ms)
-✔ coefficient summary distinguishes RMS from fluctuation RMS (0.240269ms)
-✔ dominant Strouhal scan recovers a synthetic fixed-cylinder signal (26.570919ms)
-✔ literature gate accepts the frozen target and rejects a large mismatch (0.435234ms)
-ℹ tests 4
+✔ prescribed motion has the frozen amplitude and frequency (0.47379ms)
+✔ coefficient summary distinguishes RMS from fluctuation RMS (0.190103ms)
+✔ dominant Strouhal scan recovers a synthetic fixed-cylinder signal (24.260127ms)
+✔ literature gate accepts the frozen target and rejects a large mismatch (0.217126ms)
+✔ research sensitivity matrix is unique and one-factor-at-a-time (0.448761ms)
+✔ smoke matrix reaches every sensitivity code path (0.379124ms)
+✔ sensitivity amplitudes use baseline-relative loads and absolute Strouhal shift (0.116378ms)
+✔ dominance classification is frozen and fail-closed (0.100026ms)
+✔ grid-mask research matrix is a complete two-family Cartesian product (0.500463ms)
+✔ grid-mask smoke reaches both mask families (0.393753ms)
+✔ grid-mask extension repeats N_D=20 and adds N_D=24 in both families (0.119474ms)
+✔ three-point unequal-grid fit recovers a synthetic second-order sequence (0.202778ms)
+✔ three-point fit refuses oscillatory or degenerate sequences (0.067262ms)
+ℹ tests 13
 ℹ suites 0
-ℹ pass 4
+ℹ pass 13
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 105.508257
+ℹ duration_ms 82.172997

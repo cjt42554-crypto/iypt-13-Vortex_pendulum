@@ -1,0 +1,848 @@
+{
+  "format": "VP-CFD2D-A8-GRID-MASK-BRACKET-v1",
+  "createdAt": "2026-08-25T15:38:14.394Z",
+  "profile": "research",
+  "purpose": "paired diffuse-mask grid bracket after mask-dominant fixed-cylinder sensitivity",
+  "definitions": [
+    {
+      "id": "d12-mask-0p50",
+      "group": "mask-half-thickness",
+      "diameterCells": 12,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.5,
+      "etaHat": 0.00625
+    },
+    {
+      "id": "d16-mask-0p50",
+      "group": "mask-half-thickness",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.5,
+      "etaHat": 0.00625
+    },
+    {
+      "id": "d20-mask-0p50",
+      "group": "mask-half-thickness",
+      "diameterCells": 20,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.5,
+      "etaHat": 0.00625
+    },
+    {
+      "id": "d12-mask-0p75",
+      "group": "baseline",
+      "diameterCells": 12,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.75,
+      "etaHat": 0.00625
+    },
+    {
+      "id": "d16-mask-0p75",
+      "group": "baseline",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.75,
+      "etaHat": 0.00625
+    },
+    {
+      "id": "d20-mask-0p75",
+      "group": "baseline",
+      "diameterCells": 20,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.75,
+      "etaHat": 0.00625
+    }
+  ],
+  "thresholds": {
+    "maximumDensityDeviation": 0.08,
+    "maximumObservedMach": 0.3,
+    "meanDragHalfWindowDrift": 0.05,
+    "liftRmsHalfWindowDrift": 0.1,
+    "referenceReproductionRelativeTolerance": 1e-12,
+    "maximumMiddleToFineRelativeLoadChange": 0.05,
+    "maximumFineCrossFamilyRelativeLoadDifference": 0.05,
+    "fixedLiterature": {
+      "meanDrag": 1.287,
+      "liftRms": 0.443,
+      "strouhal": 0.195,
+      "tolerance": {
+        "meanDrag": 0.05,
+        "liftRms": 0.04,
+        "strouhal": 0.005
+      }
+    }
+  },
+  "referencePaths": {
+    "public": "/home/cjt/Desktop/iypt/13 涡流摆/90_候选工作区/current/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-screening.json",
+    "sensitivity": "/home/cjt/Desktop/iypt/13 涡流摆/90_候选工作区/current/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-research.json"
+  },
+  "referenceComparisons": [
+    {
+      "id": "d12-mask-0p75",
+      "reference": {
+        "id": "d12-mask-0p75",
+        "meanDrag": 1.9708436896351744,
+        "liftRms": 0.6681114916912353,
+        "strouhal": 0.19475000000000003
+      },
+      "actual": {
+        "meanDrag": 1.9708436896351744,
+        "liftRms": 0.6681114916912353,
+        "strouhal": 0.19475000000000003
+      },
+      "relativeDifferences": {
+        "meanDrag": 0,
+        "liftRms": 0,
+        "strouhal": 0
+      },
+      "maximumRelativeDifference": 0,
+      "passed": true
+    },
+    {
+      "id": "d16-mask-0p75",
+      "reference": {
+        "id": "d16-mask-0p75",
+        "meanDrag": 1.8448367704440942,
+        "liftRms": 0.639328706879177,
+        "strouhal": 0.19925000000000004
+      },
+      "actual": {
+        "meanDrag": 1.8448367704440942,
+        "liftRms": 0.639328706879177,
+        "strouhal": 0.19925000000000004
+      },
+      "relativeDifferences": {
+        "meanDrag": 0,
+        "liftRms": 0,
+        "strouhal": 0
+      },
+      "maximumRelativeDifference": 0,
+      "passed": true
+    },
+    {
+      "id": "d16-mask-0p50",
+      "reference": {
+        "id": "d16-mask-0p50",
+        "meanDrag": 1.7668828943922643,
+        "liftRms": 0.5816985516502091,
+        "strouhal": 0.20100000000000004
+      },
+      "actual": {
+        "meanDrag": 1.7668828943922643,
+        "liftRms": 0.5816985516502091,
+        "strouhal": 0.20100000000000004
+      },
+      "relativeDifferences": {
+        "meanDrag": 0,
+        "liftRms": 0,
+        "strouhal": 0
+      },
+      "maximumRelativeDifference": 0,
+      "passed": true
+    }
+  ],
+  "familySummaries": [
+    {
+      "maskHalfThickness": 0.5,
+      "caseIds": [
+        "d12-mask-0p50",
+        "d16-mask-0p50",
+        "d20-mask-0p50"
+      ],
+      "middleToFine": {
+        "meanDrag": 0.029851469291041603,
+        "liftRms": 0.0074470569998336,
+        "strouhal": 0.018315018315018326
+      },
+      "maximumMiddleToFineLoadChange": 0.029851469291041603,
+      "fits": {
+        "meanDrag": {
+          "apparentOrder": 0.571853401653214,
+          "extrapolatedValue": 1.32661301374534,
+          "fineCorrectionRelative": 0.2921167108786537
+        },
+        "liftRms": {
+          "apparentOrder": 0.26000408928356666,
+          "extrapolatedValue": 0.5048464530997474,
+          "fineCorrectionRelative": 0.14364794648814427
+        },
+        "strouhal": null
+      },
+      "fineCaseId": "d20-mask-0p50",
+      "fineMetrics": {
+        "meanDrag": 1.714138843929447,
+        "liftRms": 0.5773666093793494,
+        "strouhal": 0.20475000000000004
+      },
+      "fineLiterature": {
+        "meanDragError": 0.427138843929447,
+        "liftRmsError": 0.13436660937934936,
+        "strouhalError": 0.009750000000000036,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": false,
+        "passed": false
+      }
+    },
+    {
+      "maskHalfThickness": 0.75,
+      "caseIds": [
+        "d12-mask-0p75",
+        "d16-mask-0p75",
+        "d20-mask-0p75"
+      ],
+      "middleToFine": {
+        "meanDrag": 0.040337807478189276,
+        "liftRms": 0.048013131609241685,
+        "strouhal": 0.014833127317676154
+      },
+      "maximumMiddleToFineLoadChange": 0.048013131609241685,
+      "fits": {
+        "meanDrag": {
+          "apparentOrder": 1.0613048076796803,
+          "extrapolatedValue": 1.4919325346406982,
+          "fineCorrectionRelative": 0.18666230467023484
+        },
+        "liftRms": null,
+        "strouhal": {
+          "apparentOrder": 0.5909839072290806,
+          "extrapolatedValue": 0.22353190392840475,
+          "fineCorrectionRelative": 0.0952074560919103
+        }
+      },
+      "fineCaseId": "d20-mask-0p75",
+      "fineMetrics": {
+        "meanDrag": 1.7704200999692359,
+        "liftRms": 0.6086325335342208,
+        "strouhal": 0.20225000000000004
+      },
+      "fineLiterature": {
+        "meanDragError": 0.48342009996923596,
+        "liftRmsError": 0.16563253353422075,
+        "strouhalError": 0.007250000000000034,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": false,
+        "passed": false
+      }
+    }
+  ],
+  "crossFamilySummaries": [
+    {
+      "diameterCells": 12,
+      "thinCaseId": "d12-mask-0p50",
+      "baselineCaseId": "d12-mask-0p75",
+      "relativeDifferences": {
+        "meanDrag": 0.06354271341354091,
+        "liftRms": 0.1204051560940592,
+        "strouhal": 0.011421319796954323
+      },
+      "maximumRelativeLoadDifference": 0.1204051560940592,
+      "absoluteStrouhalDifference": 0.002250000000000002
+    },
+    {
+      "diameterCells": 16,
+      "thinCaseId": "d16-mask-0p50",
+      "baselineCaseId": "d16-mask-0p75",
+      "relativeDifferences": {
+        "meanDrag": 0.04225516170358239,
+        "liftRms": 0.09014166673397797,
+        "strouhal": 0.008706467661691548
+      },
+      "maximumRelativeLoadDifference": 0.09014166673397797,
+      "absoluteStrouhalDifference": 0.0017500000000000016
+    },
+    {
+      "diameterCells": 20,
+      "thinCaseId": "d20-mask-0p50",
+      "baselineCaseId": "d20-mask-0p75",
+      "relativeDifferences": {
+        "meanDrag": 0.0317897746646499,
+        "liftRms": 0.05137077371351764,
+        "strouhal": 0.012210012210012219
+      },
+      "maximumRelativeLoadDifference": 0.05137077371351764,
+      "absoluteStrouhalDifference": 0.0025000000000000022
+    }
+  ],
+  "gates": {
+    "numericalStabilityPassed": true,
+    "allCasesMature": true,
+    "referencesReproduced": true,
+    "fineChangesPassed": true,
+    "fineCrossFamilyPassed": false,
+    "targetHitCaseIds": [],
+    "sourceFineResolutionMatched": false,
+    "machMatrixRun": false,
+    "domainSensitivityRun": false,
+    "gridPhaseJointMatrixRun": false,
+    "gciRun": false,
+    "prescribedMotionLongRun": false
+  },
+  "closestCaseId": "d20-mask-0p50",
+  "decision": {
+    "code": "NO-GO-A8G-GRID-MASK-NOT-SETTLED",
+    "interpretation": "没有算例命中文献全门，且 16→20 网格变化或 N_D=20 跨 mask 差仍超过 5%。"
+  },
+  "explicitNonClaims": [
+    "three-point power fits are diagnostics, not GCI",
+    "not source-level near-wall resolution",
+    "not a joint grid-Mach-domain-mask convergence study",
+    "not parameter calibration",
+    "not prescribed-motion, weak-FSI, apparatus, or experimental validation"
+  ],
+  "cases": [
+    {
+      "definition": {
+        "id": "d12-mask-0p50",
+        "group": "mask-half-thickness",
+        "diameterCells": 12,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.5,
+        "etaHat": 0.00625
+      },
+      "numericalIdentity": {
+        "diameterCells": 12,
+        "nx": 276,
+        "ny": 120,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.5097297297297297,
+        "penalizationTimeSteps": 1.5000000000000002,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.5
+      },
+      "body": {
+        "centerX": 42,
+        "centerY": 59.67320508075689,
+        "radius": 6,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 9600
+      },
+      "metrics": {
+        "samples": 9600,
+        "meanDrag": 1.845610933881801,
+        "meanLift": -0.03812741355138841,
+        "dragRms": 1.8474696427243598,
+        "liftRms": 0.5876674232459174,
+        "dragFluctuationRms": 0.08285144249822057,
+        "liftFluctuationRms": 0.5864292802038269,
+        "strouhal": 0.19700000000000004,
+        "spectralLiftAmplitude": 0.8261390068570793
+      },
+      "firstHalf": {
+        "samples": 4800,
+        "meanDrag": 1.8426064446901473,
+        "meanLift": -0.035484654350296324,
+        "dragRms": 1.8447711626351009,
+        "liftRms": 0.5819579373717296,
+        "dragFluctuationRms": 0.08934278077399159,
+        "liftFluctuationRms": 0.580875098601756
+      },
+      "secondHalf": {
+        "samples": 4800,
+        "meanDrag": 1.848615423073453,
+        "meanLift": -0.04077017275248036,
+        "dragRms": 1.8501641870618069,
+        "liftRms": 0.5933219697761363,
+        "dragFluctuationRms": 0.07568709705780012,
+        "liftFluctuationRms": 0.59191954929092
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.0032505291843315737,
+        "liftRmsHalfDrift": 0.019153230426802427,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.558610933881801,
+        "liftRmsError": 0.14466742324591736,
+        "strouhalError": 0.0020000000000000295,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 15.18890425878396,
+      "extrema": {
+        "minimumDensity": 0.9498636786145,
+        "maximumDensity": 1.0538696603976916,
+        "maximumSpeed": 0.09760258951162874,
+        "maximumMach": 0.16905264398443018,
+        "maximumDensityDeviation": 0.05386966039769159
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p50",
+        "group": "mask-half-thickness",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.5,
+        "etaHat": 0.00625
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 368,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.5
+      },
+      "body": {
+        "centerX": 56,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.7668828943922643,
+        "meanLift": 0.004676987414851084,
+        "dragRms": 1.7693515650115983,
+        "liftRms": 0.5816985516502091,
+        "dragFluctuationRms": 0.09343338864136494,
+        "liftFluctuationRms": 0.5816797493300517,
+        "strouhal": 0.20100000000000004,
+        "spectralLiftAmplitude": 0.8199528386616416
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.7695587952767453,
+        "meanLift": 0.0030127001819430775,
+        "dragRms": 1.7730915691227371,
+        "liftRms": 0.5844374547281385,
+        "dragFluctuationRms": 0.11187217059147135,
+        "liftFluctuationRms": 0.584429689634877
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.7642069935077869,
+        "meanLift": 0.006341274647759091,
+        "dragRms": 1.7656036386244427,
+        "liftRms": 0.5789466914101827,
+        "dragFluctuationRms": 0.07021319521345194,
+        "liftFluctuationRms": 0.578911961986137
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.003024370698076444,
+        "liftRmsHalfDrift": 0.009394954538822043,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.4798828943922644,
+        "liftRmsError": 0.1386985516502091,
+        "strouhalError": 0.006000000000000033,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": false,
+        "passed": false
+      },
+      "literatureErrorScore": 14.26512167910052,
+      "extrema": {
+        "minimumDensity": 0.9494036882400725,
+        "maximumDensity": 1.0543822366017077,
+        "maximumSpeed": 0.09567984521212249,
+        "maximumMach": 0.1657223531677219,
+        "maximumDensityDeviation": 0.05438223660170771
+      }
+    },
+    {
+      "definition": {
+        "id": "d20-mask-0p50",
+        "group": "mask-half-thickness",
+        "diameterCells": 20,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.5,
+        "etaHat": 0.00625
+      },
+      "numericalIdentity": {
+        "diameterCells": 20,
+        "nx": 460,
+        "ny": 200,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.5162162162162163,
+        "penalizationTimeSteps": 2.5,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.5
+      },
+      "body": {
+        "centerX": 70,
+        "centerY": 99.67320508075689,
+        "radius": 10,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 16000
+      },
+      "metrics": {
+        "samples": 16000,
+        "meanDrag": 1.714138843929447,
+        "meanLift": 0.025741812229492077,
+        "dragRms": 1.7171659821730245,
+        "liftRms": 0.5773666093793494,
+        "dragFluctuationRms": 0.10191679971651274,
+        "liftFluctuationRms": 0.5767924763113225,
+        "strouhal": 0.20475000000000004,
+        "spectralLiftAmplitude": 0.8171386652730079
+      },
+      "firstHalf": {
+        "samples": 8000,
+        "meanDrag": 1.7105747000146074,
+        "meanLift": 0.030114862416304414,
+        "dragRms": 1.714509658964374,
+        "liftRms": 0.5790848906030613,
+        "dragFluctuationRms": 0.11609292119699366,
+        "liftFluctuationRms": 0.5783013103792938
+      },
+      "secondHalf": {
+        "samples": 8000,
+        "meanDrag": 1.7177029878442924,
+        "meanLift": 0.021368762042679738,
+        "dragRms": 1.719818202596537,
+        "liftRms": 0.5756431991500094,
+        "dragFluctuationRms": 0.0852707190843888,
+        "liftFluctuationRms": 0.57524644174164
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.004149895459302285,
+        "liftRmsHalfDrift": 0.005943328014425937,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.427138843929447,
+        "liftRmsError": 0.13436660937934936,
+        "strouhalError": 0.009750000000000036,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": false,
+        "passed": false
+      },
+      "literatureErrorScore": 13.851942113072681,
+      "extrema": {
+        "minimumDensity": 0.9491519051505289,
+        "maximumDensity": 1.0547850990255012,
+        "maximumSpeed": 0.0954942564380744,
+        "maximumMach": 0.1654009039817562,
+        "maximumDensityDeviation": 0.054785099025501216
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-mask-0p75",
+        "group": "baseline",
+        "diameterCells": 12,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.75,
+        "etaHat": 0.00625
+      },
+      "numericalIdentity": {
+        "diameterCells": 12,
+        "nx": 276,
+        "ny": 120,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.5097297297297297,
+        "penalizationTimeSteps": 1.5000000000000002,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.75
+      },
+      "body": {
+        "centerX": 42,
+        "centerY": 59.67320508075689,
+        "radius": 6,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 9600
+      },
+      "metrics": {
+        "samples": 9600,
+        "meanDrag": 1.9708436896351744,
+        "meanLift": -0.11604469873921808,
+        "dragRms": 1.9734588654002354,
+        "liftRms": 0.6681114916912353,
+        "dragFluctuationRms": 0.10156300730077321,
+        "liftFluctuationRms": 0.6579563763840379,
+        "strouhal": 0.19475000000000003,
+        "spectralLiftAmplitude": 0.9253872313303306
+      },
+      "firstHalf": {
+        "samples": 4800,
+        "meanDrag": 1.9600454212906364,
+        "meanLift": -0.10727008825309481,
+        "dragRms": 1.9623721903639424,
+        "liftRms": 0.655247544561304,
+        "dragFluctuationRms": 0.0955330308918219,
+        "liftFluctuationRms": 0.6464073582655063
+      },
+      "secondHalf": {
+        "samples": 4800,
+        "meanDrag": 1.9816419579797087,
+        "meanLift": -0.12481930922534128,
+        "dragRms": 1.9844836036963727,
+        "liftRms": 0.6807323894205157,
+        "dragFluctuationRms": 0.10616178085401007,
+        "liftFluctuationRms": 0.6691910983050157
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.010898304106908391,
+        "liftRmsHalfDrift": 0.03743739133803541,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.6838436896351745,
+        "liftRmsError": 0.2251114916912353,
+        "strouhalError": 0.00024999999999997247,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 19.354661084984365,
+      "extrema": {
+        "minimumDensity": 0.9500242355690226,
+        "maximumDensity": 1.053875459284452,
+        "maximumSpeed": 0.1014000686188976,
+        "maximumMach": 0.17563007073890113,
+        "maximumDensityDeviation": 0.05387545928445192
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p75",
+        "group": "baseline",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.75,
+        "etaHat": 0.00625
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 368,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.75
+      },
+      "body": {
+        "centerX": 56,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.8448367704440942,
+        "meanLift": -0.08843985719952235,
+        "dragRms": 1.8474987109971717,
+        "liftRms": 0.639328706879177,
+        "dragFluctuationRms": 0.09914019141413684,
+        "liftFluctuationRms": 0.6331821121117756,
+        "strouhal": 0.19925000000000004,
+        "spectralLiftAmplitude": 0.8948222038821954
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.8416116015326265,
+        "meanLift": -0.08936478088609047,
+        "dragRms": 1.845144408370508,
+        "liftRms": 0.6391329846445973,
+        "dragFluctuationRms": 0.11412535582153016,
+        "liftFluctuationRms": 0.6328545709702121
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.848061939355557,
+        "meanLift": -0.08751493351295396,
+        "dragRms": 1.8498500173072074,
+        "liftRms": 0.6395243692142578,
+        "dragFluctuationRms": 0.08131515748529,
+        "liftFluctuationRms": 0.6335081335161504
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.0034903255597482307,
+        "liftRmsHalfDrift": 0.0006119932069849801,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.5578367704440943,
+        "liftRmsError": 0.19632870687917697,
+        "strouhalError": 0.0042500000000000315,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 16.914953080861316,
+      "extrema": {
+        "minimumDensity": 0.9495031582173686,
+        "maximumDensity": 1.0545180808672614,
+        "maximumSpeed": 0.10193627793135389,
+        "maximumMach": 0.176558812511567,
+        "maximumDensityDeviation": 0.0545180808672614
+      }
+    },
+    {
+      "definition": {
+        "id": "d20-mask-0p75",
+        "group": "baseline",
+        "diameterCells": 20,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.75,
+        "etaHat": 0.00625
+      },
+      "numericalIdentity": {
+        "diameterCells": 20,
+        "nx": 460,
+        "ny": 200,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.5162162162162163,
+        "penalizationTimeSteps": 2.5,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.75
+      },
+      "body": {
+        "centerX": 70,
+        "centerY": 99.67320508075689,
+        "radius": 10,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 16000
+      },
+      "metrics": {
+        "samples": 16000,
+        "meanDrag": 1.7704200999692359,
+        "meanLift": -0.05344871758414123,
+        "dragRms": 1.7737009992115098,
+        "liftRms": 0.6086325335342208,
+        "dragFluctuationRms": 0.10783276046197787,
+        "liftFluctuationRms": 0.6062811191723658,
+        "strouhal": 0.20225000000000004,
+        "spectralLiftAmplitude": 0.8546473416071593
+      },
+      "firstHalf": {
+        "samples": 8000,
+        "meanDrag": 1.769619949810949,
+        "meanLift": -0.05719417827307693,
+        "dragRms": 1.7741204695740065,
+        "liftRms": 0.6103189219867234,
+        "dragFluctuationRms": 0.1262880587886452,
+        "liftFluctuationRms": 0.6076331232797492
+      },
+      "secondHalf": {
+        "samples": 8000,
+        "meanDrag": 1.7712202501275014,
+        "meanLift": -0.04970325689520509,
+        "dragRms": 1.7732814296231365,
+        "liftRms": 0.606941459465024,
+        "dragFluctuationRms": 0.08547428961123224,
+        "liftFluctuationRms": 0.6049029025153903
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.0009035015924400939,
+        "liftRmsHalfDrift": 0.005533930540290426,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.48342009996923596,
+        "liftRmsError": 0.16563253353422075,
+        "strouhalError": 0.007250000000000034,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": false,
+        "passed": false
+      },
+      "literatureErrorScore": 15.259215337740244,
+      "extrema": {
+        "minimumDensity": 0.9490759512246849,
+        "maximumDensity": 1.0549195562237967,
+        "maximumSpeed": 0.09579330857510161,
+        "maximumMach": 0.16591887747719938,
+        "maximumDensityDeviation": 0.05491955622379674
+      }
+    }
+  ]
+}
