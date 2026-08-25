@@ -7,10 +7,10 @@
 
 ## 算例
 
-| case | N_D | mask half | mean Cd | CL rms | St | mature | literature | score | max Ma | density deviation |
-|---|---:|---:|---:|---:|---:|---|---|---:|---:|---:|
-| d08-mask-0p50 | 8 | 0.50 | 1.602155 | 0.120511 | 0.17600 | FAIL | FAIL | 18.165 | 0.1563 | 5.243e-2 |
-| d08-mask-0p75 | 8 | 0.75 | 1.718610 | 0.169499 | 0.17100 | PASS | FAIL | 20.270 | 0.1586 | 5.265e-2 |
+| N_D | mask half | mean Cd | CL rms | St | mature | literature | score |
+|---:|---:|---:|---:|---:|---|---|---:|
+| 8 | 0.50 | 1.602155 | 0.120511 | 0.17600 | FAIL | FAIL | 18.165 |
+| 8 | 0.75 | 1.718610 | 0.169499 | 0.17100 | PASS | FAIL | 20.270 |
 
 ## 网格族诊断
 

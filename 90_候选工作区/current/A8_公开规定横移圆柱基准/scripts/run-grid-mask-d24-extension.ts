@@ -19,6 +19,7 @@ interface CliOptions {
   outputPath: string;
   markdownPath: string;
   bracketReferencePath: string;
+  renderReportPath: string | null;
 }
 
 function parseOption(name: string): string | undefined {
@@ -41,6 +42,9 @@ function parseCli(): CliOptions {
       parseOption("bracket-reference")
         ?? `${artifactRoot}/a8-grid-mask-bracket-research.json`,
     ),
+    renderReportPath: parseOption("render-report") === undefined
+      ? null
+      : resolve(parseOption("render-report")!),
   };
 }
 
@@ -113,12 +117,12 @@ function renderMarkdown(report: any): string {
     "",
     "## 算例",
     "",
-    "| case | N_D | mask half | mean Cd | CL rms | St | mature | literature | score | max Ma | density deviation |",
-    "|---|---:|---:|---:|---:|---:|---|---|---:|---:|---:|",
+    "| N_D | mask half | mean Cd | CL rms | St | mature | literature | score |",
+    "|---:|---:|---:|---:|---:|---|---|---:|",
   ];
   for (const item of report.cases) {
     lines.push(
-      `| ${item.definition.id} | ${item.definition.diameterCells} | ${item.definition.maskHalfThickness.toFixed(2)} | ${item.metrics.meanDrag.toFixed(6)} | ${item.metrics.liftRms.toFixed(6)} | ${item.metrics.strouhal.toFixed(5)} | ${item.maturity.passed ? "PASS" : "FAIL"} | ${item.literature.passed ? "PASS" : "FAIL"} | ${item.literatureErrorScore.toFixed(3)} | ${item.extrema.maximumMach.toFixed(4)} | ${item.extrema.maximumDensityDeviation.toExponential(3)} |`,
+      `| ${item.definition.diameterCells} | ${item.definition.maskHalfThickness.toFixed(2)} | ${item.metrics.meanDrag.toFixed(6)} | ${item.metrics.liftRms.toFixed(6)} | ${item.metrics.strouhal.toFixed(5)} | ${item.maturity.passed ? "PASS" : "FAIL"} | ${item.literature.passed ? "PASS" : "FAIL"} | ${item.literatureErrorScore.toFixed(3)} |`,
     );
   }
   lines.push("", "## 族内与跨族诊断", "");
@@ -148,6 +152,17 @@ function renderMarkdown(report: any): string {
 }
 
 const cli = parseCli();
+if (cli.renderReportPath !== null) {
+  const existingReport = JSON.parse(await readFile(cli.renderReportPath, "utf8"));
+  await mkdir(dirname(cli.markdownPath), { recursive: true });
+  await writeFile(cli.markdownPath, renderMarkdown(existingReport), "utf8");
+  process.stdout.write(`${JSON.stringify({
+    source: cli.renderReportPath,
+    markdown: cli.markdownPath,
+    decision: existingReport.decision,
+  }, null, 2)}\n`);
+  process.exit(0);
+}
 const referenceReport = JSON.parse(await readFile(cli.bracketReferencePath, "utf8"));
 const definitions = gridMaskExtensionDefinitions();
 const cases: FixedCylinderCaseResult[] = [];

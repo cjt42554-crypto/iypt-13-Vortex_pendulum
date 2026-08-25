@@ -1,0 +1,849 @@
+{
+  "format": "VP-CFD2D-A8-INLET-DISTANCE-BRACKET-v1",
+  "createdAt": "2026-08-25T17:30:00.237Z",
+  "profile": "research",
+  "purpose": "bracket the only significant geometry axis under the current Zou-He inlet",
+  "definitions": [
+    {
+      "id": "d16-mask-0p50-inlet-7p0d",
+      "group": "mask-half-thickness",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.5,
+      "etaHat": 0.00625,
+      "domainLengthDiameters": 26.5,
+      "domainWidthDiameters": 10,
+      "upstreamDiameters": 7
+    },
+    {
+      "id": "d16-mask-0p50-inlet-10p5d",
+      "group": "mask-half-thickness",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.5,
+      "etaHat": 0.00625,
+      "domainLengthDiameters": 30,
+      "domainWidthDiameters": 10,
+      "upstreamDiameters": 10.5
+    },
+    {
+      "id": "d16-mask-0p50-inlet-14p0d",
+      "group": "mask-half-thickness",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.5,
+      "etaHat": 0.00625,
+      "domainLengthDiameters": 33.5,
+      "domainWidthDiameters": 10,
+      "upstreamDiameters": 14
+    },
+    {
+      "id": "d16-mask-0p75-inlet-7p0d",
+      "group": "baseline",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.75,
+      "etaHat": 0.00625,
+      "domainLengthDiameters": 26.5,
+      "domainWidthDiameters": 10,
+      "upstreamDiameters": 7
+    },
+    {
+      "id": "d16-mask-0p75-inlet-10p5d",
+      "group": "baseline",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.75,
+      "etaHat": 0.00625,
+      "domainLengthDiameters": 30,
+      "domainWidthDiameters": 10,
+      "upstreamDiameters": 10.5
+    },
+    {
+      "id": "d16-mask-0p75-inlet-14p0d",
+      "group": "baseline",
+      "diameterCells": 16,
+      "latticeVelocity": 0.05,
+      "fixedConvectiveDuration": 80,
+      "discardConvectiveTime": 40,
+      "phaseOffsetX": 0,
+      "phaseOffsetY": 0,
+      "maskHalfThickness": 0.75,
+      "etaHat": 0.00625,
+      "domainLengthDiameters": 33.5,
+      "domainWidthDiameters": 10,
+      "upstreamDiameters": 14
+    }
+  ],
+  "thresholds": {
+    "maximumDensityDeviation": 0.08,
+    "maximumObservedMach": 0.3,
+    "meanDragHalfWindowDrift": 0.05,
+    "liftRmsHalfWindowDrift": 0.1,
+    "referenceReproductionRelativeTolerance": 1e-12,
+    "maximumFineInletRelativeLoadChange": 0.05,
+    "fixedLiterature": {
+      "meanDrag": 1.287,
+      "liftRms": 0.443,
+      "strouhal": 0.195,
+      "tolerance": {
+        "meanDrag": 0.05,
+        "liftRms": 0.04,
+        "strouhal": 0.005
+      }
+    }
+  },
+  "domainReferencePath": "/home/cjt/Desktop/iypt/13 涡流摆/90_候选工作区/current/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-research.json",
+  "referenceComparisons": [
+    {
+      "maskHalfThickness": 0.5,
+      "actual": {
+        "meanDrag": 1.6474285242848874,
+        "liftRms": 0.547410844197499,
+        "strouhal": 0.19400000000000003
+      },
+      "reference": {
+        "meanDrag": 1.6474285242848874,
+        "liftRms": 0.547410844197499,
+        "strouhal": 0.19400000000000003
+      },
+      "relativeDifferences": {
+        "meanDrag": 0,
+        "liftRms": 0,
+        "strouhal": 0
+      },
+      "maximumRelativeDifference": 0,
+      "passed": true
+    },
+    {
+      "maskHalfThickness": 0.75,
+      "actual": {
+        "meanDrag": 1.7135326794933434,
+        "liftRms": 0.602431391317827,
+        "strouhal": 0.19200000000000003
+      },
+      "reference": {
+        "meanDrag": 1.7135326794933434,
+        "liftRms": 0.602431391317827,
+        "strouhal": 0.19200000000000003
+      },
+      "relativeDifferences": {
+        "meanDrag": 0,
+        "liftRms": 0,
+        "strouhal": 0
+      },
+      "maximumRelativeDifference": 0,
+      "passed": true
+    }
+  ],
+  "familySummaries": [
+    {
+      "maskHalfThickness": 0.5,
+      "sourceReferenceCaseId": "d16-mask-0p50-source-domain",
+      "inlet7CaseId": "d16-mask-0p50-inlet-7p0d",
+      "inlet10p5CaseId": "d16-mask-0p50-inlet-10p5d",
+      "inlet14CaseId": "d16-mask-0p50-inlet-14p0d",
+      "sourceTo7": {
+        "relativeDifferences": {
+          "meanDrag": 0.06760740651601835,
+          "liftRms": 0.058944116940707565,
+          "strouhal": 0.03482587064676619
+        },
+        "maximumRelativeLoadDifference": 0.06760740651601835,
+        "absoluteStrouhalDifference": 0.007000000000000006
+      },
+      "inlet7To10p5": {
+        "relativeDifferences": {
+          "meanDrag": 0.008570587426449165,
+          "liftRms": 0.01074939417994462,
+          "strouhal": 0.0038659793814433017
+        },
+        "maximumRelativeLoadDifference": 0.01074939417994462,
+        "absoluteStrouhalDifference": 0.0007500000000000007
+      },
+      "inlet10p5To14": {
+        "relativeDifferences": {
+          "meanDrag": 0.0020966814845278614,
+          "liftRms": 0.002507347910340995,
+          "strouhal": 0
+        },
+        "maximumRelativeLoadDifference": 0.002507347910340995,
+        "absoluteStrouhalDifference": 0
+      },
+      "sourceTo14": {
+        "relativeDifferences": {
+          "meanDrag": 0.07365631109340678,
+          "liftRms": 0.06671983951290775,
+          "strouhal": 0.038557213930348284
+        },
+        "maximumRelativeLoadDifference": 0.07365631109340678,
+        "absoluteStrouhalDifference": 0.007750000000000007
+      }
+    },
+    {
+      "maskHalfThickness": 0.75,
+      "sourceReferenceCaseId": "d16-mask-0p75-source-domain",
+      "inlet7CaseId": "d16-mask-0p75-inlet-7p0d",
+      "inlet10p5CaseId": "d16-mask-0p75-inlet-10p5d",
+      "inlet14CaseId": "d16-mask-0p75-inlet-14p0d",
+      "sourceTo7": {
+        "relativeDifferences": {
+          "meanDrag": 0.07117382581177786,
+          "liftRms": 0.05771259004067061,
+          "strouhal": 0.03638644918444168
+        },
+        "maximumRelativeLoadDifference": 0.07117382581177786,
+        "absoluteStrouhalDifference": 0.0072500000000000064
+      },
+      "inlet7To10p5": {
+        "relativeDifferences": {
+          "meanDrag": 0.008100180206508677,
+          "liftRms": 0.011271150589558672,
+          "strouhal": 0.003906250000000003
+        },
+        "maximumRelativeLoadDifference": 0.011271150589558672,
+        "absoluteStrouhalDifference": 0.0007500000000000007
+      },
+      "inlet10p5To14": {
+        "relativeDifferences": {
+          "meanDrag": 0.0006076581828489502,
+          "liftRms": 0.0012014564559940052,
+          "strouhal": 0
+        },
+        "maximumRelativeLoadDifference": 0.0012014564559940052,
+        "absoluteStrouhalDifference": 0
+      },
+      "sourceTo14": {
+        "relativeDifferences": {
+          "meanDrag": 0.07813730779484286,
+          "liftRms": 0.06945261036458066,
+          "strouhal": 0.040150564617314956
+        },
+        "maximumRelativeLoadDifference": 0.07813730779484286,
+        "absoluteStrouhalDifference": 0.008000000000000007
+      }
+    }
+  ],
+  "gates": {
+    "numericalStabilityPassed": true,
+    "allCasesMature": true,
+    "referencesReproduced": true,
+    "fineInletChangesPassed": true,
+    "targetHitCaseIds": [],
+    "currentZouHeInletDistanceBracketRun": true,
+    "sourceCharacteristicNonreflectionRun": false,
+    "sourceFineResolutionMatched": false,
+    "machMatrixRun": false,
+    "gciRun": false,
+    "prescribedMotionLongRun": false
+  },
+  "decision": {
+    "code": "NO-GO-A8I-INLET-DISTANCE-SETTLED-REFERENCE-MISMATCH-NONREFLECTING-NOT-RUN",
+    "interpretation": "当前长入口括号末段低于 5%，但文献载荷仍失配且来源特征非反射边界未运行。"
+  },
+  "explicitNonClaims": [
+    "a longer Zou-He inlet is not a source characteristic nonreflection boundary",
+    "not a comparison of alternative boundary algorithms",
+    "not source-level N_D=50 near-wall resolution or GCI",
+    "not parameter calibration",
+    "not prescribed-motion, weak-FSI, apparatus, or experimental validation"
+  ],
+  "cases": [
+    {
+      "definition": {
+        "id": "d16-mask-0p50-inlet-7p0d",
+        "group": "mask-half-thickness",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.5,
+        "etaHat": 0.00625,
+        "domainLengthDiameters": 26.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 7
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 424,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.5,
+        "outerBoundary": "open-periodic-crossflow",
+        "domainLengthDiameters": 26.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 7,
+        "downstreamDiameters": 19.5
+      },
+      "body": {
+        "centerX": 112,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.6474285242848874,
+        "meanLift": 0.016164999007650626,
+        "dragRms": 1.6494338001194193,
+        "liftRms": 0.547410844197499,
+        "dragFluctuationRms": 0.08130878395900293,
+        "liftFluctuationRms": 0.5471721165703733,
+        "strouhal": 0.19400000000000003,
+        "spectralLiftAmplitude": 0.77565070709655
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.6472962923097874,
+        "meanLift": 0.023595110992123337,
+        "dragRms": 1.6496849148690416,
+        "liftRms": 0.5426288073611869,
+        "dragFluctuationRms": 0.08874256976728873,
+        "liftFluctuationRms": 0.5421155719175516
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.6475607562599948,
+        "meanLift": 0.008734887023177616,
+        "dragRms": 1.6491826471335107,
+        "liftRms": 0.5521514666391906,
+        "dragFluctuationRms": 0.07312289681277034,
+        "liftFluctuationRms": 0.5520823705394892
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.00016051848115619438,
+        "liftRmsHalfDrift": 0.01724646198255297,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.3604285242848875,
+        "liftRmsError": 0.10441084419749896,
+        "strouhalError": 0.0009999999999999731,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 10.018841590635217,
+      "extrema": {
+        "minimumDensity": 0.9494036882400725,
+        "maximumDensity": 1.0543822366017077,
+        "maximumSpeed": 0.09567984521212249,
+        "maximumMach": 0.1657223531677219,
+        "maximumDensityDeviation": 0.05438223660170771
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p50-inlet-10p5d",
+        "group": "mask-half-thickness",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.5,
+        "etaHat": 0.00625,
+        "domainLengthDiameters": 30,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 10.5
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 480,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.5,
+        "outerBoundary": "open-periodic-crossflow",
+        "domainLengthDiameters": 30,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 10.5,
+        "downstreamDiameters": 19.5
+      },
+      "body": {
+        "centerX": 168,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.6333090940886776,
+        "meanLift": 0.018130426283817218,
+        "dragRms": 1.6345843741409989,
+        "liftRms": 0.5415265092548438,
+        "dragFluctuationRms": 0.06455601717249523,
+        "liftFluctuationRms": 0.5412229188315141,
+        "strouhal": 0.19325000000000003,
+        "spectralLiftAmplitude": 0.7667931717946077
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.630128646352618,
+        "meanLift": 0.02682967879727951,
+        "dragRms": 1.6318282051636037,
+        "liftRms": 0.5340710701449133,
+        "dragFluctuationRms": 0.07445728646743746,
+        "liftFluctuationRms": 0.5333967344307312
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.636489541824733,
+        "meanLift": 0.009431173770354817,
+        "dragRms": 1.6373359035959558,
+        "liftRms": 0.5488806905746821,
+        "dragFluctuationRms": 0.052638775656860745,
+        "liftFluctuationRms": 0.5487996587526748
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.003886914831745558,
+        "liftRmsHalfDrift": 0.026981492852778392,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.3463090940886777,
+        "liftRmsError": 0.0985265092548438,
+        "strouhalError": 0.0017499999999999738,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 9.739344613144644,
+      "extrema": {
+        "minimumDensity": 0.9494036882400725,
+        "maximumDensity": 1.0543822366017077,
+        "maximumSpeed": 0.09567984521212249,
+        "maximumMach": 0.1657223531677219,
+        "maximumDensityDeviation": 0.05438223660170771
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p50-inlet-14p0d",
+        "group": "mask-half-thickness",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.5,
+        "etaHat": 0.00625,
+        "domainLengthDiameters": 33.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 14
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 536,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.5,
+        "outerBoundary": "open-periodic-crossflow",
+        "domainLengthDiameters": 33.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 14,
+        "downstreamDiameters": 19.5
+      },
+      "body": {
+        "centerX": 224,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.6367408182572887,
+        "meanLift": 0.012673344783444895,
+        "dragRms": 1.6386831142392655,
+        "liftRms": 0.5428877176392163,
+        "dragFluctuationRms": 0.07976116061945605,
+        "liftFluctuationRms": 0.5427397721703442,
+        "strouhal": 0.19325000000000003,
+        "spectralLiftAmplitude": 0.7731404996025821
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.634421546090997,
+        "meanLift": 0.02407201387720572,
+        "dragRms": 1.6367861871778342,
+        "liftRms": 0.5377922440956765,
+        "dragFluctuationRms": 0.08795016890075351,
+        "liftFluctuationRms": 0.5372532326169465
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.639060090423589,
+        "meanLift": 0.0012746756896839183,
+        "dragRms": 1.6405778479699342,
+        "liftRms": 0.547935808391431,
+        "dragFluctuationRms": 0.07055278329230932,
+        "liftFluctuationRms": 0.5479343257357191
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.002830002609235195,
+        "liftRmsHalfDrift": 0.01851232232026014,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.34974081825728875,
+        "liftRmsError": 0.09988771763921628,
+        "strouhalError": 0.0017499999999999738,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 9.842009306126176,
+      "extrema": {
+        "minimumDensity": 0.9494036882400725,
+        "maximumDensity": 1.0543822366017077,
+        "maximumSpeed": 0.09567984521212249,
+        "maximumMach": 0.1657223531677219,
+        "maximumDensityDeviation": 0.05438223660170771
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p75-inlet-7p0d",
+        "group": "baseline",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.75,
+        "etaHat": 0.00625,
+        "domainLengthDiameters": 26.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 7
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 424,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.75,
+        "outerBoundary": "open-periodic-crossflow",
+        "domainLengthDiameters": 26.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 7,
+        "downstreamDiameters": 19.5
+      },
+      "body": {
+        "centerX": 112,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.7135326794933434,
+        "meanLift": -0.08273687406396416,
+        "dragRms": 1.715568164077072,
+        "liftRms": 0.602431391317827,
+        "dragFluctuationRms": 0.08354568751956663,
+        "liftFluctuationRms": 0.5967228761454133,
+        "strouhal": 0.19200000000000003,
+        "spectralLiftAmplitude": 0.8512508597065686
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.717251949606347,
+        "meanLift": -0.06371493653900678,
+        "dragRms": 1.7197127880245275,
+        "liftRms": 0.59926879255515,
+        "dragFluctuationRms": 0.09196637901046015,
+        "liftFluctuationRms": 0.5958720438083489
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.709813409380344,
+        "meanLift": -0.10175881158891993,
+        "dragRms": 1.7114135028959105,
+        "liftRms": 0.6055774737882473,
+        "dragFluctuationRms": 0.07398839772282988,
+        "liftFluctuationRms": 0.5969666833448648
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.00433165338825677,
+        "liftRmsHalfDrift": 0.010417628637394327,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.4265326794933435,
+        "liftRmsError": 0.15943139131782696,
+        "strouhalError": 0.002999999999999975,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 13.116438372812537,
+      "extrema": {
+        "minimumDensity": 0.9495031582173686,
+        "maximumDensity": 1.0545180808672614,
+        "maximumSpeed": 0.09574885232244111,
+        "maximumMach": 0.16584187698887728,
+        "maximumDensityDeviation": 0.0545180808672614
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p75-inlet-10p5d",
+        "group": "baseline",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.75,
+        "etaHat": 0.00625,
+        "domainLengthDiameters": 30,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 10.5
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 480,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.75,
+        "outerBoundary": "open-periodic-crossflow",
+        "domainLengthDiameters": 30,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 10.5,
+        "downstreamDiameters": 19.5
+      },
+      "body": {
+        "centerX": 168,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.6996527559997057,
+        "meanLift": -0.09499919555456814,
+        "dragRms": 1.7021429830137658,
+        "liftRms": 0.5956412963864064,
+        "dragFluctuationRms": 0.09203935921983898,
+        "liftFluctuationRms": 0.5880167572483477,
+        "strouhal": 0.19125000000000003,
+        "spectralLiftAmplitude": 0.8360539925568601
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.698644513788004,
+        "meanLift": -0.07748853198460223,
+        "dragRms": 1.7016052240454895,
+        "liftRms": 0.5993859681368177,
+        "dragFluctuationRms": 0.10033520955674423,
+        "liftFluctuationRms": 0.5943560096526163
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.7006609982113985,
+        "meanLift": -0.11250985912453389,
+        "dragRms": 1.7026805721412062,
+        "liftRms": 0.5918729332571713,
+        "dragFluctuationRms": 0.08290536719469038,
+        "liftFluctuationRms": 0.581080976045703
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.0011857062786265356,
+        "liftRmsHalfDrift": 0.012534552490443749,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.41265275599970574,
+        "liftRmsError": 0.1526412963864064,
+        "strouhalError": 0.0037499999999999756,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 12.819087529654269,
+      "extrema": {
+        "minimumDensity": 0.9495031582173686,
+        "maximumDensity": 1.0545180808672614,
+        "maximumSpeed": 0.09574885232244111,
+        "maximumMach": 0.16584187698887728,
+        "maximumDensityDeviation": 0.0545180808672614
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-mask-0p75-inlet-14p0d",
+        "group": "baseline",
+        "diameterCells": 16,
+        "latticeVelocity": 0.05,
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "phaseOffsetX": 0,
+        "phaseOffsetY": 0,
+        "maskHalfThickness": 0.75,
+        "etaHat": 0.00625,
+        "domainLengthDiameters": 33.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 14
+      },
+      "numericalIdentity": {
+        "diameterCells": 16,
+        "nx": 536,
+        "ny": 160,
+        "latticeVelocity": 0.05,
+        "nominalLatticeMach": 0.08660254037844385,
+        "relaxationTime": 0.512972972972973,
+        "penalizationTimeSteps": 2,
+        "etaHat": 0.00625,
+        "maskHalfThickness": 0.75,
+        "outerBoundary": "open-periodic-crossflow",
+        "domainLengthDiameters": 33.5,
+        "domainWidthDiameters": 10,
+        "upstreamDiameters": 14,
+        "downstreamDiameters": 19.5
+      },
+      "body": {
+        "centerX": 224,
+        "centerY": 79.67320508075689,
+        "radius": 8,
+        "velocityX": 0,
+        "velocityY": 0
+      },
+      "window": {
+        "fixedConvectiveDuration": 80,
+        "discardConvectiveTime": 40,
+        "samples": 12800
+      },
+      "metrics": {
+        "samples": 12800,
+        "meanDrag": 1.7006861918806602,
+        "meanLift": -0.087485049130097,
+        "dragRms": 1.703121945542412,
+        "liftRms": 0.5949256593054063,
+        "dragFluctuationRms": 0.09105403963914628,
+        "liftFluctuationRms": 0.5884580752089952,
+        "strouhal": 0.19125000000000003,
+        "spectralLiftAmplitude": 0.8383020887990779
+      },
+      "firstHalf": {
+        "samples": 6400,
+        "meanDrag": 1.6958721321285481,
+        "meanLift": -0.06577355092605564,
+        "dragRms": 1.699061958126956,
+        "liftRms": 0.5951701754010674,
+        "dragFluctuationRms": 0.10406367773605879,
+        "liftFluctuationRms": 0.5915246213688117
+      },
+      "secondHalf": {
+        "samples": 6400,
+        "meanDrag": 1.7055002516327706,
+        "meanLift": -0.10919654733413912,
+        "dragRms": 1.7071722775461544,
+        "liftRms": 0.5946810426716215,
+        "dragFluctuationRms": 0.07553857890287895,
+        "liftFluctuationRms": 0.5845696336308527
+      },
+      "maturity": {
+        "meanDragHalfDrift": 0.005645334555069664,
+        "liftRmsHalfDrift": 0.0008218367614209488,
+        "passed": true
+      },
+      "literature": {
+        "meanDragError": 0.41368619188066025,
+        "liftRmsError": 0.1519256593054063,
+        "strouhalError": 0.0037499999999999756,
+        "meanDragPassed": false,
+        "liftRmsPassed": false,
+        "strouhalPassed": true,
+        "passed": false
+      },
+      "literatureErrorScore": 12.821865320248357,
+      "extrema": {
+        "minimumDensity": 0.9495031582173686,
+        "maximumDensity": 1.0545180808672614,
+        "maximumSpeed": 0.09574885232244111,
+        "maximumMach": 0.16584187698887728,
+        "maximumDensityDeviation": 0.0545180808672614
+      }
+    }
+  ]
+}

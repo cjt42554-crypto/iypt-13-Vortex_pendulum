@@ -40,6 +40,7 @@ interface CliOptions {
   outputPath: string;
   markdownPath: string;
   baselineReferencePath: string;
+  renderReportPath: string | null;
 }
 
 interface ProfileSettings {
@@ -132,6 +133,9 @@ function parseCli(): CliOptions {
     outputPath: resolve(parseOption("output") ?? `${defaultStem}.json`),
     markdownPath: resolve(parseOption("markdown") ?? `${defaultStem}.md`),
     baselineReferencePath: resolve(parseOption("baseline-reference") ?? defaultReference),
+    renderReportPath: parseOption("render-report") === undefined
+      ? null
+      : resolve(parseOption("render-report")!),
   };
 }
 
@@ -420,26 +424,32 @@ function renderMarkdown(report: any): string {
     `- 总判定：**${report.decision.code}**`,
     `- 结论：${report.decision.interpretation}`,
     "",
-    "## 算例",
+    "## 离散设置",
     "",
-    "| variant | group | dx | dy | mask half | eta hat | mean Cd | CL rms | St | mature | literature | score |",
-    "|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|",
+    "| variant | group | dx | dy | mask half | eta hat |",
+    "|---|---|---:|---:|---:|---:|",
   ];
   for (const item of report.cases) {
     lines.push(
-      `| ${item.variant.id} | ${item.variant.group} | ${item.variant.phaseOffsetX.toFixed(2)} | ${item.variant.phaseOffsetY.toFixed(2)} | ${item.variant.maskHalfThickness.toFixed(2)} | ${item.variant.etaHat.toExponential(4)} | ${item.metrics.meanDrag.toFixed(6)} | ${item.metrics.liftRms.toFixed(6)} | ${item.metrics.strouhal.toFixed(5)} | ${item.maturity.passed ? "PASS" : "FAIL"} | ${item.literature.passed ? "PASS" : "FAIL"} | ${item.literatureErrorScore.toFixed(3)} |`,
+      `| ${item.variant.id} | ${item.variant.group} | ${item.variant.phaseOffsetX.toFixed(2)} | ${item.variant.phaseOffsetY.toFixed(2)} | ${item.variant.maskHalfThickness.toFixed(2)} | ${item.variant.etaHat.toExponential(4)} |`,
     );
   }
   lines.push(
     "",
-    "## 因素幅度",
+    "## 载荷与门",
     "",
-    "| group | max relative load deviation | max absolute St shift | cases |",
-    "|---|---:|---:|---|",
+    "| variant | mean Cd | CL rms | St | mature | literature | score |",
+    "|---|---:|---:|---:|---|---|---:|",
   );
+  for (const item of report.cases) {
+    lines.push(
+      `| ${item.variant.id} | ${item.metrics.meanDrag.toFixed(6)} | ${item.metrics.liftRms.toFixed(6)} | ${item.metrics.strouhal.toFixed(5)} | ${item.maturity.passed ? "PASS" : "FAIL"} | ${item.literature.passed ? "PASS" : "FAIL"} | ${item.literatureErrorScore.toFixed(3)} |`,
+    );
+  }
+  lines.push("", "## 因素幅度", "");
   for (const item of report.groupSummaries) {
     lines.push(
-      `| ${item.group} | ${item.maximumRelativeLoadDeviation.toExponential(4)} | ${item.maximumAbsoluteStrouhalShift.toExponential(4)} | ${item.caseIds.join(", ")} |`,
+      `- ${item.group}：最大相对载荷偏差 ${item.maximumRelativeLoadDeviation.toExponential(4)}；最大绝对 St 偏移 ${item.maximumAbsoluteStrouhalShift.toExponential(4)}；算例 ${item.caseIds.join(", ")}。`,
     );
   }
   lines.push(
@@ -461,6 +471,17 @@ function renderMarkdown(report: any): string {
 }
 
 const cli = parseCli();
+if (cli.renderReportPath !== null) {
+  const existingReport = JSON.parse(await readFile(cli.renderReportPath, "utf8"));
+  await mkdir(dirname(cli.markdownPath), { recursive: true });
+  await writeFile(cli.markdownPath, renderMarkdown(existingReport), "utf8");
+  process.stdout.write(`${JSON.stringify({
+    source: cli.renderReportPath,
+    markdown: cli.markdownPath,
+    decision: existingReport.decision,
+  }, null, 2)}\n`);
+  process.exit(0);
+}
 const settings = settingsFor(cli.profile);
 const variants = variantsForProfile(cli.profile);
 const cases: SensitivityCaseResult[] = [];

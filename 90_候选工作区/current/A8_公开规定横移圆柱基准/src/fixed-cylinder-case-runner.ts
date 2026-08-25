@@ -4,11 +4,8 @@ import {
   type LbmBodyKinematics,
 } from "../../../../02_模拟程序/src/solvers/highFidelity/lbm";
 import {
-  DOMAIN_LENGTH_DIAMETERS,
-  DOMAIN_WIDTH_DIAMETERS,
   FIXED_TARGET,
   REYNOLDS,
-  UPSTREAM_DIAMETERS,
 } from "./benchmark-contract.ts";
 import {
   dominantStrouhal,
@@ -22,12 +19,19 @@ import {
   relativeDifference,
   type FixedSensitivityVariant,
 } from "./fixed-sensitivity-contract.ts";
+import {
+  resolveFixedCylinderGeometry,
+  type ResolvedFixedCylinderGeometry,
+} from "./fixed-cylinder-geometry.ts";
 
 export interface FixedCylinderCaseDefinition extends FixedSensitivityVariant {
   diameterCells: number;
   latticeVelocity: number;
   fixedConvectiveDuration: number;
   discardConvectiveTime: number;
+  domainLengthDiameters?: number;
+  domainWidthDiameters?: number;
+  upstreamDiameters?: number;
 }
 
 export interface FixedCylinderRunExtrema {
@@ -60,6 +64,11 @@ export interface FixedCylinderCaseResult {
     penalizationTimeSteps: number;
     etaHat: number;
     maskHalfThickness: number;
+    outerBoundary: "open-periodic-crossflow";
+    domainLengthDiameters: number;
+    domainWidthDiameters: number;
+    upstreamDiameters: number;
+    downstreamDiameters: number;
   };
   body: LbmBodyKinematics;
   window: {
@@ -91,15 +100,18 @@ interface FieldSnapshot {
   maximumSpeed: number;
 }
 
-function createSolver(definition: FixedCylinderCaseDefinition): D2Q9MrtBrinkmanSolver {
+function createSolver(
+  definition: FixedCylinderCaseDefinition,
+  geometry: ResolvedFixedCylinderGeometry,
+): D2Q9MrtBrinkmanSolver {
   const relaxationTime = 0.5
     + 3 * definition.latticeVelocity * definition.diameterCells / REYNOLDS;
   const penalizationTimeSteps = definition.etaHat
     * definition.diameterCells
     / definition.latticeVelocity;
   const solver = new D2Q9MrtBrinkmanSolver({
-    nx: DOMAIN_LENGTH_DIAMETERS * definition.diameterCells,
-    ny: DOMAIN_WIDTH_DIAMETERS * definition.diameterCells,
+    nx: geometry.nx,
+    ny: geometry.ny,
     relaxationTime,
     penalizationTimeSteps,
     outerBoundary: "open-periodic-crossflow",
@@ -112,9 +124,11 @@ function createSolver(definition: FixedCylinderCaseDefinition): D2Q9MrtBrinkmanS
 function fixedBody(
   solver: D2Q9MrtBrinkmanSolver,
   definition: FixedCylinderCaseDefinition,
+  geometry: ResolvedFixedCylinderGeometry,
 ): LbmBodyKinematics {
   return {
-    centerX: UPSTREAM_DIAMETERS * definition.diameterCells + definition.phaseOffsetX,
+    centerX: geometry.upstreamDiameters * definition.diameterCells
+      + definition.phaseOffsetX,
     centerY: 0.5 * (solver.ny - 1)
       + BASELINE_PHASE_OFFSET_Y
       + definition.phaseOffsetY,
@@ -217,8 +231,9 @@ export function runFixedCylinderCase(
   definition: FixedCylinderCaseDefinition,
   onProgress: ((completed: number, total: number) => void) | null = null,
 ): FixedCylinderCaseResult {
-  const solver = createSolver(definition);
-  const body = fixedBody(solver, definition);
+  const geometry = resolveFixedCylinderGeometry(definition);
+  const solver = createSolver(definition, geometry);
+  const body = fixedBody(solver, definition, geometry);
   const totalSteps = Math.round(
     definition.fixedConvectiveDuration
       * definition.diameterCells
@@ -289,6 +304,11 @@ export function runFixedCylinderCase(
       penalizationTimeSteps: solver.penalizationTimeSteps,
       etaHat: definition.etaHat,
       maskHalfThickness: definition.maskHalfThickness,
+      outerBoundary: "open-periodic-crossflow",
+      domainLengthDiameters: geometry.domainLengthDiameters,
+      domainWidthDiameters: geometry.domainWidthDiameters,
+      upstreamDiameters: geometry.upstreamDiameters,
+      downstreamDiameters: geometry.downstreamDiameters,
     },
     body,
     window: {
