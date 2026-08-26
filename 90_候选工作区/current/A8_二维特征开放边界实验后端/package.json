@@ -28,7 +28,9 @@
     "formal-inlet-mechanism": "node --experimental-strip-types scripts/run-formal-inlet-mechanism.mjs",
     "assert:formal-inlet-mechanism-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-mechanism-artifact.mjs",
     "formal-inlet-qualification": "node --experimental-strip-types scripts/run-formal-inlet-qualification.mjs",
-    "assert:formal-inlet-qualification-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-qualification-artifact.mjs"
+    "assert:formal-inlet-qualification-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-qualification-artifact.mjs",
+    "formal-incoming-characteristic": "node --experimental-strip-types scripts/run-formal-incoming-characteristic.mjs",
+    "assert:formal-incoming-characteristic-artifact": "node --experimental-strip-types scripts/assert-formal-incoming-characteristic-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
