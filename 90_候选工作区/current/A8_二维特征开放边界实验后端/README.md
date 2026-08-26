@@ -14,7 +14,8 @@
 - A8I 正式核只读缓启动敏感性：`NO-GO-A8I-READONLY-FORMAL-MRT-BRINKMAN-RAMP-SENSITIVITY-INTERNAL-GATES`；
 - A8J 正式核只读无物体对照：`NO-GO-A8J-READONLY-FORMAL-MRT-NO-BODY-RAMP-INTERNAL-GATES`；
 - A8K 正式 MRT 边界侧因果审计：`PASS-A8K-FORMAL-MRT-INLET-SIDE-CAUSAL-PROBE-CANDIDATE-ONLY`；
-- A8L 正式 MRT 入口内部机制审计：`PASS-A8L-FORMAL-MRT-INLET-MECHANISM-AUDIT-CANDIDATE-ONLY`。
+- A8L 正式 MRT 入口内部机制审计：`PASS-A8L-FORMAL-MRT-INLET-MECHANISM-AUDIT-CANDIDATE-ONLY`；
+- A8M 证据完整性：`PASS-A8M-EVIDENCE-COMPLETE-CANDIDATE-ONLY-RETURN-TO-PRO`；S2 资格标记为 `s2ReadyForProSelection=false`。
 
 A8C 的 NO-GO 不撤销 A8B 冻结中心点的 PASS；它否定的是把该单点结论外推到本轮完整参数包络。81 个算例中有 54 个通过，27 个高入口速度算例因共同的启动密度稳定门失败。全部 81 个算例的 CBC 探针与场误差改善门仍通过，因此该结果不能简写成“CBC 出口性能失败”。
 
@@ -23,6 +24,8 @@ A8D--A8G 把候选核的高速度失败定位为启动路径主导：20D 半余�
 A8H--A8J 直接只读导入正式 MRT--Brinkman 源码，得到与候选核相反且更严格的结论：正式核的均匀冲击初场 9/9 稳定，而从静止作 5D 缓启动 0/9 稳定；缓启动延长到 20D 仍为 0/9。移除 Brinkman 物体后，20D 缓启动仍为 0/9，最大密度偏差为 0.148606 至 0.148615，超过冻结的 0.12 门。由此可判入口/开放边界启动路径在无物体时已独立贡献失败，但还不能在不改变正式数值方法的前提下进一步区分入口与出口机制。
 
 A8K 在候选区保持正式碰撞和迁移只读，交叉替换入口与出口，把冻结失败定位到入口侧。A8L 随后用八种可解释入口机制完成 72 个算例；九个角点的通过向量均为 `01000011`，只有密度归一化 Zou--He、固定密度全平衡和固定密度全正则化三种策略通过。该结果把冻结稳定杠杆进一步定位到入口密度控制，并说明正则化非平衡应力在固定密度全状态族内不是稳定必要条件。它仍不批准正式接入，也不建立精确离散质量守恒、反射性能或物理准确性。
+
+A8M 按 Pro 裁决进一步执行精确逐人口质量账、三种启动协议和上游声学反射资格。108/108 个启动算例与 24/24 条声学轨迹完整运行，A8L 36 个锚和 A8H 9 个锚均零差，正式人口影子与质量恒等式全部闭合，独立复跑字节一致。S2 虽为 27/27 启动稳定，却为 0/27 质量资格和 0/3 声学资格；特征振幅反射比为 5.211%--6.640%，超过冻结的 5% 门，且约 78% 的绝对适配器改写落在非入射方向。legacy 在均匀目标流和固定物体已建立来流协议下各 9/9 稳定，故保留为替代路线。A8M 不支持选择 S2，正式程序继续只读。
 
 该 PASS 仅说明本候选实现通过冻结的低成本边界资格门。它不表示：
 
@@ -46,7 +49,7 @@ A8K 在候选区保持正式碰撞和迁移只读，交叉替换入口与出口�
 
 它是独立实验核，不是 `02_模拟程序/src/solvers/highFidelity/lbm.ts` 的复制品。正式核采用 MRT--Brinkman；本候选使用正则化 BGK 与格点反弹，因此任何通过结论都不能直接转移到正式核。
 
-A8H--A8L 的审计代码例外地从候选区直接导入上述正式源文件，但只调用其公开接口，不复制、不修改正式源码。A8K--A8L 的候选边界覆盖使用公开 checkpoint 接口建立因果证据，禁止原样迁入正式步进路径。审计合同锁定该源文件 SHA-256 为 `6949dd9f215595bde4162078f9cb026456bcbed83fd2ebd08131001e03ec2dc2`；这只建立被测代码身份，不等于授权接入任何新边界。
+A8H--A8M 的审计代码例外地从候选区直接导入上述正式源文件，但只调用其公开接口，不复制、不修改正式源码。A8K--A8M 的候选边界覆盖和影子账本使用公开 checkpoint 接口建立因果及质量证据，禁止原样迁入正式步进路径。审计合同锁定该源文件 SHA-256 为 `6949dd9f215595bde4162078f9cb026456bcbed83fd2ebd08131001e03ec2dc2`；这只建立被测代码身份，不等于授权接入任何新边界。
 
 ## 运行
 
@@ -77,6 +80,8 @@ npm run formal-boundary-factorization
 npm run assert:formal-boundary-factorization-artifact
 npm run formal-inlet-mechanism
 npm run assert:formal-inlet-mechanism-artifact
+npm run formal-inlet-qualification
+npm run assert:formal-inlet-qualification-artifact
 ```
 
 研究输出：
@@ -91,8 +96,9 @@ npm run assert:formal-inlet-mechanism-artifact
 - A8I：`a8-formal-mrt-brinkman-ramp-sensitivity-matrix.json`；
 - A8J：`a8-formal-mrt-no-body-ramp-matrix.json`；
 - A8K：`a8-formal-mrt-boundary-factorization-matrix.json.gz`；
-- A8L：`a8-formal-mrt-inlet-mechanism-matrix.json.gz`。
+- A8L：`a8-formal-mrt-inlet-mechanism-matrix.json.gz`；
+- A8M：`a8-formal-mrt-inlet-qualification.json.gz`。
 
 这些文件均位于 `验证与复现/artifacts/`，并各有同名 `.sha256` 文件。A8C、A8E、A8H、A8I 和 A8J 的研究命令因有效 NO-GO 按设计返回退出码 2；JSON 完整写出后，必须再运行相应 `assert:*` 命令区分“有效 NO-GO 证据”与产物损坏。
 
-方程、A8B--A8L 冻结门、结果和结论上限见 `00_二维特征开放边界合同与裁决.md`、`01_A8K_正式MRT边界因子审计.md` 和 `03_A8L_正式MRT入口内部机制审计.md`。当前停止在 A8L 后的网页版 Pro 裁决门：未获明确批准前，不得修改正式程序，不得把候选 wrapper 迁入正式核，也不得把冻结数值稳定 PASS 扩写为物理或实验 PASS。
+方程、A8B--A8M 冻结门、结果和结论上限见 `00_二维特征开放边界合同与裁决.md`、`03_A8L_正式MRT入口内部机制审计.md` 和 `06_A8M_入口质量反射与启动资格报告.md`。当前按 A8M 合同停止并再次交回网页版 Pro：不得选择 S2，不得修改正式程序，不得把候选 wrapper 或影子账本迁入正式核，也不得把证据完整性 PASS 扩写为算法、物理或实验 PASS。
