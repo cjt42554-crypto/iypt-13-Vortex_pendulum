@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { buildStartupAuditCases } from "../src/startup-audit.ts";
 import { STARTUP_PROTOCOLS } from "../src/startup-audit-contract.ts";
+import { RAMP_SENSITIVITY_CONTRACT } from "../src/ramp-sensitivity-contract.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -82,4 +83,27 @@ test("solver inspection reports deterministic fluid-cell extrema locations", () 
     assert.ok(location.y >= 0 && location.y < solver.ny);
     assert.equal(solver.isSolid(location.x, location.y), false);
   }
+});
+
+test("A8E ramp-duration sensitivity contract is frozen before execution", () => {
+  assert.equal(
+    RAMP_SENSITIVITY_CONTRACT.format,
+    "VP-A8E-CBC2D-RAMP-SENSITIVITY-CONTRACT-v1",
+  );
+  assert.equal(RAMP_SENSITIVITY_CONTRACT.matrix.inletVelocityLattice, 0.08);
+  assert.deepEqual(
+    RAMP_SENSITIVITY_CONTRACT.matrix.rampDurationDiameters,
+    [0, 0.25, 0.5, 1, 2, 5, 10, 20],
+  );
+  assert.equal(RAMP_SENSITIVITY_CONTRACT.matrix.initialField, "uniform-rest");
+  assert.equal(
+    RAMP_SENSITIVITY_CONTRACT.matrix.zeroDurationIdentity,
+    "boundary-step-from-rest",
+  );
+  assert.equal(RAMP_SENSITIVITY_CONTRACT.gates.maximumDensityDeviation, 0.12);
+  assert.equal(RAMP_SENSITIVITY_CONTRACT.gates.maximumMach, 0.30);
+  assert.equal(
+    RAMP_SENSITIVITY_CONTRACT.interpretationRules.formalIntegrationUnlocked,
+    false,
+  );
 });
