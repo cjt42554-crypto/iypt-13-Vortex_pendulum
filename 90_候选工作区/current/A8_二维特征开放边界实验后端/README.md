@@ -5,9 +5,20 @@
 当前分层裁决：
 
 - A8B 单点边界资格：`PASS-A8B-CBC2D-BOUNDARY-QUALIFICATION-CANDIDATE-ONLY`；
-- A8C 冻结稳健性矩阵：`NO-GO-A8C-CBC2D-FROZEN-ROBUSTNESS-MATRIX`。
+- A8C 冻结稳健性矩阵：`NO-GO-A8C-CBC2D-FROZEN-ROBUSTNESS-MATRIX`；
+- A8D 候选启动审计：`PASS-A8D-CBC2D-STARTUP-AUDIT-INTERNAL-GATES-CANDIDATE-ONLY`；
+- A8E 候选缓启动时长敏感性：`NO-GO-A8E-CBC2D-RAMP-SENSITIVITY-INTERNAL-GATES`；
+- A8F 候选碰撞核对照：`PASS-A8F-CBC2D-COLLISION-CONTRAST-INTERNAL-GATES-CANDIDATE-ONLY`；
+- A8G 候选格点相位对照：`PASS-A8G-CBC2D-LATTICE-PHASE-INTERNAL-GATES-CANDIDATE-ONLY`；
+- A8H 正式核只读启动对照：`NO-GO-A8H-READONLY-FORMAL-MRT-BRINKMAN-STARTUP-INTERNAL-GATES`；
+- A8I 正式核只读缓启动敏感性：`NO-GO-A8I-READONLY-FORMAL-MRT-BRINKMAN-RAMP-SENSITIVITY-INTERNAL-GATES`；
+- A8J 正式核只读无物体对照：`NO-GO-A8J-READONLY-FORMAL-MRT-NO-BODY-RAMP-INTERNAL-GATES`。
 
 A8C 的 NO-GO 不撤销 A8B 冻结中心点的 PASS；它否定的是把该单点结论外推到本轮完整参数包络。81 个算例中有 54 个通过，27 个高入口速度算例因共同的启动密度稳定门失败。全部 81 个算例的 CBC 探针与场误差改善门仍通过，因此该结果不能简写成“CBC 出口性能失败”。
+
+A8D--A8G 把候选核的高速度失败定位为启动路径主导：20D 半余弦缓启动在候选核的 9 个高速度角点全部稳定，冲击启动全部失败；该分类不因换成 raw BGK 或改变 16 个圆柱亚格点相位而改变。A8E 的严格单调门因两个短时长角点的小幅反向变化而失败，所以不能把“缓启动有利”提升为已资格化的唯一时长规律。
+
+A8H--A8J 直接只读导入正式 MRT--Brinkman 源码，得到与候选核相反且更严格的结论：正式核的均匀冲击初场 9/9 稳定，而从静止作 5D 缓启动 0/9 稳定；缓启动延长到 20D 仍为 0/9。移除 Brinkman 物体后，20D 缓启动仍为 0/9，最大密度偏差为 0.148606 至 0.148615，超过冻结的 0.12 门。由此可判入口/开放边界启动路径在无物体时已独立贡献失败，但还不能在不改变正式数值方法的前提下进一步区分入口与出口机制。
 
 该 PASS 仅说明本候选实现通过冻结的低成本边界资格门。它不表示：
 
@@ -31,6 +42,8 @@ A8C 的 NO-GO 不撤销 A8B 冻结中心点的 PASS；它否定的是把该单�
 
 它是独立实验核，不是 `02_模拟程序/src/solvers/highFidelity/lbm.ts` 的复制品。正式核采用 MRT--Brinkman；本候选使用正则化 BGK 与格点反弹，因此任何通过结论都不能直接转移到正式核。
 
+A8H--A8J 的审计代码例外地从候选区直接导入上述正式源文件，但只调用其公开接口，不复制、不修改正式源码。审计合同锁定该源文件 SHA-256 为 `6949dd9f215595bde4162078f9cb026456bcbed83fd2ebd08131001e03ec2dc2`；这只建立被测代码身份，不等于授权接入 CBC。
+
 ## 运行
 
 ```bash
@@ -42,15 +55,34 @@ npm run qualify
 npm run assert:artifact
 npm run robustness
 npm run assert:robustness-artifact
+npm run startup-audit
+npm run assert:startup-audit-artifact
+npm run ramp-sensitivity
+npm run assert:ramp-sensitivity-artifact
+npm run collision-contrast
+npm run assert:collision-contrast-artifact
+npm run lattice-phase
+npm run assert:lattice-phase-artifact
+npm run formal-kernel-startup
+npm run assert:formal-kernel-startup-artifact
+npm run formal-ramp-sensitivity
+npm run assert:formal-ramp-sensitivity-artifact
+npm run formal-no-body-ramp
+npm run assert:formal-no-body-ramp-artifact
 ```
 
 研究输出：
 
-- `验证与复现/artifacts/a8-cbc2d-boundary-qualification-research.json`；
-- `验证与复现/artifacts/a8-cbc2d-boundary-qualification-research.md`；
-- `验证与复现/artifacts/a8-cbc2d-boundary-qualification-research.sha256`。
-- `验证与复现/artifacts/a8-cbc2d-boundary-robustness-matrix.json`；
-- `验证与复现/artifacts/a8-cbc2d-boundary-robustness-matrix.md`；
-- `验证与复现/artifacts/a8-cbc2d-boundary-robustness-matrix.sha256`。
+- A8B：`a8-cbc2d-boundary-qualification-research.json`；
+- A8C：`a8-cbc2d-boundary-robustness-matrix.json`；
+- A8D：`a8-cbc2d-startup-audit-matrix.json`；
+- A8E：`a8-cbc2d-ramp-sensitivity-matrix.json`；
+- A8F：`a8-cbc2d-collision-contrast-matrix.json`；
+- A8G：`a8-cbc2d-lattice-phase-matrix.json`；
+- A8H：`a8-formal-mrt-brinkman-startup-matrix.json`；
+- A8I：`a8-formal-mrt-brinkman-ramp-sensitivity-matrix.json`；
+- A8J：`a8-formal-mrt-no-body-ramp-matrix.json`。
 
-方程、A8B/A8C 冻结门、结果和结论上限见 `00_二维特征开放边界合同与裁决.md`。`npm run robustness` 在 A8C 为 NO-GO 时按设计返回退出码 2；只要 JSON 已完整写出，需再用 `npm run assert:robustness-artifact` 区分“有效 NO-GO 证据”与产物损坏。
+这些文件均位于 `验证与复现/artifacts/`，并各有同名 `.sha256` 文件。A8C、A8E、A8H、A8I 和 A8J 的研究命令因有效 NO-GO 按设计返回退出码 2；JSON 完整写出后，必须再运行相应 `assert:*` 命令区分“有效 NO-GO 证据”与产物损坏。
+
+方程、A8B--A8J 冻结门、结果和结论上限见 `00_二维特征开放边界合同与裁决.md`。当前已到人工数值路线裁决点：是否授权在候选区建立正式 MRT 克隆并逐项替换入口/出口，或授权修改正式程序以新增时间依赖入口与 CBC。裁决前不得把候选核的缓启动 PASS 转移到正式核。
