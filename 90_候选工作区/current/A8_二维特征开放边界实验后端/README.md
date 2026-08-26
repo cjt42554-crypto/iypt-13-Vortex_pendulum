@@ -2,7 +2,12 @@
 
 本目录执行 `90_候选工作区/交接说明_current.md` 中推荐的候选路线：在不修改正式求解器的前提下，建立独立 D2Q9 特征开放边界实验后端，并依次运行声学脉冲、对流涡和固定圆柱启动回波三类资格基准。
 
-当前裁决：`PASS-A8B-CBC2D-BOUNDARY-QUALIFICATION-CANDIDATE-ONLY`。
+当前分层裁决：
+
+- A8B 单点边界资格：`PASS-A8B-CBC2D-BOUNDARY-QUALIFICATION-CANDIDATE-ONLY`；
+- A8C 冻结稳健性矩阵：`NO-GO-A8C-CBC2D-FROZEN-ROBUSTNESS-MATRIX`。
+
+A8C 的 NO-GO 不撤销 A8B 冻结中心点的 PASS；它否定的是把该单点结论外推到本轮完整参数包络。81 个算例中有 54 个通过，27 个高入口速度算例因共同的启动密度稳定门失败。全部 81 个算例的 CBC 探针与场误差改善门仍通过，因此该结果不能简写成“CBC 出口性能失败”。
 
 该 PASS 仅说明本候选实现通过冻结的低成本边界资格门。它不表示：
 
@@ -30,10 +35,13 @@
 
 ```bash
 cd 90_候选工作区/current/A8_二维特征开放边界实验后端
+npm ci
 npm test
 npm run typecheck
 npm run qualify
 npm run assert:artifact
+npm run robustness
+npm run assert:robustness-artifact
 ```
 
 研究输出：
@@ -41,5 +49,8 @@ npm run assert:artifact
 - `验证与复现/artifacts/a8-cbc2d-boundary-qualification-research.json`；
 - `验证与复现/artifacts/a8-cbc2d-boundary-qualification-research.md`；
 - `验证与复现/artifacts/a8-cbc2d-boundary-qualification-research.sha256`。
+- `验证与复现/artifacts/a8-cbc2d-boundary-robustness-matrix.json`；
+- `验证与复现/artifacts/a8-cbc2d-boundary-robustness-matrix.md`；
+- `验证与复现/artifacts/a8-cbc2d-boundary-robustness-matrix.sha256`。
 
-方程、冻结门、结果和结论上限见 `00_二维特征开放边界合同与裁决.md`。
+方程、A8B/A8C 冻结门、结果和结论上限见 `00_二维特征开放边界合同与裁决.md`。`npm run robustness` 在 A8C 为 NO-GO 时按设计返回退出码 2；只要 JSON 已完整写出，需再用 `npm run assert:robustness-artifact` 区分“有效 NO-GO 证据”与产物损坏。

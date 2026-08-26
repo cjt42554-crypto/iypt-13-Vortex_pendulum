@@ -6,9 +6,14 @@
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "qualify": "node --experimental-strip-types scripts/run-qualification.mjs",
-    "assert:artifact": "node scripts/assert-artifact.mjs"
+    "assert:artifact": "node scripts/assert-artifact.mjs",
+    "robustness": "node --experimental-strip-types scripts/run-robustness.mjs",
+    "assert:robustness-artifact": "node scripts/assert-robustness-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
   }
 }
