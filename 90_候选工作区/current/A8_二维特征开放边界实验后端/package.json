@@ -22,7 +22,9 @@
     "formal-ramp-sensitivity": "node --experimental-strip-types scripts/run-formal-ramp-sensitivity.mjs",
     "assert:formal-ramp-sensitivity-artifact": "node scripts/assert-formal-ramp-sensitivity-artifact.mjs",
     "formal-no-body-ramp": "node --experimental-strip-types scripts/run-formal-no-body-ramp.mjs",
-    "assert:formal-no-body-ramp-artifact": "node scripts/assert-formal-no-body-ramp-artifact.mjs"
+    "assert:formal-no-body-ramp-artifact": "node scripts/assert-formal-no-body-ramp-artifact.mjs",
+    "formal-boundary-factorization": "node --experimental-strip-types scripts/run-formal-boundary-factorization.mjs",
+    "assert:formal-boundary-factorization-artifact": "node scripts/assert-formal-boundary-factorization-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
