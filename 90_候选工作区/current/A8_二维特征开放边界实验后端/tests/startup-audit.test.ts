@@ -23,6 +23,7 @@ import { buildFormalKernelStartupCases } from "../src/formal-kernel-startup.ts";
 import { FORMAL_RAMP_SENSITIVITY_CONTRACT } from "../src/formal-ramp-sensitivity-contract.ts";
 import { buildFormalRampSensitivityCases } from "../src/formal-ramp-sensitivity.ts";
 import { FORMAL_NO_BODY_RAMP_CONTRACT } from "../src/formal-no-body-ramp-contract.ts";
+import { buildFormalNoBodyRampCases } from "../src/formal-no-body-ramp.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -355,5 +356,21 @@ test("A8J formal no-body ramp contract is frozen before execution", () => {
   assert.equal(
     FORMAL_NO_BODY_RAMP_CONTRACT.interpretationRules.formalSourceModified,
     false,
+  );
+});
+
+test("A8J matrix contains 72 unique exact-step no-body ramp cases", () => {
+  const cases = buildFormalNoBodyRampCases();
+  assert.equal(cases.length, 72);
+  assert.equal(new Set(cases.map((entry) => entry.id)).size, 72);
+  assert.ok(cases.every((entry) => entry.body === "none"));
+  assert.ok(cases.every((entry) => Number.isInteger(entry.rampSteps)));
+  assert.equal(
+    cases.filter((entry) => entry.rampDurationDiameters === 0).length,
+    9,
+  );
+  assert.equal(
+    cases.filter((entry) => entry.rampDurationDiameters === 20).length,
+    9,
   );
 });
