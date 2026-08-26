@@ -21,6 +21,7 @@ import {
 } from "../src/formal-kernel-startup-contract.ts";
 import { buildFormalKernelStartupCases } from "../src/formal-kernel-startup.ts";
 import { FORMAL_RAMP_SENSITIVITY_CONTRACT } from "../src/formal-ramp-sensitivity-contract.ts";
+import { buildFormalRampSensitivityCases } from "../src/formal-ramp-sensitivity.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -317,5 +318,20 @@ test("A8I formal ramp-sensitivity contract is frozen before execution", () => {
     FORMAL_RAMP_SENSITIVITY_CONTRACT.interpretationRules
       .cbcIntegratedIntoFormalKernel,
     false,
+  );
+});
+
+test("A8I matrix contains 72 unique exact-step formal ramp cases", () => {
+  const cases = buildFormalRampSensitivityCases();
+  assert.equal(cases.length, 72);
+  assert.equal(new Set(cases.map((entry) => entry.id)).size, 72);
+  assert.ok(cases.every((entry) => Number.isInteger(entry.rampSteps)));
+  assert.equal(
+    cases.filter((entry) => entry.rampDurationDiameters === 5).length,
+    9,
+  );
+  assert.equal(
+    cases.filter((entry) => entry.rampDurationDiameters === 20).length,
+    9,
   );
 });

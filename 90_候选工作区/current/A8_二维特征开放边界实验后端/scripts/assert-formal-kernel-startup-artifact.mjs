@@ -10,7 +10,7 @@ const primaryPath = resolve(
 const repeatPath = process.argv[3] === undefined
   ? undefined
   : resolve(process.argv[3]);
-const repositoryRoot = resolve(process.cwd(), "../../../../");
+const repositoryRoot = resolve(process.cwd(), "../../../");
 const formalSourcePath = resolve(
   repositoryRoot,
   "02_模拟程序/src/solvers/highFidelity/lbm.ts",

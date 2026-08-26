@@ -18,7 +18,9 @@
     "lattice-phase": "node --experimental-strip-types scripts/run-lattice-phase.mjs",
     "assert:lattice-phase-artifact": "node scripts/assert-lattice-phase-artifact.mjs",
     "formal-kernel-startup": "node --experimental-strip-types scripts/run-formal-kernel-startup.mjs",
-    "assert:formal-kernel-startup-artifact": "node scripts/assert-formal-kernel-startup-artifact.mjs"
+    "assert:formal-kernel-startup-artifact": "node scripts/assert-formal-kernel-startup-artifact.mjs",
+    "formal-ramp-sensitivity": "node --experimental-strip-types scripts/run-formal-ramp-sensitivity.mjs",
+    "assert:formal-ramp-sensitivity-artifact": "node scripts/assert-formal-ramp-sensitivity-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
