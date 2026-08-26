@@ -20,6 +20,7 @@ import {
   FORMAL_KERNEL_STARTUP_PROTOCOLS,
 } from "../src/formal-kernel-startup-contract.ts";
 import { buildFormalKernelStartupCases } from "../src/formal-kernel-startup.ts";
+import { FORMAL_RAMP_SENSITIVITY_CONTRACT } from "../src/formal-ramp-sensitivity-contract.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -292,5 +293,29 @@ test("A8H matrix contains 18 unique read-only formal-kernel cases", () => {
     cases.filter((entry) =>
       entry.startupProtocolId === "cosine-ramp-from-rest-5d").length,
     9,
+  );
+});
+
+test("A8I formal ramp-sensitivity contract is frozen before execution", () => {
+  assert.equal(
+    FORMAL_RAMP_SENSITIVITY_CONTRACT.format,
+    "VP-A8I-FORMAL-MRT-BRINKMAN-RAMP-SENSITIVITY-CONTRACT-v1",
+  );
+  assert.deepEqual(
+    FORMAL_RAMP_SENSITIVITY_CONTRACT.matrix.rampDurationDiameters,
+    [0, 0.25, 0.5, 1, 2, 5, 10, 20],
+  );
+  assert.equal(
+    FORMAL_RAMP_SENSITIVITY_CONTRACT.matrix.longestRampPostTargetObservationDiameters,
+    70 / 3,
+  );
+  assert.equal(
+    FORMAL_RAMP_SENSITIVITY_CONTRACT.interpretationRules.formalSourceModified,
+    false,
+  );
+  assert.equal(
+    FORMAL_RAMP_SENSITIVITY_CONTRACT.interpretationRules
+      .cbcIntegratedIntoFormalKernel,
+    false,
   );
 });
