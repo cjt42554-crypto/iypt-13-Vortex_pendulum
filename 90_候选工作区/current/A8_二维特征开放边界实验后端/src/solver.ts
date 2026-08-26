@@ -23,6 +23,8 @@ export type OutletBoundary =
   | "regularized-fixed-pressure"
   | "cbc-2d-regularized";
 
+export type CollisionKernel = "regularized-bgk" | "raw-bgk";
+
 export interface CircleSolid {
   centerX: number;
   centerY: number;
@@ -40,6 +42,7 @@ export interface SolverOptions {
   nx: number;
   ny: number;
   relaxationTime: number;
+  collisionKernel?: CollisionKernel;
   inletVelocity: number;
   inletVelocityProfile?: InletVelocityProfile;
   outletBoundary: OutletBoundary;
@@ -94,6 +97,7 @@ export class CharacteristicOpenBoundarySolver {
   readonly relaxationTime: number;
   readonly omega: number;
   readonly viscosity: number;
+  readonly collisionKernel: CollisionKernel;
   readonly inletVelocity: number;
   readonly outletBoundary: OutletBoundary;
   readonly farFieldDensity: number;
@@ -127,12 +131,18 @@ export class CharacteristicOpenBoundarySolver {
     if (!Number.isFinite(options.inletVelocity) || Math.abs(options.inletVelocity) >= 0.2) {
       throw new RangeError("inletVelocity must be finite and |u| < 0.2");
     }
+    if (options.collisionKernel !== undefined
+      && options.collisionKernel !== "regularized-bgk"
+      && options.collisionKernel !== "raw-bgk") {
+      throw new RangeError("unsupported collision kernel");
+    }
     this.nx = options.nx;
     this.ny = options.ny;
     this.cells = this.nx * this.ny;
     this.relaxationTime = options.relaxationTime;
     this.omega = 1 / this.relaxationTime;
     this.viscosity = CS2 * (this.relaxationTime - 0.5);
+    this.collisionKernel = options.collisionKernel ?? "regularized-bgk";
     this.inletVelocity = options.inletVelocity;
     this.inletVelocityProfile = options.inletVelocityProfile ?? null;
     this.outletBoundary = options.outletBoundary;
@@ -371,10 +381,18 @@ export class CharacteristicOpenBoundarySolver {
           ux: this.ux[cell] ?? 0,
           uy: this.uy[cell] ?? 0,
         };
-        const stress = nonequilibriumStress(this.distributions, offset, state);
-        for (let direction = 0; direction < 9; direction += 1) {
-          post[direction] = equilibrium(direction, state.rho, state.ux, state.uy)
-            + (1 - this.omega) * regularizedNonequilibrium(direction, stress);
+        if (this.collisionKernel === "regularized-bgk") {
+          const stress = nonequilibriumStress(this.distributions, offset, state);
+          for (let direction = 0; direction < 9; direction += 1) {
+            post[direction] = equilibrium(direction, state.rho, state.ux, state.uy)
+              + (1 - this.omega) * regularizedNonequilibrium(direction, stress);
+          }
+        } else {
+          for (let direction = 0; direction < 9; direction += 1) {
+            const current = this.distributions[offset + direction] ?? 0;
+            const target = equilibrium(direction, state.rho, state.ux, state.uy);
+            post[direction] = current + this.omega * (target - current);
+          }
         }
         for (let direction = 0; direction < 9; direction += 1) {
           const value = post[direction] ?? 0;

@@ -9,6 +9,7 @@ import {
   COLLISION_KERNELS,
   COLLISION_STARTUP_PROTOCOLS,
 } from "../src/collision-contrast-contract.ts";
+import { buildCollisionContrastCases } from "../src/collision-contrast.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -150,5 +151,53 @@ test("A8F collision contrast contract is frozen before execution", () => {
   assert.equal(
     COLLISION_CONTRAST_CONTRACT.interpretationRules.rawBgkIsFormalMrtEquivalent,
     false,
+  );
+});
+
+test("raw BGK collision preserves a uniform CBC flow", () => {
+  const solver = new CharacteristicOpenBoundarySolver({
+    nx: 48,
+    ny: 16,
+    relaxationTime: 0.54,
+    collisionKernel: "raw-bgk",
+    inletVelocity: 0.08,
+    outletBoundary: "cbc-2d-regularized",
+  });
+  solver.run(80);
+  const inspection = solver.inspect();
+  assert.ok(Math.abs(inspection.minimumDensity - 1) < 1e-12);
+  assert.ok(Math.abs(inspection.maximumDensity - 1) < 1e-12);
+  assert.ok(Math.abs(inspection.maximumSpeed - 0.08) < 1e-12);
+});
+
+test("default collision identity is exactly explicit regularized BGK", () => {
+  const common = {
+    nx: 64,
+    ny: 32,
+    relaxationTime: 0.54,
+    inletVelocity: 0.08,
+    outletBoundary: "cbc-2d-regularized" as const,
+    solid: { centerX: 20, centerY: 16, radius: 4 },
+  };
+  const implicit = new CharacteristicOpenBoundarySolver(common);
+  const explicit = new CharacteristicOpenBoundarySolver({
+    ...common,
+    collisionKernel: "regularized-bgk",
+  });
+  implicit.run(20);
+  explicit.run(20);
+  assert.deepEqual(implicit.inspect(), explicit.inspect());
+  assert.deepEqual(implicit.snapshot(), explicit.snapshot());
+});
+
+test("A8F matrix contains 36 unique crossed collision/startup cases", () => {
+  const cases = buildCollisionContrastCases();
+  assert.equal(cases.length, 36);
+  assert.equal(new Set(cases.map((entry) => entry.id)).size, 36);
+  assert.equal(cases.filter((entry) => entry.collisionKernel === "raw-bgk").length, 18);
+  assert.equal(
+    cases.filter((entry) =>
+      entry.startupProtocolId === "cosine-ramp-from-rest-5d").length,
+    18,
   );
 });

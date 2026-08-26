@@ -12,7 +12,9 @@
     "startup-audit": "node --experimental-strip-types scripts/run-startup-audit.mjs",
     "assert:startup-audit-artifact": "node scripts/assert-startup-audit-artifact.mjs",
     "ramp-sensitivity": "node --experimental-strip-types scripts/run-ramp-sensitivity.mjs",
-    "assert:ramp-sensitivity-artifact": "node scripts/assert-ramp-sensitivity-artifact.mjs"
+    "assert:ramp-sensitivity-artifact": "node scripts/assert-ramp-sensitivity-artifact.mjs",
+    "collision-contrast": "node --experimental-strip-types scripts/run-collision-contrast.mjs",
+    "assert:collision-contrast-artifact": "node scripts/assert-collision-contrast-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
