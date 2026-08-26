@@ -92,12 +92,10 @@ A8L 报告已经如实指出，现有 $\sum_y\rho u_x$ 只是宏观边界流量�
 特别是 S2 的正式 Zou--He 状态与密度归一化状态之间存在可精确计算的适配器质量源：
 
 $$
-\Delta M_{\mathrm{adapter}}^n
-=
+\Delta M_{\mathrm{adapter}}^n =
 \sum_{y,i}
 \left(
- f_{i,\mathrm{S2}}^{n+1}(0,y)
--
+ f_{i,\mathrm{S2}}^{n+1}(0,y) -
  f_{i,\mathrm{legacy}}^{n+1}(0,y)
 \right).
 $$
