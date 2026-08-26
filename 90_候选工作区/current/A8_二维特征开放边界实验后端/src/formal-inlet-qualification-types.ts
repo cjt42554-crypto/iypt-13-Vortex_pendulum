@@ -270,7 +270,7 @@ export interface QualificationProvenance {
 export interface FormalInletQualificationResult {
   format: "VP-A8M-FORMAL-MRT-INLET-QUALIFICATION-v1";
   contractIdentity: QualificationProvenance & {
-    format: "VP-A8M-FORMAL-MRT-INLET-QUALIFICATION-CONTRACT-v1";
+    format: "VP-A8M-FORMAL-MRT-INLET-QUALIFICATION-CONTRACT-v2";
   };
   startupCases: StartupCaseResult[];
   interiorComparisons: S1S2InteriorComparison[];

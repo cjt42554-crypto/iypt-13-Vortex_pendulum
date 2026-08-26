@@ -57,7 +57,25 @@ export const FORMAL_INLET_QUALIFICATION_STARTUP_PROTOCOLS = Object.freeze([
  * an inlet algorithm in the formal solver.
  */
 export const FORMAL_INLET_QUALIFICATION_CONTRACT = Object.freeze({
-  format: "VP-A8M-FORMAL-MRT-INLET-QUALIFICATION-CONTRACT-v1",
+  format: "VP-A8M-FORMAL-MRT-INLET-QUALIFICATION-CONTRACT-v2",
+  amendment: Object.freeze({
+    priorContractCommit:
+      "e49ee119c3a4a301df4671190032be5919bb627f",
+    firstImplementationCommit:
+      "2c105df372848ac28de25b8533f7a5208f13d0c4",
+    firstFailedStoredArtifactSha256:
+      "818bf79c46ae39c923ef5b0c6f8cf09ba20b3a21362a6d224426953b1b8e2ee9",
+    firstFailedCanonicalArtifactSha256:
+      "a6dd6f088d36ed4022469a3060e5eeb0346cf5fe3c0963d06dfde823743aeb73",
+    failedEvidenceCode:
+      "NO-GO-A8M-EVIDENCE-INCOMPLETE-OR-INTERNAL-GATES",
+    failedA8hExactAnchors: 0,
+    correction:
+      "replace three half-cell-shifted bodyCenterY values with the exact inherited A8H ny/2 centers",
+    scientificGatesChanged: false,
+    strategySetChanged: false,
+    executionMatrixChanged: false,
+  }),
   sourceIdentity: Object.freeze({
     formalSource: Object.freeze({
       relativePath: "02_模拟程序/src/solvers/highFidelity/lbm.ts",
@@ -126,7 +144,7 @@ export const FORMAL_INLET_QUALIFICATION_CONTRACT = Object.freeze({
         auditSteps: 347,
         rampSteps: 160,
         bodyCenterX: 28,
-        bodyCenterY: 18,
+        bodyCenterY: 18.5,
         bodyRadius: 4,
       }),
       Object.freeze({
@@ -136,7 +154,7 @@ export const FORMAL_INLET_QUALIFICATION_CONTRACT = Object.freeze({
         auditSteps: 520,
         rampSteps: 240,
         bodyCenterX: 42,
-        bodyCenterY: 27.5,
+        bodyCenterY: 28,
         bodyRadius: 6,
       }),
       Object.freeze({
@@ -146,7 +164,7 @@ export const FORMAL_INLET_QUALIFICATION_CONTRACT = Object.freeze({
         auditSteps: 693,
         rampSteps: 320,
         bodyCenterX: 56,
-        bodyCenterY: 37,
+        bodyCenterY: 37.5,
         bodyRadius: 8,
       }),
     ]),
