@@ -6,3 +6,4 @@ test-results/
 __pycache__/
 *.py[cod]
 .DS_Store
+**/验证与复现/artifacts/*-unit-tests.txt
