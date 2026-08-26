@@ -10,6 +10,10 @@ import {
   COLLISION_STARTUP_PROTOCOLS,
 } from "../src/collision-contrast-contract.ts";
 import { buildCollisionContrastCases } from "../src/collision-contrast.ts";
+import {
+  LATTICE_PHASE_CONTRACT,
+  LATTICE_PHASE_STARTUP_PROTOCOLS,
+} from "../src/lattice-phase-contract.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -199,5 +203,30 @@ test("A8F matrix contains 36 unique crossed collision/startup cases", () => {
     cases.filter((entry) =>
       entry.startupProtocolId === "cosine-ramp-from-rest-5d").length,
     18,
+  );
+});
+
+test("A8G lattice-phase contract is frozen before execution", () => {
+  assert.equal(
+    LATTICE_PHASE_CONTRACT.format,
+    "VP-A8G-CBC2D-LATTICE-PHASE-CONTRACT-v1",
+  );
+  assert.deepEqual(
+    LATTICE_PHASE_CONTRACT.matrix.centerXPhaseOffsetCells,
+    [0, 0.25, 0.5, 0.75],
+  );
+  assert.deepEqual(
+    LATTICE_PHASE_CONTRACT.matrix.centerYPhaseOffsetCells,
+    [0, 0.25, 0.5, 0.75],
+  );
+  assert.deepEqual(
+    LATTICE_PHASE_STARTUP_PROTOCOLS.map((entry) => entry.id),
+    ["uniform-impulsive", "cosine-ramp-from-rest-5d"],
+  );
+  assert.equal(LATTICE_PHASE_CONTRACT.interpretationRules.phaseCount, 16);
+  assert.equal(
+    LATTICE_PHASE_CONTRACT.interpretationRules
+      .latticePhaseInvarianceIsBounceBackModelValidation,
+    false,
   );
 });
