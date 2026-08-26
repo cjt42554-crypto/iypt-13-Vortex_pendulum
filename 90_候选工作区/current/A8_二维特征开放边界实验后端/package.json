@@ -26,7 +26,9 @@
     "formal-boundary-factorization": "node --experimental-strip-types scripts/run-formal-boundary-factorization.mjs",
     "assert:formal-boundary-factorization-artifact": "node scripts/assert-formal-boundary-factorization-artifact.mjs",
     "formal-inlet-mechanism": "node --experimental-strip-types scripts/run-formal-inlet-mechanism.mjs",
-    "assert:formal-inlet-mechanism-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-mechanism-artifact.mjs"
+    "assert:formal-inlet-mechanism-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-mechanism-artifact.mjs",
+    "formal-inlet-qualification": "node --experimental-strip-types scripts/run-formal-inlet-qualification.mjs",
+    "assert:formal-inlet-qualification-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-qualification-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
