@@ -4,6 +4,11 @@ import { buildStartupAuditCases } from "../src/startup-audit.ts";
 import { STARTUP_PROTOCOLS } from "../src/startup-audit-contract.ts";
 import { RAMP_SENSITIVITY_CONTRACT } from "../src/ramp-sensitivity-contract.ts";
 import { buildRampSensitivityCases } from "../src/ramp-sensitivity.ts";
+import {
+  COLLISION_CONTRAST_CONTRACT,
+  COLLISION_KERNELS,
+  COLLISION_STARTUP_PROTOCOLS,
+} from "../src/collision-contrast-contract.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -121,5 +126,29 @@ test("A8E matrix contains 72 unique cases with exact ramp step products", () => 
   assert.equal(
     cases.filter((entry) => entry.rampDurationDiameters === 20).length,
     9,
+  );
+});
+
+test("A8F collision contrast contract is frozen before execution", () => {
+  assert.equal(
+    COLLISION_CONTRAST_CONTRACT.format,
+    "VP-A8F-CBC2D-COLLISION-CONTRAST-CONTRACT-v1",
+  );
+  assert.deepEqual(COLLISION_KERNELS, ["regularized-bgk", "raw-bgk"]);
+  assert.deepEqual(
+    COLLISION_STARTUP_PROTOCOLS.map((entry) => entry.id),
+    ["uniform-impulsive", "cosine-ramp-from-rest-5d"],
+  );
+  assert.equal(
+    COLLISION_CONTRAST_CONTRACT.gates.expectedImpulsiveStableCorners,
+    0,
+  );
+  assert.equal(
+    COLLISION_CONTRAST_CONTRACT.gates.expectedFiveDiameterRampStableCorners,
+    9,
+  );
+  assert.equal(
+    COLLISION_CONTRAST_CONTRACT.interpretationRules.rawBgkIsFormalMrtEquivalent,
+    false,
   );
 });
