@@ -19,6 +19,7 @@ import {
   FORMAL_KERNEL_STARTUP_CONTRACT,
   FORMAL_KERNEL_STARTUP_PROTOCOLS,
 } from "../src/formal-kernel-startup-contract.ts";
+import { buildFormalKernelStartupCases } from "../src/formal-kernel-startup.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -276,5 +277,20 @@ test("A8H formal-kernel startup contract is frozen before execution", () => {
   assert.equal(
     FORMAL_KERNEL_STARTUP_CONTRACT.interpretationRules.cbcIntegratedIntoFormalKernel,
     false,
+  );
+});
+
+test("A8H matrix contains 18 unique read-only formal-kernel cases", () => {
+  const cases = buildFormalKernelStartupCases();
+  assert.equal(cases.length, 18);
+  assert.equal(new Set(cases.map((entry) => entry.id)).size, 18);
+  assert.equal(
+    cases.filter((entry) => entry.startupProtocolId === "uniform-impulsive").length,
+    9,
+  );
+  assert.equal(
+    cases.filter((entry) =>
+      entry.startupProtocolId === "cosine-ramp-from-rest-5d").length,
+    9,
   );
 });

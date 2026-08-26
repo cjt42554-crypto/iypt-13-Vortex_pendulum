@@ -16,7 +16,9 @@
     "collision-contrast": "node --experimental-strip-types scripts/run-collision-contrast.mjs",
     "assert:collision-contrast-artifact": "node scripts/assert-collision-contrast-artifact.mjs",
     "lattice-phase": "node --experimental-strip-types scripts/run-lattice-phase.mjs",
-    "assert:lattice-phase-artifact": "node scripts/assert-lattice-phase-artifact.mjs"
+    "assert:lattice-phase-artifact": "node scripts/assert-lattice-phase-artifact.mjs",
+    "formal-kernel-startup": "node --experimental-strip-types scripts/run-formal-kernel-startup.mjs",
+    "assert:formal-kernel-startup-artifact": "node scripts/assert-formal-kernel-startup-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
