@@ -10,7 +10,9 @@
     "robustness": "node --experimental-strip-types scripts/run-robustness.mjs",
     "assert:robustness-artifact": "node scripts/assert-robustness-artifact.mjs",
     "startup-audit": "node --experimental-strip-types scripts/run-startup-audit.mjs",
-    "assert:startup-audit-artifact": "node scripts/assert-startup-audit-artifact.mjs"
+    "assert:startup-audit-artifact": "node scripts/assert-startup-audit-artifact.mjs",
+    "ramp-sensitivity": "node --experimental-strip-types scripts/run-ramp-sensitivity.mjs",
+    "assert:ramp-sensitivity-artifact": "node scripts/assert-ramp-sensitivity-artifact.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -3,6 +3,7 @@ import test from "node:test";
 import { buildStartupAuditCases } from "../src/startup-audit.ts";
 import { STARTUP_PROTOCOLS } from "../src/startup-audit-contract.ts";
 import { RAMP_SENSITIVITY_CONTRACT } from "../src/ramp-sensitivity-contract.ts";
+import { buildRampSensitivityCases } from "../src/ramp-sensitivity.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -105,5 +106,20 @@ test("A8E ramp-duration sensitivity contract is frozen before execution", () => 
   assert.equal(
     RAMP_SENSITIVITY_CONTRACT.interpretationRules.formalIntegrationUnlocked,
     false,
+  );
+});
+
+test("A8E matrix contains 72 unique cases with exact ramp step products", () => {
+  const cases = buildRampSensitivityCases();
+  assert.equal(cases.length, 72);
+  assert.equal(new Set(cases.map((entry) => entry.id)).size, 72);
+  assert.ok(cases.every((entry) => Number.isInteger(entry.rampSteps)));
+  assert.equal(
+    cases.filter((entry) => entry.rampDurationDiameters === 0).length,
+    9,
+  );
+  assert.equal(
+    cases.filter((entry) => entry.rampDurationDiameters === 20).length,
+    9,
   );
 });
