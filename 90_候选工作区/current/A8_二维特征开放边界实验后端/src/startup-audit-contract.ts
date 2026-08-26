@@ -6,19 +6,22 @@ export const STARTUP_PROTOCOLS = Object.freeze([
     id: "impulsive-uniform",
     initialField: "uniform-target-velocity",
     inletHistory: "constant-target-velocity",
-    rampStepsPerDiameter: 0,
+    preparationRampStepsPerDiameter: 0,
+    inAuditRampStepsPerDiameter: 0,
   }),
   Object.freeze({
     id: "cosine-ramp-from-rest",
     initialField: "uniform-rest",
     inletHistory: "half-cosine-zero-slope-endpoints",
-    rampStepsPerDiameter: 20,
+    preparationRampStepsPerDiameter: 0,
+    inAuditRampStepsPerDiameter: 20,
   }),
   Object.freeze({
-    id: "potential-flow-compatible",
-    initialField: "cylinder-potential-velocity-with-isothermal-bernoulli-density",
-    inletHistory: "constant-target-velocity",
-    rampStepsPerDiameter: 0,
+    id: "compatible-ramp-preconditioned",
+    initialField: "numerically-preconditioned-from-rest",
+    inletHistory: "preaudit-half-cosine-then-constant-target-velocity",
+    preparationRampStepsPerDiameter: 20,
+    inAuditRampStepsPerDiameter: 0,
   }),
 ] as const);
 

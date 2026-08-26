@@ -101,9 +101,14 @@ test("A8D startup audit contract remains frozen before research execution", () =
   assert.equal(STARTUP_AUDIT_CONTRACT.matrix.outletBoundary, "cbc-2d-regularized");
   assert.deepEqual(
     STARTUP_PROTOCOLS.map((protocol) => protocol.id),
-    ["impulsive-uniform", "cosine-ramp-from-rest", "potential-flow-compatible"],
+    [
+      "impulsive-uniform",
+      "cosine-ramp-from-rest",
+      "compatible-ramp-preconditioned",
+    ],
   );
-  assert.equal(STARTUP_PROTOCOLS[1].rampStepsPerDiameter, 20);
+  assert.equal(STARTUP_PROTOCOLS[1].inAuditRampStepsPerDiameter, 20);
+  assert.equal(STARTUP_PROTOCOLS[2].preparationRampStepsPerDiameter, 20);
   assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumDensityDeviation, 0.12);
   assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumMach, 0.30);
   assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumSampledBracketWidth, 0.0025);
