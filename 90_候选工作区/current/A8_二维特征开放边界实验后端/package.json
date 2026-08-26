@@ -24,7 +24,9 @@
     "formal-no-body-ramp": "node --experimental-strip-types scripts/run-formal-no-body-ramp.mjs",
     "assert:formal-no-body-ramp-artifact": "node scripts/assert-formal-no-body-ramp-artifact.mjs",
     "formal-boundary-factorization": "node --experimental-strip-types scripts/run-formal-boundary-factorization.mjs",
-    "assert:formal-boundary-factorization-artifact": "node scripts/assert-formal-boundary-factorization-artifact.mjs"
+    "assert:formal-boundary-factorization-artifact": "node scripts/assert-formal-boundary-factorization-artifact.mjs",
+    "formal-inlet-mechanism": "node --experimental-strip-types scripts/run-formal-inlet-mechanism.mjs",
+    "assert:formal-inlet-mechanism-artifact": "node --experimental-strip-types scripts/assert-formal-inlet-mechanism-artifact.mjs"
   },
   "engines": {
     "node": ">=22"

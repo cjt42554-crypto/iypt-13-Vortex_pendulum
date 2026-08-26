@@ -8,8 +8,13 @@ import {
   type PrimitiveState,
   type StressTensor,
 } from "./d2q9.ts";
-import type { CaseDefinition, Stability } from
-  "./formal-boundary-factorization-types.ts";
+import type { Stability } from "./formal-boundary-factorization-types.ts";
+
+export interface BoundaryDefinition {
+  nx: number;
+  ny: number;
+  relaxationTime: number;
+}
 
 export interface BoundaryField {
   rho: Float64Array;
@@ -36,7 +41,7 @@ export function rampVelocity(target: number, rampSteps: number, step: number): n
 
 export function applyRegularizedBoundary(
   checkpoint: LbmCheckpoint,
-  definition: CaseDefinition,
+  definition: BoundaryDefinition,
   pre: BoundaryField,
   x: number,
   targets: PrimitiveState[],
