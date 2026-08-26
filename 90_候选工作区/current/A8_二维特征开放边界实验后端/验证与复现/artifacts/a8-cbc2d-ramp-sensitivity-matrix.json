@@ -1,0 +1,5749 @@
+{
+  "format": "VP-A8E-CBC2D-RAMP-SENSITIVITY-MATRIX-v1",
+  "contract": {
+    "format": "VP-A8E-CBC2D-RAMP-SENSITIVITY-CONTRACT-v1",
+    "inheritedEvidence": {
+      "a8dContract": "VP-A8D-CBC2D-STARTUP-AUDIT-CONTRACT-v1",
+      "a8dArtifactSha256": "4a04dcf21f5a194ad2e2746836560f88b88af00d3855866111738941bc4ca0fe",
+      "a8dDecision": "PASS-A8D-CBC2D-STARTUP-AUDIT-INTERNAL-GATES-CANDIDATE-ONLY"
+    },
+    "matrix": {
+      "inletVelocityLattice": 0.08,
+      "relaxationTime": [
+        0.54,
+        0.56,
+        0.58
+      ],
+      "nominalCylinderDiameterCells": [
+        8,
+        12,
+        16
+      ],
+      "rampDurationDiameters": [
+        0,
+        0.25,
+        0.5,
+        1,
+        2,
+        5,
+        10,
+        20
+      ],
+      "initialField": "uniform-rest",
+      "rampShape": "half-cosine-zero-slope-endpoints",
+      "zeroDurationIdentity": "boundary-step-from-rest",
+      "rampStepRounding": "exact-integer-for-all-frozen-products",
+      "downstreamOutletDistanceDiameters": 6,
+      "outletBoundary": "cbc-2d-regularized",
+      "geometryIdentity": "A8C-shortest-domain-and-runtime"
+    },
+    "gates": {
+      "maximumDensityDeviation": 0.12,
+      "maximumMach": 0.3,
+      "requireEveryRunComplete": true,
+      "requireLongestRampPassAtEveryCorner": true,
+      "requireSampledDensityDeviationNonIncreasing": true,
+      "monotonicityAbsoluteTolerance": 1e-14,
+      "requireA8dTwentyDiameterAnchorsExact": true,
+      "requireByteIdenticalIndependentRepeat": true
+    },
+    "interpretationRules": {
+      "uniformImpulsiveA8dHighSpeedStableCases": 0,
+      "frozenCornerCount": 9,
+      "formalIntegrationUnlocked": false
+    }
+  },
+  "matrixComplete": true,
+  "cases": [
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.15219237050834433,
+          "maximumDensityDeviationStep": 46,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 40,
+          "minimumDensity": 0.9999999949572704,
+          "maximumDensity": 1.1521923705083443,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1521923705083443,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -28,
+            "relativeYCells": -18.5,
+            "surfaceClearanceCells": 29.559648389099664,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 2,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.15269465966188944,
+          "maximumDensityDeviationStep": 47,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 61,
+          "minimumDensity": 0.9999999955149212,
+          "maximumDensity": 1.1526946596618894,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1526946596618894,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 15,
+            "relativeXCells": -28,
+            "relativeYCells": -3.5,
+            "surfaceClearanceCells": 24.217902119044922,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 4,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.15071397738900494,
+          "maximumDensityDeviationStep": 48,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 57,
+          "minimumDensity": 0.9999999966459953,
+          "maximumDensity": 1.150713977389005,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.150713977389005,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 24,
+            "relativeXCells": -28,
+            "relativeYCells": 5.5,
+            "surfaceClearanceCells": 24.535066146760553,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 1,
+        "rampSteps": 8,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.1433921240372984,
+          "maximumDensityDeviationStep": 50,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 54,
+          "minimumDensity": 0.9999999985042646,
+          "maximumDensity": 1.1433921240372984,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1433921240372984,
+            "location": {
+              "x": 24,
+              "y": 19,
+              "relativeXCells": -4,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 14,
+            "relativeXCells": -28,
+            "relativeYCells": -4.5,
+            "surfaceClearanceCells": 24.359301824974462,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 2,
+        "rampSteps": 16,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.12523676520634153,
+          "maximumDensityDeviationStep": 56,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 60,
+          "minimumDensity": 0.9999999996469232,
+          "maximumDensity": 1.1252367652063415,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1252367652063415,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 23,
+            "relativeXCells": -28,
+            "relativeYCells": 4.5,
+            "surfaceClearanceCells": 24.359301824974462,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 5,
+        "rampSteps": 40,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.0974316024959696,
+          "maximumDensityDeviationStep": 76,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 59,
+          "minimumDensity": 0.9999999999483649,
+          "maximumDensity": 1.0974316024959696,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0974316024959696,
+            "location": {
+              "x": 24,
+              "y": 20,
+              "relativeXCells": -4,
+              "relativeYCells": 1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 9,
+            "relativeXCells": -28,
+            "relativeYCells": -9.5,
+            "surfaceClearanceCells": 25.567718883945037,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 10,
+        "rampSteps": 80,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.08317227923383785,
+          "maximumDensityDeviationStep": 113,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 82,
+          "minimumDensity": 0.9999999999872877,
+          "maximumDensity": 1.0831722792338379,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0831722792338379,
+            "location": {
+              "x": 24,
+              "y": 20,
+              "relativeXCells": -4,
+              "relativeYCells": 1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -28,
+            "relativeYCells": -18.5,
+            "surfaceClearanceCells": 29.559648389099664,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0540-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 20,
+        "rampSteps": 160,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.07817840159686806,
+          "maximumDensityDeviationStep": 191,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 163,
+          "minimumDensity": 0.9999999999968328,
+          "maximumDensity": 1.078178401596868,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.078178401596868,
+            "location": {
+              "x": 24,
+              "y": 17,
+              "relativeXCells": -4,
+              "relativeYCells": -1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 4,
+            "relativeXCells": -28,
+            "relativeYCells": -14.5,
+            "surfaceClearanceCells": 27.531730050855128,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.14811125374798095,
+          "maximumDensityDeviationStep": 47,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 50,
+          "minimumDensity": 0.9999999982256559,
+          "maximumDensity": 1.148111253747981,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.148111253747981,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -28,
+            "relativeYCells": -18.5,
+            "surfaceClearanceCells": 29.559648389099664,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 2,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.1481306844985344,
+          "maximumDensityDeviationStep": 47,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 68,
+          "minimumDensity": 0.9999999985229383,
+          "maximumDensity": 1.1481306844985344,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1481306844985344,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 15,
+            "relativeXCells": -28,
+            "relativeYCells": -3.5,
+            "surfaceClearanceCells": 24.217902119044922,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 4,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.146502594143749,
+          "maximumDensityDeviationStep": 48,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 59,
+          "minimumDensity": 0.9999999987651116,
+          "maximumDensity": 1.146502594143749,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.146502594143749,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 15,
+            "relativeXCells": -28,
+            "relativeYCells": -3.5,
+            "surfaceClearanceCells": 24.217902119044922,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 1,
+        "rampSteps": 8,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.14043177158329545,
+          "maximumDensityDeviationStep": 50,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 57,
+          "minimumDensity": 0.9999999994862834,
+          "maximumDensity": 1.1404317715832955,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1404317715832955,
+            "location": {
+              "x": 24,
+              "y": 19,
+              "relativeXCells": -4,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 20,
+            "relativeXCells": -28,
+            "relativeYCells": 1.5,
+            "surfaceClearanceCells": 24.040149785619903,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 2,
+        "rampSteps": 16,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.1257556741247421,
+          "maximumDensityDeviationStep": 56,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 57,
+          "minimumDensity": 0.9999999998719886,
+          "maximumDensity": 1.125755674124742,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.125755674124742,
+            "location": {
+              "x": 24,
+              "y": 19,
+              "relativeXCells": -4,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 20,
+            "relativeXCells": -28,
+            "relativeYCells": 1.5,
+            "surfaceClearanceCells": 24.040149785619903,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 5,
+        "rampSteps": 40,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.09955613826900023,
+          "maximumDensityDeviationStep": 76,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 63,
+          "minimumDensity": 0.9999999999804761,
+          "maximumDensity": 1.0995561382690002,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0995561382690002,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 16,
+            "relativeXCells": -28,
+            "relativeYCells": -2.5,
+            "surfaceClearanceCells": 24.111385593741197,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 10,
+        "rampSteps": 80,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.0851398251683948,
+          "maximumDensityDeviationStep": 113,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 81,
+          "minimumDensity": 0.9999999999951593,
+          "maximumDensity": 1.0851398251683948,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0851398251683948,
+            "location": {
+              "x": 24,
+              "y": 17,
+              "relativeXCells": -4,
+              "relativeYCells": -1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 9,
+            "relativeXCells": -28,
+            "relativeYCells": -9.5,
+            "surfaceClearanceCells": 25.567718883945037,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0560-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 31.99999999999997,
+        "rampDurationDiameters": 20,
+        "rampSteps": 160,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.07999652479864516,
+          "maximumDensityDeviationStep": 191,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 160,
+          "minimumDensity": 0.9999999999987914,
+          "maximumDensity": 1.0799965247986452,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0799965247986452,
+            "location": {
+              "x": 24,
+              "y": 20,
+              "relativeXCells": -4,
+              "relativeYCells": 1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 23,
+            "relativeXCells": -28,
+            "relativeYCells": 4.5,
+            "surfaceClearanceCells": 24.359301824974462,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.1452383912527202,
+          "maximumDensityDeviationStep": 47,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 58,
+          "minimumDensity": 0.9999999992740671,
+          "maximumDensity": 1.1452383912527202,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1452383912527202,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 5,
+            "relativeXCells": -28,
+            "relativeYCells": -13.5,
+            "surfaceClearanceCells": 27.084562084739105,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 2,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.14477041682078728,
+          "maximumDensityDeviationStep": 47,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 56,
+          "minimumDensity": 0.9999999993363093,
+          "maximumDensity": 1.1447704168207873,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1447704168207873,
+            "location": {
+              "x": 24,
+              "y": 19,
+              "relativeXCells": -4,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 17,
+            "relativeXCells": -28,
+            "relativeYCells": -1.5,
+            "surfaceClearanceCells": 24.040149785619903,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 4,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.1433864321902274,
+          "maximumDensityDeviationStep": 48,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 55,
+          "minimumDensity": 0.9999999995170203,
+          "maximumDensity": 1.1433864321902274,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1433864321902274,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 14,
+            "relativeXCells": -28,
+            "relativeYCells": -4.5,
+            "surfaceClearanceCells": 24.359301824974462,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 1,
+        "rampSteps": 8,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.1389769569655659,
+          "maximumDensityDeviationStep": 51,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 56,
+          "minimumDensity": 0.9999999997667597,
+          "maximumDensity": 1.138976956965566,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.138976956965566,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 11,
+            "relativeXCells": -28,
+            "relativeYCells": -7.5,
+            "surfaceClearanceCells": 24.987066081271486,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 2,
+        "rampSteps": 16,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.12625855907158723,
+          "maximumDensityDeviationStep": 56,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 59,
+          "minimumDensity": 0.9999999999403645,
+          "maximumDensity": 1.1262585590715872,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1262585590715872,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 9,
+            "relativeXCells": -28,
+            "relativeYCells": -9.5,
+            "surfaceClearanceCells": 25.567718883945037,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 5,
+        "rampSteps": 40,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.10157381002602484,
+          "maximumDensityDeviationStep": 76,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 57,
+          "minimumDensity": 0.9999999999908971,
+          "maximumDensity": 1.1015738100260248,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1015738100260248,
+            "location": {
+              "x": 24,
+              "y": 18,
+              "relativeXCells": -4,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.031128874149274566,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 26,
+            "relativeXCells": -28,
+            "relativeYCells": 7.5,
+            "surfaceClearanceCells": 24.987066081271486,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 10,
+        "rampSteps": 80,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.08702470193968859,
+          "maximumDensityDeviationStep": 113,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 83,
+          "minimumDensity": 0.9999999999977432,
+          "maximumDensity": 1.0870247019396886,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0870247019396886,
+            "location": {
+              "x": 24,
+              "y": 17,
+              "relativeXCells": -4,
+              "relativeYCells": -1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 17,
+            "relativeXCells": -28,
+            "relativeYCells": -1.5,
+            "surfaceClearanceCells": 24.040149785619903,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d08-u0800-t0580-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 8,
+        "nominalReynoldsNumber": 24.000000000000014,
+        "rampDurationDiameters": 20,
+        "rampSteps": 160,
+        "auditSteps": 347,
+        "geometry": {
+          "nx": 81,
+          "referenceNx": 200,
+          "ny": 37,
+          "steps": 347,
+          "lateStart": 227,
+          "cylinderCenterX": 28,
+          "cylinderCenterY": 18.5,
+          "cylinderRadius": 4,
+          "probeX": 50,
+          "probeY": 18.5,
+          "fieldXStart": 37,
+          "fieldXEnd": 74,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.875
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 347,
+        "stability": {
+          "maximumDensityDeviation": 0.08176472561256376,
+          "maximumDensityDeviationStep": 191,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 173,
+          "minimumDensity": 0.9999999999994367,
+          "maximumDensity": 1.0817647256125638,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0817647256125638,
+            "location": {
+              "x": 24,
+              "y": 20,
+              "relativeXCells": -4,
+              "relativeYCells": 1.5,
+              "surfaceClearanceCells": 0.2720018726587652,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 17,
+            "relativeXCells": -28,
+            "relativeYCells": -1.5,
+            "surfaceClearanceCells": 24.040149785619903,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.15484584946113733,
+          "maximumDensityDeviationStep": 67,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 40,
+          "minimumDensity": 0.9999999999897858,
+          "maximumDensity": 1.1548458494611373,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1548458494611373,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -42,
+            "relativeYCells": -28,
+            "surfaceClearanceCells": 44.47771785649585,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 3,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.15357935639610454,
+          "maximumDensityDeviationStep": 68,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 95,
+          "minimumDensity": 0.9999999999913631,
+          "maximumDensity": 1.1535793563961045,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1535793563961045,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 35,
+            "relativeXCells": -42,
+            "relativeYCells": 7,
+            "surfaceClearanceCells": 36.57933771208753,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 6,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.14985997064326884,
+          "maximumDensityDeviationStep": 70,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 67,
+          "minimumDensity": 0.9999999999953533,
+          "maximumDensity": 1.1498599706432688,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1498599706432688,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -42,
+            "relativeYCells": -28,
+            "surfaceClearanceCells": 44.47771785649585,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 1,
+        "rampSteps": 12,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.13913635734410845,
+          "maximumDensityDeviationStep": 73,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 86,
+          "minimumDensity": 0.9999999999986493,
+          "maximumDensity": 1.1391363573441085,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1391363573441085,
+            "location": {
+              "x": 36,
+              "y": 27,
+              "relativeXCells": -6,
+              "relativeYCells": -1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 6,
+            "relativeXCells": -42,
+            "relativeYCells": -22,
+            "surfaceClearanceCells": 41.41307836451879,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 2,
+        "rampSteps": 24,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.11782658039013416,
+          "maximumDensityDeviationStep": 82,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 26,
+          "minimumDensity": 0.9999999999997106,
+          "maximumDensity": 1.1178265803901342,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1178265803901342,
+            "location": {
+              "x": 36,
+              "y": 27,
+              "relativeXCells": -6,
+              "relativeYCells": -1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -42,
+            "relativeYCells": -28,
+            "surfaceClearanceCells": 44.47771785649585,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 5,
+        "rampSteps": 60,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.09564759135779255,
+          "maximumDensityDeviationStep": 113,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 84,
+          "minimumDensity": 0.9999999999999528,
+          "maximumDensity": 1.0956475913577925,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0956475913577925,
+            "location": {
+              "x": 36,
+              "y": 30,
+              "relativeXCells": -6,
+              "relativeYCells": 2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 34,
+            "relativeXCells": -42,
+            "relativeYCells": 6,
+            "surfaceClearanceCells": 36.42640687119285,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 10,
+        "rampSteps": 120,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.08212616919025106,
+          "maximumDensityDeviationStep": 169,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 120,
+          "minimumDensity": 0.9999999999999858,
+          "maximumDensity": 1.082126169190251,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.082126169190251,
+            "location": {
+              "x": 36,
+              "y": 26,
+              "relativeXCells": -6,
+              "relativeYCells": -2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 1,
+            "relativeXCells": -42,
+            "relativeYCells": -27,
+            "surfaceClearanceCells": 43.92995093127972,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0540-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 71.99999999999994,
+        "rampDurationDiameters": 20,
+        "rampSteps": 240,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.0774913903625325,
+          "maximumDensityDeviationStep": 287,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 241,
+          "minimumDensity": 0.9999999999999944,
+          "maximumDensity": 1.0774913903625325,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0774913903625325,
+            "location": {
+              "x": 36,
+              "y": 26,
+              "relativeXCells": -6,
+              "relativeYCells": -2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 12,
+            "relativeXCells": -42,
+            "relativeYCells": -16,
+            "surfaceClearanceCells": 38.944410108488455,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.148091924393557,
+          "maximumDensityDeviationStep": 67,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 50,
+          "minimumDensity": 0.9999999999977434,
+          "maximumDensity": 1.148091924393557,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.148091924393557,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -42,
+            "relativeYCells": -28,
+            "surfaceClearanceCells": 44.47771785649585,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 3,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.14707736659222648,
+          "maximumDensityDeviationStep": 68,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 94,
+          "minimumDensity": 0.9999999999980649,
+          "maximumDensity": 1.1470773665922265,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1470773665922265,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 24,
+            "relativeXCells": -42,
+            "relativeYCells": -4,
+            "surfaceClearanceCells": 36.19004621945797,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 6,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.1446433590743632,
+          "maximumDensityDeviationStep": 70,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 84,
+          "minimumDensity": 0.9999999999989154,
+          "maximumDensity": 1.1446433590743632,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1446433590743632,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 41,
+            "relativeXCells": -42,
+            "relativeYCells": 13,
+            "surfaceClearanceCells": 37.965895873961216,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 1,
+        "rampSteps": 12,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.13603796846042737,
+          "maximumDensityDeviationStep": 73,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 90,
+          "minimumDensity": 0.9999999999996619,
+          "maximumDensity": 1.1360379684604274,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1360379684604274,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 24,
+            "relativeXCells": -42,
+            "relativeYCells": -4,
+            "surfaceClearanceCells": 36.19004621945797,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 2,
+        "rampSteps": 24,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.11886847521613442,
+          "maximumDensityDeviationStep": 82,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 83,
+          "minimumDensity": 0.9999999999999232,
+          "maximumDensity": 1.1188684752161344,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1188684752161344,
+            "location": {
+              "x": 36,
+              "y": 27,
+              "relativeXCells": -6,
+              "relativeYCells": -1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 48,
+            "relativeXCells": -42,
+            "relativeYCells": 20,
+            "surfaceClearanceCells": 40.518813398452025,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 5,
+        "rampSteps": 60,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.0975600446246303,
+          "maximumDensityDeviationStep": 113,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 89,
+          "minimumDensity": 0.9999999999999867,
+          "maximumDensity": 1.0975600446246303,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0975600446246303,
+            "location": {
+              "x": 36,
+              "y": 30,
+              "relativeXCells": -6,
+              "relativeYCells": 2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 1,
+            "relativeXCells": -42,
+            "relativeYCells": -27,
+            "surfaceClearanceCells": 43.92995093127972,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 10,
+        "rampSteps": 120,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.0839546116238461,
+          "maximumDensityDeviationStep": 169,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 121,
+          "minimumDensity": 0.9999999999999959,
+          "maximumDensity": 1.083954611623846,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.083954611623846,
+            "location": {
+              "x": 36,
+              "y": 30,
+              "relativeXCells": -6,
+              "relativeYCells": 2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 8,
+            "relativeXCells": -42,
+            "relativeYCells": -20,
+            "surfaceClearanceCells": 40.518813398452025,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0560-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 47.99999999999996,
+        "rampDurationDiameters": 20,
+        "rampSteps": 240,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.07916847795376336,
+          "maximumDensityDeviationStep": 287,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 240,
+          "minimumDensity": 0.9999999999999979,
+          "maximumDensity": 1.0791684779537634,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0791684779537634,
+            "location": {
+              "x": 36,
+              "y": 26,
+              "relativeXCells": -6,
+              "relativeYCells": -2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 31,
+            "relativeXCells": -42,
+            "relativeYCells": 3,
+            "surfaceClearanceCells": 36.1070065428546,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.1433211685714435,
+          "maximumDensityDeviationStep": 67,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 80,
+          "minimumDensity": 0.9999999999993268,
+          "maximumDensity": 1.1433211685714435,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1433211685714435,
+            "location": {
+              "x": 36,
+              "y": 27,
+              "relativeXCells": -6,
+              "relativeYCells": -1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 3,
+            "relativeXCells": -42,
+            "relativeYCells": -25,
+            "surfaceClearanceCells": 42.877397639399746,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 3,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.14246563808236612,
+          "maximumDensityDeviationStep": 68,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 79,
+          "minimumDensity": 0.9999999999995026,
+          "maximumDensity": 1.1424656380823661,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1424656380823661,
+            "location": {
+              "x": 36,
+              "y": 29,
+              "relativeXCells": -6,
+              "relativeYCells": 1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 28,
+            "relativeXCells": -42,
+            "relativeYCells": 0,
+            "surfaceClearanceCells": 36,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 6,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.1409704881621121,
+          "maximumDensityDeviationStep": 70,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 80,
+          "minimumDensity": 0.9999999999996725,
+          "maximumDensity": 1.140970488162112,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.140970488162112,
+            "location": {
+              "x": 36,
+              "y": 27,
+              "relativeXCells": -6,
+              "relativeYCells": -1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 5,
+            "relativeXCells": -42,
+            "relativeYCells": -23,
+            "surfaceClearanceCells": 41.885279575251516,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 1,
+        "rampSteps": 12,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.13412348824764941,
+          "maximumDensityDeviationStep": 74,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 91,
+          "minimumDensity": 0.9999999999998994,
+          "maximumDensity": 1.1341234882476494,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1341234882476494,
+            "location": {
+              "x": 36,
+              "y": 27,
+              "relativeXCells": -6,
+              "relativeYCells": -1,
+              "surfaceClearanceCells": 0.08276253029821845,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 42,
+            "relativeXCells": -42,
+            "relativeYCells": 14,
+            "surfaceClearanceCells": 38.271887242357316,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 2,
+        "rampSteps": 24,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.119874234461683,
+          "maximumDensityDeviationStep": 83,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 90,
+          "minimumDensity": 0.9999999999999748,
+          "maximumDensity": 1.119874234461683,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.119874234461683,
+            "location": {
+              "x": 36,
+              "y": 30,
+              "relativeXCells": -6,
+              "relativeYCells": 2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 20,
+            "relativeXCells": -42,
+            "relativeYCells": -8,
+            "surfaceClearanceCells": 36.755116652863904,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 5,
+        "rampSteps": 60,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.09938170543696367,
+          "maximumDensityDeviationStep": 113,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 86,
+          "minimumDensity": 0.999999999999995,
+          "maximumDensity": 1.0993817054369637,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0993817054369637,
+            "location": {
+              "x": 36,
+              "y": 26,
+              "relativeXCells": -6,
+              "relativeYCells": -2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 3,
+            "relativeXCells": -42,
+            "relativeYCells": -25,
+            "surfaceClearanceCells": 42.877397639399746,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 10,
+        "rampSteps": 120,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.08570702277327102,
+          "maximumDensityDeviationStep": 169,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 125,
+          "minimumDensity": 0.9999999999999977,
+          "maximumDensity": 1.085707022773271,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.085707022773271,
+            "location": {
+              "x": 36,
+              "y": 30,
+              "relativeXCells": -6,
+              "relativeYCells": 2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 6,
+            "relativeXCells": -42,
+            "relativeYCells": -22,
+            "surfaceClearanceCells": 41.41307836451879,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d12-u0800-t0580-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 12,
+        "nominalReynoldsNumber": 36.00000000000002,
+        "rampDurationDiameters": 20,
+        "rampSteps": 240,
+        "auditSteps": 520,
+        "geometry": {
+          "nx": 121,
+          "referenceNx": 300,
+          "ny": 56,
+          "steps": 520,
+          "lateStart": 340,
+          "cylinderCenterX": 42,
+          "cylinderCenterY": 28,
+          "cylinderRadius": 6,
+          "probeX": 75,
+          "probeY": 28,
+          "fieldXStart": 55,
+          "fieldXEnd": 111,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.916666666666668
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 520,
+        "stability": {
+          "maximumDensityDeviation": 0.08079825142471853,
+          "maximumDensityDeviationStep": 286,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 241,
+          "minimumDensity": 0.9999999999999979,
+          "maximumDensity": 1.0807982514247185,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0807982514247185,
+            "location": {
+              "x": 36,
+              "y": 26,
+              "relativeXCells": -6,
+              "relativeYCells": -2,
+              "surfaceClearanceCells": 0.32455532033675905,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 8,
+            "relativeXCells": -42,
+            "relativeYCells": -20,
+            "surfaceClearanceCells": 40.518813398452025,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.15838194325953392,
+          "maximumDensityDeviationStep": 87,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 40,
+          "minimumDensity": 0.9999999999999715,
+          "maximumDensity": 1.158381943259534,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.158381943259534,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -56,
+            "relativeYCells": -37.5,
+            "surfaceClearanceCells": 59.39621651101788,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 4,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.1574706509991417,
+          "maximumDensityDeviationStep": 89,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 107,
+          "minimumDensity": 0.9999999999999793,
+          "maximumDensity": 1.1574706509991417,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1574706509991417,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 47,
+            "relativeXCells": -56,
+            "relativeYCells": 9.5,
+            "surfaceClearanceCells": 48.800088028100795,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 8,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.15320707931456234,
+          "maximumDensityDeviationStep": 91,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 104,
+          "minimumDensity": 0.9999999999999897,
+          "maximumDensity": 1.1532070793145623,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1532070793145623,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 23,
+            "relativeXCells": -56,
+            "relativeYCells": -14.5,
+            "surfaceClearanceCells": 49.846780377130756,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 1,
+        "rampSteps": 16,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.13957474885084253,
+          "maximumDensityDeviationStep": 96,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 106,
+          "minimumDensity": 0.9999999999999958,
+          "maximumDensity": 1.1395747488508425,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1395747488508425,
+            "location": {
+              "x": 48,
+              "y": 38,
+              "relativeXCells": -8,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 24,
+            "relativeXCells": -56,
+            "relativeYCells": -13.5,
+            "surfaceClearanceCells": 49.60425331518499,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 2,
+        "rampSteps": 32,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.11725257840139491,
+          "maximumDensityDeviationStep": 109,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 120,
+          "minimumDensity": 0.9999999999999972,
+          "maximumDensity": 1.117252578401395,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.117252578401395,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 42,
+            "relativeXCells": -56,
+            "relativeYCells": 4.5,
+            "surfaceClearanceCells": 48.18051263561058,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 5,
+        "rampSteps": 80,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.09492139763770191,
+          "maximumDensityDeviationStep": 151,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 107,
+          "minimumDensity": 0.9999999999999972,
+          "maximumDensity": 1.094921397637702,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.094921397637702,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 10,
+            "relativeXCells": -56,
+            "relativeYCells": -27.5,
+            "surfaceClearanceCells": 54.38789946776538,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 10,
+        "rampSteps": 160,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.0812220363849141,
+          "maximumDensityDeviationStep": 226,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 161,
+          "minimumDensity": 0.9999999999999971,
+          "maximumDensity": 1.081222036384914,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.081222036384914,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 39,
+            "relativeXCells": -56,
+            "relativeYCells": 1.5,
+            "surfaceClearanceCells": 48.020085683618866,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0540-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.54,
+        "viscosity": 0.013333333333333345,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 95.99999999999991,
+        "rampDurationDiameters": 20,
+        "rampSteps": 320,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.07685746212725642,
+          "maximumDensityDeviationStep": 382,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 320,
+          "minimumDensity": 0.9999999999999971,
+          "maximumDensity": 1.0768574621272564,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0768574621272564,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 68,
+            "relativeXCells": -56,
+            "relativeYCells": 30.5,
+            "surfaceClearanceCells": 55.76715455467651,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.15202121551980863,
+          "maximumDensityDeviationStep": 88,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 50,
+          "minimumDensity": 0.9999999999999943,
+          "maximumDensity": 1.1520212155198086,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1520212155198086,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -56,
+            "relativeYCells": -37.5,
+            "surfaceClearanceCells": 59.39621651101788,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 4,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.1513029024097965,
+          "maximumDensityDeviationStep": 89,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 113,
+          "minimumDensity": 0.9999999999999954,
+          "maximumDensity": 1.1513029024097965,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1513029024097965,
+            "location": {
+              "x": 48,
+              "y": 38,
+              "relativeXCells": -8,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 19,
+            "relativeXCells": -56,
+            "relativeYCells": -18.5,
+            "surfaceClearanceCells": 50.97669031066427,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 8,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.14791493111868648,
+          "maximumDensityDeviationStep": 91,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 106,
+          "minimumDensity": 0.9999999999999972,
+          "maximumDensity": 1.1479149311186865,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1479149311186865,
+            "location": {
+              "x": 48,
+              "y": 38,
+              "relativeXCells": -8,
+              "relativeYCells": 0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 4,
+            "relativeXCells": -56,
+            "relativeYCells": -33.5,
+            "surfaceClearanceCells": 57.25526798657714,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 1,
+        "rampSteps": 16,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.13781412030842,
+          "maximumDensityDeviationStep": 96,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 115,
+          "minimumDensity": 0.9999999999999977,
+          "maximumDensity": 1.13781412030842,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.13781412030842,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 26,
+            "relativeXCells": -56,
+            "relativeYCells": -11.5,
+            "surfaceClearanceCells": 49.16861026822325,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 2,
+        "rampSteps": 32,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.11882369416243987,
+          "maximumDensityDeviationStep": 109,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 105,
+          "minimumDensity": 0.9999999999999977,
+          "maximumDensity": 1.1188236941624399,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1188236941624399,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 20,
+            "relativeXCells": -56,
+            "relativeYCells": -17.5,
+            "surfaceClearanceCells": 50.670691149840735,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 5,
+        "rampSteps": 80,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.09690830317951349,
+          "maximumDensityDeviationStep": 151,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 115,
+          "minimumDensity": 0.9999999999999976,
+          "maximumDensity": 1.0969083031795135,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0969083031795135,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 39,
+            "relativeXCells": -56,
+            "relativeYCells": 1.5,
+            "surfaceClearanceCells": 48.020085683618866,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 10,
+        "rampSteps": 160,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.0830296662843173,
+          "maximumDensityDeviationStep": 225,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 161,
+          "minimumDensity": 0.9999999999999974,
+          "maximumDensity": 1.0830296662843173,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0830296662843173,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 47,
+            "relativeXCells": -56,
+            "relativeYCells": 9.5,
+            "surfaceClearanceCells": 48.800088028100795,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0560-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.56,
+        "viscosity": 0.020000000000000018,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 63.99999999999994,
+        "rampDurationDiameters": 20,
+        "rampSteps": 320,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.07850400242534294,
+          "maximumDensityDeviationStep": 383,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 321,
+          "minimumDensity": 0.9999999999999976,
+          "maximumDensity": 1.078504002425343,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.078504002425343,
+            "location": {
+              "x": 48,
+              "y": 40,
+              "relativeXCells": -8,
+              "relativeYCells": 2.5,
+              "surfaceClearanceCells": 0.3815273071201055,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 21,
+            "relativeXCells": -56,
+            "relativeYCells": -16.5,
+            "surfaceClearanceCells": 50.380219252757186,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r0000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 0,
+        "rampSteps": 0,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.14832648295835194,
+          "maximumDensityDeviationStep": 88,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 113,
+          "minimumDensity": 0.9999999999999971,
+          "maximumDensity": 1.148326482958352,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.148326482958352,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 64,
+            "relativeXCells": -56,
+            "relativeYCells": 26.5,
+            "surfaceClearanceCells": 53.953611678416294,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r0025",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 0.25,
+        "rampSteps": 4,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.1470209336715247,
+          "maximumDensityDeviationStep": 89,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 112,
+          "minimumDensity": 0.9999999999999972,
+          "maximumDensity": 1.1470209336715247,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1470209336715247,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 17,
+            "relativeXCells": -56,
+            "relativeYCells": -20.5,
+            "surfaceClearanceCells": 51.63430220938282,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r0050",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 0.5,
+        "rampSteps": 8,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.14504082283841768,
+          "maximumDensityDeviationStep": 92,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 117,
+          "minimumDensity": 0.9999999999999978,
+          "maximumDensity": 1.1450408228384177,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.1450408228384177,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 0,
+            "relativeXCells": -56,
+            "relativeYCells": -37.5,
+            "surfaceClearanceCells": 59.39621651101788,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r0100",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 1,
+        "rampSteps": 16,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.13689092324351404,
+          "maximumDensityDeviationStep": 97,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 113,
+          "minimumDensity": 0.9999999999999977,
+          "maximumDensity": 1.136890923243514,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.136890923243514,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 48,
+            "relativeXCells": -56,
+            "relativeYCells": 10.5,
+            "surfaceClearanceCells": 48.97587208634897,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r0200",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 2,
+        "rampSteps": 32,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.12029465656097105,
+          "maximumDensityDeviationStep": 109,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 104,
+          "minimumDensity": 0.9999999999999978,
+          "maximumDensity": 1.120294656560971,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.120294656560971,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 26,
+            "relativeXCells": -56,
+            "relativeYCells": -11.5,
+            "surfaceClearanceCells": 49.16861026822325,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": false,
+        "machPass": true,
+        "failureReasons": [
+          "DENSITY_GATE_FAILED"
+        ],
+        "pass": false
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r0500",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 5,
+        "rampSteps": 80,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.09879956505217247,
+          "maximumDensityDeviationStep": 151,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 110,
+          "minimumDensity": 0.9999999999999976,
+          "maximumDensity": 1.0987995650521725,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0987995650521725,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 25,
+            "relativeXCells": -56,
+            "relativeYCells": -12.5,
+            "surfaceClearanceCells": 49.37813172280882,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r1000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 10,
+        "rampSteps": 160,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.08476661438038757,
+          "maximumDensityDeviationStep": 225,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 162,
+          "minimumDensity": 0.9999999999999973,
+          "maximumDensity": 1.0847666143803876,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0847666143803876,
+            "location": {
+              "x": 48,
+              "y": 37,
+              "relativeXCells": -8,
+              "relativeYCells": -0.5,
+              "surfaceClearanceCells": 0.015609770940699264,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 73,
+            "relativeXCells": -56,
+            "relativeYCells": 35.5,
+            "surfaceClearanceCells": 58.30422309325402,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    },
+    {
+      "definition": {
+        "id": "d16-u0800-t0580-r2000",
+        "inletVelocity": 0.08,
+        "meanMach": 0.13856406460551016,
+        "relaxationTime": 0.58,
+        "viscosity": 0.02666666666666665,
+        "nominalCylinderDiameterCells": 16,
+        "nominalReynoldsNumber": 48.00000000000003,
+        "rampDurationDiameters": 20,
+        "rampSteps": 320,
+        "auditSteps": 693,
+        "geometry": {
+          "nx": 161,
+          "referenceNx": 400,
+          "ny": 75,
+          "steps": 693,
+          "lateStart": 453,
+          "cylinderCenterX": 56,
+          "cylinderCenterY": 37.5,
+          "cylinderRadius": 8,
+          "probeX": 100,
+          "probeY": 37.5,
+          "fieldXStart": 73,
+          "fieldXEnd": 148,
+          "actualDownstreamOutletDistanceDiameters": 6,
+          "actualReferenceDownstreamDistanceDiameters": 20.9375
+        }
+      },
+      "run": {
+        "status": "completed",
+        "completedSteps": 693,
+        "stability": {
+          "maximumDensityDeviation": 0.08010768040487926,
+          "maximumDensityDeviationStep": 382,
+          "maximumMach": 0.13856406460551024,
+          "maximumMachStep": 320,
+          "minimumDensity": 0.9999999999999977,
+          "maximumDensity": 1.0801076804048793,
+          "densityExtremum": {
+            "kind": "maximum",
+            "density": 1.0801076804048793,
+            "location": {
+              "x": 48,
+              "y": 40,
+              "relativeXCells": -8,
+              "relativeYCells": 2.5,
+              "surfaceClearanceCells": 0.3815273071201055,
+              "adjacentToSolid": true
+            }
+          },
+          "machExtremumLocation": {
+            "x": 0,
+            "y": 1,
+            "relativeXCells": -56,
+            "relativeYCells": -36.5,
+            "surfaceClearanceCells": 58.84496989302936,
+            "adjacentToSolid": false
+          }
+        }
+      },
+      "gate": {
+        "executionPass": true,
+        "densityPass": true,
+        "machPass": true,
+        "failureReasons": [],
+        "pass": true
+      }
+    }
+  ],
+  "corners": [
+    {
+      "nominalCylinderDiameterCells": 8,
+      "relaxationTime": 0.54,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.15219237050834433,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 2,
+          "maximumDensityDeviation": 0.15269465966188944,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 4,
+          "maximumDensityDeviation": 0.15071397738900494,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 8,
+          "maximumDensityDeviation": 0.1433921240372984,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 16,
+          "maximumDensityDeviation": 0.12523676520634153,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 40,
+          "maximumDensityDeviation": 0.0974316024959696,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 80,
+          "maximumDensityDeviation": 0.08317227923383785,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 160,
+          "maximumDensityDeviation": 0.07817840159686806,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": false,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 5,
+      "longestFailingRampDurationDiameters": 2,
+      "transitionBracketWidthDiameters": 3
+    },
+    {
+      "nominalCylinderDiameterCells": 8,
+      "relaxationTime": 0.56,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.14811125374798095,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 2,
+          "maximumDensityDeviation": 0.1481306844985344,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 4,
+          "maximumDensityDeviation": 0.146502594143749,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 8,
+          "maximumDensityDeviation": 0.14043177158329545,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 16,
+          "maximumDensityDeviation": 0.1257556741247421,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 40,
+          "maximumDensityDeviation": 0.09955613826900023,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 80,
+          "maximumDensityDeviation": 0.0851398251683948,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 160,
+          "maximumDensityDeviation": 0.07999652479864516,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": false,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 5,
+      "longestFailingRampDurationDiameters": 2,
+      "transitionBracketWidthDiameters": 3
+    },
+    {
+      "nominalCylinderDiameterCells": 8,
+      "relaxationTime": 0.58,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.1452383912527202,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 2,
+          "maximumDensityDeviation": 0.14477041682078728,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 4,
+          "maximumDensityDeviation": 0.1433864321902274,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 8,
+          "maximumDensityDeviation": 0.1389769569655659,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 16,
+          "maximumDensityDeviation": 0.12625855907158723,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 40,
+          "maximumDensityDeviation": 0.10157381002602484,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 80,
+          "maximumDensityDeviation": 0.08702470193968859,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 160,
+          "maximumDensityDeviation": 0.08176472561256376,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 5,
+      "longestFailingRampDurationDiameters": 2,
+      "transitionBracketWidthDiameters": 3
+    },
+    {
+      "nominalCylinderDiameterCells": 12,
+      "relaxationTime": 0.54,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.15484584946113733,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 3,
+          "maximumDensityDeviation": 0.15357935639610454,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 6,
+          "maximumDensityDeviation": 0.14985997064326884,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 12,
+          "maximumDensityDeviation": 0.13913635734410845,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 24,
+          "maximumDensityDeviation": 0.11782658039013416,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 60,
+          "maximumDensityDeviation": 0.09564759135779255,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 120,
+          "maximumDensityDeviation": 0.08212616919025106,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 240,
+          "maximumDensityDeviation": 0.0774913903625325,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 2,
+      "longestFailingRampDurationDiameters": 1,
+      "transitionBracketWidthDiameters": 1
+    },
+    {
+      "nominalCylinderDiameterCells": 12,
+      "relaxationTime": 0.56,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.148091924393557,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 3,
+          "maximumDensityDeviation": 0.14707736659222648,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 6,
+          "maximumDensityDeviation": 0.1446433590743632,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 12,
+          "maximumDensityDeviation": 0.13603796846042737,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 24,
+          "maximumDensityDeviation": 0.11886847521613442,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 60,
+          "maximumDensityDeviation": 0.0975600446246303,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 120,
+          "maximumDensityDeviation": 0.0839546116238461,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 240,
+          "maximumDensityDeviation": 0.07916847795376336,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 2,
+      "longestFailingRampDurationDiameters": 1,
+      "transitionBracketWidthDiameters": 1
+    },
+    {
+      "nominalCylinderDiameterCells": 12,
+      "relaxationTime": 0.58,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.1433211685714435,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 3,
+          "maximumDensityDeviation": 0.14246563808236612,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 6,
+          "maximumDensityDeviation": 0.1409704881621121,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 12,
+          "maximumDensityDeviation": 0.13412348824764941,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 24,
+          "maximumDensityDeviation": 0.119874234461683,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 60,
+          "maximumDensityDeviation": 0.09938170543696367,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 120,
+          "maximumDensityDeviation": 0.08570702277327102,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 240,
+          "maximumDensityDeviation": 0.08079825142471853,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 2,
+      "longestFailingRampDurationDiameters": 1,
+      "transitionBracketWidthDiameters": 1
+    },
+    {
+      "nominalCylinderDiameterCells": 16,
+      "relaxationTime": 0.54,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.15838194325953392,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 4,
+          "maximumDensityDeviation": 0.1574706509991417,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 8,
+          "maximumDensityDeviation": 0.15320707931456234,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 16,
+          "maximumDensityDeviation": 0.13957474885084253,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 32,
+          "maximumDensityDeviation": 0.11725257840139491,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 80,
+          "maximumDensityDeviation": 0.09492139763770191,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 160,
+          "maximumDensityDeviation": 0.0812220363849141,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 320,
+          "maximumDensityDeviation": 0.07685746212725642,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 2,
+      "longestFailingRampDurationDiameters": 1,
+      "transitionBracketWidthDiameters": 1
+    },
+    {
+      "nominalCylinderDiameterCells": 16,
+      "relaxationTime": 0.56,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.15202121551980863,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 4,
+          "maximumDensityDeviation": 0.1513029024097965,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 8,
+          "maximumDensityDeviation": 0.14791493111868648,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 16,
+          "maximumDensityDeviation": 0.13781412030842,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 32,
+          "maximumDensityDeviation": 0.11882369416243987,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 80,
+          "maximumDensityDeviation": 0.09690830317951349,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 160,
+          "maximumDensityDeviation": 0.0830296662843173,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 320,
+          "maximumDensityDeviation": 0.07850400242534294,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 2,
+      "longestFailingRampDurationDiameters": 1,
+      "transitionBracketWidthDiameters": 1
+    },
+    {
+      "nominalCylinderDiameterCells": 16,
+      "relaxationTime": 0.58,
+      "samples": [
+        {
+          "rampDurationDiameters": 0,
+          "rampSteps": 0,
+          "maximumDensityDeviation": 0.14832648295835194,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.25,
+          "rampSteps": 4,
+          "maximumDensityDeviation": 0.1470209336715247,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 0.5,
+          "rampSteps": 8,
+          "maximumDensityDeviation": 0.14504082283841768,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 1,
+          "rampSteps": 16,
+          "maximumDensityDeviation": 0.13689092324351404,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 2,
+          "rampSteps": 32,
+          "maximumDensityDeviation": 0.12029465656097105,
+          "maximumMach": 0.13856406460551024,
+          "pass": false
+        },
+        {
+          "rampDurationDiameters": 5,
+          "rampSteps": 80,
+          "maximumDensityDeviation": 0.09879956505217247,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 10,
+          "rampSteps": 160,
+          "maximumDensityDeviation": 0.08476661438038757,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        },
+        {
+          "rampDurationDiameters": 20,
+          "rampSteps": 320,
+          "maximumDensityDeviation": 0.08010768040487926,
+          "maximumMach": 0.13856406460551024,
+          "pass": true
+        }
+      ],
+      "densityDeviationNonIncreasing": true,
+      "longestRampPass": true,
+      "shortestPassingRampDurationDiameters": 5,
+      "longestFailingRampDurationDiameters": 2,
+      "transitionBracketWidthDiameters": 3
+    }
+  ],
+  "summary": {
+    "totalCases": 72,
+    "completedCases": 72,
+    "stableCases": 32,
+    "boundaryStepFromRestStableCases": 0,
+    "longestRampStableCases": 9,
+    "monotoneCorners": 7,
+    "worstDensityDeviation": {
+      "caseId": "d16-u0800-t0540-r0000",
+      "value": 0.15838194325953392
+    },
+    "worstMach": {
+      "caseId": "d08-u0800-t0540-r0000",
+      "value": 0.13856406460551024
+    }
+  },
+  "interpretation": {
+    "uniformImpulsiveA8dHighSpeedStableCases": 0,
+    "boundaryStepFromRestStableCases": 0,
+    "allBoundaryStepsFromRestStable": false,
+    "statement": "At least one boundary-step-from-rest corner fails; the minimum stable half-cosine duration must be read from the frozen corner brackets."
+  },
+  "decision": {
+    "code": "NO-GO-A8E-CBC2D-RAMP-SENSITIVITY-INTERNAL-GATES",
+    "pass": false,
+    "internalChecks": {
+      "matrixComplete": true,
+      "longestRampPassAtEveryCorner": true,
+      "densityDeviationNonIncreasingAtEveryCorner": false
+    },
+    "externalChecksRequired": [
+      "A8D twenty-diameter ramp anchors exact against frozen artifact",
+      "independent A8E JSON repeat byte-identical"
+    ],
+    "formalIntegrationUnlocked": false,
+    "statement": "At least one frozen A8E internal gate failed; no ramp-duration qualification may be promoted."
+  }
+}

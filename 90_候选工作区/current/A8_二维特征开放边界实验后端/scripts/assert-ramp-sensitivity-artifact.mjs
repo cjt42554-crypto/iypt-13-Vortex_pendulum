@@ -25,14 +25,22 @@ assert.equal(result.summary?.totalCases, 72);
 assert.equal(result.summary?.completedCases, 72);
 assert.equal(result.cases?.length, 72);
 assert.equal(result.corners?.length, 9);
-assert.equal(result.decision?.pass, true);
+const expectedDecisionPass = result.matrixComplete
+  && result.corners.every((entry) => entry.longestRampPass)
+  && result.corners.every((entry) => entry.densityDeviationNonIncreasing);
+assert.equal(result.decision?.pass, expectedDecisionPass);
 assert.equal(
   result.decision?.code,
-  "PASS-A8E-CBC2D-RAMP-SENSITIVITY-INTERNAL-GATES-CANDIDATE-ONLY",
+  expectedDecisionPass
+    ? "PASS-A8E-CBC2D-RAMP-SENSITIVITY-INTERNAL-GATES-CANDIDATE-ONLY"
+    : "NO-GO-A8E-CBC2D-RAMP-SENSITIVITY-INTERNAL-GATES",
 );
 assert.equal(result.decision?.formalIntegrationUnlocked, false);
 assert.ok(result.corners.every((entry) => entry.longestRampPass));
-assert.ok(result.corners.every((entry) => entry.densityDeviationNonIncreasing));
+assert.equal(
+  result.summary?.monotoneCorners,
+  result.corners.filter((entry) => entry.densityDeviationNonIncreasing).length,
+);
 assert.equal(primaryText.includes("null"), false);
 
 const ids = new Set();
