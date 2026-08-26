@@ -14,6 +14,7 @@ import {
   LATTICE_PHASE_CONTRACT,
   LATTICE_PHASE_STARTUP_PROTOCOLS,
 } from "../src/lattice-phase-contract.ts";
+import { buildLatticePhaseCases } from "../src/lattice-phase.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -229,4 +230,22 @@ test("A8G lattice-phase contract is frozen before execution", () => {
       .latticePhaseInvarianceIsBounceBackModelValidation,
     false,
   );
+});
+
+test("A8G matrix contains 288 unique cases and diverse masks", () => {
+  const cases = buildLatticePhaseCases();
+  assert.equal(cases.length, 288);
+  assert.equal(new Set(cases.map((entry) => entry.id)).size, 288);
+  for (const diameter of [8, 12, 16]) {
+    const phaseMasks = new Map<string, string>();
+    for (const entry of cases) {
+      if (entry.nominalCylinderDiameterCells !== diameter) continue;
+      phaseMasks.set(
+        `${entry.centerXPhaseOffsetCells}:${entry.centerYPhaseOffsetCells}`,
+        entry.solidMaskFingerprint,
+      );
+    }
+    assert.equal(phaseMasks.size, 16);
+    assert.ok(new Set(phaseMasks.values()).size >= 4);
+  }
 });
