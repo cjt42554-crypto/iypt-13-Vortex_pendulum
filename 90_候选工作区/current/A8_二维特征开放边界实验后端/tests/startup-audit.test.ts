@@ -15,6 +15,10 @@ import {
   LATTICE_PHASE_STARTUP_PROTOCOLS,
 } from "../src/lattice-phase-contract.ts";
 import { buildLatticePhaseCases } from "../src/lattice-phase.ts";
+import {
+  FORMAL_KERNEL_STARTUP_CONTRACT,
+  FORMAL_KERNEL_STARTUP_PROTOCOLS,
+} from "../src/formal-kernel-startup-contract.ts";
 import { CharacteristicOpenBoundarySolver } from "../src/solver.ts";
 
 test("A8D full-factorial definition contains 243 unique cases", () => {
@@ -248,4 +252,29 @@ test("A8G matrix contains 288 unique cases and diverse masks", () => {
     assert.equal(phaseMasks.size, 16);
     assert.ok(new Set(phaseMasks.values()).size >= 4);
   }
+});
+
+test("A8H formal-kernel startup contract is frozen before execution", () => {
+  assert.equal(
+    FORMAL_KERNEL_STARTUP_CONTRACT.format,
+    "VP-A8H-FORMAL-MRT-BRINKMAN-STARTUP-CONTRACT-v1",
+  );
+  assert.equal(
+    FORMAL_KERNEL_STARTUP_CONTRACT.formalSource.accessMode,
+    "read-only-import-from-candidate-audit",
+  );
+  assert.deepEqual(
+    FORMAL_KERNEL_STARTUP_PROTOCOLS.map((entry) => entry.id),
+    ["uniform-impulsive", "cosine-ramp-from-rest-5d"],
+  );
+  assert.equal(FORMAL_KERNEL_STARTUP_CONTRACT.matrix.penalizationTimeSteps, 1.5);
+  assert.equal(FORMAL_KERNEL_STARTUP_CONTRACT.matrix.maskHalfThicknessCells, 0.75);
+  assert.equal(
+    FORMAL_KERNEL_STARTUP_CONTRACT.interpretationRules.formalSourceModified,
+    false,
+  );
+  assert.equal(
+    FORMAL_KERNEL_STARTUP_CONTRACT.interpretationRules.cbcIntegratedIntoFormalKernel,
+    false,
+  );
 });
