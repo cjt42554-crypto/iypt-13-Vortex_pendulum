@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { ROBUSTNESS_CONTRACT } from "../src/robustness-contract.ts";
 import {
+  STARTUP_AUDIT_CONTRACT,
+  STARTUP_PROTOCOLS,
+} from "../src/startup-audit-contract.ts";
+import {
   buildRobustnessCases,
   buildRobustnessGeometry,
 } from "../src/robustness.ts";
@@ -74,4 +78,38 @@ test("all compared outlets preserve the high-speed uniform state before cylinder
     assert.ok(Math.abs(inspection.maximumDensity - 1) < 1e-14);
     assert.ok(Math.abs(inspection.maximumSpeed - 0.08) < 1e-14);
   }
+});
+
+test("A8D startup audit contract remains frozen before research execution", () => {
+  assert.equal(
+    STARTUP_AUDIT_CONTRACT.format,
+    "VP-A8D-CBC2D-STARTUP-AUDIT-CONTRACT-v1",
+  );
+  assert.deepEqual(
+    STARTUP_AUDIT_CONTRACT.matrix.inletVelocityLattice,
+    [0.06, 0.0625, 0.065, 0.0675, 0.07, 0.0725, 0.075, 0.0775, 0.08],
+  );
+  assert.deepEqual(
+    STARTUP_AUDIT_CONTRACT.matrix.relaxationTime,
+    [0.54, 0.56, 0.58],
+  );
+  assert.deepEqual(
+    STARTUP_AUDIT_CONTRACT.matrix.nominalCylinderDiameterCells,
+    [8, 12, 16],
+  );
+  assert.equal(STARTUP_AUDIT_CONTRACT.matrix.downstreamOutletDistanceDiameters, 6);
+  assert.equal(STARTUP_AUDIT_CONTRACT.matrix.outletBoundary, "cbc-2d-regularized");
+  assert.deepEqual(
+    STARTUP_PROTOCOLS.map((protocol) => protocol.id),
+    ["impulsive-uniform", "cosine-ramp-from-rest", "potential-flow-compatible"],
+  );
+  assert.equal(STARTUP_PROTOCOLS[1].rampStepsPerDiameter, 20);
+  assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumDensityDeviation, 0.12);
+  assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumMach, 0.30);
+  assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumSampledBracketWidth, 0.0025);
+  assert.equal(STARTUP_AUDIT_CONTRACT.uniformNoSolidGuard.steps, 6);
+  assert.equal(
+    STARTUP_AUDIT_CONTRACT.attributionRules.formalIntegrationUnlocked,
+    false,
+  );
 });
