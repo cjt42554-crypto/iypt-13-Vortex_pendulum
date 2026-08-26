@@ -29,11 +29,19 @@ export interface CircleSolid {
   radius: number;
 }
 
+export interface GridLocation {
+  x: number;
+  y: number;
+}
+
+export type InletVelocityProfile = (boundaryStep: number) => number;
+
 export interface SolverOptions {
   nx: number;
   ny: number;
   relaxationTime: number;
   inletVelocity: number;
+  inletVelocityProfile?: InletVelocityProfile;
   outletBoundary: OutletBoundary;
   farFieldDensity?: number;
   pressureRelaxationSigma?: number;
@@ -49,6 +57,10 @@ export interface SolverInspection {
   maximumDensity: number;
   maximumSpeed: number;
   maximumMach: number;
+  minimumDensityLocation: GridLocation;
+  maximumDensityLocation: GridLocation;
+  maximumSpeedLocation: GridLocation;
+  appliedInletVelocity: number;
   forceX: number;
   forceY: number;
   characteristicDiagnostics: CharacteristicDiagnostics | null;
@@ -90,6 +102,9 @@ export class CharacteristicOpenBoundarySolver {
   readonly characteristicLength: number;
   readonly solid: CircleSolid | null;
 
+  private readonly inletVelocityProfile: InletVelocityProfile | null;
+  private readonly automaticTransverseRelaxation: boolean;
+
   private distributions: Float64Array;
   private streamed: Float64Array;
   private readonly rho: Float64Array;
@@ -100,6 +115,7 @@ export class CharacteristicOpenBoundarySolver {
   private currentStep = 0;
   private lastForceX = 0;
   private lastForceY = 0;
+  private lastAppliedInletVelocity: number;
   private lastCharacteristicDiagnostics: CharacteristicDiagnostics | null = null;
 
   constructor(options: SolverOptions) {
@@ -118,9 +134,11 @@ export class CharacteristicOpenBoundarySolver {
     this.omega = 1 / this.relaxationTime;
     this.viscosity = CS2 * (this.relaxationTime - 0.5);
     this.inletVelocity = options.inletVelocity;
+    this.inletVelocityProfile = options.inletVelocityProfile ?? null;
     this.outletBoundary = options.outletBoundary;
     this.farFieldDensity = options.farFieldDensity ?? 1;
     this.pressureRelaxationSigma = options.pressureRelaxationSigma ?? 0.9;
+    this.automaticTransverseRelaxation = options.transverseRelaxation === undefined;
     this.transverseRelaxation = options.transverseRelaxation
       ?? Math.abs(this.inletVelocity) / CS;
     this.characteristicLength = options.characteristicLength ?? this.nx;
@@ -131,6 +149,7 @@ export class CharacteristicOpenBoundarySolver {
     this.ux = new Float64Array(this.cells);
     this.uy = new Float64Array(this.cells);
     this.solidMask = new Uint8Array(this.cells);
+    this.lastAppliedInletVelocity = this.velocityAtBoundaryStep(0);
     this.buildSolidMask();
     this.initializeUniform();
   }
@@ -170,12 +189,14 @@ export class CharacteristicOpenBoundarySolver {
     this.currentStep = 0;
     this.lastForceX = 0;
     this.lastForceY = 0;
+    this.lastAppliedInletVelocity = this.velocityAtBoundaryStep(0);
     this.lastCharacteristicDiagnostics = null;
     this.macrosValid = false;
   }
 
   step(): void {
     this.computeMacros();
+    const appliedInletVelocity = this.velocityAtBoundaryStep(this.currentStep + 1);
     let cbcTargets: PrimitiveState[] | null = null;
     if (this.outletBoundary === "cbc-2d-regularized") {
       const result = computeRightCbc2dTargets(
@@ -186,10 +207,12 @@ export class CharacteristicOpenBoundarySolver {
         this.uy,
         {
           farFieldDensity: this.farFieldDensity,
-          meanStreamwiseVelocity: this.inletVelocity,
+          meanStreamwiseVelocity: appliedInletVelocity,
           characteristicLength: this.characteristicLength,
           pressureRelaxationSigma: this.pressureRelaxationSigma,
-          transverseRelaxation: this.transverseRelaxation,
+          transverseRelaxation: this.automaticTransverseRelaxation
+            ? Math.abs(appliedInletVelocity) / CS
+            : this.transverseRelaxation,
         },
       );
       cbcTargets = result.states;
@@ -199,7 +222,7 @@ export class CharacteristicOpenBoundarySolver {
     }
 
     this.collideAndStream();
-    this.applyRegularizedInlet();
+    this.applyRegularizedInlet(appliedInletVelocity);
     if (this.outletBoundary === "zou-he-pressure") {
       this.applyZouHePressureOutlet();
     } else if (this.outletBoundary === "regularized-fixed-pressure") {
@@ -213,6 +236,7 @@ export class CharacteristicOpenBoundarySolver {
     this.distributions = this.streamed;
     this.streamed = previous;
     this.currentStep += 1;
+    this.lastAppliedInletVelocity = appliedInletVelocity;
     this.macrosValid = false;
   }
 
@@ -236,14 +260,27 @@ export class CharacteristicOpenBoundarySolver {
     let minimumDensity = Number.POSITIVE_INFINITY;
     let maximumDensity = Number.NEGATIVE_INFINITY;
     let maximumSpeed = 0;
+    let minimumDensityLocation: GridLocation = { x: 0, y: 0 };
+    let maximumDensityLocation: GridLocation = { x: 0, y: 0 };
+    let maximumSpeedLocation: GridLocation = { x: 0, y: 0 };
     for (let cell = 0; cell < this.cells; cell += 1) {
       if (this.solidMask[cell] === 1) continue;
       const density = this.rho[cell] ?? 0;
       const speed = Math.hypot(this.ux[cell] ?? 0, this.uy[cell] ?? 0);
+      const location = { x: cell % this.nx, y: Math.floor(cell / this.nx) };
       mass += density;
-      minimumDensity = Math.min(minimumDensity, density);
-      maximumDensity = Math.max(maximumDensity, density);
-      maximumSpeed = Math.max(maximumSpeed, speed);
+      if (density < minimumDensity) {
+        minimumDensity = density;
+        minimumDensityLocation = location;
+      }
+      if (density > maximumDensity) {
+        maximumDensity = density;
+        maximumDensityLocation = location;
+      }
+      if (speed > maximumSpeed) {
+        maximumSpeed = speed;
+        maximumSpeedLocation = location;
+      }
     }
     requireFinite(mass, "mass");
     requireFinite(minimumDensity, "minimumDensity");
@@ -256,6 +293,10 @@ export class CharacteristicOpenBoundarySolver {
       maximumDensity,
       maximumSpeed,
       maximumMach: maximumSpeed / CS,
+      minimumDensityLocation,
+      maximumDensityLocation,
+      maximumSpeedLocation,
+      appliedInletVelocity: this.lastAppliedInletVelocity,
       forceX: this.lastForceX,
       forceY: this.lastForceY,
       characteristicDiagnostics: this.lastCharacteristicDiagnostics,
@@ -358,10 +399,10 @@ export class CharacteristicOpenBoundarySolver {
     this.lastForceY = forceY;
   }
 
-  private applyRegularizedInlet(): void {
+  private applyRegularizedInlet(inletVelocity: number): void {
     const targets = Array.from({ length: this.ny }, () => ({
       rho: this.farFieldDensity,
-      ux: this.inletVelocity,
+      ux: inletVelocity,
       uy: 0,
     }));
     this.applyRegularizedBoundary(0, targets, "left");
@@ -374,7 +415,7 @@ export class CharacteristicOpenBoundarySolver {
       const cell = interiorX + this.nx * y;
       targets.push({
         rho: this.farFieldDensity,
-        ux: this.ux[cell] ?? this.inletVelocity,
+        ux: this.ux[cell] ?? this.lastAppliedInletVelocity,
         uy: this.uy[cell] ?? 0,
       });
     }
@@ -440,5 +481,17 @@ export class CharacteristicOpenBoundarySolver {
       this.streamed[offset + 6] = f8 + 0.5 * (f4 - f2) - (1 / 6) * rho * ux;
       this.streamed[offset + 7] = f5 + 0.5 * (f2 - f4) - (1 / 6) * rho * ux;
     }
+  }
+
+  private velocityAtBoundaryStep(boundaryStep: number): number {
+    const velocity = this.inletVelocityProfile === null
+      ? this.inletVelocity
+      : this.inletVelocityProfile(boundaryStep);
+    if (!Number.isFinite(velocity) || Math.abs(velocity) >= 0.2) {
+      throw new RangeError(
+        `inlet velocity profile returned invalid value at step ${boundaryStep}`,
+      );
+    }
+    return velocity;
   }
 }

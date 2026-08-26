@@ -112,6 +112,7 @@ test("A8D startup audit contract remains frozen before research execution", () =
   assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumDensityDeviation, 0.12);
   assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumMach, 0.30);
   assert.equal(STARTUP_AUDIT_CONTRACT.gates.maximumSampledBracketWidth, 0.0025);
+  assert.equal(STARTUP_AUDIT_CONTRACT.gates.monotonicityAbsoluteTolerance, 1e-14);
   assert.equal(STARTUP_AUDIT_CONTRACT.uniformNoSolidGuard.steps, 6);
   assert.equal(
     STARTUP_AUDIT_CONTRACT.attributionRules.formalIntegrationUnlocked,
