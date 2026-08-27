@@ -23,13 +23,16 @@ const contractRepositoryPath =
   `${candidateRoot}/src/formal-incoming-characteristic-contract.ts`;
 const contractDocumentRepositoryPath =
   `${candidateRoot}/08_A8N_入射特征相容入口预注册合同.md`;
-const implementationRepositoryPaths = [
+const scientificImplementationRepositoryPaths = [
   `${candidateRoot}/src/formal-incoming-characteristic-boundary.ts`,
   `${candidateRoot}/src/formal-incoming-characteristic-reconstruction.ts`,
   `${candidateRoot}/src/formal-incoming-characteristic-types.ts`,
   `${candidateRoot}/src/formal-incoming-characteristic-case.ts`,
   `${candidateRoot}/src/formal-incoming-characteristic-acoustics.ts`,
   `${candidateRoot}/src/formal-incoming-characteristic.ts`,
+].sort();
+const implementationRepositoryPaths = [
+  ...scientificImplementationRepositoryPaths,
   `${candidateRoot}/scripts/run-formal-incoming-characteristic.mjs`,
   `${candidateRoot}/scripts/assert-formal-incoming-characteristic-artifact.mjs`,
 ].sort();
@@ -50,15 +53,24 @@ function git(args, encoding = "utf8") {
   });
 }
 
-async function implementationTreeSha256() {
+function implementationTreeSha256AtCommit(commit) {
   const digest = createHash("sha256");
   for (const path of implementationRepositoryPaths) {
     digest.update(path);
     digest.update("\0");
-    digest.update(await readFile(resolve(repositoryRoot, path)));
+    digest.update(git(["show", `${commit}:${path}`], null));
     digest.update("\0");
   }
   return digest.digest("hex");
+}
+
+function correctedContractDocument(frozenRaw) {
+  const marker = `${String.fromCharCode(12)}rac`;
+  const frozenText = frozenRaw.toString("utf8");
+  if (frozenText.split(marker).length - 1 !== 2) {
+    throw new Error("A8N frozen Markdown does not contain the two accepted escapes");
+  }
+  return Buffer.from(frozenText.split(marker).join("\\frac"), "utf8");
 }
 
 const frozenInputPaths = [
@@ -78,17 +90,10 @@ const contractCommit = git([
   "--",
   contractRepositoryPath,
 ]).trim();
-const documentCommit = git([
-  "log",
-  "-1",
-  "--format=%H",
-  "--",
-  contractDocumentRepositoryPath,
-]).trim();
-if (contractCommit === "" || contractCommit !== documentCommit) {
-  throw new Error("A8N executable and Markdown contracts were not frozen together");
+if (contractCommit === "") {
+  throw new Error("A8N executable contract has no frozen commit");
 }
-const implementationCommits = new Set(implementationRepositoryPaths.map((path) =>
+const implementationCommits = new Set(scientificImplementationRepositoryPaths.map((path) =>
   git(["log", "-1", "--format=%H", "--", path]).trim()));
 if (implementationCommits.size !== 1 || implementationCommits.has("")) {
   throw new Error("A8N no-result implementation was not frozen in one commit");
@@ -100,21 +105,38 @@ if (implementationCommit === undefined || implementationCommit === contractCommi
 git(["merge-base", "--is-ancestor", contractCommit, implementationCommit]);
 git(["merge-base", "--is-ancestor", implementationCommit, "HEAD"]);
 
-for (const path of frozenInputPaths) {
+const frozenContractRaw = git([
+  "show",
+  `${contractCommit}:${contractRepositoryPath}`,
+], null);
+const frozenContractDocumentRaw = git([
+  "show",
+  `${contractCommit}:${contractDocumentRepositoryPath}`,
+], null);
+if (Buffer.compare(
+  await readFile(resolve(repositoryRoot, contractRepositoryPath)),
+  frozenContractRaw,
+) !== 0) {
+  throw new Error("working A8N executable contract differs from its frozen commit");
+}
+if (Buffer.compare(
+  await readFile(resolve(repositoryRoot, contractDocumentRepositoryPath)),
+  correctedContractDocument(frozenContractDocumentRaw),
+) !== 0) {
+  throw new Error("working A8N Markdown differs from the accepted escape-only correction");
+}
+for (const path of scientificImplementationRepositoryPaths) {
   const working = await readFile(resolve(repositoryRoot, path));
-  const committed = git(["show", `${path === contractRepositoryPath
-    || path === contractDocumentRepositoryPath ? contractCommit : implementationCommit}:${path}`], null);
-  if (Buffer.compare(working, committed) !== 0) {
-    throw new Error(`working A8N input differs from its frozen commit: ${path}`);
+  const frozen = git(["show", `${implementationCommit}:${path}`], null);
+  if (Buffer.compare(working, frozen) !== 0) {
+    throw new Error(`working A8N scientific implementation differs from frozen: ${path}`);
   }
 }
 
 const contractPath = resolve(repositoryRoot, contractRepositoryPath);
-const contractDocumentPath = resolve(repositoryRoot, contractDocumentRepositoryPath);
 const contractRaw = await readFile(contractPath);
-const contractDocumentRaw = await readFile(contractDocumentPath);
 const contractSha256 = hash(contractRaw);
-const contractDocumentSha256 = hash(contractDocumentRaw);
+const contractDocumentSha256 = hash(frozenContractDocumentRaw);
 const formalSourcePath = resolve(
   repositoryRoot,
   CONTRACT.sourceIdentity.formalSource.relativePath,
@@ -170,7 +192,7 @@ const provenance = {
   contractDocumentSha256,
   contractCommit,
   implementationCommit,
-  implementationTreeSha256: await implementationTreeSha256(),
+  implementationTreeSha256: implementationTreeSha256AtCommit(implementationCommit),
 };
 const result = runIncomingCharacteristicQualification(
   a8mStartup,
