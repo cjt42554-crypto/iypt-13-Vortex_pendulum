@@ -3,9 +3,14 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { gunzipSync } from "node:zlib";
 import { FORMAL_CAUSAL_REFERENCE_CONTRACT as CONTRACT } from
   "../src/formal-causal-reference-contract.ts";
+import {
+  filesAreByteIdentical,
+  sha256CanonicalJson,
+  sha256File,
+  streamSelectedJsonValues,
+} from "./formal-causal-reference-artifact-stream.mjs";
 
 const primaryPath = resolve(
   process.argv[2]
@@ -34,9 +39,11 @@ const scientificImplementationRepositoryPaths = [
 ].sort();
 const implementationRepositoryPaths = [
   ...scientificImplementationRepositoryPaths,
+  candidateRoot + "/scripts/formal-causal-reference-artifact-stream.mjs",
   candidateRoot + "/scripts/run-formal-causal-reference.mjs",
   candidateRoot + "/scripts/assert-formal-causal-reference-artifact.mjs",
   candidateRoot + "/package.json",
+  candidateRoot + "/package-lock.json",
 ].sort();
 
 function hash(buffer) {
@@ -62,7 +69,7 @@ function implementationTreeSha256AtCommit(commit) {
   return digest.digest("hex");
 }
 
-function assertFiniteTree(value, path = "result") {
+function assertFiniteTree(value, path = "record") {
   if (typeof value === "number") {
     assert.ok(Number.isFinite(value), path);
     return;
@@ -173,99 +180,7 @@ function assertRunLedger(run, expectedSteps, expectedRows, candidate) {
   assertReconstruction(run, expectedSteps, expectedRows, candidate);
 }
 
-const primaryRaw = await readFile(primaryPath);
-const canonicalRaw = primaryPath.endsWith(".gz")
-  ? gunzipSync(primaryRaw)
-  : primaryRaw;
-const result = JSON.parse(canonicalRaw.toString("utf8"));
-assertFiniteTree(result);
-assert.equal(result.format, "VP-A8O-CAUSAL-REFERENCE-2D-QUALIFICATION-v1");
-assert.equal(result.contractIdentity?.format, CONTRACT.format);
-
-const contractCommit = result.contractIdentity.contractCommit;
-const implementationCommit = result.contractIdentity.implementationCommit;
-const frozenContractRaw = git([
-  "show",
-  contractCommit + ":" + contractRepositoryPath,
-], null);
-const frozenDocumentRaw = git([
-  "show",
-  contractCommit + ":" + contractDocumentRepositoryPath,
-], null);
-assert.equal(
-  Buffer.compare(
-    await readFile(resolve(repositoryRoot, contractRepositoryPath)),
-    frozenContractRaw,
-  ),
-  0,
-);
-assert.equal(
-  Buffer.compare(
-    await readFile(resolve(repositoryRoot, contractDocumentRepositoryPath)),
-    frozenDocumentRaw,
-  ),
-  0,
-);
-assert.equal(result.contractIdentity.contractSha256, hash(frozenContractRaw));
-assert.equal(
-  result.contractIdentity.contractDocumentSha256,
-  hash(frozenDocumentRaw),
-);
-const implementationCommits = new Set(
-  scientificImplementationRepositoryPaths.map((path) =>
-    git(["log", "-1", "--format=%H", "--", path]).trim()),
-);
-assert.equal(implementationCommits.size, 1);
-assert.equal([...implementationCommits][0], implementationCommit);
-for (const path of implementationRepositoryPaths) {
-  const current = await readFile(resolve(repositoryRoot, path));
-  const frozen = git(["show", implementationCommit + ":" + path], null);
-  assert.equal(Buffer.compare(current, frozen), 0, path);
-}
-assert.equal(
-  result.contractIdentity.implementationTreeSha256,
-  implementationTreeSha256AtCommit(implementationCommit),
-);
-
-for (const [field, entry] of [
-  ["formalSourceSha256", CONTRACT.sourceIdentity.formalSource],
-  ["proDecisionSha256", CONTRACT.sourceIdentity.proDecision],
-  ["frozenS9BoundarySha256", CONTRACT.sourceIdentity.frozenS9Boundary],
-  ["frozenA8nContractSha256", CONTRACT.sourceIdentity.frozenA8nContract],
-  [
-    "fixedCylinderGeometrySha256",
-    CONTRACT.sourceIdentity.fixedCylinderGeometry,
-  ],
-  [
-    "fixedCylinderMetricsSha256",
-    CONTRACT.sourceIdentity.fixedCylinderMetrics,
-  ],
-]) {
-  assert.equal(
-    result.contractIdentity[field],
-    hash(await readFile(resolve(repositoryRoot, entry.relativePath))),
-  );
-}
-const a8nStoredRaw = await readFile(a8nPath);
-assert.equal(
-  result.contractIdentity.a8nStoredArtifactSha256,
-  hash(a8nStoredRaw),
-);
-assert.equal(
-  result.contractIdentity.a8nCanonicalArtifactSha256,
-  hash(gunzipSync(a8nStoredRaw)),
-);
-
-assert.equal(
-  result.causal.runs.length,
-  CONTRACT.causalReference.matrix.runCount,
-);
-assert.equal(result.causal.cornerAnalyses.length, 9);
-assert.equal(
-  new Set(result.causal.runs.map((entry) => entry.definition.id)).size,
-  CONTRACT.causalReference.matrix.runCount,
-);
-for (const run of result.causal.runs) {
+function assertCausalRun(run) {
   const candidate = run.definition.strategy
     === "incoming-characteristic-compatible-zou-he";
   assertRunLedger(
@@ -282,22 +197,15 @@ for (const run of result.causal.runs) {
     assert.equal(run.anchorComparison.applicable, false);
   }
 }
-for (const corner of result.causal.cornerAnalyses) {
+
+function assertCausalCorner(corner) {
   assert.equal(corner.runComparisons.length, 8);
   assert.equal(corner.shortDistancePairs.length, 3);
   assert.equal(corner.alignedFluxComparisons.length, 3);
   assert.ok(corner.referenceAgreement.sampleCount > 0);
 }
 
-assert.equal(
-  result.statistics.runs.length,
-  CONTRACT.continuousStatistics.matrixRunCount,
-);
-assert.equal(
-  new Set(result.statistics.runs.map((entry) => entry.definition.id)).size,
-  CONTRACT.continuousStatistics.matrixRunCount,
-);
-for (const run of result.statistics.runs) {
+function assertStatisticalRun(run) {
   const candidate = run.definition.strategy
     === "incoming-characteristic-compatible-zou-he";
   assertRunLedger(
@@ -327,15 +235,7 @@ for (const run of result.statistics.runs) {
   }
 }
 
-assert.equal(
-  result.perturbations.pairs.length,
-  CONTRACT.twoDimensionalPerturbations.casePairCount,
-);
-assert.equal(
-  new Set(result.perturbations.pairs.map((entry) => entry.definition.id)).size,
-  CONTRACT.twoDimensionalPerturbations.casePairCount,
-);
-for (const pair of result.perturbations.pairs) {
+function assertPerturbationPair(pair) {
   const candidate = pair.definition.strategy
     === "incoming-characteristic-compatible-zou-he";
   for (const trace of [pair.test, pair.extendedReference]) {
@@ -375,54 +275,228 @@ for (const pair of result.perturbations.pairs) {
   }
 }
 
+const selectedPaths = /^(format|contractIdentity|inheritedA8nAnchors|causal\.runs\.\d+|causal\.cornerAnalyses\.\d+|causal\.gate|statistics\.runs\.\d+|statistics\.gate|perturbations\.pairs\.\d+|perturbations\.gate|evidenceDecision|candidateDecision)$/;
+let format;
+let contractIdentity;
+let inheritedA8nAnchors;
+let causalGate;
+let statisticalGate;
+let perturbationGate;
+let evidenceDecision;
+let candidateDecision;
+let causalRunCount = 0;
+let causalCornerCount = 0;
+let statisticalRunCount = 0;
+let perturbationPairCount = 0;
+const causalIds = new Set();
+const statisticalIds = new Set();
+const perturbationIds = new Set();
+
+for await (const { value } of streamSelectedJsonValues(
+  primaryPath,
+  selectedPaths,
+)) {
+  assertFiniteTree(value);
+  if (typeof value === "string") {
+    format = value;
+  } else if (value?.formalSourceSha256 !== undefined) {
+    contractIdentity = value;
+  } else if (value?.requiredCases !== undefined
+    && value?.exactMatchedCases !== undefined) {
+    inheritedA8nAnchors = value;
+  } else if (value?.definition?.id?.startsWith("causal-")) {
+    assertCausalRun(value);
+    causalRunCount += 1;
+    causalIds.add(value.definition.id);
+  } else if (Array.isArray(value?.runComparisons)
+    && value?.referenceAgreement !== undefined) {
+    assertCausalCorner(value);
+    causalCornerCount += 1;
+  } else if (value?.cornerAnalysisCountPass !== undefined) {
+    causalGate = value;
+  } else if (value?.definition?.id?.startsWith("statistics-")) {
+    assertStatisticalRun(value);
+    statisticalRunCount += 1;
+    statisticalIds.add(value.definition.id);
+  } else if (value?.allContinuousWindowsMature !== undefined) {
+    statisticalGate = value;
+  } else if (value?.definition?.perturbationId !== undefined) {
+    assertPerturbationPair(value);
+    perturbationPairCount += 1;
+    perturbationIds.add(value.definition.id);
+  } else if (value?.pairCountPass !== undefined) {
+    perturbationGate = value;
+  } else if (value?.internalChecks !== undefined) {
+    evidenceDecision = value;
+  } else if (value?.code !== undefined && value?.gates !== undefined) {
+    candidateDecision = value;
+  } else {
+    assert.fail(
+      "unrecognized selected A8O value with keys: "
+        + Object.keys(value ?? {}).join(","),
+    );
+  }
+}
+
+assert.equal(format, "VP-A8O-CAUSAL-REFERENCE-2D-QUALIFICATION-v1");
+assert.equal(contractIdentity?.format, CONTRACT.format);
+assert.equal(causalRunCount, CONTRACT.causalReference.matrix.runCount);
+assert.equal(causalIds.size, CONTRACT.causalReference.matrix.runCount);
+assert.equal(causalCornerCount, 9);
 assert.equal(
-  result.inheritedA8nAnchors.requiredCases,
+  statisticalRunCount,
+  CONTRACT.continuousStatistics.matrixRunCount,
+);
+assert.equal(
+  statisticalIds.size,
+  CONTRACT.continuousStatistics.matrixRunCount,
+);
+assert.equal(
+  perturbationPairCount,
+  CONTRACT.twoDimensionalPerturbations.casePairCount,
+);
+assert.equal(
+  perturbationIds.size,
+  CONTRACT.twoDimensionalPerturbations.casePairCount,
+);
+assert.ok(causalGate !== undefined);
+assert.ok(statisticalGate !== undefined);
+assert.ok(perturbationGate !== undefined);
+assert.ok(evidenceDecision !== undefined);
+assert.ok(candidateDecision !== undefined);
+
+assert.equal(
+  inheritedA8nAnchors.requiredCases,
   CONTRACT.sourceIdentity.a8nEvidence.exactShortDomainCausalAnchors,
 );
 assert.equal(
-  result.evidenceDecision.pass,
-  Object.values(result.evidenceDecision.internalChecks).every(Boolean),
+  evidenceDecision.pass,
+  Object.values(evidenceDecision.internalChecks).every(Boolean),
 );
-const candidateGatesPass = Object.values(
-  result.candidateDecision.gates,
-).every(Boolean);
+const candidateGatesPass = Object.values(candidateDecision.gates).every(Boolean);
 assert.equal(
-  result.candidateDecision.pass,
-  result.evidenceDecision.pass && candidateGatesPass,
+  candidateDecision.pass,
+  evidenceDecision.pass && candidateGatesPass,
 );
 assert.equal(
-  result.candidateDecision.code,
-  result.candidateDecision.pass
+  candidateDecision.code,
+  candidateDecision.pass
     ? CONTRACT.decision.candidateReadyCode
     : CONTRACT.decision.candidateHoldCode,
 );
 assert.equal(
-  result.evidenceDecision.code,
-  result.evidenceDecision.pass
+  evidenceDecision.code,
+  evidenceDecision.pass
     ? CONTRACT.decision.evidenceCompleteCode
     : CONTRACT.decision.evidenceIncompleteCode,
 );
-assert.equal(result.evidenceDecision.formalSourceModified, false);
-assert.equal(result.evidenceDecision.formalIntegrationUnlocked, false);
-assert.equal(result.evidenceDecision.candidateAutomaticallyApproved, false);
+assert.equal(evidenceDecision.formalSourceModified, false);
+assert.equal(evidenceDecision.formalIntegrationUnlocked, false);
+assert.equal(evidenceDecision.candidateAutomaticallyApproved, false);
 
-if (repeatPath !== undefined) {
-  const repeatRaw = await readFile(repeatPath);
+const contractCommit = contractIdentity.contractCommit;
+const implementationCommit = contractIdentity.implementationCommit;
+const frozenContractRaw = git([
+  "show",
+  contractCommit + ":" + contractRepositoryPath,
+], null);
+const frozenDocumentRaw = git([
+  "show",
+  contractCommit + ":" + contractDocumentRepositoryPath,
+], null);
+assert.equal(
+  Buffer.compare(
+    await readFile(resolve(repositoryRoot, contractRepositoryPath)),
+    frozenContractRaw,
+  ),
+  0,
+);
+assert.equal(
+  Buffer.compare(
+    await readFile(resolve(repositoryRoot, contractDocumentRepositoryPath)),
+    frozenDocumentRaw,
+  ),
+  0,
+);
+assert.equal(contractIdentity.contractSha256, hash(frozenContractRaw));
+assert.equal(
+  contractIdentity.contractDocumentSha256,
+  hash(frozenDocumentRaw),
+);
+assert.equal(
+  git([
+    "log",
+    "-1",
+    "--format=%H",
+    "--",
+    contractDocumentRepositoryPath,
+  ]).trim(),
+  contractCommit,
+);
+git(["merge-base", "--is-ancestor", contractCommit, implementationCommit]);
+git(["merge-base", "--is-ancestor", implementationCommit, "HEAD"]);
+for (const path of implementationRepositoryPaths) {
+  const current = await readFile(resolve(repositoryRoot, path));
+  const frozen = git(["show", implementationCommit + ":" + path], null);
+  assert.equal(Buffer.compare(current, frozen), 0, path);
+}
+assert.equal(
+  contractIdentity.implementationTreeSha256,
+  implementationTreeSha256AtCommit(implementationCommit),
+);
+
+for (const [field, entry] of [
+  ["formalSourceSha256", CONTRACT.sourceIdentity.formalSource],
+  ["proDecisionSha256", CONTRACT.sourceIdentity.proDecision],
+  ["frozenS9BoundarySha256", CONTRACT.sourceIdentity.frozenS9Boundary],
+  ["frozenA8nContractSha256", CONTRACT.sourceIdentity.frozenA8nContract],
+  [
+    "fixedCylinderGeometrySha256",
+    CONTRACT.sourceIdentity.fixedCylinderGeometry,
+  ],
+  [
+    "fixedCylinderMetricsSha256",
+    CONTRACT.sourceIdentity.fixedCylinderMetrics,
+  ],
+]) {
   assert.equal(
-    Buffer.compare(primaryRaw, repeatRaw),
-    0,
+    contractIdentity[field],
+    hash(await readFile(resolve(repositoryRoot, entry.relativePath))),
+  );
+}
+const a8nStored = await sha256File(a8nPath);
+const a8nCanonical = await sha256CanonicalJson(a8nPath);
+assert.equal(
+  contractIdentity.a8nStoredArtifactSha256,
+  a8nStored.sha256,
+);
+assert.equal(
+  contractIdentity.a8nCanonicalArtifactSha256,
+  a8nCanonical.sha256,
+);
+
+const primaryStored = await sha256File(primaryPath);
+const primaryCanonical = await sha256CanonicalJson(primaryPath);
+let repeatByteIdentical = null;
+if (repeatPath !== undefined) {
+  repeatByteIdentical = await filesAreByteIdentical(primaryPath, repeatPath);
+  assert.equal(
+    repeatByteIdentical,
+    true,
     "independent A8O repeat must be byte-identical",
   );
 }
 console.log(JSON.stringify({
   primaryPath,
-  storedSha256: hash(primaryRaw),
-  canonicalSha256: hash(canonicalRaw),
-  repeatByteIdentical: repeatPath === undefined ? null : true,
-  inheritedA8nAnchors: result.inheritedA8nAnchors,
-  causalGate: result.causal.gate,
-  statisticalGate: result.statistics.gate,
-  perturbationGate: result.perturbations.gate,
-  evidenceDecision: result.evidenceDecision,
-  candidateDecision: result.candidateDecision,
+  storedSha256: primaryStored.sha256,
+  storedBytes: primaryStored.bytes,
+  canonicalSha256: primaryCanonical.sha256,
+  canonicalBytes: primaryCanonical.bytes,
+  repeatByteIdentical,
+  inheritedA8nAnchors,
+  causalGate,
+  statisticalGate,
+  perturbationGate,
+  evidenceDecision,
+  candidateDecision,
 }, null, 2));

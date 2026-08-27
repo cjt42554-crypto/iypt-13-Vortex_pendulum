@@ -1,12 +1,14 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
-import { gunzipSync, gzipSync } from "node:zlib";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { gunzipSync } from "node:zlib";
 import { FORMAL_CAUSAL_REFERENCE_CONTRACT as CONTRACT } from
   "../src/formal-causal-reference-contract.ts";
 import { runFormalCausalReferenceQualification } from
   "../src/formal-causal-reference.ts";
+import { writeDeterministicJsonGzip } from
+  "./formal-causal-reference-artifact-stream.mjs";
 
 const outputPath = resolve(
   process.argv[2]
@@ -32,9 +34,11 @@ const scientificImplementationRepositoryPaths = [
 ].sort();
 const implementationRepositoryPaths = [
   ...scientificImplementationRepositoryPaths,
+  candidateRoot + "/scripts/formal-causal-reference-artifact-stream.mjs",
   candidateRoot + "/scripts/run-formal-causal-reference.mjs",
   candidateRoot + "/scripts/assert-formal-causal-reference-artifact.mjs",
   candidateRoot + "/package.json",
+  candidateRoot + "/package-lock.json",
 ].sort();
 
 function hash(buffer) {
@@ -95,15 +99,8 @@ const documentCommit = git([
 if (contractCommit === "" || documentCommit !== contractCommit) {
   throw new Error("A8O machine and Markdown contracts must share one frozen commit");
 }
-const implementationCommits = new Set(
-  scientificImplementationRepositoryPaths.map((path) =>
-    git(["log", "-1", "--format=%H", "--", path]).trim()),
-);
-if (implementationCommits.size !== 1 || implementationCommits.has("")) {
-  throw new Error("A8O no-result scientific implementation was not frozen in one commit");
-}
-const implementationCommit = [...implementationCommits][0];
-if (implementationCommit === undefined || implementationCommit === contractCommit) {
+const implementationCommit = git(["rev-parse", "HEAD"]).trim();
+if (implementationCommit === "" || implementationCommit === contractCommit) {
   throw new Error("A8O implementation commit must follow the contract commit");
 }
 git(["merge-base", "--is-ancestor", contractCommit, implementationCommit]);
@@ -203,29 +200,20 @@ const result = runFormalCausalReferenceQualification(
   },
 );
 
-function rejectNonFinite(_key, value) {
-  if (typeof value === "number" && !Number.isFinite(value)) {
-    throw new RangeError("A8O result contains a non-finite number");
-  }
-  return value;
-}
-
-const canonicalJson = Buffer.from(
-  JSON.stringify(result, rejectNonFinite) + "\n",
-  "utf8",
-);
-await mkdir(dirname(outputPath), { recursive: true });
-await writeFile(
+const artifactIdentity = await writeDeterministicJsonGzip(
+  result,
   outputPath,
-  gzipSync(canonicalJson, {
+  {
     level: CONTRACT.operationalDefinitions.artifact.gzipLevel,
     mtime: CONTRACT.operationalDefinitions.artifact.gzipMtime,
-  }),
+  },
 );
 console.log(JSON.stringify({
   outputPath,
-  storedSha256: hash(await readFile(outputPath)),
-  canonicalSha256: hash(canonicalJson),
+  storedSha256: artifactIdentity.storedSha256,
+  canonicalSha256: artifactIdentity.canonicalSha256,
+  storedBytes: artifactIdentity.storedBytes,
+  canonicalBytes: artifactIdentity.canonicalBytes,
   contractCommit,
   implementationCommit,
   implementationTreeSha256: provenance.implementationTreeSha256,
