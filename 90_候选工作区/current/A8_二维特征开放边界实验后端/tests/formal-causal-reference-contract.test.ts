@@ -76,6 +76,18 @@ test("A8O separates the causal window from long-time statistics", () => {
         * CONTRACT.continuousStatistics.windowConvectiveDuration,
     CONTRACT.continuousStatistics.totalConvectiveDuration,
   );
+  assert.equal(
+    CONTRACT.operationalDefinitions.causalComparison.commonReference,
+    "cellwise-arithmetic-mean-of-aligned-S1-and-S9-14D-traces",
+  );
+  assert.equal(
+    CONTRACT.operationalDefinitions.statistics.freshUniformInitializationForEveryRun,
+    true,
+  );
+  assert.equal(
+    CONTRACT.operationalDefinitions.correctedLoad.recordEveryAcceptedStep,
+    true,
+  );
 });
 
 test("A8O freezes two oblique gates, a local pulse gate, and a shear diagnostic", () => {
@@ -99,6 +111,14 @@ test("A8O freezes two oblique gates, a local pulse gate, and a shear diagnostic"
   assert.equal(
     definitions.filter((entry) => entry.family === "shear-vorticity").length,
     6,
+  );
+  assert.equal(
+    CONTRACT.operationalDefinitions.perturbations.windowEnvelopeSigmaMultipliers,
+    3,
+  );
+  assert.equal(
+    CONTRACT.operationalDefinitions.perturbations.shearDiagnosticStrideSteps,
+    4,
   );
 });
 

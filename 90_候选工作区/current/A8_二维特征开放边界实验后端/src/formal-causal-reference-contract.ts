@@ -149,6 +149,123 @@ export const FORMAL_CAUSAL_REFERENCE_CONTRACT = Object.freeze({
     }),
     sampleStrideCellsPerNominalDiameter: 0.25,
   }),
+  operationalDefinitions: Object.freeze({
+    acceptedStepConvention:
+      "step-one-is-the-field-after-the-first-formal-kernel-step-and-candidate-adapter",
+    causalComparison: Object.freeze({
+      commonReference:
+        "cellwise-arithmetic-mean-of-aligned-S1-and-S9-14D-traces",
+      referenceUseRequiresAgreementGate: true,
+      spatialAlignment:
+        "integer-translation-by-body-center; compare-x-over-D-minus-2-through-4-and-all-periodic-y-rows",
+      includedCells: "mask-less-than-0.5-in-the-aligned-cylinder-region",
+      windowBounds:
+        "inclusive-ceil-of-lower-fraction-and-floor-of-upper-fraction; retain-only-sample-stride-steps",
+      densityError:
+        "space-time-root-mean-square-of-cellwise-density-difference",
+      velocityError:
+        "space-time-root-mean-square-of-cellwise-vector-velocity-difference",
+      correctedLoadError:
+        "time-root-mean-square-of-paired-corrected-drag-and-lift-coefficient-differences",
+      correctedLoadVectorComponents: 2,
+      ratioDenominator:
+        "legacy-error-with-contract-detection-floor-required-before-ratio-is-qualified",
+      nonqualifiedRatioRepresentation: null,
+    }),
+    correctedLoad: Object.freeze({
+      rawReaction:
+        "formal-kernel-Brinkman-raw-reaction-impulse-for-the-accepted-step",
+      fictitiousFluidMomentum:
+        "sum-over-all-cells-of-mask-times-density-times-velocity",
+      correction:
+        "raw-reaction-plus-post-minus-pre-fictitious-fluid-momentum",
+      dynamicLineForce:
+        "0.5-times-inlet-velocity-squared-times-nominal-diameter-cells",
+      recordEveryAcceptedStep: true,
+    }),
+    statistics: Object.freeze({
+      freshUniformInitializationForEveryRun: true,
+      windowBounds:
+        "open-lower-closed-upper-convective-time-intervals-12-to-16-16-to-20-and-20-to-24",
+      fieldSample:
+        "post-accepted-step-at-the-frozen-nominal-diameter-quarter-stride",
+      loadSample: "every-accepted-step",
+      storedFieldCoverage: "entire-domain-with-static-mask-recorded",
+      gateCellSelection: "mask-less-than-0.5",
+      meanVelocityFieldComponents: Object.freeze(["ux", "uy"]),
+      fluctuationRmsFields: Object.freeze([
+        "density-temporal-standard-deviation",
+        "sqrt-of-ux-and-uy-temporal-variance-sum",
+        "isothermal-pressure-proxy-temporal-standard-deviation",
+      ]),
+      pressureProxy: "cs-squared-times-rho-minus-one",
+      consecutiveFieldDifference:
+        "spatial-root-mean-square-over-fluid-cells-of-window-mean-field-difference",
+      relativeDriftDenominatorFloor: 1e-12,
+      fluctuationRmsRelativeDriftDenominatorFloor: 1e-12,
+      strouhalTrace:
+        "all-load-samples-in-the-combined-12-convective-time-post-warmup-statistics-interval",
+      strouhalConvectiveSampleInterval:
+        "inlet-velocity-divided-by-nominal-diameter-cells-per-lattice-step",
+    }),
+    alignedBoundaryFlux: Object.freeze({
+      windowBounds: "inclusive-ceil-start-and-floor-end",
+      response:
+        "signed-cumulative-S9-adapter-mass-divided-by-boundary-row-count",
+      relativeDifferenceDenominator:
+        "maximum-of-short-absolute-reference-absolute-and-absolute-floor-per-row",
+    }),
+    exactPopulationAccounting: Object.freeze({
+      preMass: "population-sum-before-formal-kernel-step",
+      formalPostMass: "population-sum-after-formal-boundaries-before-candidate-adapter",
+      candidatePostMass: "population-sum-after-candidate-adapter",
+      stepBudget:
+        "formal-post-minus-pre-plus-sum-of-candidate-minus-formal-by-direction",
+      normalization:
+        "absolute-closure-residual-divided-by-maximum-of-one-absolute-formal-change-and-absolute-adapter-total",
+      a8nAnchorProjection:
+        "exact-prefix-match-of-pre-formal-post-candidate-post-and-adapter-direction-arrays-for-all-18-3.5D-fixed-body-paths",
+    }),
+    perturbations: Object.freeze({
+      baseState: Object.freeze({ rho: 1, ux: 0.08, uy: 0 }),
+      centerY: 31.5,
+      periodicTransverseDistance: true,
+      obliqueAcousticInitialization:
+        "delta-rho=A-exp(-(x-xc)^2/(2*sigma^2))*cos(kx*(x-xc)+ky*(y-yc)); delta-u=-cs*delta-rho*(kx,ky)/sqrt(kx^2+ky^2)",
+      obliqueKx: "2*pi-over-streamwise-wavelength",
+      obliqueKy: "2*pi-times-transverse-mode-over-ny",
+      localizedPressureInitialization:
+        "delta-rho=A-exp(-((x-xc)^2+periodic-dy^2)/(2*sigma^2)); delta-ux=delta-uy=0",
+      shearVorticityInitialization:
+        "delta-uy=A-exp(-(x-xc)^2/(2*sigma^2))*cos(2*pi*(y-yc)/ny); delta-rho=delta-ux=0",
+      characteristicProjection:
+        "A-minus=0.5*(delta-rho-delta-u-dot-khat/cs); A-plus=0.5*(delta-rho+delta-u-dot-khat/cs)",
+      transverseModalProjection:
+        "two-over-ny-complex-Fourier-coefficient-at-the-frozen-positive-mode",
+      contaminationModes:
+        "nonnegative-Fourier-modes-zero-through-ny-over-two-excluding-the-target-mode",
+      contaminationRatio:
+        "square-root-of-summed-nontarget-reflected-energy-over-target-reflected-energy",
+      incidentAndReflectionWindows:
+        "predicted-probe-center-times-using-oblique-group-speed-or-normal-acoustic-speed-plus-minus-three-envelope-sigma-travel-times-clipped-to-run",
+      windowEnvelopeSigmaMultipliers: 3,
+      acousticTraceSampleStrideSteps: 1,
+      localizedPressureProbeMetric:
+        "cross-stream-root-mean-square-test-minus-reference-divided-by-incident-reference-root-mean-square",
+      meanVelocityDrift:
+        "maximum-vector-magnitude-of-domain-mean-velocity-minus-initial-domain-mean-velocity",
+      shearDiagnosticStrideSteps: 4,
+      shearDiagnosticComparison:
+        "aligned-test-reference-vorticity-rms-and-transverse-kinetic-energy-over-the-test-domain",
+    }),
+    artifact: Object.freeze({
+      deterministicCaseOrder: true,
+      timestampFieldsForbidden: true,
+      nonFiniteJsonValuesForbidden: true,
+      gzipLevel: 9,
+      gzipMtime: 0,
+    }),
+  }),
   causalReference: Object.freeze({
     matrix: Object.freeze({
       strategyCount: 2,
