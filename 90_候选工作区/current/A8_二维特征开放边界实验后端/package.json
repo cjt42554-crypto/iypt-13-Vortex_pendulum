@@ -8,7 +8,9 @@
     "formal-incoming-characteristic": "node --experimental-strip-types scripts/run-formal-incoming-characteristic.mjs",
     "assert:formal-incoming-characteristic-artifact": "node --experimental-strip-types scripts/assert-formal-incoming-characteristic-artifact.mjs",
     "formal-causal-reference": "node --experimental-strip-types scripts/run-formal-causal-reference.mjs",
-    "assert:formal-causal-reference-artifact": "node --experimental-strip-types scripts/assert-formal-causal-reference-artifact.mjs"
+    "assert:formal-causal-reference-artifact": "node --experimental-strip-types scripts/assert-formal-causal-reference-artifact.mjs",
+    "formal-discrete-reference": "node --experimental-strip-types scripts/run-formal-discrete-reference.mjs",
+    "assert:formal-discrete-reference-artifact": "node --experimental-strip-types scripts/assert-formal-discrete-reference-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
