@@ -153,3 +153,13 @@
 - A8P 新 Neumaier 人口账通过，但不回改 A8O 原人口账或 NO-GO；S9 未被选择，正式集成未解锁，也没有创建新边界策略。
 - 仓库外干净克隆从第一个案例完整复跑，主/复跑 gzip 和 sidecar 逐字节一致；压缩/规范 SHA-256 为 `0aec8ce335baab93224608d01f6de0d5afcf8779226d2be8d40a5e946ae31868`/`56dd50ed6c941b4581d5f7fa7faabafb2459f334749a5b321a64329c0abf00ff`。
 - 机器产物和 sidecar 已按独立提交 `93e8b256fda5f8a485fbb8abf1a9111059c9acc9` 推送，压缩文件由候选包精确 Git LFS 规则跟踪；下一步停止并交回独立 Pro，不直接创建 A8Q。
+
+## 2026-08-28 03:35:57 +09:00
+
+- 网页版 Pro 独立审查 A8P 的结果前合同、无结果实现、报告、机器产物身份、完整复跑记录，并与公开固定圆柱的网格--mask、域和入口距离证据交叉核对。
+- 接受 A8P 短时离散过去锥参考和高参数 `symmetry-lock-present`/`unstable-growing-not-saturated` 为候选级窄结论，同时确认冻结总裁决 `NO-GO-A8P-DISCRETE-REFERENCE-OR-MATURITY-PROTOCOL-GATES` 不得回改。
+- 裁定横向失败发生在 $W/D=4.667$ 与 $7$ 的高周期阻塞域，且四种几何均未饱和；约 15% 阻力差只能解释为高阻塞周期域和未饱和瞬态联合敏感性，不能淘汰 S1/S9 或证明成熟长时载荷不收敛。
+- 发现既有固定圆柱网格研究固定 $\widehat\eta=0.00625$，使 `penalizationTimeSteps=\widehat\eta D/U` 随 $D=16,20,24$ 增至 2、2.5、3；该序列没有让无量纲 Brinkman 惩罚时间趋于零，尚未建立无滑移锐界面极限。
+- 新增 `16_A8P_网页版Pro独立审查与A8Q路线裁决.md`，下一阶段冻结为 `VP-A8Q-BRINKMAN-SHARP-INTERFACE-SCALING-SCREEN-v1`：在 $Re=185$、$14D/19.5D/10D$ 载体上运行 10 个 $D$--mask--固定格子惩罚时间算例，并新增固体滑移、有效 mask 几何与力分解诊断。
+- A8Q 最高只允许解锁 A8R，不允许单点文献命中选参；A8Q 前不追加 A8P 宽域矩阵、不开发 S10、不运行 $D=32/40/50$、规定横移或 weak-FSI。
+- 正式理论与正式程序未修改；本轮没有重跑 A8P、LFS 产物断言或正式 `npm run validate`。新裁决和交接通过 Pandoc `--mathjax` 解析，无制表符、无非预期尾随空格，公式分隔符成对。
