@@ -228,3 +228,11 @@
 - 明确 `body=null` 烟雾合同沿用冻结控制体中心，独立逐格宏观量按 D2Q9 方向 0 至 8 确定性 Neumaier 求和，全部独立量形成后才能读取正式比较值；文献屏蔽分开记录原始和去均值升力 RMS。
 - 候选包既有测试 41/41、TypeScript 和 Pandoc 严格解析通过；新合同完成 17 页 MathML/Chrome 实际渲染并逐页检查。仓库数学检查器仍只有 A8O/A8P 四个既有命中，新 v2.1 文件无新增命中。
 - A8R v1/v2 继续作为无数值结果的结果盲历史；正式理论、正式程序、A8Q 和候选 README 未修改，没有创建 A8R 测试、实现或可执行入口，也没有执行烟雾或研究轨迹。下一步停止并再次交回独立 Pro 审查 v2.1。
+
+## 2026-08-29 01:34:58 +09:00
+
+- 独立审查 A8R v2.1 结果前 Markdown 与 TypeScript 机器合同，确认原始交叉选择、六周期闭区间频带门、禁止回退搜索、四类主指标双 mask/双相位门、两类力身份和绝对舍入账均已机器冻结。
+- 裁决为 `ACCEPT-A8R-V2P1-PRO-RESULT-BEFORE-CONTRACT`、`UNLOCK-A8R-V2P1-PRO-CONTRACT-TESTS-ONLY` 和 `KEEP-A8R-V2P1-PRO-IMPLEMENTATION-SMOKE-AND-RESEARCH-LOCKED`；当前只解锁独立合同测试提交。
+- 逐周期 $6\times6$ 最坏门同时包含轨迹内部周期散布和轨迹间差异，属于联合窄带屏蔽；失败只能判 INCONCLUSIVE，报告必须分开呈现自身周期包络、聚合差和最坏逐周期差，不得单独归因于 mask 或相位。
+- 新增 `25_A8R_v2_1_网页版Pro独立审查与合同测试解锁裁决.md`，更新候选 README 与当前交接；正式理论和正式程序未修改，没有创建或执行合同测试、无结果实现、烟雾测试或研究矩阵。
+- 下一步只允许 Codex 创建并推送 `tests/brinkman-multiresolution-contract-v2-1.test.ts`，运行候选包测试和 TypeScript 检查后停止，再交回独立 Pro。
