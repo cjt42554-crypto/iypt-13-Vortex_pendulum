@@ -12,7 +12,9 @@
     "formal-discrete-reference": "node --experimental-strip-types scripts/run-formal-discrete-reference.mjs",
     "assert:formal-discrete-reference-artifact": "node --experimental-strip-types scripts/assert-formal-discrete-reference-artifact.mjs",
     "brinkman-scaling": "node --experimental-strip-types scripts/run-brinkman-scaling.mjs",
-    "assert:brinkman-scaling-artifact": "node --experimental-strip-types scripts/assert-brinkman-scaling-artifact.mjs"
+    "assert:brinkman-scaling-artifact": "node --experimental-strip-types scripts/assert-brinkman-scaling-artifact.mjs",
+    "brinkman-multiresolution-v2-1": "node --experimental-strip-types scripts/run-brinkman-multiresolution-v2-1.mjs",
+    "assert:brinkman-multiresolution-v2-1-artifact": "node --experimental-strip-types scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
