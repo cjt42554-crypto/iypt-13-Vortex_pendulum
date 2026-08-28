@@ -2,7 +2,7 @@
 
 ## 当前用途
 
-本目录保留 A8N、A8O、A8P 的冻结候选复现链，并记录 A8P 后的独立 Pro 裁决。正式 `01_最终理论/**` 和 `02_模拟程序/**` 保持只读；候选区代码不是正式模拟程序的补丁层，也不得原样迁入正式步进路径。
+本目录保留 A8N、A8O、A8P 的冻结候选复现链，并新增 A8Q Brinkman 锐界面缩放路径屏蔽的结果前合同、无结果实现、机器证据、资格报告和独立复跑身份。正式 `01_最终理论/**` 和 `02_模拟程序/**` 保持只读；候选区代码不是正式模拟程序的补丁层，也不得原样迁入正式步进路径。
 
 当前主线资料：
 
@@ -10,6 +10,8 @@
 - `14_A8P_离散因果参考与反对称成熟性预注册合同.md`；
 - `15_A8P_离散因果参考与成熟性资格报告.md`；
 - `16_A8P_网页版Pro独立审查与A8Q路线裁决.md`；
+- `17_A8Q_Brinkman锐界面缩放路径预注册合同.md`；
+- `18_A8Q_Brinkman锐界面缩放路径资格报告.md`；
 - `90_候选工作区/交接说明_current.md`。
 
 ## 当前裁决
@@ -60,54 +62,30 @@ $$
 
 扩展宽度为 $7D$，对应周期阻塞比约 21.43% 与 14.29%。四种几何又都处于未饱和增长阶段。因此，横向门失败只建立高阻塞周期域和未饱和瞬态的联合敏感性，不能写成成熟长时载荷不收敛或 S1/S9 边界算法失败。
 
-## 下一路线：A8Q
-
-独立 Pro 决定下一阶段不开发 S10，不继续追加 A8P 窄域矩阵，而优先审查 Brinkman 弥散固体的锐界面缩放路径：
-
-`PRIORITIZE-A8Q-BRINKMAN-SHARP-INTERFACE-SCALING-PATH`
+## A8Q 已执行
 
 阶段名：
 
 `VP-A8Q-BRINKMAN-SHARP-INTERFACE-SCALING-SCREEN-v1`
 
-现有公开固定圆柱运行器使用：
+机器总裁决为：
 
-$$
-\eta_{\mathrm{lu}}
-=\widehat\eta\frac{D}{U_{\mathrm{lu}}}.
-$$
+`PASS-A8Q-BRINKMAN-SCALING-PATH-CANDIDATE-ONLY-UNLOCK-A8R`
 
-既有网格研究固定 $\widehat\eta=0.00625$、$U_{\mathrm{lu}}=0.05$，所以 $D=16,20,24$ 对应 $\eta_{\mathrm{lu}}=2,2.5,3$。该序列没有让无量纲惩罚时间随网格加密趋于零，尚不能识别无滑移锐界面极限。
+冻结十算例矩阵已全部完成：
 
-A8Q 冻结载体：
+- 10/10 轨迹完成且有限；
+- 10/10 通过密度、Mach、升力 RMS 和前后半窗漂移门；
+- 10/10 的原始 Brinkman 反力、虚拟内部流体修正和最终载荷逐步可重组，最大绝对残差为 0；
+- 所有冻结源哈希一致；
+- 单点文献联合命中为 0/10；
+- 主运行和仓库外完整复跑的压缩产物与 sidecar 逐字节一致。
 
-- 固定圆柱，$Re=185$；
-- $U_{\mathrm{lu}}=0.05$；
-- S1 只作为冻结数值载体；
-- 上游 $14D$、下游 $19.5D$、横向周期宽度 $10D$；
-- 总时长 80 个对流时间，舍弃前 40 个；
-- A2 修正取力、频谱和文献目标定义不变；
-- 正式 `lbm.ts` 保持字节不变。
+固定 $\eta_{\mathrm{lu}}=1$ 路径通过全部内部门。两个 mask 的核心滑移均随 $D=16\to24$ 降低，阻力和升力 RMS 的变化方向一致；$D=24$ 跨 mask 平均阻力差为 2.10034%，升力 RMS 差为 4.99512%。后者只比 5% 门低约 0.00488 个百分点，所以这是窄裕量候选 PASS，不是稳健平台或收敛证明。
 
-冻结十算例矩阵：
+固定 $\eta_{\mathrm{lu}}=2$ 路径只在细网格跨 mask 门失败：平均阻力差为 2.55032%，升力 RMS 差为 5.50714%。$\eta_{\mathrm{lu}}=3$ 仍只作旧固定 $\widehat\eta=0.00625$ 路径控制，不参与解锁。
 
-$$
-D\in\{16,24\},
-\qquad
-w_\chi\in\{0.50,0.75\}\ \text{格},
-\qquad
-\eta_{\mathrm{lu}}\in\{1,2\}.
-$$
-
-$D=24$ 对两个 mask 再运行 $\eta_{\mathrm{lu}}=3$ 作为现有固定 $\widehat\eta$ 路径控制，共十条轨迹。
-
-A8Q 必须新增核心/过渡带速度滑移、有效 mask 几何、惩罚层尺度、原始反力与虚拟流体修正分解等诊断。它只允许筛查候选缩放路径：
-
-- 至少一条固定 $\eta_{\mathrm{lu}}$ 路径通过内部一致性门，最高输出 `PASS-A8Q-BRINKMAN-SCALING-PATH-CANDIDATE-ONLY-UNLOCK-A8R`；
-- 两条路径都失败，输出 `NO-GO-A8Q-BRINKMAN-SCALING-PATH-INCOHERENT`；
-- 单点偶然进入文献容差仍为 `INCONCLUSIVE-A8Q-SINGLE-POINT-LITERATURE-HIT`。
-
-不得按最接近文献的单点选择 mask 或惩罚时间。完整合同要求见 `16_A8P_网页版Pro独立审查与A8Q路线裁决.md`。
+A8Q PASS 只允许把唯一通过的 $\eta_{\mathrm{lu}}=1$ 路径交给下一份结果前预注册的 A8R。它不等于网格收敛、锐界面资格、文献验证、边界选择、正式接入、规定横移、weak-FSI、装置预测或实验验证。
 
 ## 冻结活动代码
 
@@ -120,8 +98,12 @@ A8Q 必须新增核心/过渡带速度滑移、有效 mask 几何、惩罚层尺
 - `src/formal-discrete-reference-support.ts`：A8P 离散锥、求和、镜像、分类和断言支持；
 - `src/formal-discrete-reference-runs.ts`：A8P 24 条短时与 16 条成熟性轨迹；
 - `src/formal-discrete-reference.ts`：A8P 汇总、门和总裁决；
+- `src/brinkman-scaling-contract.ts`：A8Q 冻结来源、十算例矩阵、诊断和门槛；
+- `src/brinkman-scaling-support.ts`：A8Q 有效几何、只读宏观视图、滑移、力分解和断言支持；
+- `src/brinkman-scaling-runs.ts`：A8Q 十条固定圆柱轨迹；
+- `src/brinkman-scaling.ts`：A8Q 路径门、总裁决和产物结构；
 - `src/formal-boundary-factorization-boundaries.ts` 与类型：冻结复现依赖；
-- A8N、A8O、A8P 的运行器、断言器和测试。
+- A8N、A8O、A8P、A8Q 的运行器、断言器和测试。
 
 固定圆柱几何、载荷、网格--mask 与既有域研究位于：
 
@@ -164,6 +146,15 @@ npm run assert:formal-discrete-reference-artifact
 
 `formal-discrete-reference` 在当前负裁决下完整形成产物后预期退出 2；产物断言预期退出 0，因为它验证负证据结构和裁决语义自洽，而不是改写总裁决。
 
+A8Q：
+
+```bash
+npm run brinkman-scaling
+npm run assert:brinkman-scaling-artifact
+```
+
+当前 A8Q 候选 PASS 下，运行器和机器断言均预期退出 0。机器断言会重算派生字段、全局门、两条固定惩罚时间路径门、哈希和裁决语义；它不把候选 PASS 提升为锐界面或物理资格。
+
 ## 冻结产物
 
 A8N：
@@ -184,9 +175,16 @@ A8P：
 - 压缩/规范 JSON 大小：23,170,223/174,836,651 字节；
 - 主运行和仓库外完整复跑逐字节一致。
 
+A8Q：
+
+- 压缩 SHA-256：`022cc54704ac542b5c148eed5ce026f5701ae79d50426ec3417073f1148ef451`；
+- 规范 JSON SHA-256：`16dad4a4d95eb91ad0e6f4e427d0d8ea05c8a349b479233479e03a78c6943082`；
+- 压缩/规范 JSON 大小：22,058,158/100,105,555 字节；
+- 主运行和仓库外完整复跑逐字节一致。
+
 ## 当前停止条件
 
-A8Q 完成并交回独立 Pro 前，不执行：
+A8Q 已到冻结停止门，应先交回独立 Pro 审查。获得新的 A8R 结果前合同或明确裁决前，不执行：
 
 - A8P 更宽横向域追加矩阵；
 - S9 正式接入或 S10 开发；
@@ -195,4 +193,4 @@ A8Q 完成并交回独立 Pro 前，不执行：
 - weak-FSI、三维、自由表面；
 - 装置预测或实验拟合。
 
-不得把 S9 的低声学反射、A8P 的短时逐值一致、种子增长分类或补偿人口账 PASS 写成正式二维边界、固定圆柱物理真值或涡流摆预测 PASS。
+不得把 S9 的低声学反射、A8P 的短时逐值一致、种子增长分类、补偿人口账 PASS 或 A8Q 的两分辨率窄裕量候选 PASS 写成正式二维边界、Brinkman 锐界面资格、固定圆柱物理真值或涡流摆预测 PASS。
