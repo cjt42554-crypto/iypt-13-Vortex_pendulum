@@ -201,3 +201,13 @@
 - 新增 `21_A8R_网页版Pro独立审查与v2合同修订裁决.md`，要求 v2 加入最后 6 个完整周期的周期分辨统计、$D=54$ 双 mask 半格相位屏蔽、已分辨/未分辨三值增量逻辑、完整舍入绝对账，并把外部比较降级为文献接近度屏蔽。
 - 当前裁决为 `REJECT-A8R-V1-PRO-STATISTICAL-ROBUSTNESS-CONTRACT-AS-FINAL`、`REQUIRE-A8R-V2-PRO-CYCLE-RESOLVED-AND-LATTICE-PHASE-CONTRACT` 和 `KEEP-A8R-PRO-RESULT-BEFORE-EXECUTION-LOCKED`。正式理论与正式程序未修改；下一步只建立 v2 Markdown 与机器合同并再次交回独立 Pro。
 - 新增审查和更新 README/当前交接通过 Pandoc 严格解析、制表符、尾随空格与公式分隔符检查；独立审查 MathML HTML 无残留显示公式定界符。候选包测试、TypeScript、正式 `npm run validate`、Zettlr 应用预览和数值矩阵本轮未执行。
+
+## 2026-08-28 23:32:33 +08:00
+
+- 按 A8R v1 后独立 Pro 裁决，只在候选 A8 后端建立 v2 结果前 Markdown 与 TypeScript 机器合同；两文件以独立提交 `d7e33c64d07fbc17a44c2e0408235cc00528762e` 推送到远程 `main`。
+- v2 冻结基线六轨迹和 $D=54$ 双 mask 的两条半格相位轨迹，以最后 7 个有效正斜率过零点定义最后 6 个完整周期；四个固定时间分块只作诊断。
+- 相邻分辨率门改为周期包络 Minkowski 差的已分辨 PASS、未分辨 INCONCLUSIVE 和已分辨 NO-GO 三值逻辑；精确平台明确不得判 NO-GO。
+- 独立力审计拆成 `independentRawPopulationMomentumIdentity` 与 `independentA2FormulaRecomputation`，并展开逐人口、逐链路、逐格 Brinkman 力和逐格 $\chi\rho u$ 的绝对 Neumaier 舍入账；A2 重算不是第二种物理取力法。
+- 外部比较降级为 `literatureProximityScreen`，不改变 v2 三终局；合同最高结论仍只是候选离散身份与未来结果判定协议，不是锐界面、无滑移、载荷资格或装置预测。
+- 候选包 41/41 测试、TypeScript、Pandoc 严格解析和 16 页 MathML/Chrome 实际渲染检查通过；仓库级数学检查仍只有 A8O/A8P 四个既有冻结文档命中，新 v2 文件没有新增命中。
+- 正式理论与正式程序未修改，没有创建 v1/v2 合同测试、实现、运行器或产物，也没有执行烟雾测试或任何 A8R 数值轨迹。下一步停止并再次交回独立 Pro 审查 v2 合同。
