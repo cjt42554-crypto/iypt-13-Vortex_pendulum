@@ -211,3 +211,11 @@
 - 外部比较降级为 `literatureProximityScreen`，不改变 v2 三终局；合同最高结论仍只是候选离散身份与未来结果判定协议，不是锐界面、无滑移、载荷资格或装置预测。
 - 候选包 41/41 测试、TypeScript、Pandoc 严格解析和 16 页 MathML/Chrome 实际渲染检查通过；仓库级数学检查仍只有 A8O/A8P 四个既有冻结文档命中，新 v2 文件没有新增命中。
 - 正式理论与正式程序未修改，没有创建 v1/v2 合同测试、实现、运行器或产物，也没有执行烟雾测试或任何 A8R 数值轨迹。下一步停止并再次交回独立 Pro 审查 v2 合同。
+
+## 2026-08-29 00:58:27 +09:00
+
+- 独立审查 A8R v2 结果前 Markdown/TypeScript 合同；接受周期端点插值、周期包络 Minkowski 差三值门、原始人口恒等式与 A2 公式重算分离、逐项绝对舍入账和文献接近度降级结构，但拒绝 v2 作为可执行最终合同。
+- 构造 $z(t)=\sin(2\pi t/T)+0.1\sin(40\pi t/T)$ 的解析反例，证明原始正斜率过零点可被高频小振荡污染；要求 v2.1 保留最后 7 个原始交叉且六周期全部满足 $1/0.24\le T_j\le1/0.15$，不得跳过不合格交叉寻找替代点。
+- 裁定 $D=54$ 双 mask、双相位屏蔽必须把平均阻力、原始升力 RMS、去均值升力 RMS 和平均周期同时纳入聚合及逐周期 $6\times6$ 最坏相对差的严格 5% 门；A8Q 精确常数仍只约束基线相位两种升力 RMS。
+- 新增 `23_A8R_v2_网页版Pro独立审查与v2_1修订裁决.md`，裁决为 `REJECT-A8R-V2-PRO-AS-EXECUTABLE-FINAL-CONTRACT`、`REQUIRE-A8R-V2P1-PRO-CROSSING-PLAUSIBILITY-AND-PRIMARY-METRIC-PHASE-GATES` 和继续结果前锁定。
+- 下一步只允许 Codex 建立 v2.1 Markdown 与机器合同并再次交回独立 Pro；正式理论与正式程序未修改，没有创建测试、实现、烟雾或研究矩阵。新增审查、README 和当前交接通过 Pandoc/数学语法检查；候选包测试、TypeScript 和正式 `npm run validate` 本轮未执行。
