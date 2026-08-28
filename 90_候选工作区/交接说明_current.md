@@ -83,7 +83,9 @@ v2 Markdown 与机器合同应位于同一个独立提交并推送到远程 `mai
 - 核对 A8Q 统计实现、A8Q 资格报告和既有 Pro 裁决；
 - 对新增独立审查和更新 README 执行 Pandoc `--from=markdown --to=json --fail-if-warnings`；
 - 检查新增/改写 Markdown 无制表符、无非预期尾随空格且显示公式分隔符成对；
-- 对独立审查生成 MathML HTML，未发现残留显示公式定界符。
+- 对独立审查生成 MathML HTML，未发现残留显示公式定界符；
+- 按 `tools/check_markdown_math.py` 的同一逻辑逐个检查本轮四个改动文件，均为零错误；
+- 核对 GitHub Actions：接续前基线提交与本轮最终提交的 `Markdown check` 都失败且均有两条 annotation，因此当前红灯与仓库既有冻结文档问题一致，没有证据表明本轮四个改动文件新增数学格式错误。
 
 未执行：
 
