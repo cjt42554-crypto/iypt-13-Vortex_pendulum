@@ -319,7 +319,7 @@ v2 或 v2.1 增加测试、实现或运行脚本。
 A8N：
 
 - 压缩 SHA-256：
-  `b3df6c32ef9226d1e0244f057d729178733d7df7`；
+  `b3df6c32ef922d7bc464f77da736f42be0fbf21ebec031b3aacb27d56fddbff4`；
 - 规范 JSON SHA-256：
   `68a267662d7a2841f39cfc3fbff3238996fb0f3fa6f08df6ac8cbd3b9209fd5c`。
 
