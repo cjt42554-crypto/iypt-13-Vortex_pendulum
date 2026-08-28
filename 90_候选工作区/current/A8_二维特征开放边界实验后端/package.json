@@ -10,7 +10,9 @@
     "formal-causal-reference": "node --experimental-strip-types scripts/run-formal-causal-reference.mjs",
     "assert:formal-causal-reference-artifact": "node --experimental-strip-types scripts/assert-formal-causal-reference-artifact.mjs",
     "formal-discrete-reference": "node --experimental-strip-types scripts/run-formal-discrete-reference.mjs",
-    "assert:formal-discrete-reference-artifact": "node --experimental-strip-types scripts/assert-formal-discrete-reference-artifact.mjs"
+    "assert:formal-discrete-reference-artifact": "node --experimental-strip-types scripts/assert-formal-discrete-reference-artifact.mjs",
+    "brinkman-scaling": "node --experimental-strip-types scripts/run-brinkman-scaling.mjs",
+    "assert:brinkman-scaling-artifact": "node --experimental-strip-types scripts/assert-brinkman-scaling-artifact.mjs"
   },
   "engines": {
     "node": ">=22"
