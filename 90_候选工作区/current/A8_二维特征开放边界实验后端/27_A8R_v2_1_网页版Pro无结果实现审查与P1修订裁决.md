@@ -57,9 +57,7 @@ checkpoint，也没有复制正式碰撞实现。
 构造：
 
 $$
-\boldsymbol F_{\mathrm{CV,raw}}^n
-=
--\left(
+\boldsymbol F_{\mathrm{CV,raw}}^n = -\left(
 \boldsymbol P_\Omega^{n+1}
 -\boldsymbol P_\Omega^n
 +\boldsymbol\Phi_\Omega^n
@@ -78,9 +76,7 @@ Brinkman 反力的候选离散身份。它仍不是连续应力积分或物理�
 A2 修正由步前/步后人口独立重建的宏观量形成：
 
 $$
-\Delta\boldsymbol P_\chi^n
-=
-\sum_{\boldsymbol x}
+\Delta\boldsymbol P_\chi^n = \sum_{\boldsymbol x}
 \chi\left(
 \rho^{n+1}\boldsymbol u^{n+1}
 -\rho^n\boldsymbol u^n
