@@ -2,107 +2,82 @@
 
 ## 当前状态
 
-A8R v2.1 已按独立 Pro 裁决完成“无结果实现”阶段。解锁与继续锁定代码为：
+A8R v2.1 无结果实现提交已完成独立 Pro 审查：
 
-`UNLOCK-A8R-V2P1-PRO-NO-RESULT-IMPLEMENTATION-ONLY`
+`d42efeb192f10a433d0f2a02d2a3cb119ac26c42`
+
+新增审查文件：
+
+`90_候选工作区/current/A8_二维特征开放边界实验后端/27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md`
+
+现行裁决为：
+
+`ACCEPT-A8R-V2P1-PRO-NO-RESULT-SCIENTIFIC-CORE-IN-PRINCIPLE`
+
+`REJECT-A8R-V2P1-PRO-FORMAL-SMOKE-OR-RESEARCH-UNLOCK`
+
+`REQUIRE-A8R-V2P1-PRO-P1-ASSERTION-REPEAT-PROVENANCE-AND-AUTHORIZATION-REPAIR`
 
 `KEEP-A8R-V2P1-PRO-FORMAL-SMOKE-RESEARCH-AND-DOWNSTREAM-LOCKED`
 
-独立实现提交已推送到远程 `main`：
+无结果实现的周期统计、三值趋势、D54 双 mask/双相位屏蔽、D24 公共投影、控制体人口动量恒等式和 A2 公式重算核心原则上可保留；但当前实现不能进入正式 40 步烟雾或八轨迹研究矩阵。
 
-`d42efeb192f10a433d0f2a02d2a3cb119ac26c42`
+正式 `01_最终理论/**` 与 `02_模拟程序/**` 未修改。A8Q 科学源、产物、报告与门值未修改。当前不存在任何 A8R 数值 PASS、INCONCLUSIVE 或 NO-GO。
 
-实现树 SHA-256 为：
+## 本轮发现的阻塞问题
 
-`a2404a5e89318f8764b71d04953fa3baee99328f3361b64efe49dc604231df9f`
+### 1. 产物断言器 sidecar 换行错误
 
-当前 `HEAD == origin/main` 且实现提交的来源、祖先、工作树、LFS 和 A8Q
-锚前置门已在已提交状态下通过。
+研究运行器写 sidecar 时使用真实 `"\n"`；当前产物断言器却使用反斜杠加物理换行的 JavaScript 行续接，实际不会产生换行字符。因此合法 sidecar 会被断言器错误拒绝。
 
-## 已完成范围
+### 2. 独立完整复跑门未 fail-closed
 
-候选 A8 后端新增：
+当前 repeat 参数可缺省；同时把同一个文件作为 primary 和 repeat 也会得到字节一致。P1 必须强制 distinct repeat 路径，并要求 gzip 与 sidecar 双字节一致，否则非零失败。
 
-- `src/brinkman-multiresolution-support-v2-1.ts`：周期、趋势、相位、
-  $D=24$ 锚、Neumaier 求和、控制体人口动量恒等式与 A2 重算；
-- `src/brinkman-multiresolution-runs-v2-1.ts`：八算例只读求解器适配与
-  采样结构；
-- `src/brinkman-multiresolution-v2-1.ts`：证据汇总、三终局优先级与机器
-  产物结构；
-- 流式工件/LFS 守卫、提交前置检查、研究运行器和产物断言器；
-- 3 份新实现级测试、`package.json` 入口和精确 `.gitattributes`
-  LFS 规则。
+### 3. 缺少后实现 Pro 执行授权门
 
-正式 `01_最终理论/**` 与 `02_模拟程序/**` 未修改。A8Q 科学源、
-产物、报告与门值未修改。
+`package.json` 已暴露完整八轨迹运行入口，而前置门只绑定“允许建立无结果实现”的旧裁决，没有绑定后实现审查后的烟雾/研究授权。P1 必须在第一个正式求解器构造之前默认 fail-closed。
 
-## 阻塞门闭合
+### 4. 运行时来源身份链不完整
 
-### 合成 D2Q9 力身份
+A8R 结果相关依赖至少还包括公开固定圆柱基准的 `benchmark-metrics.ts`、`benchmark-contract.ts` 和候选包 `package-lock.json`。这些当前未完整纳入运行前身份树，可能在不触发现有门的情况下漂移。
 
-实现级测试已覆盖：
+### 5. P1 提交身份需可修订
 
-- 均匀无力场精确零反力；
-- 八个移动方向的向内/向外链路符号与分量；
-- 已知局域动量变化与控制面通量闭合；
-- mask 或 Brinkman 力支撑落在控制体外时 fail-closed；
-- 运行时人口视图与公开 checkpoint 逐元素相等且返回副本；
-- D2Q9 方向 0 至 8 的固定 Neumaier 宏观重建；
-- 正式 getter 读取屏障；
-- 原始力与 A2 残差独立注入失败，不得互相抵消；
-- 逐项绝对账与原始/A2 两类舍入上界。
-
-### A8Q 规范锚与 LFS
-
-已通过新的流式守卫对真实 A8Q 产物重新核验：
-
-- 实体化压缩字节：`22058158`；
-- 压缩 SHA-256：
-  `022cc54704ac542b5c148eed5ce026f5701ae79d50426ec3417073f1148ef451`；
-- 解压规范 JSON 字节：`100105555`；
-- 规范 SHA-256：
-  `16dad4a4d95eb91ad0e6f4e427d0d8ea05c8a349b479233479e03a78c6943082`；
-- sidecar SHA-256：
-  `d22ad3b8e1c29e00988c78aad801ee683362ca719178707be3d43873ae456e50`；
-- 导入两条冻结 $D=24$ 锚 ID，全程流式 gunzip/JSON 选取，没有
-  构造 100 MB 级单字符串；
-- 小型确定性 gzip 和明确 Git LFS 指针拒绝测试通过；
-- A8R 冻结产物路径的 `filter/diff/merge=lfs` 及 `-text` 属性通过。
-
-## 已执行和未执行的验证
-
-已执行：
-
-- 候选包 `npm test`：80/80 PASS；
-- `npm run typecheck`：PASS；
-- 4 份新 `.mjs` 脚本 Node 语法检查：PASS；
-- 小型确定性 gzip、sidecar、规范哈希与 LFS 指针门：PASS；
-- 真实 A8Q 压缩/sidecar/规范 JSON 流式身份与 $D=24$ 锚选取：
-  PASS；
-- 已提交状态的来源、祖先、实现树、远端同步与精确 LFS 前置门：
-  PASS。
-
-未执行：
-
-- `npm ci`；
-- 正式程序 `npm run validate`；
-- 固定圆柱或 `body=null` 的 A8R 40 步正式求解器烟雾测试；
-- 任何 A8R $D=24,36,54$ 或格点相位研究轨迹；
-- A8R 冻结研究产物的生成、覆盖或断言；
-- 规定横移、weak-FSI、三维、自由表面、装置预测或实验验证。
-
-## 结论上限
-
-本轮只建立“A8R v2.1 无结果实现、纯合成实现级测试和运行前阻塞
-门已完成”。当前仍不存在 A8R 数值 PASS、INCONCLUSIVE 或 NO-GO，也不
-存在网格收敛、锐界面、无滑移、载荷物理资格、正式接入、装置预测或
-实验结论。
+当前前置门要求所有实现路径的“最后修改提交”完全相同。P1 若只修阻塞文件会被该门自身拒绝。应改为绑定明确 P1 提交下的完整实现字节树，并验证工作树与该提交一致，而不是要求每个文件都在 P1 中被人为修改。
 
 ## 下一步唯一任务
 
-独立 Pro 只读审查无结果实现提交：
+Codex 只建立一个结果盲 P1 修订提交，不执行任何正式求解器步骤。
 
-`d42efeb192f10a433d0f2a02d2a3cb119ac26c42`
+必须完成：
 
-在获得新的明确解锁前，不得执行正式 40 步烟雾、八轨迹研究矩阵或冻结产物
-断言。不得修改 v2.1 合同/合同测试、A8Q 科学证据、正式理论或正式程序。
+- 修复断言器 sidecar 的真实 `"\n"`；
+- 强制 repeat 存在、primary/repeat 规范化绝对路径不同、两份 sidecar 路径不同，并要求双 gzip/sidecar 逐字节一致；
+- 增加缺 repeat、同路径、错误 sidecar、合法双文件的 CLI 或等价端到端测试；
+- 在正式求解器构造前加入后实现 Pro 授权 fail-closed 门，当前默认锁定；
+- 补齐 `benchmark-metrics.ts`、`benchmark-contract.ts`、`package-lock.json` 和静态导入图中的其余结果相关运行依赖身份；
+- 将实现身份改为完整 P1 提交树绑定，不要求所有文件最后修改提交相同；
+- 保留 v2.1 周期、趋势、D54、D24、控制体和 A2 科学算法，不回改合同或合同测试；
+- 更新相应测试、README 和交接；
+- 运行候选包 `npm ci`、`npm test`、`npm run typecheck`、Node 语法检查、A8Q 流式身份核验和纯合成前置门负向测试；
+- 作为独立提交直接推送远程 `main`，随后停止并再次交回独立 Pro。
+
+## 当前继续禁止
+
+P1 再次获得独立 Pro 接受前，禁止：
+
+- 固定圆柱或 `body=null` 的正式 40 步烟雾；
+- 任何 A8R $D=24,36,54$ 或格点相位研究轨迹；
+- 生成、覆盖或断言 A8R 冻结研究产物；
+- 修改 v1、v2、v2.1 合同或合同测试；
+- 修改 A8Q 科学源、产物、报告或门值；
+- 修改正式理论或正式程序；
+- Richardson、GCI、锐界面、无滑移极限或载荷物理资格；
+- S9 正式接入、S10、规定横移、weak-FSI、三维、自由表面、装置预测或实验拟合。
+
+## 本轮验证边界
+
+本轮实际完成：源码逐段审查、与正式 `lbm.ts` 步进时序交叉核对、JavaScript 行续接最小反例检查、提交范围与远程祖先关系核对，以及本审查文档的 Pandoc 解析和基础 Markdown 检查。
+
+本轮未重新执行：候选包 `npm test`、`npm run typecheck`、`npm ci`、正式 `npm run validate`、A8Q 规范 JSON 复算、正式烟雾或任何 A8R 研究轨迹。
