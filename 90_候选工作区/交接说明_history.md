@@ -252,3 +252,11 @@
 - 新流式守卫核验 A8Q 实体 gzip `22058158` 字节、压缩 SHA-256 `022cc54704ac542b5c148eed5ce026f5701ae79d50426ec3417073f1148ef451`、规范 JSON `100105555` 字节、规范 SHA-256 `16dad4a4d95eb91ad0e6f4e427d0d8ea05c8a349b479233479e03a78c6943082` 和 sidecar，并流式选取两条 $D=24$ 锚；明确 LFS 指针拒绝和精确属性测试通过。
 - 已提交状态的前置门通过：`HEAD == origin/main`，实现树 SHA-256 为 `a2404a5e89318f8764b71d04953fa3baee99328f3361b64efe49dc604231df9f`，冻结来源、祖先链、A8Q 实体化和锚身份均闭合。
 - 未执行 A8R 固定圆柱/`body=null` 40 步正式烟雾、任何 $D=24,36,54$ 研究轨迹或冻结产物断言；正式理论、正式程序和 A8Q 未修改。当前只是无结果实现阶段完成，不存在 A8R 数值、物理或实验结论；下一步唯一任务是独立 Pro 审查提交 `d42efeb192f10a433d0f2a02d2a3cb119ac26c42`。
+
+## 2026-08-29 13:23:00 +08:00
+
+- 网页版 Pro 独立审查 A8R v2.1 无结果实现提交 `d42efeb192f10a433d0f2a02d2a3cb119ac26c42`；周期统计、三值趋势、D54 四指标双 mask/双相位屏蔽、D24 公共投影、控制体人口恒等式和 A2 公式重算核心原则上可保留。
+- 发现四类阻塞：产物断言器把 JavaScript 行续接误当 sidecar 换行；repeat 参数可缺省且允许同文件自比较；完整研究入口没有绑定后实现 Pro 授权；`benchmark-metrics.ts`、`benchmark-contract.ts`、`package-lock.json` 等结果相关运行依赖未完整纳入身份树。另需把“所有实现文件最后修改提交相同”改为完整 P1 提交树身份。
+- 裁决为 `ACCEPT-A8R-V2P1-PRO-NO-RESULT-SCIENTIFIC-CORE-IN-PRINCIPLE`、`REJECT-A8R-V2P1-PRO-FORMAL-SMOKE-OR-RESEARCH-UNLOCK`、`REQUIRE-A8R-V2P1-PRO-P1-ASSERTION-REPEAT-PROVENANCE-AND-AUTHORIZATION-REPAIR` 和继续正式烟雾/研究锁定。
+- 新增 `27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md`，下一步只允许结果盲 P1 修订：修断言器换行、强制 distinct repeat、加入后实现授权 fail-closed 门、补齐运行依赖身份并修正 P1 提交树绑定；不得执行任何正式求解器步骤。
+- 本轮未重新执行候选包测试、TypeScript、`npm ci`、正式 `npm run validate`、A8Q 规范 JSON 复算、正式烟雾或 A8R 研究轨迹；正式理论、正式程序、A8Q 科学证据和 v2.1 合同/合同测试均未修改。
