@@ -260,3 +260,12 @@
 - 裁决为 `ACCEPT-A8R-V2P1-PRO-NO-RESULT-SCIENTIFIC-CORE-IN-PRINCIPLE`、`REJECT-A8R-V2P1-PRO-FORMAL-SMOKE-OR-RESEARCH-UNLOCK`、`REQUIRE-A8R-V2P1-PRO-P1-ASSERTION-REPEAT-PROVENANCE-AND-AUTHORIZATION-REPAIR` 和继续正式烟雾/研究锁定。
 - 新增 `27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md`，下一步只允许结果盲 P1 修订：修断言器换行、强制 distinct repeat、加入后实现授权 fail-closed 门、补齐运行依赖身份并修正 P1 提交树绑定；不得执行任何正式求解器步骤。
 - 本轮未重新执行候选包测试、TypeScript、`npm ci`、正式 `npm run validate`、A8Q 规范 JSON 复算、正式烟雾或 A8R 研究轨迹；正式理论、正式程序、A8Q 科学证据和 v2.1 合同/合同测试均未修改。
+
+## 2026-08-29 14:05:25 +08:00
+
+- 按 `27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md`，只在候选 A8 后端完成结果盲 P1；提交 `ffc382921ae31db02f7517866b26330a4b0a2eff` 已推送到远程 `main`。
+- sidecar 两行格式收敛为共享的真实 `"\n"` 实现；完整断言器强制 primary/repeat 规范化绝对路径、真实实体和 sidecar 实体不同，并要求 gzip 与 sidecar 分别逐字节一致。新增 CLI 端到端测试覆盖缺 repeat、同路径、错误 sidecar 和合法双文件。
+- 研究入口及单算例适配器均在正式求解器构造前硬锁，状态为 `LOCKED_PENDING_POST_P1_PRO_REVIEW` 且授权范围为空；实际入口负测退出 1，未生成 A8R gzip 或 sidecar。
+- 前置门改为绑定 P1 提交中的递归静态运行依赖树，不再要求各旧文件最后修改提交相同；26 路径树包含 `benchmark-metrics.ts`、`benchmark-contract.ts`、`package-lock.json` 和正式 `lbm.ts`，树 SHA-256 为 `c7b82d28cfe29e6ec52716864b35a05a332374fb71c60bd3fc609c37d245effa`。
+- `npm ci`、候选包 86/86 测试、TypeScript、五个相关脚本语法、推送后提交/来源/远端/A8Q 流式身份前置门、README Pandoc 解析和 4 页 MathML/Chrome 实际渲染均通过；仓库数学检查仍只有 A8O/A8P 冻结旧文档的 4 个既有命中。
+- 未执行任何 A8R 正式求解器步骤、40 步烟雾、研究轨迹或冻结产物断言；正式理论、正式程序、A8Q 科学证据、v2.1 合同和合同测试未修改。当前没有 A8R 数值、物理或实验结论，下一步唯一任务是独立 Pro 审查 `ffc382921ae31db02f7517866b26330a4b0a2eff`。

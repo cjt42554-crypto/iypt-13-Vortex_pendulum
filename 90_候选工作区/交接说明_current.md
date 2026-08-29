@@ -2,15 +2,12 @@
 
 ## 当前状态
 
-A8R v2.1 无结果实现提交已完成独立 Pro 审查：
+A8R v2.1 已按最新 Pro 裁决完成唯一结果盲 P1 修订，并以独立提交推送到
+远程 `main`：
 
-`d42efeb192f10a433d0f2a02d2a3cb119ac26c42`
+`ffc382921ae31db02f7517866b26330a4b0a2eff`
 
-新增审查文件：
-
-`90_候选工作区/current/A8_二维特征开放边界实验后端/27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md`
-
-现行裁决为：
+P1 的上游审查仍为：
 
 `ACCEPT-A8R-V2P1-PRO-NO-RESULT-SCIENTIFIC-CORE-IN-PRINCIPLE`
 
@@ -20,64 +17,90 @@ A8R v2.1 无结果实现提交已完成独立 Pro 审查：
 
 `KEEP-A8R-V2P1-PRO-FORMAL-SMOKE-RESEARCH-AND-DOWNSTREAM-LOCKED`
 
-无结果实现的周期统计、三值趋势、D54 双 mask/双相位屏蔽、D24 公共投影、控制体人口动量恒等式和 A2 公式重算核心原则上可保留；但当前实现不能进入正式 40 步烟雾或八轨迹研究矩阵。
+本轮没有生成 A8R 数值结果。当前不存在 A8R 数值 PASS、INCONCLUSIVE 或
+NO-GO；P1 只是等待独立 Pro 复审的候选实现基础设施。
 
-正式 `01_最终理论/**` 与 `02_模拟程序/**` 未修改。A8Q 科学源、产物、报告与门值未修改。当前不存在任何 A8R 数值 PASS、INCONCLUSIVE 或 NO-GO。
+正式 `01_最终理论/**` 与 `02_模拟程序/**` 未修改。正式 `lbm.ts` SHA-256
+仍为：
 
-## 本轮发现的阻塞问题
+`6949dd9f215595bde4162078f9cb026456bcbed83fd2ebd08131001e03ec2dc2`
 
-### 1. 产物断言器 sidecar 换行错误
+v2.1 机器合同和合同测试未修改，SHA-256 仍分别为：
 
-研究运行器写 sidecar 时使用真实 `"\n"`；当前产物断言器却使用反斜杠加物理换行的 JavaScript 行续接，实际不会产生换行字符。因此合法 sidecar 会被断言器错误拒绝。
+- `c629337a7199f6c51a23735ca75432eaa5019b633afcf8fb4f908a6f723c335b`；
+- `671afe5954034894f03a030ffb1e3c3642006454042f750b4b2d8888e92b548b`。
 
-### 2. 独立完整复跑门未 fail-closed
+## P1 已完成内容
 
-当前 repeat 参数可缺省；同时把同一个文件作为 primary 和 repeat 也会得到字节一致。P1 必须强制 distinct repeat 路径，并要求 gzip 与 sidecar 双字节一致，否则非零失败。
+1. sidecar 文本统一由
+   `scripts/brinkman-multiresolution-artifact-v2-1.mjs` 中的单一函数构造，
+   运行器与断言器共享两个真实 `"\n"` 的精确两行格式。
+2. 完整产物断言器现在强制 repeat 存在；primary/repeat 的规范化绝对路径、
+   `realpath` 实体和 sidecar 实体均必须不同；gzip 与 sidecar 必须分别逐字节
+   一致，否则非零退出。
+3. 新增
+   `scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs` 和对应端到端测试，
+   覆盖缺 repeat、同路径、错误 sidecar、合法双文件。路径不同只闭合机器可检
+   部分；未来研究报告仍须记录第二次运行从干净环境和第一个算例开始。
+4. 新增 `src/brinkman-multiresolution-p1-v2-1.ts`。研究包入口和
+   `runBrinkmanMultiresolutionV2P1Case()` 都在第一个正式求解器构造前调用
+   授权门；当前状态为 `LOCKED_PENDING_POST_P1_PRO_REVIEW`，授权范围为空。
+5. 前置门从三个结果相关入口递归解析仓库内静态导入，并把
+   `package.json`、`package-lock.json`、`tsconfig.json`、LFS 规则和 P1 测试
+   纳入身份。提交 `ffc3829` 下共绑定 26 个路径，明确包含
+   `benchmark-metrics.ts`、`benchmark-contract.ts`、正式 `lbm.ts` 和 A8Q
+   复用源。
+6. 实现身份改为 P1 提交下完整依赖树的字节身份，不再要求每个旧科学文件的
+   最后修改提交相同。P1 树 SHA-256 为：
 
-### 3. 缺少后实现 Pro 执行授权门
+   `c7b82d28cfe29e6ec52716864b35a05a332374fb71c60bd3fc609c37d245effa`
 
-`package.json` 已暴露完整八轨迹运行入口，而前置门只绑定“允许建立无结果实现”的旧裁决，没有绑定后实现审查后的烟雾/研究授权。P1 必须在第一个正式求解器构造之前默认 fail-closed。
+周期、趋势、D54、D24、控制体人口恒等式和 A2 重算算法没有改变；v1、v2、
+v2.1 合同及合同测试没有改变。
 
-### 4. 运行时来源身份链不完整
+## 已执行验证
 
-A8R 结果相关依赖至少还包括公开固定圆柱基准的 `benchmark-metrics.ts`、`benchmark-contract.ts` 和候选包 `package-lock.json`。这些当前未完整纳入运行前身份树，可能在不触发现有门的情况下漂移。
+- GitHub 写接口成功创建本次 P1 新身份文件对应的 blob，随后本地提交和
+  `git push origin main` 成功；P1 推送后
+  `HEAD == origin/main == ffc382921ae31db02f7517866b26330a4b0a2eff`。
+- `npm ci` 成功，安装 3 个包并审计 4 个包，报告 0 个已知漏洞。
+- `npm test`：86/86 通过；新增 P1 测试包含四种双文件 CLI 场景、默认授权硬
+  锁，以及授权调用位于求解器构造之前的检查。
+- `npm run typecheck` 通过。
+- 五个 A8R v2.1 相关 `.mjs` 文件的 `node --check` 通过。
+- 推送后完整前置门通过：P1 的 26 路径工作树与提交字节一致，来源/祖先/远端/
+  LFS 门闭合；A8Q 压缩、规范 JSON 和 sidecar SHA-256 分别复核为
+  `022cc54704ac542b5c148eed5ce026f5701ae79d50426ec3417073f1148ef451`、
+  `16dad4a4d95eb91ad0e6f4e427d0d8ea05c8a349b479233479e03a78c6943082`、
+  `d22ad3b8e1c29e00988c78aad801ee683362ca719178707be3d43873ae456e50`；
+  两条 D24 锚 ID 正确。
+- 实际调用 `npm run brinkman-multiresolution-v2-1` 进行无求解器负向测试，
+  在授权门按预期退出 1，并输出现行锁码；目标 A8R gzip/sidecar 均保持不存在。
+- 候选 README 通过 Pandoc `--from=markdown` 严格解析，并经 MathML/Chrome
+  实际渲染为 4 页后逐页检查；仓库数学检查器仍只有 A8O/A8P 冻结旧裁决的
+  4 个既有命中，本轮没有新增命中。
+- `git diff --check` 通过。
 
-### 5. P1 提交身份需可修订
+`npm test` 中仍包含既有 A8P 小型两步合成 smoke；本轮没有执行任何 A8R
+正式求解器步骤、固定圆柱/`body=null` 40 步烟雾或研究轨迹。
 
-当前前置门要求所有实现路径的“最后修改提交”完全相同。P1 若只修阻塞文件会被该门自身拒绝。应改为绑定明确 P1 提交下的完整实现字节树，并验证工作树与该提交一致，而不是要求每个文件都在 P1 中被人为修改。
+## 未执行与当前禁止
 
-## 下一步唯一任务
+本轮未执行：正式 `npm run validate`、A8R 冻结研究产物断言、任何 A8R
+$D=24,36,54$ 或格点相位轨迹、Richardson/GCI、锐界面或载荷物理资格、
+规定横移、weak-FSI、三维、自由表面、装置预测和实验拟合。
 
-Codex 只建立一个结果盲 P1 修订提交，不执行任何正式求解器步骤。
-
-必须完成：
-
-- 修复断言器 sidecar 的真实 `"\n"`；
-- 强制 repeat 存在、primary/repeat 规范化绝对路径不同、两份 sidecar 路径不同，并要求双 gzip/sidecar 逐字节一致；
-- 增加缺 repeat、同路径、错误 sidecar、合法双文件的 CLI 或等价端到端测试；
-- 在正式求解器构造前加入后实现 Pro 授权 fail-closed 门，当前默认锁定；
-- 补齐 `benchmark-metrics.ts`、`benchmark-contract.ts`、`package-lock.json` 和静态导入图中的其余结果相关运行依赖身份；
-- 将实现身份改为完整 P1 提交树绑定，不要求所有文件最后修改提交相同；
-- 保留 v2.1 周期、趋势、D54、D24、控制体和 A2 科学算法，不回改合同或合同测试；
-- 更新相应测试、README 和交接；
-- 运行候选包 `npm ci`、`npm test`、`npm run typecheck`、Node 语法检查、A8Q 流式身份核验和纯合成前置门负向测试；
-- 作为独立提交直接推送远程 `main`，随后停止并再次交回独立 Pro。
-
-## 当前继续禁止
-
-P1 再次获得独立 Pro 接受前，禁止：
+P1 再次获得独立 Pro 接受前继续禁止：
 
 - 固定圆柱或 `body=null` 的正式 40 步烟雾；
-- 任何 A8R $D=24,36,54$ 或格点相位研究轨迹；
 - 生成、覆盖或断言 A8R 冻结研究产物；
 - 修改 v1、v2、v2.1 合同或合同测试；
 - 修改 A8Q 科学源、产物、报告或门值；
 - 修改正式理论或正式程序；
-- Richardson、GCI、锐界面、无滑移极限或载荷物理资格；
-- S9 正式接入、S10、规定横移、weak-FSI、三维、自由表面、装置预测或实验拟合。
+- A8R 研究矩阵和全部下游物理任务。
 
-## 本轮验证边界
+## 下一步唯一任务
 
-本轮实际完成：源码逐段审查、与正式 `lbm.ts` 步进时序交叉核对、JavaScript 行续接最小反例检查、提交范围与远程祖先关系核对，以及本审查文档的 Pandoc 解析和基础 Markdown 检查。
-
-本轮未重新执行：候选包 `npm test`、`npm run typecheck`、`npm ci`、正式 `npm run validate`、A8Q 规范 JSON 复算、正式烟雾或任何 A8R 研究轨迹。
+独立 Pro 只读审查提交
+`ffc382921ae31db02f7517866b26330a4b0a2eff`。在新的精确授权裁决到达前，
+Codex 不再修改 A8R 实现，也不运行正式烟雾或研究矩阵。
