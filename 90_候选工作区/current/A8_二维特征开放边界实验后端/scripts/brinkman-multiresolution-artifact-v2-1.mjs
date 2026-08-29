@@ -1,9 +1,10 @@
 import { createHash } from "node:crypto";
-import { open, readFile, stat } from "node:fs/promises";
+import { open, readFile, realpath, stat } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_CONTRACT as CONTRACT } from
   "../src/brinkman-multiresolution-contract-v2-1.ts";
 import {
+  filesAreByteIdentical,
   sha256CanonicalJson,
   sha256File,
   streamSelectedJsonValues,
@@ -12,12 +13,23 @@ import {
 export const GIT_LFS_POINTER_PREFIX =
   "version https://git-lfs.github.com/spec/v1";
 
-function expectedSidecarText(artifactPath, canonicalSha256, storedSha256) {
+export function expectedArtifactSidecarText(
+  artifactPath,
+  canonicalSha256,
+  storedSha256,
+) {
   const storedName = basename(artifactPath);
   const canonicalName = storedName.replace(/\.gz$/, "")
     + " (canonical uncompressed bytes)";
   return canonicalSha256 + "  " + canonicalName + "\n"
     + storedSha256 + "  " + storedName + "\n";
+}
+
+export function artifactSidecarPath(artifactPath) {
+  if (!artifactPath.endsWith(".json.gz")) {
+    throw new Error("A8R v2.1 artifact paths must end with .json.gz");
+  }
+  return artifactPath.replace(/\.json\.gz$/, ".sha256");
 }
 
 async function sha256Bytes(path) {
@@ -87,7 +99,7 @@ export async function verifyArtifactIdentity(input) {
     throw new Error(`A8R v2.1 ${label} sidecar SHA-256 mismatch`);
   }
   const sidecar = await readFile(sidecarPath, "utf8");
-  const expectedSidecar = expectedSidecarText(
+  const expectedSidecar = expectedArtifactSidecarText(
     artifactPath,
     expectedCanonicalSha256,
     expectedStoredSha256,
@@ -113,6 +125,137 @@ export async function verifyArtifactIdentity(input) {
     canonicalSha256: canonical.sha256,
     sidecarSha256,
     sidecarExact: true,
+  };
+}
+
+/**
+ * Resolve and prove that primary/repeat artifact and sidecar paths are two
+ * distinct materialized files. `resolve()` enforces normalized absolute-path
+ * inequality; `realpath()` additionally closes symlink aliases.
+ */
+export async function resolveRequiredIndependentRepeatPaths({
+  primaryPath,
+  repeatPath,
+  cwd = process.cwd(),
+}) {
+  if (typeof primaryPath !== "string" || primaryPath.length === 0) {
+    throw new Error("A8R v2.1 primary artifact path is required");
+  }
+  if (typeof repeatPath !== "string" || repeatPath.length === 0) {
+    throw new Error("A8R v2.1 repeat artifact path is required");
+  }
+  const primary = resolve(cwd, primaryPath);
+  const repeat = resolve(cwd, repeatPath);
+  if (primary === repeat) {
+    throw new Error(
+      "A8R v2.1 primary and repeat normalized absolute paths must differ",
+    );
+  }
+  const primarySidecar = artifactSidecarPath(primary);
+  const repeatSidecar = artifactSidecarPath(repeat);
+  if (primarySidecar === repeatSidecar) {
+    throw new Error(
+      "A8R v2.1 primary and repeat sidecar paths must differ",
+    );
+  }
+
+  await assertMaterializedArtifact(primary, "primary A8R v2.1 artifact");
+  await assertMaterializedArtifact(repeat, "repeat A8R v2.1 artifact");
+  const sidecarStats = await Promise.all([
+    stat(primarySidecar),
+    stat(repeatSidecar),
+  ]);
+  if (!sidecarStats.every((identity) => identity.isFile())) {
+    throw new Error("A8R v2.1 repeat sidecars must be regular files");
+  }
+
+  const [primaryReal, repeatReal, primarySidecarReal, repeatSidecarReal] =
+    await Promise.all([
+      realpath(primary),
+      realpath(repeat),
+      realpath(primarySidecar),
+      realpath(repeatSidecar),
+    ]);
+  if (primaryReal === repeatReal) {
+    throw new Error(
+      "A8R v2.1 primary and repeat resolve to the same artifact file",
+    );
+  }
+  if (primarySidecarReal === repeatSidecarReal) {
+    throw new Error(
+      "A8R v2.1 primary and repeat resolve to the same sidecar file",
+    );
+  }
+  return {
+    primaryPath: primary,
+    repeatPath: repeat,
+    primarySidecarPath: primarySidecar,
+    repeatSidecarPath: repeatSidecar,
+  };
+}
+
+/** Verify one materialized gzip against the exact two-line sidecar format. */
+export async function verifyStoredCanonicalAndSidecar(
+  artifactPath,
+  sidecarPath,
+) {
+  await assertMaterializedArtifact(
+    artifactPath,
+    "A8R v2.1 result artifact",
+  );
+  const stored = await sha256File(artifactPath);
+  const canonical = await sha256CanonicalJson(artifactPath);
+  const sidecar = await readFile(sidecarPath, "utf8");
+  const expected = expectedArtifactSidecarText(
+    artifactPath,
+    canonical.sha256,
+    stored.sha256,
+  );
+  if (sidecar !== expected) {
+    throw new Error("A8R v2.1 result artifact sidecar contents mismatch");
+  }
+  return { stored, canonical, sidecar };
+}
+
+/**
+ * Close the machine-checkable part of the independent full-repeat gate.
+ * Distinct paths do not prove separate execution, so the later qualification
+ * report must still record clean-environment execution from case one.
+ */
+export async function assertIndependentRepeatByteIdentity(input) {
+  const paths = await resolveRequiredIndependentRepeatPaths(input);
+  const gzipByteIdentical = await filesAreByteIdentical(
+    paths.primaryPath,
+    paths.repeatPath,
+  );
+  if (!gzipByteIdentical) {
+    throw new Error(
+      "A8R v2.1 primary and repeat gzip files are not byte-identical",
+    );
+  }
+  const sidecarByteIdentical = await filesAreByteIdentical(
+    paths.primarySidecarPath,
+    paths.repeatSidecarPath,
+  );
+  if (!sidecarByteIdentical) {
+    throw new Error(
+      "A8R v2.1 primary and repeat sidecars are not byte-identical",
+    );
+  }
+  const primaryIdentity = await verifyStoredCanonicalAndSidecar(
+    paths.primaryPath,
+    paths.primarySidecarPath,
+  );
+  const repeatIdentity = await verifyStoredCanonicalAndSidecar(
+    paths.repeatPath,
+    paths.repeatSidecarPath,
+  );
+  return {
+    ...paths,
+    gzipByteIdentical: true,
+    sidecarByteIdentical: true,
+    primaryIdentity,
+    repeatIdentity,
   };
 }
 

@@ -1,10 +1,14 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { dirname, extname, posix, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_CONTRACT as CONTRACT } from
   "../src/brinkman-multiresolution-contract-v2-1.ts";
+import {
+  BRINKMAN_MULTIRESOLUTION_V2P1_P1_IDENTITY as P1_IDENTITY,
+} from "../src/brinkman-multiresolution-p1-v2-1.ts";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_IMPLEMENTATION_INPUTS as INPUTS } from
   "../src/brinkman-multiresolution-support-v2-1.ts";
 import { loadFrozenA8qD24AnchorRuns } from
@@ -22,33 +26,35 @@ const CONTRACT_DOCUMENT_PATH = INPUTS.contract.document.relativePath;
 const MACHINE_CONTRACT_PATH = INPUTS.contract.machine.relativePath;
 const CONTRACT_TEST_PATH = INPUTS.contractTest.relativePath;
 const UNLOCK_REVIEW_PATH = INPUTS.implementationUnlockReview.relativePath;
+const NO_RESULT_IMPLEMENTATION_IDENTITY_PATH = CANDIDATE_ROOT
+  + "/src/brinkman-multiresolution-v2-1.ts";
+const P1_IDENTITY_PATH = CANDIDATE_ROOT
+  + "/src/brinkman-multiresolution-p1-v2-1.ts";
+const P1_REPAIR_REVIEW_PATH = P1_IDENTITY.repairReview.relativePath;
 
-export const SCIENTIFIC_IMPLEMENTATION_PATHS = Object.freeze([
-  CANDIDATE_ROOT + "/src/brinkman-multiresolution-support-v2-1.ts",
-  CANDIDATE_ROOT + "/src/brinkman-multiresolution-runs-v2-1.ts",
-  CANDIDATE_ROOT + "/src/brinkman-multiresolution-v2-1.ts",
+/** Result-bearing package entries whose complete local static imports matter. */
+export const RESULT_RUNTIME_ENTRY_PATHS = Object.freeze([
+  CANDIDATE_ROOT + "/scripts/run-brinkman-multiresolution-v2-1.mjs",
+  CANDIDATE_ROOT
+    + "/scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs",
+  CANDIDATE_ROOT
+    + "/scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
 ].sort());
 
-export const IMPLEMENTATION_PATHS = Object.freeze([
-  ...SCIENTIFIC_IMPLEMENTATION_PATHS,
-  CANDIDATE_ROOT + "/scripts/brinkman-multiresolution-artifact-v2-1.mjs",
-  CANDIDATE_ROOT + "/scripts/brinkman-multiresolution-preflight-v2-1.mjs",
-  CANDIDATE_ROOT + "/scripts/run-brinkman-multiresolution-v2-1.mjs",
-  CANDIDATE_ROOT + "/scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs",
-  CANDIDATE_ROOT + "/tests/brinkman-multiresolution-support-v2-1.test.ts",
-  CANDIDATE_ROOT + "/tests/brinkman-multiresolution-artifact-v2-1.test.ts",
-  CANDIDATE_ROOT + "/tests/brinkman-multiresolution-v2-1.test.ts",
+/** Non-imported bytes that still define installation, LFS, and P1 evidence. */
+export const IMPLEMENTATION_AUDIT_PATHS = Object.freeze([
   CANDIDATE_ROOT + "/.gitattributes",
   CANDIDATE_ROOT + "/package.json",
-].sort());
-
-const FROZEN_RUNTIME_DEPENDENCY_PATHS = Object.freeze([
-  CANDIDATE_ROOT + "/scripts/formal-causal-reference-artifact-stream.mjs",
-].sort());
-
-export const IMPLEMENTATION_TREE_PATHS = Object.freeze([
-  ...IMPLEMENTATION_PATHS,
-  ...FROZEN_RUNTIME_DEPENDENCY_PATHS,
+  CANDIDATE_ROOT + "/package-lock.json",
+  CANDIDATE_ROOT + "/tsconfig.json",
+  CANDIDATE_ROOT
+    + "/tests/brinkman-multiresolution-contract-v2-1.test.ts",
+  CANDIDATE_ROOT
+    + "/tests/brinkman-multiresolution-support-v2-1.test.ts",
+  CANDIDATE_ROOT
+    + "/tests/brinkman-multiresolution-artifact-v2-1.test.ts",
+  CANDIDATE_ROOT + "/tests/brinkman-multiresolution-v2-1.test.ts",
+  CANDIDATE_ROOT + "/tests/brinkman-multiresolution-p1-v2-1.test.ts",
 ].sort());
 
 function hash(value) {
@@ -79,15 +85,145 @@ function ensureAncestor(ancestor, descendant, label) {
   }
 }
 
-function treeHashAtCommit(commit, paths) {
+function gitObjectExists(commit, path) {
+  try {
+    git(["cat-file", "-e", commit + ":" + path]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function readAtCommit(commit, path, encoding = null) {
+  if (!gitObjectExists(commit, path)) {
+    throw new Error(
+      `A8R v2.1 missing identity path at ${commit}: ${path}`,
+    );
+  }
+  return git(["show", commit + ":" + path], encoding);
+}
+
+export function treeHashAtCommit(commit, paths) {
   const digest = createHash("sha256");
-  for (const path of paths) {
+  for (const path of [...paths].sort()) {
     digest.update(path);
     digest.update("\0");
-    digest.update(git(["show", commit + ":" + path], null));
+    digest.update(readAtCommit(commit, path));
     digest.update("\0");
   }
   return digest.digest("hex");
+}
+
+function scriptKindFor(path) {
+  if (path.endsWith(".ts") || path.endsWith(".mts")) {
+    return ts.ScriptKind.TS;
+  }
+  if (path.endsWith(".cts")) return ts.ScriptKind.TS;
+  if (path.endsWith(".jsx")) return ts.ScriptKind.JSX;
+  return ts.ScriptKind.JS;
+}
+
+function staticModuleSpecifiers(sourceText, sourcePath) {
+  const sourceFile = ts.createSourceFile(
+    sourcePath,
+    sourceText,
+    ts.ScriptTarget.Latest,
+    true,
+    scriptKindFor(sourcePath),
+  );
+  const specifiers = [];
+  for (const statement of sourceFile.statements) {
+    if ((ts.isImportDeclaration(statement)
+      || ts.isExportDeclaration(statement))
+      && statement.moduleSpecifier !== undefined
+      && ts.isStringLiteralLike(statement.moduleSpecifier)) {
+      specifiers.push(statement.moduleSpecifier.text);
+    } else if (ts.isImportEqualsDeclaration(statement)
+      && ts.isExternalModuleReference(statement.moduleReference)
+      && statement.moduleReference.expression !== undefined
+      && ts.isStringLiteralLike(statement.moduleReference.expression)) {
+      specifiers.push(statement.moduleReference.expression.text);
+    }
+  }
+  return specifiers;
+}
+
+function localImportCandidates(importerPath, specifier) {
+  const base = posix.normalize(posix.join(posix.dirname(importerPath), specifier));
+  const extension = extname(base);
+  if (extension !== "") {
+    const candidates = [base];
+    if ([".js", ".mjs", ".cjs"].includes(extension)) {
+      candidates.push(base.slice(0, -extension.length) + ".ts");
+      candidates.push(base.slice(0, -extension.length) + ".mts");
+      candidates.push(base.slice(0, -extension.length) + ".cts");
+    }
+    return candidates;
+  }
+  return [
+    base + ".ts",
+    base + ".mts",
+    base + ".cts",
+    base + ".mjs",
+    base + ".js",
+    posix.join(base, "index.ts"),
+    posix.join(base, "index.mjs"),
+    posix.join(base, "index.js"),
+  ];
+}
+
+function resolveLocalStaticImport(commit, importerPath, specifier) {
+  if (!specifier.startsWith(".")) return null;
+  for (const candidate of localImportCandidates(importerPath, specifier)) {
+    if (gitObjectExists(commit, candidate)) return candidate;
+  }
+  throw new Error(
+    "A8R v2.1 unresolved local static import at " + commit + ": "
+      + importerPath + " -> " + specifier,
+  );
+}
+
+/**
+ * Discover the complete repository-local static import closure at a commit.
+ * Bare package imports are bound by package-lock.json instead of node_modules.
+ */
+export function collectStaticDependencyPathsAtCommit(commit, rootPaths) {
+  const pending = [...new Set(rootPaths)].sort().reverse();
+  const visited = new Set();
+  const parseable = new Set([
+    ".ts", ".mts", ".cts", ".js", ".mjs", ".cjs", ".jsx",
+  ]);
+  while (pending.length > 0) {
+    const path = pending.pop();
+    if (path === undefined || visited.has(path)) continue;
+    if (!gitObjectExists(commit, path)) {
+      throw new Error(`A8R v2.1 static dependency root is absent: ${path}`);
+    }
+    visited.add(path);
+    if (!parseable.has(extname(path))) continue;
+    const source = readAtCommit(commit, path, "utf8");
+    for (const specifier of staticModuleSpecifiers(source, path)) {
+      const dependency = resolveLocalStaticImport(commit, path, specifier);
+      if (dependency !== null && !visited.has(dependency)) {
+        pending.push(dependency);
+      }
+    }
+  }
+  return [...visited].sort();
+}
+
+export function implementationTreePathsAtCommit(commit) {
+  const paths = new Set(collectStaticDependencyPathsAtCommit(
+    commit,
+    RESULT_RUNTIME_ENTRY_PATHS,
+  ));
+  for (const path of IMPLEMENTATION_AUDIT_PATHS) {
+    if (!gitObjectExists(commit, path)) {
+      throw new Error(`A8R v2.1 P1 audit path is absent: ${path}`);
+    }
+    paths.add(path);
+  }
+  return [...paths].sort();
 }
 
 function a8qTreePaths() {
@@ -128,7 +264,7 @@ function sourceShaEntries(value, entries = new Map()) {
 
 async function assertWorkingMatchesCommit(path, commit, label) {
   const working = await readFile(resolve(REPOSITORY_ROOT, path));
-  const frozen = git(["show", commit + ":" + path], null);
+  const frozen = readAtCommit(commit, path);
   if (Buffer.compare(working, frozen) !== 0) {
     throw new Error(`A8R v2.1 working ${label} differs from frozen: ${path}`);
   }
@@ -141,6 +277,21 @@ async function verifyExactInput(path, expectedSha256, commit, label) {
   }
   await assertWorkingMatchesCommit(path, commit, label);
   return actual;
+}
+
+async function assertRepairReviewCodes() {
+  const text = await readFile(resolve(REPOSITORY_ROOT, P1_REPAIR_REVIEW_PATH), "utf8");
+  const review = P1_IDENTITY.repairReview;
+  for (const code of [
+    review.acceptedCoreCode,
+    review.rejectExecutionCode,
+    review.requiredRepairCode,
+    review.lockCode,
+  ]) {
+    if (!text.includes(code)) {
+      throw new Error(`A8R v2.1 P1 repair review lacks required code: ${code}`);
+    }
+  }
 }
 
 async function assertExactLfsRule() {
@@ -187,12 +338,30 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
     !== INPUTS.implementationUnlockReview.commit) {
     throw new Error("A8R v2.1 implementation-unlock review commit mismatch");
   }
-  const implementationCommit = lastCommit(SCIENTIFIC_IMPLEMENTATION_PATHS[0]);
-  if (implementationCommit === ""
-    || [contractCommit, contractTestCommit, implementationUnlockReviewCommit]
-      .includes(implementationCommit)) {
-    throw new Error("A8R v2.1 no-result implementation commit is not independent");
+  const noResultImplementationCommit =
+    P1_IDENTITY.noResultImplementationCommit;
+  if (!gitObjectExists(
+    noResultImplementationCommit,
+    NO_RESULT_IMPLEMENTATION_IDENTITY_PATH,
+  )) {
+    throw new Error("A8R v2.1 no-result implementation identity is absent");
   }
+  const p1RepairReviewCommit = lastCommit(P1_REPAIR_REVIEW_PATH);
+  if (p1RepairReviewCommit !== P1_IDENTITY.repairReview.commit) {
+    throw new Error("A8R v2.1 P1 repair-review commit identity mismatch");
+  }
+  const implementationCommit = lastCommit(P1_IDENTITY_PATH);
+  if (implementationCommit === ""
+    || [
+      contractCommit,
+      contractTestCommit,
+      implementationUnlockReviewCommit,
+      noResultImplementationCommit,
+      p1RepairReviewCommit,
+    ].includes(implementationCommit)) {
+    throw new Error("A8R v2.1 P1 implementation commit is not independent");
+  }
+
   ensureAncestor(contractCommit, contractTestCommit, "contract-to-test");
   ensureAncestor(
     contractTestCommit,
@@ -201,24 +370,29 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
   );
   ensureAncestor(
     implementationUnlockReviewCommit,
-    implementationCommit,
-    "unlock-review-to-implementation",
+    noResultImplementationCommit,
+    "unlock-review-to-no-result-implementation",
   );
-  ensureAncestor(implementationCommit, head, "implementation-to-HEAD");
-  ensureAncestor(contractCommit, remoteMain, "contract-pushed");
-  ensureAncestor(contractTestCommit, remoteMain, "contract-test-pushed");
   ensureAncestor(
-    implementationUnlockReviewCommit,
-    remoteMain,
-    "unlock-review-pushed",
+    noResultImplementationCommit,
+    p1RepairReviewCommit,
+    "no-result-implementation-to-P1-review",
   );
-  ensureAncestor(implementationCommit, remoteMain, "implementation-pushed");
-  for (const path of IMPLEMENTATION_PATHS) {
-    if (lastCommit(path) !== implementationCommit) {
-      throw new Error(
-        "A8R v2.1 implementation paths must share one commit: " + path,
-      );
-    }
+  ensureAncestor(
+    p1RepairReviewCommit,
+    implementationCommit,
+    "P1-review-to-P1-implementation",
+  );
+  ensureAncestor(implementationCommit, head, "P1-implementation-to-HEAD");
+  for (const [commit, label] of [
+    [contractCommit, "contract-pushed"],
+    [contractTestCommit, "contract-test-pushed"],
+    [implementationUnlockReviewCommit, "unlock-review-pushed"],
+    [noResultImplementationCommit, "no-result-implementation-pushed"],
+    [p1RepairReviewCommit, "P1-review-pushed"],
+    [implementationCommit, "P1-implementation-pushed"],
+  ]) {
+    ensureAncestor(commit, remoteMain, label);
   }
 
   await verifyExactInput(
@@ -245,8 +419,23 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
     implementationUnlockReviewCommit,
     "implementation unlock review",
   );
-  for (const path of IMPLEMENTATION_TREE_PATHS) {
-    await assertWorkingMatchesCommit(path, implementationCommit, "implementation tree");
+  await verifyExactInput(
+    P1_REPAIR_REVIEW_PATH,
+    P1_IDENTITY.repairReview.sha256,
+    p1RepairReviewCommit,
+    "P1 repair review",
+  );
+  await assertRepairReviewCodes();
+
+  const implementationTreePaths = implementationTreePathsAtCommit(
+    implementationCommit,
+  );
+  for (const path of implementationTreePaths) {
+    await assertWorkingMatchesCommit(
+      path,
+      implementationCommit,
+      "P1 implementation tree",
+    );
   }
   await assertExactLfsRule();
 
@@ -263,6 +452,9 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
     }
     frozenSourceSha256[entry.relativePath] = actual;
   }
+
+  // Preserve the contract's legacy A8Q tree check and additionally bind every
+  // A8Q dependency reachable from the A8R P1 runtime through the static graph.
   const a8qImplementationCommit = CONTRACT.sourceIdentity.frozenA8q
     .commits.implementation;
   const a8qTreeSha256 = treeHashAtCommit(
@@ -276,13 +468,14 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
   const anchorLoaded = await loadFrozenA8qD24AnchorRuns(REPOSITORY_ROOT);
   const implementationTreeSha256 = treeHashAtCommit(
     implementationCommit,
-    IMPLEMENTATION_TREE_PATHS,
+    implementationTreePaths,
   );
   return {
     packageRoot: PACKAGE_ROOT,
     repositoryRoot: REPOSITORY_ROOT,
     implementationCommit,
     implementationTreeSha256,
+    implementationTreePaths,
     anchor: {
       identity: anchorLoaded.identity,
       runsById: anchorLoaded.runsById,
@@ -294,6 +487,7 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
       contractTestSha256: INPUTS.contractTest.sha256,
       implementationUnlockReviewSha256:
         INPUTS.implementationUnlockReview.sha256,
+      p1RepairReviewSha256: P1_IDENTITY.repairReview.sha256,
       frozenA8qStoredSha256: anchorLoaded.identity.storedSha256,
       frozenA8qCanonicalSha256: anchorLoaded.identity.canonicalSha256,
       frozenA8qSidecarSha256: anchorLoaded.identity.sidecarSha256,
@@ -302,8 +496,12 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
       contractCommit,
       contractTestCommit,
       implementationUnlockReviewCommit,
+      noResultImplementationCommit,
+      p1RepairReviewCommit,
       implementationCommit,
       implementationTreeSha256,
+      implementationTreePathCount: implementationTreePaths.length,
+      implementationTreePaths,
     },
   };
 }

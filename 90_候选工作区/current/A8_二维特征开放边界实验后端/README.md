@@ -2,7 +2,8 @@
 
 ## 当前状态
 
-A8R v2.1 已完成结果前合同、合同测试和无结果实现。无结果实现提交：
+A8R v2.1 已完成结果前合同、合同测试、无结果实现，以及最新 Pro 裁决要求的
+结果盲 P1 基础设施修订。原无结果实现提交：
 
 `d42efeb192f10a433d0f2a02d2a3cb119ac26c42`
 
@@ -16,7 +17,13 @@ A8R v2.1 已完成结果前合同、合同测试和无结果实现。无结果�
 
 `KEEP-A8R-V2P1-PRO-FORMAL-SMOKE-RESEARCH-AND-DOWNSTREAM-LOCKED`
 
-因此当前只允许进行结果盲 P1 实现修订；正式 40 步烟雾、八轨迹研究矩阵和下游物理任务继续锁定。
+P1 修订只修复产物断言、完整复跑闭合、运行时来源身份和后实现授权门，未运行
+任何正式求解器步骤。P1 由
+`src/brinkman-multiresolution-p1-v2-1.ts` 的最后修改提交标识，前置门会要求
+该提交已经推送到远程 `main`，并以该提交中的完整运行依赖字节树为身份。
+
+P1 自身不解锁任何执行范围。正式 40 步烟雾、八轨迹研究矩阵和下游物理任务
+继续锁定，必须等待新的独立 Pro 审查。
 
 正式 `01_最终理论/**` 与 `02_模拟程序/**` 保持只读。候选区代码不是正式程序补丁，也不得把不同物理模型或数值后端视为可直接互换。
 
@@ -28,7 +35,10 @@ A8R v2.1 已完成结果前合同、合同测试和无结果实现。无结果�
 - `26_A8R_v2_1_网页版Pro合同测试审查与无结果实现解锁裁决.md`；
 - `27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md`；
 - `src/brinkman-multiresolution-contract-v2-1.ts`；
+- `src/brinkman-multiresolution-p1-v2-1.ts`；
 - `tests/brinkman-multiresolution-contract-v2-1.test.ts`；
+- `tests/brinkman-multiresolution-p1-v2-1.test.ts`；
+- `scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs`；
 - `90_候选工作区/交接说明_current.md`。
 
 ## A8Q 冻结边界
@@ -61,17 +71,30 @@ A8Q 压缩/规范 SHA-256：
 
 逐周期 $6\times6$ 门是轨迹内部散布和轨迹间差异的联合窄带屏蔽。失败只能判 INCONCLUSIVE，不能单独归因于 mask 或格点相位。当前两个横向相位也不能建立完整格点相位不变或相位收敛。
 
-## P1 阻塞修订
+## P1 结果盲修订
 
-无结果科学核心原则上保留，但当前实现仍有以下执行阻塞：
+当前候选实现完成以下机器闭合：
 
-1. 产物断言器把 JavaScript 行续接误当作 sidecar 换行，合法 sidecar 会被错误拒绝；
-2. repeat 参数不是强制项，且同一文件可以与自身比较，独立完整复跑门没有 fail-closed；
-3. 完整研究入口只绑定旧的“无结果实现解锁”裁决，没有新的后实现 Pro 执行授权门；
-4. `benchmark-metrics.ts`、`benchmark-contract.ts`、`package-lock.json` 等结果相关运行依赖没有完整纳入运行前字节身份；
-5. 当前“每个实现文件最后修改提交必须相同”的门会阻塞正常 P1 修订，应改为完整 P1 提交树身份。
+1. sidecar 期望文本只有一个实现，并显式写入两个真实 `"\n"`；
+2. 完整产物断言器要求 repeat 参数存在；primary/repeat 的规范化绝对路径、
+   真实文件和 sidecar 均必须不同；gzip 与 sidecar 必须分别逐字节一致，否则
+   非零退出；
+3. 新增小型确定性双文件 CLI 测试，覆盖缺 repeat、同路径、错误 sidecar 和
+   合法双文件；路径不同仍不冒充“确实独立执行”的不可伪造证明，研究阶段还须
+   在资格报告中记录第二次运行从干净环境和第一个算例开始；
+4. 研究入口和单算例适配器均在第一个
+   `D2Q9MrtBrinkmanSolver` 构造前执行硬锁；当前授权状态为
+   `LOCKED_PENDING_POST_P1_PRO_REVIEW`，授权范围为空；
+5. 前置门从研究运行器、完整产物断言器和双文件断言 CLI 出发，使用 TypeScript
+   语法树递归收集全部仓库内静态导入，并额外绑定 `package.json`、
+   `package-lock.json`、`tsconfig.json`、精确 LFS 规则和 P1 测试；因此
+   `benchmark-metrics.ts`、`benchmark-contract.ts`、正式 LBM 源、A8Q 复用源和
+   其他传递依赖都由 P1 提交字节树覆盖；
+6. 前置门不再要求每个旧科学文件的最后修改提交相同，而是验证工作树中每个
+   依赖文件与明确 P1 提交中的字节完全相同。
 
-下一阶段只修上述结果盲实现与测试问题，不改 v2.1 科学合同和算法，不运行正式求解器。
+P1 没有修改 v1、v2、v2.1 合同或合同测试，也没有改变周期、趋势、D54、D24、
+控制体人口恒等式或 A2 重算算法。
 
 ## 当前允许
 
@@ -83,6 +106,16 @@ npm run typecheck
 ```
 
 还允许 Node 语法检查、A8Q 流式身份核验、临时目录小型确定性 gzip/sidecar/双文件断言测试，以及不构造正式求解器的授权门负向测试。
+
+小型双文件机器闭合入口为：
+
+```bash
+npm run assert:brinkman-multiresolution-v2-1-repeat -- \
+  /path/to/primary.json.gz /different/path/to/repeat.json.gz
+```
+
+完整研究产物断言入口也必须同时提供这两个不同路径；它不再接受省略 repeat
+或把同一文件与自身比较。
 
 ## 当前禁止
 

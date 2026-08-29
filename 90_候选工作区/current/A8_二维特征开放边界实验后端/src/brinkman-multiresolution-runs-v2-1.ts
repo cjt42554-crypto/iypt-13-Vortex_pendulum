@@ -12,6 +12,9 @@ import {
   type BrinkmanMultiresolutionV2P1Definition,
 } from "./brinkman-multiresolution-contract-v2-1.ts";
 import {
+  assertBrinkmanMultiresolutionV2P1ExecutionAuthorized,
+} from "./brinkman-multiresolution-p1-v2-1.ts";
+import {
   deriveBrinkmanScalingRunAnalysis,
   type BrinkmanScalingDerivedAnalysis,
   type BrinkmanScalingTraceRecord,
@@ -435,6 +438,11 @@ export function runBrinkmanMultiresolutionV2P1Case(
   onProgress:
     ((progress: BrinkmanMultiresolutionV2P1Progress) => void) | null = null,
 ): BrinkmanMultiresolutionV2P1RunResult {
+  // This call is deliberately outside the failure-to-run-result conversion.
+  // A missing post-P1 Pro authorization must abort the whole entry path before
+  // the first formal solver is constructed, rather than becoming a research
+  // artifact containing eight ordinary failed runs.
+  assertBrinkmanMultiresolutionV2P1ExecutionAuthorized();
   let solver: D2Q9MrtBrinkmanSolver | undefined;
   try {
     solver = new D2Q9MrtBrinkmanSolver({

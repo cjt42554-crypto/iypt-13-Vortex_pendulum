@@ -158,6 +158,10 @@ test("A8R v2.1 package exposes exact locked entries and one exact LFS rule", asy
     packageJson.scripts["assert:brinkman-multiresolution-v2-1-artifact"],
     "node --experimental-strip-types scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs",
   );
+  assert.equal(
+    packageJson.scripts["assert:brinkman-multiresolution-v2-1-repeat"],
+    "node --experimental-strip-types scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
+  );
   const exactRule =
     "验证与复现/artifacts/a8-brinkman-cycle-resolved-multiresolution-phase-force-identity.json.gz filter=lfs diff=lfs merge=lfs -text";
   const attributes = (await readFile(

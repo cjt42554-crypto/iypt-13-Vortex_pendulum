@@ -1,11 +1,16 @@
 import { writeFile } from "node:fs/promises";
-import { basename, resolve } from "node:path";
+import { resolve } from "node:path";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_CONTRACT as CONTRACT } from
   "../src/brinkman-multiresolution-contract-v2-1.ts";
+import {
+  assertBrinkmanMultiresolutionV2P1ExecutionAuthorized,
+} from "../src/brinkman-multiresolution-p1-v2-1.ts";
 import { runBrinkmanMultiresolutionV2P1Qualification } from
   "../src/brinkman-multiresolution-v2-1.ts";
 import { writeDeterministicJsonGzip } from
   "./formal-causal-reference-artifact-stream.mjs";
+import { expectedArtifactSidecarText } from
+  "./brinkman-multiresolution-artifact-v2-1.mjs";
 import {
   PACKAGE_ROOT,
   verifyBrinkmanMultiresolutionV2P1Preflight,
@@ -22,6 +27,10 @@ const sidecarPath = outputPath.replace(/\.json\.gz$/, ".sha256");
 // All repository, source, canonical A8Q, sidecar, LFS, ancestry, remote, and
 // cleanliness gates complete before the first formal solver is constructed.
 const preflight = await verifyBrinkmanMultiresolutionV2P1Preflight();
+// P1 intentionally has no authorized execution scope. This is kept adjacent
+// to the package entry as an explicit first-line defense; the case adapter
+// repeats the same fail-closed check immediately before solver construction.
+assertBrinkmanMultiresolutionV2P1ExecutionAuthorized();
 const lastPrintedPercent = new Map();
 const result = runBrinkmanMultiresolutionV2P1Qualification(
   preflight.provenance,
@@ -59,13 +68,13 @@ const artifactIdentity = await writeDeterministicJsonGzip(
     mtime: CONTRACT.artifact.gzipMtime,
   },
 );
-const storedName = basename(outputPath);
-const canonicalName = storedName.replace(/\.gz$/, "")
-  + " (canonical uncompressed bytes)";
 await writeFile(
   sidecarPath,
-  artifactIdentity.canonicalSha256 + "  " + canonicalName + "\n"
-    + artifactIdentity.storedSha256 + "  " + storedName + "\n",
+  expectedArtifactSidecarText(
+    outputPath,
+    artifactIdentity.canonicalSha256,
+    artifactIdentity.storedSha256,
+  ),
   { encoding: "utf8", flag: "wx" },
 );
 

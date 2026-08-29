@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
-import { basename, resolve } from "node:path";
+import { resolve } from "node:path";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_CONTRACT as CONTRACT } from
   "../src/brinkman-multiresolution-contract-v2-1.ts";
 import { deriveBrinkmanScalingRunAnalysis } from
@@ -17,12 +16,10 @@ import {
   assertFiniteTree,
   neumaierSum,
 } from "../src/brinkman-multiresolution-support-v2-1.ts";
-import { assertMaterializedArtifact } from
-  "./brinkman-multiresolution-artifact-v2-1.mjs";
 import {
-  filesAreByteIdentical,
-  sha256CanonicalJson,
-  sha256File,
+  assertIndependentRepeatByteIdentity,
+} from "./brinkman-multiresolution-artifact-v2-1.mjs";
+import {
   streamSelectedJsonValues,
 } from "./formal-causal-reference-artifact-stream.mjs";
 import {
@@ -30,23 +27,23 @@ import {
   verifyBrinkmanMultiresolutionV2P1Preflight,
 } from "./brinkman-multiresolution-preflight-v2-1.mjs";
 
-const primaryPath = process.argv[2] === undefined
+const primaryInput = process.argv[2] === undefined
   ? resolve(PACKAGE_ROOT, CONTRACT.artifact.relativePath)
-  : resolve(process.cwd(), process.argv[2]);
-const repeatPath = process.argv[3] === undefined
-  ? undefined
-  : resolve(process.cwd(), process.argv[3]);
-if (!primaryPath.endsWith(".json.gz")
-  || (repeatPath !== undefined && !repeatPath.endsWith(".json.gz"))) {
-  throw new Error("A8R v2.1 artifact paths must end with .json.gz");
-}
-const primarySidecarPath = primaryPath.replace(/\.json\.gz$/, ".sha256");
-const repeatSidecarPath = repeatPath?.replace(/\.json\.gz$/, ".sha256");
+  : process.argv[2];
+const repeatClosure = await assertIndependentRepeatByteIdentity({
+  primaryPath: primaryInput,
+  repeatPath: process.argv[3],
+});
+const {
+  primaryPath,
+  repeatPath,
+  primaryIdentity,
+  repeatIdentity,
+} = repeatClosure;
 
 const preflight = await verifyBrinkmanMultiresolutionV2P1Preflight({
   requireCleanWorktree: false,
 });
-await assertMaterializedArtifact(primaryPath, "primary A8R v2.1 artifact");
 
 function sameNumber(actual, expected, label) {
   assert.ok(
@@ -390,57 +387,19 @@ assert.equal(decision.prescribedMotionUnlocked, false);
 assert.equal(decision.weakFsiUnlocked, false);
 assert.equal(decision.validOnlyAfterIndependentFullRepeatByteIdentity, true);
 
-async function verifyStoredCanonicalAndSidecar(artifactPath, sidecarPath) {
-  await assertMaterializedArtifact(artifactPath, "A8R v2.1 result artifact");
-  const stored = await sha256File(artifactPath);
-  const canonical = await sha256CanonicalJson(artifactPath);
-  const sidecar = await readFile(sidecarPath, "utf8");
-  const storedName = basename(artifactPath);
-  const canonicalName = storedName.replace(/\.gz$/, "")
-    + " (canonical uncompressed bytes)";
-  assert.equal(
-    sidecar,
-    canonical.sha256 + "  " + canonicalName + "\n"
-      + stored.sha256 + "  " + storedName + "\n",
-  );
-  return { stored, canonical, sidecar };
-}
-
-const primaryIdentity = await verifyStoredCanonicalAndSidecar(
-  primaryPath,
-  primarySidecarPath,
-);
-let repeatByteIdentical = null;
-let repeatSidecarByteIdentical = null;
-let repeatIdentity = null;
-if (repeatPath !== undefined && repeatSidecarPath !== undefined) {
-  repeatIdentity = await verifyStoredCanonicalAndSidecar(
-    repeatPath,
-    repeatSidecarPath,
-  );
-  repeatByteIdentical = await filesAreByteIdentical(primaryPath, repeatPath);
-  repeatSidecarByteIdentical = await filesAreByteIdentical(
-    primarySidecarPath,
-    repeatSidecarPath,
-  );
-  assert.equal(repeatByteIdentical, true);
-  assert.equal(repeatSidecarByteIdentical, true);
-}
-
 console.log(JSON.stringify({
   primaryPath,
-  repeatPath: repeatPath ?? null,
-  repeatByteIdentical,
-  repeatSidecarByteIdentical,
-  independentFullRepeatClosed:
-    repeatByteIdentical === true && repeatSidecarByteIdentical === true,
+  repeatPath,
+  repeatByteIdentical: repeatClosure.gzipByteIdentical,
+  repeatSidecarByteIdentical: repeatClosure.sidecarByteIdentical,
+  independentFullRepeatClosed: true,
   primaryIdentity: {
     storedSha256: primaryIdentity.stored.sha256,
     storedBytes: primaryIdentity.stored.bytes,
     canonicalSha256: primaryIdentity.canonical.sha256,
     canonicalBytes: primaryIdentity.canonical.bytes,
   },
-  repeatIdentity: repeatIdentity === null ? null : {
+  repeatIdentity: {
     storedSha256: repeatIdentity.stored.sha256,
     storedBytes: repeatIdentity.stored.bytes,
     canonicalSha256: repeatIdentity.canonical.sha256,

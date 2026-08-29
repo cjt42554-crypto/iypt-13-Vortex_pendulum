@@ -174,6 +174,7 @@ function provenance() {
     machineContractSha256: "c",
     contractTestSha256: "d",
     implementationUnlockReviewSha256: "e",
+    p1RepairReviewSha256: "f",
     frozenA8qStoredSha256: CONTRACT.sourceIdentity.frozenA8q.artifact.storedSha256,
     frozenA8qCanonicalSha256:
       CONTRACT.sourceIdentity.frozenA8q.artifact.canonicalSha256,
@@ -183,8 +184,12 @@ function provenance() {
     contractCommit: "contract",
     contractTestCommit: "test",
     implementationUnlockReviewCommit: "review",
+    noResultImplementationCommit: "no-result-implementation",
+    p1RepairReviewCommit: "p1-review",
     implementationCommit: "implementation",
     implementationTreeSha256: "tree",
+    implementationTreePathCount: 2,
+    implementationTreePaths: ["runtime-a", "runtime-b"],
   };
 }
 
