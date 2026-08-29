@@ -2,10 +2,12 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import {
   copyFile,
+  link,
   mkdir,
   mkdtemp,
   readFile,
   rm,
+  unlink,
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -27,6 +29,7 @@ import {
   buildBrinkmanMultiresolutionV2P1Definitions,
 } from "../src/brinkman-multiresolution-contract-v2-1.ts";
 import {
+  BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES as EXECUTION_SCOPES,
   BRINKMAN_MULTIRESOLUTION_V2P1_P1_IDENTITY as P1_IDENTITY,
   assertBrinkmanMultiresolutionV2P1ExecutionAuthorized,
 } from "../src/brinkman-multiresolution-p1-v2-1.ts";
@@ -152,21 +155,64 @@ test("A8R v2.1 repeat CLI accepts only a valid distinct byte-identical pair", as
   }
 });
 
-test("A8R v2.1 P1 execution gate aborts before formal solver construction", async () => {
+test("A8R v2.1 repeat helper rejects hard-linked artifact aliases", async () => {
+  const fixture = await makeSyntheticRepeatFixture();
+  try {
+    await unlink(fixture.repeatPath);
+    await link(fixture.primaryPath, fixture.repeatPath);
+    await assert.rejects(
+      assertIndependentRepeatByteIdentity({
+        primaryPath: fixture.primaryPath,
+        repeatPath: fixture.repeatPath,
+      }),
+      /artifacts are hard-link aliases/,
+    );
+  } finally {
+    await rm(fixture.directory, { recursive: true, force: true });
+  }
+});
+
+test("A8R v2.1 repeat helper rejects hard-linked sidecar aliases", async () => {
+  const fixture = await makeSyntheticRepeatFixture();
+  try {
+    await unlink(fixture.repeatSidecarPath);
+    await link(fixture.primarySidecarPath, fixture.repeatSidecarPath);
+    await assert.rejects(
+      assertIndependentRepeatByteIdentity({
+        primaryPath: fixture.primaryPath,
+        repeatPath: fixture.repeatPath,
+      }),
+      /sidecars are hard-link aliases/,
+    );
+  } finally {
+    await rm(fixture.directory, { recursive: true, force: true });
+  }
+});
+
+test("A8R v2.1 scoped gate keeps research locked before solver construction", async () => {
   assert.equal(
     P1_IDENTITY.executionAuthorization.state,
-    "LOCKED_PENDING_POST_P1_PRO_REVIEW",
+    "DUAL_FORMAL_40_STEP_SMOKE_ONLY",
   );
-  assert.deepEqual(P1_IDENTITY.executionAuthorization.authorizedScopes, []);
+  assert.deepEqual(P1_IDENTITY.executionAuthorization.authorizedScopes, [
+    EXECUTION_SCOPES.forcedFixedCylinderSmoke40,
+    EXECUTION_SCOPES.unforcedBodyNullSmoke40,
+  ]);
+  assert.doesNotThrow(() =>
+    assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
+      EXECUTION_SCOPES.forcedFixedCylinderSmoke40,
+    ));
   assert.throws(
-    () => assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(),
-    /formal solver execution is locked pending an independent post-P1 Pro review/,
+    () => assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
+      EXECUTION_SCOPES.researchMatrix,
+    ),
+    /RESEARCH_MATRIX is not authorized.*research matrix.*remain locked/,
   );
   const definition = buildBrinkmanMultiresolutionV2P1Definitions()[0];
   assert.ok(definition !== undefined);
   assert.throws(
     () => runBrinkmanMultiresolutionV2P1Case(definition),
-    /formal solver execution is locked pending an independent post-P1 Pro review/,
+    /RESEARCH_MATRIX is not authorized.*research matrix.*remain locked/,
   );
 
   const source = await readFile(
@@ -174,10 +220,12 @@ test("A8R v2.1 P1 execution gate aborts before formal solver construction", asyn
     "utf8",
   );
   const gatePosition = source.indexOf(
-    "assertBrinkmanMultiresolutionV2P1ExecutionAuthorized();",
+    "assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(",
   );
+  const scopePosition = source.indexOf("EXECUTION_SCOPES.researchMatrix");
   const constructorPosition = source.indexOf("new D2Q9MrtBrinkmanSolver({");
   assert.ok(gatePosition >= 0);
+  assert.ok(scopePosition > gatePosition);
   assert.ok(constructorPosition > gatePosition);
 });
 

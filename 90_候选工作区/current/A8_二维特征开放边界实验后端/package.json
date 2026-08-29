@@ -14,6 +14,8 @@
     "brinkman-scaling": "node --experimental-strip-types scripts/run-brinkman-scaling.mjs",
     "assert:brinkman-scaling-artifact": "node --experimental-strip-types scripts/assert-brinkman-scaling-artifact.mjs",
     "brinkman-multiresolution-v2-1": "node --experimental-strip-types scripts/run-brinkman-multiresolution-v2-1.mjs",
+    "brinkman-multiresolution-v2-1-smoke": "node --experimental-strip-types scripts/run-brinkman-multiresolution-smoke-v2-1.mjs",
+    "assert:brinkman-multiresolution-v2-1-smoke": "node --experimental-strip-types scripts/assert-brinkman-multiresolution-smoke-v2-1.mjs",
     "assert:brinkman-multiresolution-v2-1-repeat": "node --experimental-strip-types scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
     "assert:brinkman-multiresolution-v2-1-artifact": "node --experimental-strip-types scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs"
   },

@@ -131,6 +131,7 @@ export interface IndependentForceIdentityAudit {
   rawReactionLattice: Vector2;
   rawReaction: Vector2;
   independentlyRecomputedBrinkmanReaction: Vector2;
+  reconstructedNonzeroForceCellCount: number;
   fictitiousFluidCorrectionLattice: Vector2;
   fictitiousFluidCorrection: Vector2;
   correctedA2Load: Vector2;
@@ -776,6 +777,7 @@ export function constructIndependentForceIdentityAudit(input: {
   const absoluteFictitiousPreY = new NeumaierAccumulator();
   const absoluteFictitiousPostX = new NeumaierAccumulator();
   const absoluteFictitiousPostY = new NeumaierAccumulator();
+  let reconstructedNonzeroForceCellCount = 0;
 
   for (let y = 0; y < controlVolume.ny; y += 1) {
     for (let x = 0; x < controlVolume.nx; x += 1) {
@@ -812,6 +814,10 @@ export function constructIndependentForceIdentityAudit(input: {
         throw new Error(
           `A8R v2.1 recomputed Brinkman force lies outside at cell ${cell}`,
         );
+      }
+      if (!Object.is(pre.brinkmanForceX, 0)
+        || !Object.is(pre.brinkmanForceY, 0)) {
+        reconstructedNonzeroForceCellCount += 1;
       }
       forceX.add(pre.brinkmanForceX);
       forceY.add(pre.brinkmanForceY);
@@ -926,6 +932,7 @@ export function constructIndependentForceIdentityAudit(input: {
       x: canonicalZero(-forceX.value() / coefficientScale),
       y: canonicalZero(-forceY.value() / coefficientScale),
     },
+    reconstructedNonzeroForceCellCount,
     fictitiousFluidCorrectionLattice: correctionLattice,
     fictitiousFluidCorrection,
     correctedA2Load,

@@ -131,7 +131,9 @@ export async function verifyArtifactIdentity(input) {
 /**
  * Resolve and prove that primary/repeat artifact and sidecar paths are two
  * distinct materialized files. `resolve()` enforces normalized absolute-path
- * inequality; `realpath()` additionally closes symlink aliases.
+ * inequality; `realpath()` additionally closes symlink aliases, and stable
+ * `(dev, ino)` identities close hard-link aliases where the platform exposes
+ * them.
  */
 export async function resolveRequiredIndependentRepeatPaths({
   primaryPath,
@@ -161,12 +163,32 @@ export async function resolveRequiredIndependentRepeatPaths({
 
   await assertMaterializedArtifact(primary, "primary A8R v2.1 artifact");
   await assertMaterializedArtifact(repeat, "repeat A8R v2.1 artifact");
+  const artifactStats = await Promise.all([stat(primary), stat(repeat)]);
   const sidecarStats = await Promise.all([
     stat(primarySidecar),
     stat(repeatSidecar),
   ]);
   if (!sidecarStats.every((identity) => identity.isFile())) {
     throw new Error("A8R v2.1 repeat sidecars must be regular files");
+  }
+  const stableIdentity = (identity) =>
+    Number.isSafeInteger(identity.dev)
+      && Number.isSafeInteger(identity.ino)
+      && identity.dev >= 0
+      && identity.ino > 0;
+  if (artifactStats.every(stableIdentity)
+    && artifactStats[0].dev === artifactStats[1].dev
+    && artifactStats[0].ino === artifactStats[1].ino) {
+    throw new Error(
+      "A8R v2.1 primary and repeat artifacts are hard-link aliases",
+    );
+  }
+  if (sidecarStats.every(stableIdentity)
+    && sidecarStats[0].dev === sidecarStats[1].dev
+    && sidecarStats[0].ino === sidecarStats[1].ino) {
+    throw new Error(
+      "A8R v2.1 primary and repeat sidecars are hard-link aliases",
+    );
   }
 
   const [primaryReal, repeatReal, primarySidecarReal, repeatSidecarReal] =

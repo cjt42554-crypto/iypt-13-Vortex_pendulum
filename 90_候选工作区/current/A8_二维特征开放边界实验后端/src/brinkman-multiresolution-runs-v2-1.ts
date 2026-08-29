@@ -12,6 +12,7 @@ import {
   type BrinkmanMultiresolutionV2P1Definition,
 } from "./brinkman-multiresolution-contract-v2-1.ts";
 import {
+  BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES as EXECUTION_SCOPES,
   assertBrinkmanMultiresolutionV2P1ExecutionAuthorized,
 } from "./brinkman-multiresolution-p1-v2-1.ts";
 import {
@@ -442,7 +443,9 @@ export function runBrinkmanMultiresolutionV2P1Case(
   // A missing post-P1 Pro authorization must abort the whole entry path before
   // the first formal solver is constructed, rather than becoming a research
   // artifact containing eight ordinary failed runs.
-  assertBrinkmanMultiresolutionV2P1ExecutionAuthorized();
+  assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
+    EXECUTION_SCOPES.researchMatrix,
+  );
   let solver: D2Q9MrtBrinkmanSolver | undefined;
   try {
     solver = new D2Q9MrtBrinkmanSolver({

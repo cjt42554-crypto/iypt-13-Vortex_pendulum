@@ -31,6 +31,7 @@ const NO_RESULT_IMPLEMENTATION_IDENTITY_PATH = CANDIDATE_ROOT
 const P1_IDENTITY_PATH = CANDIDATE_ROOT
   + "/src/brinkman-multiresolution-p1-v2-1.ts";
 const P1_REPAIR_REVIEW_PATH = P1_IDENTITY.repairReview.relativePath;
+const SMOKE_UNLOCK_REVIEW_PATH = P1_IDENTITY.smokeUnlockReview.relativePath;
 
 /** Result-bearing package entries whose complete local static imports matter. */
 export const RESULT_RUNTIME_ENTRY_PATHS = Object.freeze([
@@ -39,6 +40,10 @@ export const RESULT_RUNTIME_ENTRY_PATHS = Object.freeze([
     + "/scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs",
   CANDIDATE_ROOT
     + "/scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
+  CANDIDATE_ROOT
+    + "/scripts/run-brinkman-multiresolution-smoke-v2-1.mjs",
+  CANDIDATE_ROOT
+    + "/scripts/assert-brinkman-multiresolution-smoke-v2-1.mjs",
 ].sort());
 
 /** Non-imported bytes that still define installation, LFS, and P1 evidence. */
@@ -55,6 +60,8 @@ export const IMPLEMENTATION_AUDIT_PATHS = Object.freeze([
     + "/tests/brinkman-multiresolution-artifact-v2-1.test.ts",
   CANDIDATE_ROOT + "/tests/brinkman-multiresolution-v2-1.test.ts",
   CANDIDATE_ROOT + "/tests/brinkman-multiresolution-p1-v2-1.test.ts",
+  CANDIDATE_ROOT + "/tests/brinkman-multiresolution-smoke-v2-1.test.ts",
+  SMOKE_UNLOCK_REVIEW_PATH,
 ].sort());
 
 function hash(value) {
@@ -294,6 +301,26 @@ async function assertRepairReviewCodes() {
   }
 }
 
+async function assertSmokeUnlockReviewCodes() {
+  const text = await readFile(
+    resolve(REPOSITORY_ROOT, SMOKE_UNLOCK_REVIEW_PATH),
+    "utf8",
+  );
+  const review = P1_IDENTITY.smokeUnlockReview;
+  for (const code of [
+    review.acceptedCode,
+    review.unlockCode,
+    review.requiredCode,
+    review.lockCode,
+  ]) {
+    if (!text.includes(code)) {
+      throw new Error(
+        `A8R v2.1 smoke-unlock review lacks required code: ${code}`,
+      );
+    }
+  }
+}
+
 async function assertExactLfsRule() {
   const attributesPath = resolve(PACKAGE_ROOT, ".gitattributes");
   const expected = CONTRACT.artifact.relativePath
@@ -350,6 +377,14 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
   if (p1RepairReviewCommit !== P1_IDENTITY.repairReview.commit) {
     throw new Error("A8R v2.1 P1 repair-review commit identity mismatch");
   }
+  const p1ImplementationCommit = P1_IDENTITY.p1ImplementationCommit;
+  if (!gitObjectExists(p1ImplementationCommit, P1_IDENTITY_PATH)) {
+    throw new Error("A8R v2.1 P1 implementation identity is absent");
+  }
+  const smokeUnlockReviewCommit = lastCommit(SMOKE_UNLOCK_REVIEW_PATH);
+  if (smokeUnlockReviewCommit !== P1_IDENTITY.smokeUnlockReview.commit) {
+    throw new Error("A8R v2.1 smoke-unlock review commit identity mismatch");
+  }
   const implementationCommit = lastCommit(P1_IDENTITY_PATH);
   if (implementationCommit === ""
     || [
@@ -358,8 +393,10 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
       implementationUnlockReviewCommit,
       noResultImplementationCommit,
       p1RepairReviewCommit,
+      p1ImplementationCommit,
+      smokeUnlockReviewCommit,
     ].includes(implementationCommit)) {
-    throw new Error("A8R v2.1 P1 implementation commit is not independent");
+    throw new Error("A8R v2.1 smoke implementation commit is not independent");
   }
 
   ensureAncestor(contractCommit, contractTestCommit, "contract-to-test");
@@ -380,17 +417,29 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
   );
   ensureAncestor(
     p1RepairReviewCommit,
-    implementationCommit,
+    p1ImplementationCommit,
     "P1-review-to-P1-implementation",
   );
-  ensureAncestor(implementationCommit, head, "P1-implementation-to-HEAD");
+  ensureAncestor(
+    p1ImplementationCommit,
+    smokeUnlockReviewCommit,
+    "P1-implementation-to-smoke-review",
+  );
+  ensureAncestor(
+    smokeUnlockReviewCommit,
+    implementationCommit,
+    "smoke-review-to-smoke-implementation",
+  );
+  ensureAncestor(implementationCommit, head, "smoke-implementation-to-HEAD");
   for (const [commit, label] of [
     [contractCommit, "contract-pushed"],
     [contractTestCommit, "contract-test-pushed"],
     [implementationUnlockReviewCommit, "unlock-review-pushed"],
     [noResultImplementationCommit, "no-result-implementation-pushed"],
     [p1RepairReviewCommit, "P1-review-pushed"],
-    [implementationCommit, "P1-implementation-pushed"],
+    [p1ImplementationCommit, "P1-implementation-pushed"],
+    [smokeUnlockReviewCommit, "smoke-review-pushed"],
+    [implementationCommit, "smoke-implementation-pushed"],
   ]) {
     ensureAncestor(commit, remoteMain, label);
   }
@@ -426,6 +475,13 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
     "P1 repair review",
   );
   await assertRepairReviewCodes();
+  await verifyExactInput(
+    SMOKE_UNLOCK_REVIEW_PATH,
+    P1_IDENTITY.smokeUnlockReview.sha256,
+    smokeUnlockReviewCommit,
+    "smoke unlock review",
+  );
+  await assertSmokeUnlockReviewCodes();
 
   const implementationTreePaths = implementationTreePathsAtCommit(
     implementationCommit,
@@ -488,6 +544,7 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
       implementationUnlockReviewSha256:
         INPUTS.implementationUnlockReview.sha256,
       p1RepairReviewSha256: P1_IDENTITY.repairReview.sha256,
+      smokeUnlockReviewSha256: P1_IDENTITY.smokeUnlockReview.sha256,
       frozenA8qStoredSha256: anchorLoaded.identity.storedSha256,
       frozenA8qCanonicalSha256: anchorLoaded.identity.canonicalSha256,
       frozenA8qSidecarSha256: anchorLoaded.identity.sidecarSha256,
@@ -498,6 +555,8 @@ export async function verifyBrinkmanMultiresolutionV2P1Preflight(
       implementationUnlockReviewCommit,
       noResultImplementationCommit,
       p1RepairReviewCommit,
+      p1ImplementationCommit,
+      smokeUnlockReviewCommit,
       implementationCommit,
       implementationTreeSha256,
       implementationTreePathCount: implementationTreePaths.length,

@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_CONTRACT as CONTRACT } from
   "../src/brinkman-multiresolution-contract-v2-1.ts";
 import {
+  BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES as EXECUTION_SCOPES,
   assertBrinkmanMultiresolutionV2P1ExecutionAuthorized,
 } from "../src/brinkman-multiresolution-p1-v2-1.ts";
 import { runBrinkmanMultiresolutionV2P1Qualification } from
@@ -27,10 +28,12 @@ const sidecarPath = outputPath.replace(/\.json\.gz$/, ".sha256");
 // All repository, source, canonical A8Q, sidecar, LFS, ancestry, remote, and
 // cleanliness gates complete before the first formal solver is constructed.
 const preflight = await verifyBrinkmanMultiresolutionV2P1Preflight();
-// P1 intentionally has no authorized execution scope. This is kept adjacent
-// to the package entry as an explicit first-line defense; the case adapter
-// repeats the same fail-closed check immediately before solver construction.
-assertBrinkmanMultiresolutionV2P1ExecutionAuthorized();
+// The post-P1 review authorizes only two separate smoke scopes. The package
+// research entry remains explicitly denied, and the case adapter repeats this
+// same fail-closed RESEARCH_MATRIX check before solver construction.
+assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
+  EXECUTION_SCOPES.researchMatrix,
+);
 const lastPrintedPercent = new Map();
 const result = runBrinkmanMultiresolutionV2P1Qualification(
   preflight.provenance,
