@@ -43,7 +43,7 @@
 - A8C 结果为 54/81 PASS、27/81 FAIL，裁决 `NO-GO-A8C-CBC2D-FROZEN-ROBUSTNESS-MATRIX`；全部失败均在入口速度 0.08 层，原因是最大密度偏差 0.149215 至 0.162707 超过 0.12 门，最大 Mach 与两项误差改善门均通过。
 - 高速度层的参考、Zou--He、CBC 稳定包络逐值相同，密度峰在第 3 至 6 步出现，早于最短 48 格点出口传播时间；因此只判为共同启动或内部离散稳定性风险，不归咎于 CBC 出口。
 - A8B 冻结中心点逐值复现原 PASS；A8C NO-GO 只禁止宽参数外推。测试 13/13（含三种出口高速度均匀流不变性）、严格 TypeScript 检查、机器产物断言、6 份 Markdown 严格 Pandoc 解析、全仓数学检查和 Pandoc+KaTeX 浏览器实际渲染通过；正式程序全套验证未执行。
-- 正式理论与正式程序源码均未修改。下一轮先做 A8D 共同启动密度峰定位与 0.06 至 0.08 稳定边界括定，不接入正式核、不运行高分辨率、规定横移长时或 weak-FSI。
+- 正式理论与正式程序源码未修改。下一轮先做 A8D 共同启动密度峰定位与 0.06 至 0.08 稳定边界括定，不接入正式核、不运行高分辨率、规定横移长时或 weak-FSI。
 
 ## 2026-08-26 19:20:00 +08
 
@@ -269,3 +269,12 @@
 - 前置门改为绑定 P1 提交中的递归静态运行依赖树，不再要求各旧文件最后修改提交相同；26 路径树包含 `benchmark-metrics.ts`、`benchmark-contract.ts`、`package-lock.json` 和正式 `lbm.ts`，树 SHA-256 为 `c7b82d28cfe29e6ec52716864b35a05a332374fb71c60bd3fc609c37d245effa`。
 - `npm ci`、候选包 86/86 测试、TypeScript、五个相关脚本语法、推送后提交/来源/远端/A8Q 流式身份前置门、README Pandoc 解析和 4 页 MathML/Chrome 实际渲染均通过；仓库数学检查仍只有 A8O/A8P 冻结旧文档的 4 个既有命中。
 - 未执行任何 A8R 正式求解器步骤、40 步烟雾、研究轨迹或冻结产物断言；正式理论、正式程序、A8Q 科学证据、v2.1 合同和合同测试未修改。当前没有 A8R 数值、物理或实验结论，下一步唯一任务是独立 Pro 审查 `ffc382921ae31db02f7517866b26330a4b0a2eff`。
+
+## 2026-08-29 14:20:39 +08:00
+
+- 独立审查 P1 提交 `ffc382921ae31db02f7517866b26330a4b0a2eff`，确认 sidecar、repeat fail-closed、求解器构造前授权硬锁和递归静态依赖树等上一轮阻塞已闭合，裁决接受 P1。
+- 裁决为 `ACCEPT-A8R-V2P1-PRO-P1-RESULT-BLIND-REPAIR`、`UNLOCK-A8R-V2P1-PRO-DUAL-FORMAL-40-STEP-SMOKE-ONLY`、`REQUIRE-A8R-V2P1-PRO-SCOPED-SMOKE-AUTHORIZATION-AND-SEPARATE-EVIDENCE-COMMIT` 和 `KEEP-A8R-V2P1-PRO-RESEARCH-MATRIX-ARTIFACT-AND-DOWNSTREAM-LOCKED`。
+- 只解锁固定圆柱和 `body=null` 两个 $D=24$、mask 0.75、基线相位、40 步正式烟雾；必须使用显式作用域隔离，完整研究入口继续拒绝 `RESEARCH_MATRIX`。
+- 结果前烟雾实现提交必须先推送，再执行两烟雾；机器证据和报告使用独立结果后提交，随后停止并再次交回独立 Pro。
+- 保留两项非阻塞限制：`realpath` 不识别硬链接，研究前应检查 `(dev, ino)`；烟雾前重新执行干净 `npm ci` 并记录 Node/V8/zlib/平台身份。
+- 新增 `28_A8R_v2_1_P1_网页版Pro独立审查与双40步正式烟雾解锁裁决.md`，更新候选 README、当前交接和历史交接；本轮未重新执行 `npm ci`、测试、TypeScript、正式烟雾或 A8R 研究轨迹，正式理论、正式程序、A8Q 科学证据和 v2.1 合同/合同测试未修改。
