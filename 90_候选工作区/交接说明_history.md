@@ -288,3 +288,11 @@
 - 机器证据 SHA-256 为 `50fc8d7ccb3f5a0570f334aec8e31d7eb51cacfc4b07bce558c7b367db42ba08`，与 sidecar 闭合；证据和报告以独立结果后提交 `c69051ab0f4051ed67a8e7637a97c1023dda7aec` 推送。推送后机器断言器重新核验并返回 `pass=true`。
 - 报告与交接通过 Pandoc 解析；报告完成 5 页 Chrome/PDF 实际渲染及页首/页尾视觉检查。仓库数学检查器仍只有 A8O/A8P 冻结旧文档 4 个既有命中，新报告无新命中。
 - 正式理论、正式程序、A8Q 和 v1/v2/v2.1 合同/合同测试未修改。当前只有短时集成烟雾内部 PASS，没有 A8R 数值、物理或实验结论；下一步唯一任务是交回独立 Pro，`RESEARCH_MATRIX`、研究产物和下游继续锁定。
+
+## 2026-08-31 03:37:23 +09:00
+
+- 独立 Pro 复审结果前烟雾实现 `9811120482a387158115e4e5565bd25a50bf2e3b`、结果后证据 `c69051ab0f4051ed67a8e7637a97c1023dda7aec`、机器 JSON、sidecar、报告、授权门、人口恒等式与 A2 重算路径，接受双 40 步正式烟雾。
+- 裁决为 `ACCEPT-A8R-V2P1-PRO-DUAL-FORMAL-40-STEP-SMOKE`、`UNLOCK-A8R-V2P1-PRO-FROZEN-EIGHT-TRAJECTORY-RESEARCH-MATRIX-ONLY`、`REQUIRE-A8R-V2P1-PRO-RESULT-BLIND-RESEARCH-AUTHORIZATION-PRIMARY-ARTIFACT-AND-CLEAN-FULL-REPEAT` 和 `KEEP-A8R-V2P1-PRO-FORMAL-INTEGRATION-PHYSICAL-LOAD-AND-DOWNSTREAM-LOCKED`。
+- 新增裁决文件 `30_A8R_v2_1_双40步烟雾独立审查与研究矩阵解锁裁决.md`，审查提交为 `d5e0662cdee163e82da3dfe2bb2554c3d1cff2b9`，文件 SHA-256 为 `c46634b2975996903d7c3cb3eb5d2999bb7412630d95496d832bb480d284553c`；同步更新候选 README 与当前交接。
+- 本轮没有重新执行正式求解器、候选测试、TypeScript、正式 `npm run validate` 或八轨迹研究矩阵；正式理论、正式程序、A8Q 科学证据和 v2.1 合同/合同测试均未修改。
+- 下一步只允许 Codex 先建立并推送结果盲 `RESEARCH_MATRIX` 授权提交，再执行冻结八轨迹主研究、独立结果提交和从干净环境开始的完整复跑；结果出现后不得修改科学实现或门值，完成后必须再次交回独立 Pro。
