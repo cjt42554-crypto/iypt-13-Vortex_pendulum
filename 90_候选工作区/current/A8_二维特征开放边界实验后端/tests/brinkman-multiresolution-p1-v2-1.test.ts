@@ -26,20 +26,19 @@ import {
 import { writeDeterministicJsonGzip } from
   "../scripts/formal-causal-reference-artifact-stream.mjs";
 import {
-  buildBrinkmanMultiresolutionV2P1Definitions,
-} from "../src/brinkman-multiresolution-contract-v2-1.ts";
-import {
   BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES as EXECUTION_SCOPES,
   BRINKMAN_MULTIRESOLUTION_V2P1_P1_IDENTITY as P1_IDENTITY,
   assertBrinkmanMultiresolutionV2P1ExecutionAuthorized,
 } from "../src/brinkman-multiresolution-p1-v2-1.ts";
-import { runBrinkmanMultiresolutionV2P1Case } from
-  "../src/brinkman-multiresolution-runs-v2-1.ts";
 
 const PACKAGE_ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const REPEAT_CLI = resolve(
   PACKAGE_ROOT,
   "scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
+);
+const RESEARCH_RUNNER = resolve(
+  PACKAGE_ROOT,
+  "scripts/run-brinkman-multiresolution-v2-1.mjs",
 );
 
 async function makeSyntheticRepeatFixture() {
@@ -189,44 +188,111 @@ test("A8R v2.1 repeat helper rejects hard-linked sidecar aliases", async () => {
   }
 });
 
-test("A8R v2.1 scoped gate keeps research locked before solver construction", async () => {
+test("A8R v2.1 research runner rejects an existing output before preflight", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "a8r-v2p1-existing-output-"));
+  const outputPath = join(directory, "already-present.json.gz");
+  try {
+    await writeFile(outputPath, "must-not-overwrite");
+    const result = spawnSync(
+      process.execPath,
+      ["--experimental-strip-types", RESEARCH_RUNNER, outputPath],
+      { cwd: PACKAGE_ROOT, encoding: "utf8" },
+    );
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /output artifact exists before execution/);
+    assert.equal(await readFile(outputPath, "utf8"), "must-not-overwrite");
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("A8R v2.1 scoped gate authorizes only the reviewed research matrix", async () => {
   assert.equal(
     P1_IDENTITY.executionAuthorization.state,
-    "DUAL_FORMAL_40_STEP_SMOKE_ONLY",
+    "FROZEN_EIGHT_TRAJECTORY_RESEARCH_MATRIX_AUTHORIZED",
   );
   assert.deepEqual(P1_IDENTITY.executionAuthorization.authorizedScopes, [
     EXECUTION_SCOPES.forcedFixedCylinderSmoke40,
     EXECUTION_SCOPES.unforcedBodyNullSmoke40,
+    EXECUTION_SCOPES.researchMatrix,
   ]);
-  assert.doesNotThrow(() =>
-    assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
-      EXECUTION_SCOPES.forcedFixedCylinderSmoke40,
-    ));
+  assert.deepEqual(P1_IDENTITY.executionAuthorization.lockedScopes, []);
+  for (const scope of P1_IDENTITY.executionAuthorization.authorizedScopes) {
+    assert.doesNotThrow(() =>
+      assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(scope));
+  }
   assert.throws(
     () => assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
-      EXECUTION_SCOPES.researchMatrix,
+      "UNREVIEWED_RUNTIME_SCOPE" as never,
     ),
-    /RESEARCH_MATRIX is not authorized.*research matrix.*remain locked/,
-  );
-  const definition = buildBrinkmanMultiresolutionV2P1Definitions()[0];
-  assert.ok(definition !== undefined);
-  assert.throws(
-    () => runBrinkmanMultiresolutionV2P1Case(definition),
-    /RESEARCH_MATRIX is not authorized.*research matrix.*remain locked/,
+    /UNREVIEWED_RUNTIME_SCOPE is not authorized.*explicitly reviewed scopes/,
   );
 
-  const source = await readFile(
+  const caseSource = await readFile(
     new URL("../src/brinkman-multiresolution-runs-v2-1.ts", import.meta.url),
     "utf8",
   );
-  const gatePosition = source.indexOf(
+  const caseGatePosition = caseSource.indexOf(
     "assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(",
   );
-  const scopePosition = source.indexOf("EXECUTION_SCOPES.researchMatrix");
-  const constructorPosition = source.indexOf("new D2Q9MrtBrinkmanSolver({");
-  assert.ok(gatePosition >= 0);
-  assert.ok(scopePosition > gatePosition);
-  assert.ok(constructorPosition > gatePosition);
+  const caseScopePosition = caseSource.indexOf(
+    "EXECUTION_SCOPES.researchMatrix",
+  );
+  const constructorPosition = caseSource.indexOf("new D2Q9MrtBrinkmanSolver({");
+  assert.ok(caseGatePosition >= 0);
+  assert.ok(caseScopePosition > caseGatePosition);
+  assert.ok(constructorPosition > caseGatePosition);
+
+  const runnerSource = await readFile(
+    new URL("../scripts/run-brinkman-multiresolution-v2-1.mjs", import.meta.url),
+    "utf8",
+  );
+  const runnerGatePosition = runnerSource.indexOf(
+    "assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(",
+  );
+  const absenceGatePosition = runnerSource.indexOf(
+    "await assertExecutionOutputAbsent(outputPath",
+  );
+  const preflightPosition = runnerSource.indexOf(
+    "await verifyBrinkmanMultiresolutionV2P1Preflight()",
+  );
+  const qualificationPosition = runnerSource.indexOf(
+    "runBrinkmanMultiresolutionV2P1Qualification(",
+  );
+  assert.ok(absenceGatePosition >= 0);
+  assert.ok(preflightPosition > absenceGatePosition);
+  assert.ok(runnerGatePosition > preflightPosition);
+  assert.ok(runnerGatePosition >= 0);
+  assert.ok(qualificationPosition > runnerGatePosition);
+});
+
+test("A8R v2.1 research ruling identity and audit path are exact", () => {
+  assert.equal(
+    P1_IDENTITY.format,
+    "VP-A8R-V2P1-RESULT-BLIND-RESEARCH-AUTHORIZATION-IDENTITY-v1",
+  );
+  assert.equal(
+    P1_IDENTITY.smokeImplementationCommit,
+    "9811120482a387158115e4e5565bd25a50bf2e3b",
+  );
+  assert.deepEqual(P1_IDENTITY.researchUnlockReview, {
+    commit: "d5e0662cdee163e82da3dfe2bb2554c3d1cff2b9",
+    relativePath:
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/30_A8R_v2_1_双40步烟雾独立审查与研究矩阵解锁裁决.md",
+    sha256:
+      "c46634b2975996903d7c3cb3eb5d2999bb7412630d95496d832bb480d284553c",
+    acceptedCode:
+      "ACCEPT-A8R-V2P1-PRO-DUAL-FORMAL-40-STEP-SMOKE",
+    unlockCode:
+      "UNLOCK-A8R-V2P1-PRO-FROZEN-EIGHT-TRAJECTORY-RESEARCH-MATRIX-ONLY",
+    requiredCode:
+      "REQUIRE-A8R-V2P1-PRO-RESULT-BLIND-RESEARCH-AUTHORIZATION-PRIMARY-ARTIFACT-AND-CLEAN-FULL-REPEAT",
+    lockCode:
+      "KEEP-A8R-V2P1-PRO-FORMAL-INTEGRATION-PHYSICAL-LOAD-AND-DOWNSTREAM-LOCKED",
+  });
+  assert.ok(IMPLEMENTATION_AUDIT_PATHS.includes(
+    P1_IDENTITY.researchUnlockReview.relativePath,
+  ));
 });
 
 test("A8R v2.1 static dependency identity reaches benchmark metrics and contract", () => {

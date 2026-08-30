@@ -95,15 +95,20 @@ test("A8R v2.1 dual orchestration invokes two separate case executions", () => {
   );
 });
 
-test("A8R v2.1 environment values cannot unlock RESEARCH_MATRIX", () => {
+test("A8R v2.1 environment values cannot add or remove execution scopes", () => {
   const previous = process.env.A8R_V2P1_SCOPE;
-  process.env.A8R_V2P1_SCOPE = EXECUTION_SCOPES.forcedFixedCylinderSmoke40;
+  process.env.A8R_V2P1_SCOPE = "UNREVIEWED_RUNTIME_SCOPE";
   try {
-    assert.throws(
+    assert.doesNotThrow(
       () => assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
         EXECUTION_SCOPES.researchMatrix,
       ),
-      /RESEARCH_MATRIX is not authorized/,
+    );
+    assert.throws(
+      () => assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
+        process.env.A8R_V2P1_SCOPE as never,
+      ),
+      /UNREVIEWED_RUNTIME_SCOPE is not authorized/,
     );
   } finally {
     if (previous === undefined) delete process.env.A8R_V2P1_SCOPE;

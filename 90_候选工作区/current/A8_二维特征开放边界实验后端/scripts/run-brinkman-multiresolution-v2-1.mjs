@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { lstat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { BRINKMAN_MULTIRESOLUTION_V2P1_CONTRACT as CONTRACT } from
   "../src/brinkman-multiresolution-contract-v2-1.ts";
@@ -25,12 +25,26 @@ if (!outputPath.endsWith(".json.gz")) {
 }
 const sidecarPath = outputPath.replace(/\.json\.gz$/, ".sha256");
 
+async function assertExecutionOutputAbsent(path, label) {
+  try {
+    await lstat(path);
+  } catch (error) {
+    if (error?.code === "ENOENT") return;
+    throw error;
+  }
+  throw new Error(`A8R v2.1 ${label} exists before execution: ${path}`);
+}
+
+// Refuse an overwrite before any source preflight or solver construction. The
+// stream writer repeats the artifact check at write time to close race windows.
+await assertExecutionOutputAbsent(outputPath, "output artifact");
+await assertExecutionOutputAbsent(sidecarPath, "output sidecar");
+
 // All repository, source, canonical A8Q, sidecar, LFS, ancestry, remote, and
 // cleanliness gates complete before the first formal solver is constructed.
 const preflight = await verifyBrinkmanMultiresolutionV2P1Preflight();
-// The post-P1 review authorizes only two separate smoke scopes. The package
-// research entry remains explicitly denied, and the case adapter repeats this
-// same fail-closed RESEARCH_MATRIX check before solver construction.
+// The bound post-smoke review explicitly authorizes RESEARCH_MATRIX. The case
+// adapter repeats this exact fail-closed scope check before solver construction.
 assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
   EXECUTION_SCOPES.researchMatrix,
 );
@@ -92,6 +106,10 @@ console.log(JSON.stringify({
   contractTestCommit: preflight.provenance.contractTestCommit,
   implementationUnlockReviewCommit:
     preflight.provenance.implementationUnlockReviewCommit,
+  smokeImplementationCommit:
+    preflight.provenance.smokeImplementationCommit,
+  researchUnlockReviewCommit:
+    preflight.provenance.researchUnlockReviewCommit,
   implementationCommit: preflight.implementationCommit,
   implementationTreeSha256: preflight.implementationTreeSha256,
   globalGate: result.globalGate,

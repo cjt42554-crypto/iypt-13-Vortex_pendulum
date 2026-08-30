@@ -27,6 +27,8 @@ export interface BrinkmanMultiresolutionV2P1Provenance {
   contractTestSha256: string;
   implementationUnlockReviewSha256: string;
   p1RepairReviewSha256: string;
+  smokeUnlockReviewSha256: string;
+  researchUnlockReviewSha256: string;
   frozenA8qStoredSha256: string;
   frozenA8qCanonicalSha256: string;
   frozenA8qSidecarSha256: string;
@@ -37,6 +39,10 @@ export interface BrinkmanMultiresolutionV2P1Provenance {
   implementationUnlockReviewCommit: string;
   noResultImplementationCommit: string;
   p1RepairReviewCommit: string;
+  p1ImplementationCommit: string;
+  smokeUnlockReviewCommit: string;
+  smokeImplementationCommit: string;
+  researchUnlockReviewCommit: string;
   implementationCommit: string;
   implementationTreeSha256: string;
   implementationTreePathCount: number;

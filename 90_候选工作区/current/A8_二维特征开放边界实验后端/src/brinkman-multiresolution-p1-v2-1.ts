@@ -1,4 +1,4 @@
-/** Result-blind P1 identity plus the narrowly scoped post-P1 smoke unlock. */
+/** Result-blind P1 identity plus the explicitly reviewed execution scopes. */
 export const BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES = Object.freeze({
   forcedFixedCylinderSmoke40:
     "FORMAL_FORCED_FIXED_CYLINDER_SMOKE_40" as const,
@@ -12,11 +12,13 @@ export type BrinkmanMultiresolutionV2P1ExecutionScope =
     typeof BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES];
 
 export const BRINKMAN_MULTIRESOLUTION_V2P1_P1_IDENTITY = Object.freeze({
-  format: "VP-A8R-V2P1-RESULT-BLIND-P1-IDENTITY-v1",
+  format: "VP-A8R-V2P1-RESULT-BLIND-RESEARCH-AUTHORIZATION-IDENTITY-v1",
   noResultImplementationCommit:
     "d42efeb192f10a433d0f2a02d2a3cb119ac26c42",
   p1ImplementationCommit:
     "ffc382921ae31db02f7517866b26330a4b0a2eff",
+  smokeImplementationCommit:
+    "9811120482a387158115e4e5565bd25a50bf2e3b",
   repairReview: Object.freeze({
     commit: "8778844605bdd44404e601d83f88b5d5fa97a8b3",
     relativePath:
@@ -47,28 +49,41 @@ export const BRINKMAN_MULTIRESOLUTION_V2P1_P1_IDENTITY = Object.freeze({
     lockCode:
       "KEEP-A8R-V2P1-PRO-RESEARCH-MATRIX-ARTIFACT-AND-DOWNSTREAM-LOCKED",
   }),
+  researchUnlockReview: Object.freeze({
+    commit: "d5e0662cdee163e82da3dfe2bb2554c3d1cff2b9",
+    relativePath:
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/30_A8R_v2_1_双40步烟雾独立审查与研究矩阵解锁裁决.md",
+    sha256:
+      "c46634b2975996903d7c3cb3eb5d2999bb7412630d95496d832bb480d284553c",
+    acceptedCode:
+      "ACCEPT-A8R-V2P1-PRO-DUAL-FORMAL-40-STEP-SMOKE",
+    unlockCode:
+      "UNLOCK-A8R-V2P1-PRO-FROZEN-EIGHT-TRAJECTORY-RESEARCH-MATRIX-ONLY",
+    requiredCode:
+      "REQUIRE-A8R-V2P1-PRO-RESULT-BLIND-RESEARCH-AUTHORIZATION-PRIMARY-ARTIFACT-AND-CLEAN-FULL-REPEAT",
+    lockCode:
+      "KEEP-A8R-V2P1-PRO-FORMAL-INTEGRATION-PHYSICAL-LOAD-AND-DOWNSTREAM-LOCKED",
+  }),
   executionAuthorization: Object.freeze({
-    state: "DUAL_FORMAL_40_STEP_SMOKE_ONLY" as const,
-    requiredReviewTiming: "AFTER_P1_IMPLEMENTATION" as const,
+    state: "FROZEN_EIGHT_TRAJECTORY_RESEARCH_MATRIX_AUTHORIZED" as const,
+    requiredReviewTiming: "AFTER_DUAL_FORMAL_SMOKE_EVIDENCE" as const,
     authorizedScopes: Object.freeze([
       BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES
         .forcedFixedCylinderSmoke40,
       BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES
         .unforcedBodyNullSmoke40,
-    ]),
-    lockedScopes: Object.freeze([
       BRINKMAN_MULTIRESOLUTION_V2P1_EXECUTION_SCOPES.researchMatrix,
     ]),
+    lockedScopes: Object.freeze([]),
   }),
 });
 
 /**
- * Fail closed before a formal solver can be constructed outside either one of
- * the two exact 40-step smoke scopes.
+ * Fail closed before a formal solver can be constructed outside an exact scope
+ * explicitly listed by the bound Pro rulings.
  *
  * An environment variable, CLI flag, output path, or prior implementation
- * review cannot satisfy this gate. In particular, RESEARCH_MATRIX always
- * remains denied by this post-P1 decision.
+ * review cannot add a scope to this frozen list.
  */
 export function assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
   scope: BrinkmanMultiresolutionV2P1ExecutionScope,
@@ -80,7 +95,8 @@ export function assertBrinkmanMultiresolutionV2P1ExecutionAuthorized(
   }
   throw new Error(
     `A8R v2.1 execution scope ${String(scope)} is not authorized; `
-      + "the research matrix, research artifact, and downstream work remain "
-      + `locked (${identity.smokeUnlockReview.lockCode})`,
+      + "only the explicitly reviewed scopes are executable, and formal "
+      + "integration, physical-load claims, and downstream work remain locked "
+      + `(${identity.researchUnlockReview.lockCode})`,
   );
 }
