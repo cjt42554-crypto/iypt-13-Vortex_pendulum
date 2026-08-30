@@ -5,7 +5,7 @@
 A8R v2.1 的双 40 步正式烟雾已经独立 Pro 接受，Pro 解锁的冻结八轨迹
 `RESEARCH_MATRIX` 已完成结果盲授权实现、验证、提交和推送。当前状态为：
 
-`RESULT_BLIND_RESEARCH_AUTHORIZATION_PUSHED_READY_FOR_PRIMARY_RUN`
+`REPEAT_ENVIRONMENT_FROZEN_READY_FOR_PRIMARY_RUN`
 
 当前仍未执行任何八轨迹研究算例，未生成主研究 gzip 或复跑产物，也不存在 A8R
 数值 PASS、INCONCLUSIVE 或 NO-GO。
@@ -64,21 +64,42 @@ A8R v2.1 的双 40 步正式烟雾已经独立 Pro 接受，Pro 解锁的冻结�
 仓库级 Markdown 数学检查仍只报告 A8O/A8P 两份冻结旧裁决中的 4 个既有命中；
 本轮没有修改这些文件。
 
+## 独立复跑环境已冻结
+
+第二环境已经在主运行前从远端结果前快照独立克隆并验证：
+
+- 仓库绝对路径：`/home/cjt/.codex/tmp/iypt13-a8r-repeat-HyC6La`；
+- 冻结快照：`HEAD == origin/main == 78f42f88b51b11a89d720b88065f40ded4e1dc1d`；
+- 结果前实现提交：`a298ee2976cbfd3738fc4ba17cdb52189b1e0da6`；
+- 静态实现树 SHA-256：`6b11ea23cca5b514c5d2a4f8d34ea11f3202e5c92434b567a828c2fa1f03579f`；
+- 主仓库根目录 `(dev, ino)`：`(66310, 815894)`；
+- 第二仓库根目录 `(dev, ino)`：`(66310, 3410616)`；
+- 运行时：Node `v24.19.0`、V8 `13.6.233.17-node.51`、zlib
+  `1.3.2.1-motley-3246f1b`、Linux x64；
+- 第二环境独立 `npm ci`、97/97 测试、TypeScript 和完整前置门通过；
+- 计划复跑路径中的 gzip 与 sidecar 均不存在。
+
+复跑产物固定写入第二环境候选包内不同名称：
+
+- `验证与复现/artifacts/a8-brinkman-cycle-resolved-multiresolution-phase-force-identity-repeat.json.gz`；
+- `验证与复现/artifacts/a8-brinkman-cycle-resolved-multiresolution-phase-force-identity-repeat.sha256`。
+
+主产物提交后，第二环境不得 fetch、pull、rebase、恢复 checkpoint、读取主产物或复用
+主运行人口与缓存；它保持上述远端跟踪快照，从第一条算例和新鲜初态完整复跑。
+
 ## 下一步固定顺序
 
-1. 先提交并推送本交接收口文档；
-2. 从该结果前远端快照建立另一个独立干净环境，执行独立 `npm ci`，固定其
-   `HEAD`、`origin/main` 快照、绝对路径、设备和运行时身份；
-3. 在主工作区再次证明工作树干净、远端一致、主 gzip 和 sidecar 均不存在；
-4. 从第一条算例和新鲜初态执行冻结八轨迹主矩阵；
-5. 只写一次冻结主 gzip 与 sidecar，生成初始机器报告和验证记录；
-6. 只提交并推送主产物及初始报告，不修改任何结果相关源码、合同或门值；
-7. 在步骤 2 的第二环境中保持同一结果前实现快照，不拉入结果提交，从第一条算例
+1. 先提交并推送本次第二环境身份记录；
+2. 在主工作区再次证明工作树干净、远端一致、主 gzip 和 sidecar 均不存在；
+3. 从第一条算例和新鲜初态执行冻结八轨迹主矩阵；
+4. 只写一次冻结主 gzip 与 sidecar，生成初始机器报告和验证记录；
+5. 只提交并推送主产物及初始报告，不修改任何结果相关源码、合同或门值；
+6. 在上述第二环境中保持同一结果前实现快照，不拉入结果提交，从第一条算例
    和新鲜初态完整复跑八轨迹，写入不同规范路径；
-8. 核验主产物与复跑产物的路径、`realpath`、可用时的 `(dev, ino)` 均不同，且
+7. 核验主产物与复跑产物的路径、`realpath`、可用时的 `(dev, ino)` 均不同，且
    gzip 与 sidecar 分别逐字节一致；
-9. 执行冻结主产物断言与 repeat 断言，写最终资格报告、验证记录和交接；
-10. 推送后停止并交回独立 Pro。
+8. 执行冻结主产物断言与 repeat 断言，写最终资格报告、验证记录和交接；
+9. 推送后停止并交回独立 Pro。
 
 若任一运行崩溃、缺算例、出现非有限值、来源漂移、周期证据不足或断言失败，不得
 根据已见结果修改科学实现、矩阵、算法、门值、mask、相位、分辨率或结果窗口。
