@@ -1,0 +1,70 @@
+{
+  "format": "VP-A8R-V2P1-RESULT-BLIND-PARALLEL-PERFORMANCE-PROBE-BATCH-v1",
+  "status": "FAIL_CLOSED",
+  "failureReason": "MEM_AVAILABLE_FLOOR_BREACH",
+  "startedAt": "2026-08-31T08:05:18.094Z",
+  "endedAt": "2026-08-31T08:05:18.201Z",
+  "workers": 1,
+  "batchElapsedNanoseconds": 105125992,
+  "sourceIdentity": {
+    "repositoryHead": "be9e71f6f51248c2b15710112d8c9c0397c001bd",
+    "remoteMain": "be9e71f6f51248c2b15710112d8c9c0397c001bd",
+    "rulingCommit": "ffa9b115141bd7c7fadf942f17676d7c65f0a5d6",
+    "rulingSha256": "6b8e97f031025cd012203b3bdf4146f4aba37c9e46756f271f6c2aec19a63765",
+    "formalSourceSha256": "6949dd9f215595bde4162078f9cb026456bcbed83fd2ebd08131001e03ec2dc2",
+    "candidateTreeSha256": "2533d4f75c3af77a9593397fe0322187221c5479c96eaf14719a81f2e39c3b3c",
+    "candidateTreePathCount": 10,
+    "candidateTreePaths": [
+      "02_模拟程序/src/solvers/highFidelity/lbm.ts",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/31_A8R_v2_1_长时主运行安全暂停与结果盲轨迹并行裁决.md",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/package-lock.json",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/package.json",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-parallel-candidate-preflight-v2-1.mjs",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-performance-probe-worker-v2-1.mjs",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-performance-probe-v2-1.mjs",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract-v2-1.ts",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-support-v2-1.ts"
+    ],
+    "candidateDirtyPaths": [
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/package.json",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-parallel-candidate-preflight-v2-1.mjs",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-performance-probe-worker-v2-1.mjs",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-performance-probe-v2-1.mjs",
+      "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts"
+    ]
+  },
+  "memoryGate": {
+    "memTotalBytes": 15890984960,
+    "frozenFloorBytes": 4294967296,
+    "startedMemAvailableBytes": 4325957632,
+    "minimumMemAvailableBytes": 4282589184,
+    "endedMemAvailableBytes": 4274016256,
+    "startedSwapUsedBytes": 757215232,
+    "maximumSwapUsedBytes": 757215232,
+    "swapGrowthBytes": 0,
+    "maximumAllowedSwapGrowthBytes": 268435456,
+    "workerHighWaterMarkSumBytes": 89858048,
+    "parentHighWaterMarkBytes": 145723392,
+    "combinedHighWaterMarkBytes": 235581440,
+    "maximumCombinedHighWaterMarkBytes": 11123689472,
+    "pass": false
+  },
+  "processes": [
+    {
+      "pid": 304829,
+      "exitCode": null,
+      "signal": "SIGTERM",
+      "observedPeak": {
+        "residentSetBytes": 89858048,
+        "highWaterMarkBytes": 89858048
+      },
+      "stderr": ""
+    }
+  ],
+  "workerMetrics": [
+    null
+  ],
+  "scientificOutputPersisted": false,
+  "normativeArtifactWritten": false
+}

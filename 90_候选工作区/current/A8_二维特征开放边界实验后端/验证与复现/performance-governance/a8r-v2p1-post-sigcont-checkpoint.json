@@ -1,0 +1,104 @@
+{
+  "format": "VP-A8R-V2P1-PRE-SUPERSEDING-PROBE-STATIC-MEMORY-AND-RESUME-EVIDENCE-v1",
+  "stage": "POST_SIGCONT_IDENTITY_AND_CPU_CHECKPOINT",
+  "createdAt": "2026-08-31T09:08:08.591Z",
+  "predecessor": {
+    "path": "/tmp/a8r-v2p1-pre-superseding-probe-static-memory-pre-resume-evidence-20260831.json",
+    "sha256": "f4f3cc6b858609b0465220675cbecd4feaf9babf19864b4e4ab4104341e69386",
+    "stage": "PRE_SIGCONT_IMMUTABLE_CHECKPOINT"
+  },
+  "classification": "PERFORMANCE_PARALLELIZATION_MEMORY_NO_GO_NONSCIENTIFIC",
+  "decision": {
+    "code": "NO-GO-A8R-V2P1-PARALLELIZATION-CURRENT-PAUSE-EPISODE-HARD-MEMORY-GATE",
+    "scientificConclusion": "NONE",
+    "originalSerialRunMayResume": true
+  },
+  "originalRun": {
+    "sigcontSent": true,
+    "samePidAndStartIdentityAfterResume": true,
+    "nodeCpuTicksIncreased": true,
+    "nodeNoLongerStopped": true,
+    "processIdentitiesAfterResume": [
+      {
+        "pid": 51467,
+        "stat": {
+          "state": "S",
+          "ppid": 12617,
+          "processGroup": 51467,
+          "session": 51467,
+          "userTicks": 55,
+          "systemTicks": 10,
+          "startTimeTicksSinceBoot": 298357
+        },
+        "status": {
+          "state": "S (sleeping)",
+          "threads": 11,
+          "vmRss": "51376 kB",
+          "vmHwm": "65916 kB"
+        },
+        "commandLine": [
+          "npm run brinkman-multiresolution-v2-1"
+        ]
+      },
+      {
+        "pid": 51497,
+        "stat": {
+          "state": "S",
+          "ppid": 51467,
+          "processGroup": 51467,
+          "session": 51467,
+          "userTicks": 0,
+          "systemTicks": 0,
+          "startTimeTicksSinceBoot": 298364
+        },
+        "status": {
+          "state": "S (sleeping)",
+          "threads": 1,
+          "vmRss": "1904 kB",
+          "vmHwm": "1904 kB"
+        },
+        "commandLine": [
+          "sh",
+          "-c",
+          "node --experimental-strip-types scripts/run-brinkman-multiresolution-v2-1.mjs"
+        ]
+      },
+      {
+        "pid": 51498,
+        "stat": {
+          "state": "R",
+          "ppid": 51497,
+          "processGroup": 51467,
+          "session": 51467,
+          "userTicks": 5638966,
+          "systemTicks": 104520,
+          "startTimeTicksSinceBoot": 298364
+        },
+        "status": {
+          "state": "R (running)",
+          "threads": 11,
+          "vmRss": "1164240 kB",
+          "vmHwm": "1240980 kB"
+        },
+        "commandLine": [
+          "node",
+          "--experimental-strip-types",
+          "scripts/run-brinkman-multiresolution-v2-1.mjs"
+        ]
+      }
+    ],
+    "canonicalArtifactsAbsentAfterResume": true,
+    "oldWorktreeModified": false,
+    "oldWorkspaceHead": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "candidateCodeLoaded": false,
+    "checkpointLoaded": false,
+    "terminalSessionId": 99850,
+    "terminalNewOutputInInitialSevenSecondPoll": "",
+    "lastProgressLineBeforePause": "[A8R-v2.1 a8r-v2p1-d54-mask-0p50-phase-baseline-eta-1p00] 51840/86400 (60%)",
+    "nextSameCaseProgressEmissionVerified": false,
+    "identityAndCpuResumeVerified": true,
+    "resumeVerified": false,
+    "resumeVerificationPending": "next same-case progress line at an existing decile emission boundary"
+  },
+  "scientificConclusion": "NONE"
+}

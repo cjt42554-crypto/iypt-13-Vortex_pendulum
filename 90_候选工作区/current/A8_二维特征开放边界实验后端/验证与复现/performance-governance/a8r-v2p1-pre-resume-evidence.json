@@ -1,0 +1,215 @@
+{
+  "format": "VP-A8R-V2P1-PRE-SUPERSEDING-PROBE-STATIC-MEMORY-AND-RESUME-EVIDENCE-v1",
+  "stage": "PRE_SIGCONT_IMMUTABLE_CHECKPOINT",
+  "createdAt": "2026-08-31T09:04:17.815Z",
+  "classification": "PERFORMANCE_PARALLELIZATION_MEMORY_NO_GO_NONSCIENTIFIC",
+  "chronology": {
+    "probeStartedBeforeSupersedingStaticRuling": true,
+    "governingRulingCommitAtProbeStart": "ffa9b115141bd7c7fadf942f17676d7c65f0a5d6",
+    "governingRulingFileSha256": "6b8e97f031025cd012203b3bdf4146f4aba37c9e46756f271f6c2aec19a63765",
+    "supersedingStaticRulingCommit": "dc7f2dfc0e925b058458d6fff7c0e17e7562c234",
+    "supersedingStaticRulingFileSha256": "280d714c70f08bb283aebdfd03b986407df8648f5ed6040480097687a302e40c",
+    "supersedingHandoffCommit": "d5c88e0a8552dd0c9ebddad1ade574acee632460",
+    "chronologyRulingCommit": "ef66995f31b017522c51d42978f3069102a1023c",
+    "chronologyRulingFileSha256": "2a1f90ff6809e60dbff50182723b9362f18fe769ecbe46a7704560514d966995",
+    "retroactiveRewriteForbidden": true
+  },
+  "probe": {
+    "probeExecuted": true,
+    "executionCount": 1,
+    "workerCount": 1,
+    "coldStart": true,
+    "requestedPath": "D54-40-step-full-force-identity-nonscientific-probe",
+    "probeCompleted": false,
+    "validTimingMeasurementProduced": false,
+    "scientificOutputProduced": false,
+    "terminationSignal": "SIGTERM",
+    "terminationReason": "MEMAVAILABLE_HARD_FLOOR_CROSSED",
+    "terminationElapsedSeconds": 0.105,
+    "memAvailableStartBytes": 4325957632,
+    "memAvailableMinimumObservedBytes": 4282589184,
+    "hardFloorBytes": 4294967296,
+    "startHeadroomBytes": 30990336,
+    "observedDropBytes": 43368448,
+    "floorUndershootBytes": 12378112,
+    "workerPeakRssObservedBytes": 89858048,
+    "workerPeakRssIsCensoredEarlyObservation": true,
+    "swapGrowthBytes": 0,
+    "oomOccurred": false,
+    "canonicalGzipCreated": false,
+    "canonicalSidecarCreated": false,
+    "partialCreated": false,
+    "residualProbeProcesses": false,
+    "unrelatedProcessTouched": false,
+    "failureJsonSha256": "750535af9a8836155d41496114a8371a14533661d9f9a043fc070ab55b007c6f"
+  },
+  "staticWindow": {
+    "executed": true,
+    "durationSecondsAtLeast": 60.200008519,
+    "maximumSampleIntervalMilliseconds": 201.315419999999,
+    "staticAdmissionThresholdKb": 4608325,
+    "aMinMemAvailableKb": 6372104,
+    "aMaxMemAvailableKb": 7001940,
+    "classification": "STATIC_WINDOW_RESOURCE_RECOVERY_AFTER_PRIOR_HARD_GATE_FAILURE",
+    "rawWindowConclusionCode": "STATIC_MEMORY_ADMISSION_WINDOW_INCONCLUSIVE",
+    "evidenceSha256": "15bd6f7f97674caff6ac31f717ad5b63e193b1c28153ebbe3a80c6397474b216"
+  },
+  "candidateSourceDisposition": {
+    "candidateSourceCommitted": false,
+    "candidateSourcePushed": false,
+    "sourceManifestRecordedBeforeDeletion": true,
+    "sourceBytesRetained": false,
+    "buildAndTemporaryBytesRetained": false,
+    "discardVerified": true,
+    "manifestSha256": "58e6a2fa960181d4e88ad445ae1fab997cf5c109fac90783df9de028fee63a1b",
+    "candidateFileIdentityManifestSha256": "5d464dc42ae464328c889d40900df3a88bd5a1669725ba3f75d033b5fa5c4605",
+    "cleanBaselineHead": "be9e71f6f51248c2b15710112d8c9c0397c001bd",
+    "cleanWorktree": true,
+    "nodeModulesAbsent": true,
+    "disposedPathChecks": [
+      {
+        "path": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH/90_候选工作区/current/A8_二维特征开放边界实验后端/package.json",
+        "exists": true,
+        "wasTracked": true
+      },
+      {
+        "path": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH/90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-parallel-candidate-preflight-v2-1.mjs",
+        "exists": false,
+        "wasTracked": false
+      },
+      {
+        "path": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH/90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-performance-probe-worker-v2-1.mjs",
+        "exists": false,
+        "wasTracked": false
+      },
+      {
+        "path": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH/90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-performance-probe-v2-1.mjs",
+        "exists": false,
+        "wasTracked": false
+      },
+      {
+        "path": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH/90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts",
+        "exists": true,
+        "wasTracked": true
+      }
+    ]
+  },
+  "originalRun": {
+    "samePidAndStartIdentityBeforeResume": true,
+    "remainedStoppedThroughEvidenceClosure": true,
+    "oldWorktreeModified": false,
+    "oldWorkspaceHead": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "oldWorkspaceOriginMain": "be9e71f6f51248c2b15710112d8c9c0397c001bd",
+    "oldWorkspaceIntentionallyNotPulled": true,
+    "canonicalArtifactsAbsentBeforeResume": true,
+    "artifactAbsence": {
+      "artifactAbsent": true,
+      "sidecarAbsent": true,
+      "partialNames": []
+    },
+    "processIdentities": [
+      {
+        "pid": 51467,
+        "stat": {
+          "state": "T",
+          "ppid": 12617,
+          "processGroup": 51467,
+          "session": 51467,
+          "userTicks": 54,
+          "systemTicks": 10,
+          "startTimeTicksSinceBoot": 298357
+        },
+        "status": {
+          "state": "T (stopped)",
+          "threads": 11,
+          "vmRss": "51344 kB",
+          "vmHwm": "65916 kB"
+        },
+        "commandLine": [
+          "npm run brinkman-multiresolution-v2-1"
+        ],
+        "cwd": "/home/cjt/Desktop/iypt/13 涡流摆/90_候选工作区/current/A8_二维特征开放边界实验后端",
+        "executable": "/usr/bin/node"
+      },
+      {
+        "pid": 51497,
+        "stat": {
+          "state": "T",
+          "ppid": 51467,
+          "processGroup": 51467,
+          "session": 51467,
+          "userTicks": 0,
+          "systemTicks": 0,
+          "startTimeTicksSinceBoot": 298364
+        },
+        "status": {
+          "state": "T (stopped)",
+          "threads": 1,
+          "vmRss": "1904 kB",
+          "vmHwm": "1904 kB"
+        },
+        "commandLine": [
+          "sh",
+          "-c",
+          "node --experimental-strip-types scripts/run-brinkman-multiresolution-v2-1.mjs"
+        ],
+        "cwd": "/home/cjt/Desktop/iypt/13 涡流摆/90_候选工作区/current/A8_二维特征开放边界实验后端",
+        "executable": "/usr/bin/dash"
+      },
+      {
+        "pid": 51498,
+        "stat": {
+          "state": "T",
+          "ppid": 51497,
+          "processGroup": 51467,
+          "session": 51467,
+          "userTicks": 5615107,
+          "systemTicks": 103447,
+          "startTimeTicksSinceBoot": 298364
+        },
+        "status": {
+          "state": "T (stopped)",
+          "threads": 11,
+          "vmRss": "1164096 kB",
+          "vmHwm": "1240980 kB"
+        },
+        "commandLine": [
+          "node",
+          "--experimental-strip-types",
+          "scripts/run-brinkman-multiresolution-v2-1.mjs"
+        ],
+        "cwd": "/home/cjt/Desktop/iypt/13 涡流摆/90_候选工作区/current/A8_二维特征开放边界实验后端",
+        "executable": "/usr/bin/node"
+      }
+    ],
+    "residualProbeProcesses": [],
+    "standaloneRegularLogAvailable": false,
+    "logFileDescriptorTargets": {
+      "stdout": "/dev/pts/0",
+      "stderr": "/dev/pts/0"
+    },
+    "logHashLimitation": "No standalone regular log exists; PTY was not read or hashed. Stable stopped-state CPU ticks and live terminal session with no new output close non-execution.",
+    "sigcontAuthorized": true,
+    "sigcontSent": false,
+    "resumeVerified": false
+  },
+  "decision": {
+    "code": "NO-GO-A8R-V2P1-PARALLELIZATION-CURRENT-PAUSE-EPISODE-HARD-MEMORY-GATE",
+    "scientificConclusion": "NONE",
+    "originalSerialRunMayResume": true
+  },
+  "evidenceChain": {
+    "immutableW1FailureJson": {
+      "path": "/tmp/a8r-v2p1-performance-probe-w1-cold-20260831T1600.json",
+      "sha256": "750535af9a8836155d41496114a8371a14533661d9f9a043fc070ab55b007c6f"
+    },
+    "staticMemoryWindowJson": {
+      "path": "/tmp/a8r-v2p1-static-memory-admission-window-20260831T1636.json",
+      "sha256": "15bd6f7f97674caff6ac31f717ad5b63e193b1c28153ebbe3a80c6397474b216"
+    },
+    "candidateDispositionManifest": {
+      "path": "/tmp/a8r-v2p1-parallel-candidate-disposition-manifest-20260831.json",
+      "sha256": "58e6a2fa960181d4e88ad445ae1fab997cf5c109fac90783df9de028fee63a1b"
+    }
+  }
+}

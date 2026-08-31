@@ -1,0 +1,108 @@
+{
+  "format": "VP-A8R-V2P1-FAILED-PARALLEL-CANDIDATE-DISPOSITION-MANIFEST-v1",
+  "createdAt": "2026-08-31T08:58:54.392Z",
+  "cloneIdentity": {
+    "absoluteRealpath": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH",
+    "device": 66310,
+    "inode": 3411447,
+    "baselineHead": "be9e71f6f51248c2b15710112d8c9c0397c001bd",
+    "originMainAtProbeStart": "be9e71f6f51248c2b15710112d8c9c0397c001bd",
+    "originMainAtDisposition": "ef66995f31b017522c51d42978f3069102a1023c",
+    "independentGitDirectory": "/home/cjt/.codex/tmp/iypt13-a8r-parallel-KNSlkH/.git"
+  },
+  "gitStatusPorcelainV1": [
+    {
+      "status": " M",
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/package.json"
+    },
+    {
+      "status": "??",
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-parallel-candidate-preflight-v2-1.mjs"
+    },
+    {
+      "status": "??",
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-performance-probe-worker-v2-1.mjs"
+    },
+    {
+      "status": "??",
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-performance-probe-v2-1.mjs"
+    },
+    {
+      "status": " M",
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts"
+    }
+  ],
+  "candidateFiles": [
+    {
+      "status": " M",
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/package.json",
+      "bytes": 2186,
+      "sha256": "9e0c745b200dab14f50f9731770c0584b047ac84f061b36a2d4582757fe6afd0",
+      "device": 66310,
+      "inode": 3412243,
+      "hardLinkCount": 1
+    },
+    {
+      "status": "??",
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-parallel-candidate-preflight-v2-1.mjs",
+      "bytes": 8473,
+      "sha256": "9b25dbe2d7523a5064eb95c37614495fd37dfe9d62ba28a6382cf8ed5d6206c5",
+      "device": 66310,
+      "inode": 3412863,
+      "hardLinkCount": 1
+    },
+    {
+      "status": "??",
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-performance-probe-worker-v2-1.mjs",
+      "bytes": 7479,
+      "sha256": "bbe4cd898a21ad950038412b4342b49ee48b3ed6a14cfb81174773cf8df1be3a",
+      "device": 66310,
+      "inode": 3412864,
+      "hardLinkCount": 1
+    },
+    {
+      "status": "??",
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-performance-probe-v2-1.mjs",
+      "bytes": 11384,
+      "sha256": "2155c74c30e4268d8f681b7907da28317aebc512859bd20ac156c505a0af1cb0",
+      "device": 66310,
+      "inode": 3412865,
+      "hardLinkCount": 1
+    },
+    {
+      "status": " M",
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts",
+      "bytes": 5530,
+      "sha256": "4684b50f8e943317f672281f9dcf67dd75028d79884e22401366285836b5d49c",
+      "device": 66310,
+      "inode": 3412268,
+      "hardLinkCount": 1
+    }
+  ],
+  "candidateFileIdentityManifestSha256": "5d464dc42ae464328c889d40900df3a88bd5a1669725ba3f75d033b5fa5c4605",
+  "probeExecutionIdentity": {
+    "command": "npm run brinkman-multiresolution-v2-1-performance-probe -- --workers=1 --output=/tmp/a8r-v2p1-performance-probe-w1-cold-20260831T1600.json",
+    "node": "24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64",
+    "candidateTreeSha256": "2533d4f75c3af77a9593397fe0322187221c5479c96eaf14719a81f2e39c3b3c",
+    "candidateTreePathCount": 10,
+    "performanceSupervisorRelativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-performance-probe-v2-1.mjs"
+  },
+  "immutableFailureEvidence": {
+    "absolutePath": "/tmp/a8r-v2p1-performance-probe-w1-cold-20260831T1600.json",
+    "bytes": 3631,
+    "device": 66310,
+    "inode": 730,
+    "hardLinkCount": 1,
+    "sha256": "750535af9a8836155d41496114a8371a14533661d9f9a043fc070ab55b007c6f"
+  },
+  "dispositionAuthorization": {
+    "rulingCommit": "ef66995f31b017522c51d42978f3069102a1023c",
+    "rulingFileSha256": "2a1f90ff6809e60dbff50182723b9362f18fe769ecbe46a7704560514d966995",
+    "sourceContentMayBeRetained": false,
+    "sourceDiffOrPatchMayBeRetained": false,
+    "sourceIdentityOnlyRecorded": true
+  }
+}
