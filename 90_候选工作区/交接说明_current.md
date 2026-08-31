@@ -2,134 +2,137 @@
 
 ## 当前状态
 
-原 A8R v2.1 串行主运行已经按独立 Pro 裁决恢复。当前状态为：
+用户报告原 A8R v2.1 串行主运行继续保持旧来源和原进程身份：
 
-`A8R_ORIGINAL_SERIAL_RUN_RESUME_VERIFIED_AT_D54_70_PERCENT_CONTINUING_MAIN_RUN`
-
-恢复后仍是原专用进程组：
-
-- npm PID：`51467`；
-- 包装 shell PID：`51497`；
+- 原运行工作区提交：`88c4e9e8ba57b02a06315679e9b30dd10999b30c`；
 - Node PID：`51498`；
-- PGID/SID：`51467`；
-- Node 启动时间：`2026-08-31 03:00:25 +08:00`；
-- 原运行工作区提交：`88c4e9e8ba57b02a06315679e9b30dd10999b30c`。
+- 当前同一 D54 case 已输出 `77760/86400 (90%)`；
+- 旧工作树干净；
+- 规范 gzip、sidecar 和 `.partial-*` 尚未出现。
 
-`SIGCONT` 后，Node 从 stopped 变为运行态；同一启动时间、PGID 和 SID 未变化，5 秒
-观测窗口中累计 CPU 时间从 `15:53:31` 增长到 `15:53:38`。随后终端会话 `99850`
-输出：
+GitHub 无法独立核验该实时进度。当前健康运行不得因新的硬件路线自行中断。当前状态为：
 
-```text
-[A8R-v2.1 a8r-v2p1-d54-mask-0p50-phase-baseline-eta-1p00] 60480/86400 (70%)
-```
+`A8R_SERIAL_REFERENCE_RUNNING_HW1_SUPERSEDING_PAIR_RESULT_BLIND_ROUTE_UNLOCKED`
 
-该行与暂停前 `51840/86400 (60%)` 的 case ID 相同且步数严格增加；捕获后仍是同一
-Node PID、启动时间、PGID 和 SID，没有从 step 0 重启。最终恢复证据已记录
-`nextSameCaseProgressEmissionVerified=true` 和 `resumeVerified=true`。
-
-规范主 gzip、sidecar 和 `.partial-*` 在 70% 取证后仍不存在，这符合运行器在八轨迹
-全部返回后才一次性写入规范产物的设计。旧工作区保持干净，且为了保持启动时来源
-身份，仍未 pull、checkout、rebase 或加载远端新文件。
-
-## 性能分支结论
-
-本次暂停事件中的性能分支结论为：
-
-`NO-GO-A8R-V2P1-PARALLELIZATION-CURRENT-PAUSE-EPISODE-HARD-MEMORY-GATE`
-
-科学结论为 `NONE`。这不是 A8R 数值、物理或实验 `NO-GO`。
-
-先行 `W=1` 探针在启动时受 `ffa9b115...` 裁决授权，但约 `0.105 s` 后穿越 4 GiB
-硬内存门并立即 fail-closed。探针未完成、无有效计时、无科学输出、无规范产物、无
-swap 增长、无 OOM、无残留进程、无无关进程操作。
-
-60 秒静态窗口随后观测到资源自然恢复，分类为：
-
-`STATIC_WINDOW_RESOURCE_RECOVERY_AFTER_PRIOR_HARD_GATE_FAILURE`
-
-依据最新独立 Pro 裁决，该恢复不授权第二次探针。本次暂停事件中的并行路线已经结束。
+科学结论仍为 `NONE`。
 
 ## 最新独立 Pro 裁决
 
 裁决文件：
 
-`90_候选工作区/current/A8_二维特征开放边界实验后端/33_A8R_v2_1_先行W1探针时间序列证据真实性与恢复原运行裁决.md`
+`90_候选工作区/current/A8_二维特征开放边界实验后端/35_A8R_硬件充分利用结果身份迁移与全仓模拟技术债裁决.md`
 
-- 裁决提交：`ef66995f31b017522c51d42978f3069102a1023c`；
-- 裁决文件 SHA-256：
-  `2a1f90ff6809e60dbff50182723b9362f18fe769ecbe46a7704560514d966995`；
-- 审查基线：`d5c88e0a8552dd0c9ebddad1ade574acee632460`。
+- 裁决提交：`27dbd7e5971317469cbbcdb7ded1da1b34e82df3`；
+- 裁决文件 Git blob SHA：`f11f85c2df1857a1671ab0c8cc78274843629cda`；
+- 审查基线：`af55d5dddfe5b9b827ec1f5fbfea77bc956d1469`。
 
 裁决码：
 
-- `ACCEPT-A8R-V2P1-PRO-PRE-SUPERSEDING-W1-PROBE-AS-TEMPORALLY-AUTHORIZED`；
-- `CLASSIFY-A8R-V2P1-PRO-W1-PROBE-HARD-MEMORY-GATE-FAIL-CLOSED-INCOMPLETE`；
-- `REQUIRE-A8R-V2P1-PRO-TRUTHFUL-PROBE-EXECUTED-TRUE-AND-IMMUTABLE-FAILURE-HASH`；
-- `AUTHORIZE-A8R-V2P1-PRO-STATIC-WINDOW-THEN-SIGCONT-ORIGINAL-SERIAL-RUN`；
-- `REQUIRE-A8R-V2P1-PRO-DISCARD-UNCOMMITTED-PARALLEL-CANDIDATE-SOURCE-RETAIN-EVIDENCE-ONLY`；
-- `FORBID-A8R-V2P1-PRO-ANY-FURTHER-PROBE-SCHEDULER-BYTE-OR-TIMING-GATE-ON-CURRENT-SNAPSHOT`；
-- `KEEP-A8R-V2P1-PRO-SCIENTIFIC-RESULTS-FORMAL-INTEGRATION-AND-DOWNSTREAM-LOCKED`。
+- `KEEP-A8R-V2P1-CURRENT-SERIAL-PRIMARY-UNINTERRUPTED-TO-SEALED-REFERENCE`；
+- `CLASSIFY-A8R-V2P1-CURRENT-SERIAL-ARTIFACT-AS-REFERENCE-NOT-FINAL-CLOSURE`；
+- `SUPERSEDE-A8R-V2P1-LEGACY-SERIAL-INDEPENDENT-REPEAT-BEFORE-EXECUTION`；
+- `UNLOCK-A8R-HW1-RESULT-BLIND-HARDWARE-DISCOVERY-CANDIDATE-ARCHITECTURE-AND-QUALIFICATION`；
+- `REQUIRE-A8R-HW1-TWO-FRESH-FULL-RUNS-FROM-STEP-ZERO-UNDER-ONE-QUALIFIED-EXECUTION-IDENTITY`；
+- `FORBID-A8R-HW1-MIXED-SERIAL-OPTIMIZED-PAIR-PROVENANCE-ALIASING-AND-SERIAL-FALLBACK`；
+- `REQUIRE-IYPT13-SIMULATION-DATA-PLANE-STAGED-MEDIUM-LARGE-REFACTOR`；
+- `KEEP-IYPT13-PROTECTED-FORMAL-PATHS-LOCKED-PENDING-CANDIDATE-QUALIFICATION`；
+- `KEEP-A8R-SCIENTIFIC-RESULTS-FORMAL-INTEGRATION-AND-DOWNSTREAM-LOCKED`。
 
-## 已提交的性能治理证据
+## 身份与运行顺序变更
 
-证据提交：
+### 当前串行运行
 
-`654ca873cafe13caba822c1f59d86294c22b86ad`
+当前运行必须自然完成。完成后先在旧工作区冻结 PID/退出状态、八轨迹状态、终端摘要、
+工作区身份、规范 gzip/sidecar/partial、文件大小、SHA-256、inode、`realpath` 和现有
+产物断言结果，再把逐字节相同的产物转移到最新 `main` 的独立干净工作区。
 
-最终恢复证据提交：
+该产物分类为：
 
-`fa3e40cd99034fb57a5289fbb3b2f8b248fa759d`
+`A8R-V2P1-SERIAL-REFERENCE`
 
-报告：
+它保留证据价值，但不再与一次新后端复跑混成最终独立复跑对。
 
-`90_候选工作区/current/A8_二维特征开放边界实验后端/34_A8R_v2_1_先行W1硬内存门失败候选处置与串行恢复证据报告.md`
+### 原冻结串行复跑
 
-证据目录：
+原来在旧来源上冻结、尚未启动的串行全量复跑被本裁决在执行前取代：
 
-`90_候选工作区/current/A8_二维特征开放边界实验后端/验证与复现/performance-governance/`
+- 不再运行旧串行八轨迹；
+- 不得读取当前串行参考结果；
+- 只保留为历史冻结环境；
+- 不得复用于 A8R-HW1。
 
-主要不可变 JSON：
+### A8R-HW1
 
-- 原始 `W=1` 失败：
-  `750535af9a8836155d41496114a8371a14533661d9f9a043fc070ab55b007c6f`；
-- 60 秒静态窗口：
-  `15bd6f7f97674caff6ac31f717ad5b63e193b1c28153ebbe3a80c6397474b216`；
-- 候选处置 manifest：
-  `58e6a2fa960181d4e88ad445ae1fab997cf5c109fac90783df9de028fee63a1b`；
-- `SIGCONT` 前总记录：
-  `f4f3cc6b858609b0465220675cbecd4feaf9babf19864b4e4ab4104341e69386`；
-- `SIGCONT` 后身份与 CPU 检查点：
-  `9f24e60add6f7d8ab54c29580c6f30e62e35f17e0507baeb7ec5d0f6ab22c57a`；
-- 同一 D54 case 单调推进至 70% 的最终恢复证明：
-  `098446da61407b549d84eb0cc27103b19f090892359bff242512f9f6afca9659`。
+下一次长时结果承载运行必须采用通过硬件资格的 A8R-HW1 身份。必须从同一结果前实现
+提交建立两个独立环境，分别从第一个 case、step 0、新鲜初态完成八轨迹：
 
-未提交候选源码、构建缓存和临时 worker 字节已经在记录非内容哈希身份后丢弃；候选
-克隆恢复到干净基线，`discardVerified=true`。候选源码没有 commit 或 push。
+- `HW1-primary`；
+- `HW1-repeat`。
+
+两者不得共享 shard、checkpoint、缓存、临时文件、inode 或中间状态。若硬件资格没有
+候选通过，不得自动退回串行，应停止在
+`NO-GO-A8R-HW1-HARDWARE-QUALIFICATION`。
+
+## 全仓技术债裁决摘要
+
+本轮不选择保持现状，也不批准立即全仓重写。结论为：
+
+- A8R 候选执行与数据平面：分阶段大范围重构；
+- 正式高保真内核、runner 和 worker：候选通过后局部到中等规模集成；
+- 前向理论、结构性理论、ROM、普通 UI 和无关分析：保持现状；
+- 旧合同、产物和裁决：保持不可变历史。
+
+P0 债务包括：八轨迹同步串行、每分析步多份 `9N` 人口复制、全场二次力身份扫描、
+对象化 trace 常驻、八轨迹结束前无 case shard，以及 scientific/execution/artifact
+身份耦合。只增加 worker 不足以解决这些问题。
 
 ## 下一步唯一固定顺序
 
-1. 保持 PID `51498` 原样运行，不发送第二次性能探针，不修改其旧工作区；
-2. 不干预地继续原冻结串行八轨迹主运行，直到规范 gzip 和 sidecar 完整生成；
-3. 核验规范产物、sidecar、来源身份和运行完成状态，单独提交主产物与初始报告；
-4. 使用原冻结且未同步主结果的独立干净复跑环境，从 step 0 完成完整八轨迹复跑；
-5. 核验主、复跑 gzip 和 sidecar 分别逐字节一致，再交回独立 Pro。
+### 当前串行参考仍运行时
 
-如果 PID 身份变化、进程消失、进度倒退、规范产物意外提前出现或旧工作区发生来源
-变化，不得自行重启，应保全现场并重新交回独立 Pro。
+1. 不干预 PID `51498`、旧工作区、终端、cgroup、affinity 或内存策略；
+2. 在最新 `main` 的独立干净工作区，只允许新建
+   `90_候选工作区/current/H1_硬件利用与执行架构/**`；
+3. 先分别建立并 push Markdown 结果盲合同、机器合同和合同测试；
+4. 可以继续无结果 backend interface、case shard、resource planner 和 probe 源码，
+   但当前串行进程退出并完成参考封存前，不得启动重型求解器或性能 probe；
+5. 不得启动原冻结串行复跑。
 
-## 禁止项与结论上限
+### 串行参考封存后
 
-当前禁止：
+1. 完成静态硬件 inventory 和可持续内存带宽基线；
+2. 对所有静态可行、可能有实质净收益的 CPU、GPU、WASM/native、轨迹级或单轨迹级
+   候选执行结果盲代表性 probe；
+3. 先验证精确执行等价；非逐字节后端必须使用新的数值资格合同；
+4. 只有正确性、端到端加速、95% 最优吞吐、资源利用、内存、安全与热管理全部通过，
+   才允许 H3 两次全量运行；
+5. 主/复跑完成后交回独立 Pro，不自动推进正式集成或下游。
 
-- 第二次 D54 探针；
-- 2、3、4 worker 启动；
-- 继续并行调度器、逐字节等价门或重复计时；
-- 修改原运行工作区或加载远端治理文件；
-- 修改正式理论、正式程序、A8Q、A8R 合同、合同测试、矩阵、门值或科学实现；
-- 从先行探针或性能治理证据推断 A8R 科学结果。
+## 精确授权与锁定
 
-当前 A8R 仍没有数值 `PASS`、`INCONCLUSIVE` 或科学 `NO-GO`。旧串行主运行完成后
-仍须执行原冻结独立完整复跑并再次交回独立 Pro。A8R 终局只是长期任务的检查点；
+立即授权：
+
+- `90_候选工作区/current/H1_硬件利用与执行架构/**`；
+- 交接文件；
+- 可选新增 `.github/workflows/simulation-check.yml`，但仅用于静态、测试、构建和短 smoke。
+
+现有 A8R v2.1 合同、实现、runner、preflight、asserter、测试、证据和串行参考保持只读。
+
+当前不授权修改：
+
+- `01_最终理论/**`；
+- `02_模拟程序/**`；
+- 顶层 `AGENTS.md`。
+
+正式高保真候选通过并经独立 Pro 结果审查后，才可按最新裁决第 11.3 节列出的逐文件
+清单申请正式集成；清单外正式路径仍锁定。
+
+## 当前结论上限
+
+本轮只有硬件治理、结果身份迁移和技术债重构结论。没有读取或形成 A8R 数值
+`PASS`、`INCONCLUSIVE` 或科学 `NO-GO`，没有解锁正式接入、规定横移、weak-FSI、
+三维、自由表面或实验预测。
+
 长期终点仍为：
 
 `EXPERIMENT_PREPARATION_PAUSE_READY_NO_EXECUTABLE_NONEXPERIMENTAL_TASKS`
