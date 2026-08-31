@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iypt13:e1:run-record:v1",
+  "title": "Experiment run record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "conditionBlockId",
+    "runFamily",
+    "apparatusId",
+    "apparatusRevision",
+    "startedAt",
+    "clockId",
+    "latencySeconds",
+    "synchronizationStandardUncertaintySeconds",
+    "configurationHash",
+    "rawDataHash",
+    "calibrationIds",
+    "channels",
+    "safety",
+    "status"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "E1-RUN-RECORD-v1"},
+    "runId": {"type": "string", "minLength": 1},
+    "conditionBlockId": {"type": "string", "minLength": 1},
+    "runFamily": {
+      "enum": ["fixed-body", "prescribed-motion", "no-flow-mechanical", "free-response", "holdout"]
+    },
+    "apparatusId": {"type": "string", "minLength": 1},
+    "apparatusRevision": {"type": "string", "minLength": 1},
+    "startedAt": {"type": "string", "format": "date-time"},
+    "clockId": {"type": "string", "minLength": 1},
+    "latencySeconds": {"type": "number"},
+    "synchronizationStandardUncertaintySeconds": {"type": "number", "minimum": 0},
+    "configurationHash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "rawDataHash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "calibrationIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["channelId", "kind", "unit", "calibrationId"],
+        "properties": {
+          "channelId": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["angle", "displacement", "flow-speed", "water-level", "load", "image", "clock", "environment"]},
+          "unit": {"type": "string", "minLength": 1},
+          "calibrationId": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operator", "emergencyStopChecked", "limitsChecked", "waterElectricalIsolationChecked", "backupTargetChecked"],
+      "properties": {
+        "operator": {"type": "string", "minLength": 1},
+        "emergencyStopChecked": {"const": true},
+        "limitsChecked": {"const": true},
+        "waterElectricalIsolationChecked": {"const": true},
+        "backupTargetChecked": {"const": true}
+      }
+    },
+    "status": {"enum": ["PLANNED", "RUNNING", "COMPLETE", "FAILED", "STOPPED", "NOT_STARTED_DUE_TO_STOP"]}
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "contractId": "VP-A8R-HW1-MACHINE-CONTRACT-v1",
+  "parentContractId": "VP-A8R-HW1-RESULT-BLIND-HARDWARE-QUALIFICATION-CONTRACT-v1",
+  "phaseOrder": ["H0", "H1", "H2", "H3"],
+  "serialReference": {
+    "identity": "A8R-V2P1-SERIAL-REFERENCE",
+    "sourceCommit": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "requiredStateBeforeH2": "SEALED",
+    "forbiddenActions": [
+      "SIGSTOP",
+      "SIGTERM",
+      "affinity-change",
+      "cgroup-change",
+      "worktree-update",
+      "dependency-install",
+      "heap-read",
+      "checkpoint-read",
+      "scientific-payload-read",
+      "heavy-probe"
+    ]
+  },
+  "fieldBoundary": {
+    "allowed": [
+      "contractHash",
+      "sourceHash",
+      "dependencyHash",
+      "implementationHash",
+      "environmentHash",
+      "backendId",
+      "schedulerId",
+      "workerCount",
+      "deviceId",
+      "wallTimeSeconds",
+      "throughputMlups",
+      "speedup",
+      "parallelEfficiency",
+      "cpuUtilizationFraction",
+      "memoryBandwidthFraction",
+      "gpuBusyFraction",
+      "transferFraction",
+      "rssBytes",
+      "memAvailableBytes",
+      "swapBytes",
+      "memoryEventsDelta",
+      "thermalThrottle",
+      "shardHash",
+      "canonicalPayloadHash",
+      "exitCode",
+      "signal",
+      "classification"
+    ],
+    "forbidden": [
+      "drag",
+      "lift",
+      "torque",
+      "power",
+      "pressure",
+      "velocity",
+      "period",
+      "frequency",
+      "strouhal",
+      "phase",
+      "spectrumPeak",
+      "scientificMargin",
+      "scientificGateCount",
+      "scientificDecision",
+      "literatureDistance"
+    ]
+  },
+  "candidateClasses": [
+    "trajectory-process-parallel",
+    "single-trajectory-cpu-domain-or-thread",
+    "native-or-wasm-simd",
+    "gpu-compute",
+    "cpu-gpu-hybrid",
+    "data-layout-shard-aggregation"
+  ],
+  "inventory": {
+    "required": [
+      "cpu",
+      "numa",
+      "cache",
+      "isa",
+      "memory",
+      "cgroup",
+      "swap",
+      "gpu",
+      "operatingSystem",
+      "kernel",
+      "node",
+      "v8",
+      "compiler",
+      "filesystem",
+      "thermalProxy"
+    ],
+    "mutationForbidden": true
+  },
+  "probe": {
+    "resultBlind": true,
+    "warmupStepsMinimum": 32,
+    "timedWindowSecondsMinimum": 15,
+    "timedWindowSecondsMaximum": 60,
+    "validRepeatsMinimum": 3,
+    "soakSecondsMaximum": 600,
+    "includeEndToEndOverheads": true
+  },
+  "gates": {
+    "repeatWallTimeCvMaximum": 0.05,
+    "repeatSlowestFastestRatioMaximum": 1.1,
+    "speedupMinimum": 1.5,
+    "selectedThroughputFractionOfBestMinimum": 0.95,
+    "cpuParallelEfficiencyMinimum": 0.55,
+    "cpuAssignedUtilizationFractionMinimum": 0.7,
+    "memoryBandwidthFractionMinimum": 0.7,
+    "additionalCpuGainAtBandwidthSaturationMaximum": 0.05,
+    "gpuBusyMedianFractionMinimum": 0.6,
+    "gpuTransferSyncSerializationFractionMaximum": 0.35,
+    "soakThroughputDegradationMaximum": 0.1,
+    "systemReserveBytesMinimum": 4294967296,
+    "systemReserveMemTotalFraction": 0.25,
+    "candidateHeadroomFraction": 0.1,
+    "frequencyDropFractionMaximum": 0.15,
+    "swapGrowthMaximumBytes": 0,
+    "oomEventGrowthMaximum": 0
+  },
+  "equivalence": {
+    "exactMode": "H2-X",
+    "nonExactMode": "H2-N",
+    "exactRequiredComparisons": [
+      "checkpoint-population-bytes",
+      "per-step-force-identity-summary-hash",
+      "case-scientific-payload-hash",
+      "one-worker-vs-selected-workers",
+      "permuted-completion-order",
+      "three-independent-environments"
+    ],
+    "nonExactRequiresNewFrozenContractAndProReview": true,
+    "runtimeFallbackForbidden": true
+  },
+  "shards": {
+    "expectedCaseCount": 8,
+    "atomicAfterCompleteCase": true,
+    "completeFromStepZero": true,
+    "canonicalSortKey": "caseId",
+    "rejectMissing": true,
+    "rejectDuplicate": true,
+    "rejectCorrupt": true,
+    "rejectSourceDrift": true,
+    "crossRunReuseForbidden": true
+  },
+  "provenanceLayers": ["scientific", "execution", "artifact"],
+  "fullRuns": {
+    "identities": ["HW1-primary", "HW1-repeat"],
+    "sameFrozenImplementation": true,
+    "independentCleanEnvironments": true,
+    "freshInitialState": true,
+    "startAtFirstCaseStepZero": true,
+    "sharedShardCheckpointCacheTemporaryStateForbidden": true
+  },
+  "failureCodes": [
+    "NO-GO-HW1-CONTRACT-MAPPING",
+    "NO-GO-HW1-PROVENANCE-ALIASING",
+    "NO-GO-HW1-SCIENTIFIC-FIELD-LEAK",
+    "INCONCLUSIVE-HW1-BACKEND-INTERFACE",
+    "NO-GO-A8R-HW1-HARDWARE-QUALIFICATION",
+    "DEFERRED-UNSAFE-TO-PROBE"
+  ]
+}

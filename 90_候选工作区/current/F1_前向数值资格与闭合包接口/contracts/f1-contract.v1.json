@@ -1,0 +1,33 @@
+{
+  "contractId": "VP-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-CONTRACT-v1",
+  "classification": "synthetic-only",
+  "coefficientSources": ["synthetic", "analytic", "literature-prior"],
+  "apparatusCalibratedAllowedSources": ["measured-calibration", "holdout-validated-calibration"],
+  "requiredCases": [
+    "four-state-ode-convergence",
+    "wet-geometry-analytic-reference",
+    "conservative-energy-balance",
+    "event-root-location",
+    "variable-inertia-acceleration",
+    "output-integration",
+    "canonical-repeat",
+    "coefficient-source-label"
+  ],
+  "stepLevels": ["coarse", "nominal", "reference"],
+  "gates": {
+    "stateAndDisplacementErrorStrictlyDecreasing": true,
+    "nominalNormalizedRmsMaximum": 0.001,
+    "nominalNormalizedMaximumMaximum": 0.005,
+    "conservativeFinalRelativeEnergyMaximum": 0.00005,
+    "conservativeLocalRelativeRmsMaximum": 0.0001,
+    "eventFineDifferenceRule": "max(10*epsilon_t,1e-6_s)",
+    "variableInertiaFineRelativeDifferenceMaximum": 0.0001,
+    "outputIntegralRelativeErrorMaximum": 0.0001,
+    "canonicalRepeatByteIdentical": true
+  },
+  "resultCodes": [
+    "PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY",
+    "NO-GO-F1-FORWARD-NUMERICAL-QUALIFICATION",
+    "INCONCLUSIVE-F1-EVENT-OR-ENERGY-CONVERGENCE"
+  ]
+}

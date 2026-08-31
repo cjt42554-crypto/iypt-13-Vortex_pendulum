@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iypt13:e1:timeseries:v1",
+  "title": "Long-form measurement records",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runId", "timeUnit", "records"],
+  "properties": {
+    "schemaVersion": {"const": "E1-TIMESERIES-v1"},
+    "runId": {"type": "string", "minLength": 1},
+    "timeUnit": {"const": "s"},
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["recordId", "channelId", "time", "value", "unit", "source", "standardUncertainty"],
+        "properties": {
+          "recordId": {"type": "string", "minLength": 1},
+          "channelId": {"type": "string", "minLength": 1},
+          "time": {"type": "number", "minimum": 0},
+          "value": {"type": "number"},
+          "unit": {"type": "string", "minLength": 1},
+          "source": {"enum": ["raw", "calibrated", "derived", "synthetic"]},
+          "standardUncertainty": {"type": "number", "minimum": 0}
+        }
+      }
+    }
+  }
+}

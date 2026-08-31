@@ -1,0 +1,46 @@
+{
+  "contractId": "VP-E1-EXPERIMENT-PREPARATION-CONTRACT-v1",
+  "resultClassification": "synthetic-only",
+  "requiredRunFamilies": [
+    "fixed-body",
+    "prescribed-motion",
+    "no-flow-mechanical",
+    "free-response",
+    "holdout"
+  ],
+  "requiredChannelKinds": [
+    "angle",
+    "displacement",
+    "flow-speed",
+    "water-level",
+    "load",
+    "image",
+    "clock",
+    "environment"
+  ],
+  "quantityRequiredFields": ["value", "unit", "source", "observedAt", "standardUncertainty"],
+  "runRequiredHashes": ["configurationHash", "rawDataHash"],
+  "holdoutSplitUnit": "condition-block",
+  "randomFrameSplitForbidden": true,
+  "canonicalRoundTripRequired": true,
+  "syntheticEstimateEnvelope": "max(2*u_num,2*u_fit)",
+  "negativeCases": [
+    "missing-unit",
+    "missing-source",
+    "missing-timestamp",
+    "missing-uncertainty",
+    "non-finite-value",
+    "time-regression",
+    "duplicate-primary-key",
+    "missing-calibration",
+    "expired-calibration",
+    "angle-displacement-mix",
+    "training-holdout-overlap",
+    "unsafe-run"
+  ],
+  "conclusionCodes": [
+    "PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY",
+    "INCONCLUSIVE-E1-METROLOGY-OR-SYNCHRONIZATION",
+    "NO-GO-E1-DATA-CONTRACT-OR-SAFETY"
+  ]
+}

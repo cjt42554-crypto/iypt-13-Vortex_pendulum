@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iypt13:e1:identification:v1",
+  "title": "Result-before parameter identification plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "planId",
+    "frozenAt",
+    "parameterGroups",
+    "trainingConditionBlocks",
+    "holdoutConditionBlocks",
+    "regularization",
+    "uncertaintyMethod",
+    "syntheticAcceptance"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "E1-IDENTIFICATION-v1"},
+    "planId": {"type": "string", "minLength": 1},
+    "frozenAt": {"type": "string", "format": "date-time"},
+    "parameterGroups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["groupId", "parameters", "priorSource", "identifiableCombination"],
+        "properties": {
+          "groupId": {"type": "string", "minLength": 1},
+          "parameters": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+          "priorSource": {"enum": ["synthetic", "literature-prior", "measured"]},
+          "identifiableCombination": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "trainingConditionBlocks": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "holdoutConditionBlocks": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "regularization": {"type": "object"},
+    "uncertaintyMethod": {"type": "string", "minLength": 1},
+    "syntheticAcceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["envelope"],
+      "properties": {"envelope": {"const": "max(2*u_num,2*u_fit)"}}
+    }
+  }
+}

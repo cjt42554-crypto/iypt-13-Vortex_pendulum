@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iypt13:s1:qualification-record:v1",
+  "title": "S1 synthetic structural qualification record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "contractId", "classification", "cases", "decision", "deferred"],
+  "properties": {
+    "schemaVersion": {"const": "S1-QUALIFICATION-RECORD-v1"},
+    "contractId": {"const": "VP-S1-SYNTHETIC-STRUCTURAL-QUALIFICATION-CONTRACT-v1"},
+    "classification": {"const": "synthetic-only"},
+    "cases": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["caseId", "metrics", "pass"],
+        "properties": {
+          "caseId": {"type": "string", "minLength": 1},
+          "metrics": {"type": "object"},
+          "pass": {"type": "boolean"}
+        }
+      }
+    },
+    "decision": {"const": "PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS"},
+    "deferred": {"const": "DEFERRED-S1-NONLINEAR-CONTINUATION-AWAITING-CALIBRATION"}
+  }
+}

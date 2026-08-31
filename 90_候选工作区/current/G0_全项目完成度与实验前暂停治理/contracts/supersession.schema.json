@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iypt13:g0:supersession:v1",
+  "title": "G0 ruling supersession ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "baselineCommit", "entries"],
+  "properties": {
+    "schemaVersion": {"const": "G0-SUPERSESSION-CONTRACT-v1"},
+    "baselineCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "subject",
+          "olderPath",
+          "olderCommit",
+          "newerPath",
+          "newerCommit",
+          "relation",
+          "retainedClauses"
+        ],
+        "properties": {
+          "subject": {"type": "string", "minLength": 1},
+          "olderPath": {"type": "string", "minLength": 1},
+          "olderCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "newerPath": {"type": "string", "minLength": 1},
+          "newerCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "relation": {"enum": ["supersedes", "narrows", "clarifies", "retains"]},
+          "retainedClauses": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}
