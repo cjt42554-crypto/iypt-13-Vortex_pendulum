@@ -35,3 +35,11 @@ git show b11eea58dcf45518c0a086dc5dba1e065fd49213:"90_候选工作区/交接说�
 - 只向原专用 PGID `51467` 发送 `SIGCONT`；PID `51467/51497/51498`、Node 启动时间、PGID 与 SID 未变化，Node CPU 时间重新增长，旧工作区仍干净且规范产物仍不存在。
 - 初始 7 秒终端轮询尚未出现下一条整十进度行；当前状态为 `A8R_ORIGINAL_SERIAL_RUN_SIGCONT_IDENTITY_CPU_VERIFIED_PENDING_NEXT_PROGRESS_EMISSION`。下一步只等待同一 D54 case 的下一条进度行并追加最终恢复记录，然后继续原冻结串行主运行。
 - 性能分支结论为 `NO-GO-A8R-V2P1-PARALLELIZATION-CURRENT-PAUSE-EPISODE-HARD-MEMORY-GATE`，科学结论仍为 `NONE`。正式理论、正式程序、A8Q、A8R 合同/测试、矩阵和科学实现均未修改。
+
+## 2026-08-31 18:19:21 +08:00
+
+- 终端会话 `99850` 输出同一 D54 case 的 `60480/86400 (70%)`；相对于暂停前 `51840/86400 (60%)`，case ID 相同且步数严格增加。捕获后仍是原 PID `51467/51497/51498`、Node 启动时间、PGID 和 SID，旧工作区仍干净，没有从 step 0 重启。
+- 新增不可变 `a8r-v2p1-post-sigcont-final-resume-verification.json`，链接前驱检查点 SHA-256 `9f24e60add6f7d8ab54c29580c6f30e62e35f17e0507baeb7ec5d0f6ab22c57a`；最终 JSON SHA-256 为 `098446da61407b549d84eb0cc27103b19f090892359bff242512f9f6afca9659`，记录 `nextSameCaseProgressEmissionVerified=true` 和 `resumeVerified=true`。
+- 最终恢复证据提交为 `fa3e40cd99034fb57a5289fbb3b2f8b248fa759d`。同时按 Pro 复核勘误报告：目标 cgroup 的 `memory.events` 已记录，根 cgroup 字段实际为 `null` 且未作为结论依据。
+- 最终 JSON 解析、全部 sidecar、硬链接数、Pandoc 解析、Chrome 页面渲染和 Git 差异检查通过。仓库级 Markdown 数学检查仍只命中未修改的既有 A8O/A8P 裁决文件，不报告为全仓库通过。
+- 当前状态为 `A8R_ORIGINAL_SERIAL_RUN_RESUME_VERIFIED_AT_D54_70_PERCENT_CONTINUING_MAIN_RUN`。原冻结串行主运行继续；规范主 gzip、sidecar 和 `.partial-*` 在取证时仍不存在。性能结论不变，科学结论仍为 `NONE`；正式理论、正式程序、合同、矩阵和科学实现均未修改。

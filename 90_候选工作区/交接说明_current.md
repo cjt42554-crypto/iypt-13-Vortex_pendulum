@@ -4,7 +4,7 @@
 
 原 A8R v2.1 串行主运行已经按独立 Pro 裁决恢复。当前状态为：
 
-`A8R_ORIGINAL_SERIAL_RUN_SIGCONT_IDENTITY_CPU_VERIFIED_PENDING_NEXT_PROGRESS_EMISSION`
+`A8R_ORIGINAL_SERIAL_RUN_RESUME_VERIFIED_AT_D54_70_PERCENT_CONTINUING_MAIN_RUN`
 
 恢复后仍是原专用进程组：
 
@@ -16,12 +16,20 @@
 - 原运行工作区提交：`88c4e9e8ba57b02a06315679e9b30dd10999b30c`。
 
 `SIGCONT` 后，Node 从 stopped 变为运行态；同一启动时间、PGID 和 SID 未变化，5 秒
-观测窗口中累计 CPU 时间从 `15:53:31` 增长到 `15:53:38`。初始 7 秒终端轮询尚未
-出现下一条整十进度行，因此最终恢复证据仍等待同一 D54 case 的下一次原有进度输出。
-不得因等待该输出再次暂停或重启进程。
+观测窗口中累计 CPU 时间从 `15:53:31` 增长到 `15:53:38`。随后终端会话 `99850`
+输出：
 
-规范主 gzip、sidecar 和 `.partial-*` 在恢复检查点仍不存在。旧工作区保持干净，且
-为了保持启动时来源身份，仍未 pull、checkout、rebase 或加载远端新文件。
+```text
+[A8R-v2.1 a8r-v2p1-d54-mask-0p50-phase-baseline-eta-1p00] 60480/86400 (70%)
+```
+
+该行与暂停前 `51840/86400 (60%)` 的 case ID 相同且步数严格增加；捕获后仍是同一
+Node PID、启动时间、PGID 和 SID，没有从 step 0 重启。最终恢复证据已记录
+`nextSameCaseProgressEmissionVerified=true` 和 `resumeVerified=true`。
+
+规范主 gzip、sidecar 和 `.partial-*` 在 70% 取证后仍不存在，这符合运行器在八轨迹
+全部返回后才一次性写入规范产物的设计。旧工作区保持干净，且为了保持启动时来源
+身份，仍未 pull、checkout、rebase 或加载远端新文件。
 
 ## 性能分支结论
 
@@ -68,6 +76,10 @@ swap 增长、无 OOM、无残留进程、无无关进程操作。
 
 `654ca873cafe13caba822c1f59d86294c22b86ad`
 
+最终恢复证据提交：
+
+`fa3e40cd99034fb57a5289fbb3b2f8b248fa759d`
+
 报告：
 
 `90_候选工作区/current/A8_二维特征开放边界实验后端/34_A8R_v2_1_先行W1硬内存门失败候选处置与串行恢复证据报告.md`
@@ -87,7 +99,9 @@ swap 增长、无 OOM、无残留进程、无无关进程操作。
 - `SIGCONT` 前总记录：
   `f4f3cc6b858609b0465220675cbecd4feaf9babf19864b4e4ab4104341e69386`；
 - `SIGCONT` 后身份与 CPU 检查点：
-  `9f24e60add6f7d8ab54c29580c6f30e62e35f17e0507baeb7ec5d0f6ab22c57a`。
+  `9f24e60add6f7d8ab54c29580c6f30e62e35f17e0507baeb7ec5d0f6ab22c57a`；
+- 同一 D54 case 单调推进至 70% 的最终恢复证明：
+  `098446da61407b549d84eb0cc27103b19f090892359bff242512f9f6afca9659`。
 
 未提交候选源码、构建缓存和临时 worker 字节已经在记录非内容哈希身份后丢弃；候选
 克隆恢复到干净基线，`discardVerified=true`。候选源码没有 commit 或 push。
@@ -95,16 +109,10 @@ swap 增长、无 OOM、无残留进程、无无关进程操作。
 ## 下一步唯一固定顺序
 
 1. 保持 PID `51498` 原样运行，不发送第二次性能探针，不修改其旧工作区；
-2. 等待终端原有进度输出出现同一
-   `a8r-v2p1-d54-mask-0p50-phase-baseline-eta-1p00` case 的下一条整十进度行；
-3. 新增最终 post-resume JSON，链接
-   `a8r-v2p1-post-sigcont-checkpoint.json`，记录
-   `nextSameCaseProgressEmissionVerified=true` 和 `resumeVerified=true`，不得覆盖既有文件；
-4. 提交、push 该最终恢复证据并更新本交接；
-5. 继续原冻结串行八轨迹主运行直到规范 gzip 和 sidecar 完整生成；
-6. 单独提交主产物和初始报告；
-7. 使用原冻结独立干净复跑环境，从 step 0 完成完整八轨迹复跑；
-8. 核验主、复跑 gzip 和 sidecar 逐字节一致，再交回独立 Pro。
+2. 不干预地继续原冻结串行八轨迹主运行，直到规范 gzip 和 sidecar 完整生成；
+3. 核验规范产物、sidecar、来源身份和运行完成状态，单独提交主产物与初始报告；
+4. 使用原冻结且未同步主结果的独立干净复跑环境，从 step 0 完成完整八轨迹复跑；
+5. 核验主、复跑 gzip 和 sidecar 分别逐字节一致，再交回独立 Pro。
 
 如果 PID 身份变化、进程消失、进度倒退、规范产物意外提前出现或旧工作区发生来源
 变化，不得自行重启，应保全现场并重新交回独立 Pro。
