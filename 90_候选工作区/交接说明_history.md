@@ -43,3 +43,12 @@ git show b11eea58dcf45518c0a086dc5dba1e065fd49213:"90_候选工作区/交接说�
 - 最终恢复证据提交为 `fa3e40cd99034fb57a5289fbb3b2f8b248fa759d`。同时按 Pro 复核勘误报告：目标 cgroup 的 `memory.events` 已记录，根 cgroup 字段实际为 `null` 且未作为结论依据。
 - 最终 JSON 解析、全部 sidecar、硬链接数、Pandoc 解析、Chrome 页面渲染和 Git 差异检查通过。仓库级 Markdown 数学检查仍只命中未修改的既有 A8O/A8P 裁决文件，不报告为全仓库通过。
 - 当前状态为 `A8R_ORIGINAL_SERIAL_RUN_RESUME_VERIFIED_AT_D54_70_PERCENT_CONTINUING_MAIN_RUN`。原冻结串行主运行继续；规范主 gzip、sidecar 和 `.partial-*` 在取证时仍不存在。性能结论不变，科学结论仍为 `NONE`；正式理论、正式程序、合同、矩阵和科学实现均未修改。
+
+## 2026-08-31 23:46:21 +09:00
+
+- 用户新增“下一轮必须充分利用本机硬件算力”的明确要求；独立审查远端 `af55d5d...`、正式 LBM、GUI worker、A8R runner、每步人口复制与力身份、trace、产物和 provenance 链后，形成新的结果盲硬件路线裁决。
+- 当前 PID `51498` 保持运行并自然完成，产物封存为 `A8R-V2P1-SERIAL-REFERENCE`；原尚未启动的旧串行独立复跑被执行前取代，不得与新后端结果混成一对。
+- 下一次长时结果承载运行必须使用通过资格的 A8R-HW1 身份；新的 primary 和 repeat 从同一结果前实现提交、两个独立环境、step 0 和新鲜初态完整执行八轨迹。无候选通过时不得串行 fallback。
+- 技术债裁决为候选执行与数据平面分阶段大范围重构、正式内核后续局部到中等集成，不做无目的全仓重写。P0 包括串行矩阵、全人口复制、全场二次审计、对象化 trace、无 case shard 和三层身份耦合。
+- 新增 `35_A8R_硬件充分利用结果身份迁移与全仓模拟技术债裁决.md`，裁决提交 `27dbd7e5971317469cbbcdb7ded1da1b34e82df3`，Git blob SHA `f11f85c2df1857a1671ab0c8cc78274843629cda`；当前交接提交 `4e4f47e09443d8ef6d4e178807b1729f72913ed7`。
+- 立即只授权新建 `90_候选工作区/current/H1_硬件利用与执行架构/**` 和可选短 CI；现有 A8R 与 `01_最终理论/**`、`02_模拟程序/**`、`AGENTS.md` 继续只读。当前未运行性能 probe、数值矩阵或科学分析，科学结论仍为 `NONE`。
