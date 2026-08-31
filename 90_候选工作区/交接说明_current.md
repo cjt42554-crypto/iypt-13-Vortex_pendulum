@@ -2,124 +2,155 @@
 
 ## 当前状态
 
-用户报告原 A8R v2.1 串行主运行的整个专用进程组已经用 `SIGSTOP` 可逆暂停；
-旧 Node 仍保留约 `1.11 GiB` RSS，规范主 gzip、sidecar 和 `.partial-*` 均不存在。
+原 A8R v2.1 串行主运行的专用进程组仍以 `SIGSTOP` 可逆暂停。规范主 gzip、sidecar
+和 `.partial-*` 均不存在。
+
+在静态准入裁决 `dc7f2dfc...` 到达之前，Codex 已按当时生效的
+`ffa9b115...` 裁决，在独立克隆启动过一次且仅一次 `W=1`、D54、40 步、全力身份
+非科学冷启动探针。监督器约在 `0.105 s` 内观测 `MemAvailable` 穿越 4 GiB 硬门并
+立即 `SIGTERM` 唯一 worker。探针未完成、未输出有效指标或科学字段，无 swap 增长、
+无 OOM、无规范或临时研究产物、无残留进程、无无关进程操作。
 
 当前状态为：
 
-`A8R_STATIC_MEMORY_ADMISSION_NO_GO_PENDING_HOST_WINDOW_EVIDENCE_AND_SIGCONT`
+`A8R_PRE_SUPERSEDING_W1_PROBE_HARD_MEMORY_FAIL_CLOSED_PENDING_STATIC_EVIDENCE_SOURCE_DISCARD_AND_SIGCONT`
 
-GitHub 无法直接核验主机 `/proc`。下一步不是启动探针或实现并行调度器，而是在运行
-主机按最新裁决完成 60 秒结果盲内存窗口、固化失败证据并恢复原运行。
+必须如实记录 `probeExecuted=true`。不得按照较晚到达的静态裁决把已经发生的探针
+改写为未执行。
 
 ## 最新独立 Pro 裁决
 
 裁决文件：
 
-`90_候选工作区/current/A8_二维特征开放边界实验后端/32_A8R_v2_1_低内存探针准入与并行性能门短路裁决.md`
+`90_候选工作区/current/A8_二维特征开放边界实验后端/33_A8R_v2_1_先行W1探针时间序列证据真实性与恢复原运行裁决.md`
 
-- 裁决提交：`dc7f2dfc0e925b058458d6fff7c0e17e7562c234`；
+- 裁决提交：`ef66995f31b017522c51d42978f3069102a1023c`；
 - 裁决文件 SHA-256：
-  `280d714c70f08bb283aebdfd03b986407df8648f5ed6040480097687a302e40c`；
-- 审查基线：`be9e71f6f51248c2b15710112d8c9c0397c001bd`。
+  `2a1f90ff6809e60dbff50182723b9362f18fe769ecbe46a7704560514d966995`；
+- 审查基线：`d5c88e0a8552dd0c9ebddad1ade574acee632460`。
 
 裁决码：
 
-- `ACCEPT-A8R-V2P1-PRO-STATIC-MEMORY-ADMISSION-PROOF-FOR-CURRENT-RESOURCE-SNAPSHOT`；
-- `DO-NOT-LAUNCH-A8R-V2P1-PRO-D54-FULL-FORCE-IDENTITY-PROBE-UNDER-CURRENT-HEADROOM`；
-- `ALLOW-A8R-V2P1-PRO-HARD-MEMORY-GATE-SHORT-CIRCUIT-BEFORE-SCHEDULER-BYTE-AND-TIMING-GATES`；
-- `AUTHORIZE-A8R-V2P1-PRO-PRESERVE-MEMORY-NO-GO-EVIDENCE-AND-SIGCONT-ORIGINAL-RUN`；
-- `FORBID-A8R-V2P1-PRO-UNRELATED-PROCESS-GPU-CACHE-SWAP-OR-CGROUP-MANIPULATION`；
+- `ACCEPT-A8R-V2P1-PRO-PRE-SUPERSEDING-W1-PROBE-AS-TEMPORALLY-AUTHORIZED`；
+- `CLASSIFY-A8R-V2P1-PRO-W1-PROBE-HARD-MEMORY-GATE-FAIL-CLOSED-INCOMPLETE`；
+- `REQUIRE-A8R-V2P1-PRO-TRUTHFUL-PROBE-EXECUTED-TRUE-AND-IMMUTABLE-FAILURE-HASH`；
+- `AUTHORIZE-A8R-V2P1-PRO-STATIC-WINDOW-THEN-SIGCONT-ORIGINAL-SERIAL-RUN`；
+- `REQUIRE-A8R-V2P1-PRO-DISCARD-UNCOMMITTED-PARALLEL-CANDIDATE-SOURCE-RETAIN-EVIDENCE-ONLY`；
+- `FORBID-A8R-V2P1-PRO-ANY-FURTHER-PROBE-SCHEDULER-BYTE-OR-TIMING-GATE-ON-CURRENT-SNAPSHOT`；
 - `KEEP-A8R-V2P1-PRO-SCIENTIFIC-RESULTS-FORMAL-INTEGRATION-AND-DOWNSTREAM-LOCKED`。
 
-## 静态内存判定
+## 已发生探针的固定事实
 
-当前报告值：
+必须在证据中逐值记录：
 
-- `MemTotal = 15518540 kB`；
-- `MemAvailable = 4473040 kB`；
-- 硬下限为 `4194304 kB`；
-- 当前余量为 `278736 kB = 272.203125 MiB`。
+- `probeExecuted=true`；
+- `executionCount=1`；
+- `workerCount=1`；
+- `probeCompleted=false`；
+- `validTimingMeasurementProduced=false`；
+- `scientificOutputProduced=false`；
+- `terminationSignal=SIGTERM`；
+- `terminationReason=MEMAVAILABLE_HARD_FLOOR_CROSSED`；
+- `terminationElapsedSeconds=0.105`；
+- `memAvailableStartBytes=4325957632`；
+- `memAvailableMinimumObservedBytes=4282589184`；
+- `hardFloorBytes=4294967296`；
+- `startHeadroomBytes=30990336`；
+- `observedDropBytes=43368448`；
+- `floorUndershootBytes=12378112`；
+- `workerPeakRssObservedBytes=89858048`；
+- `workerPeakRssIsCensoredEarlyObservation=true`；
+- `swapGrowthBytes=0`；
+- `oomOccurred=false`；
+- 规范 gzip、sidecar、partial 均为 `false`；
+- `residualProbeProcesses=false`；
+- `unrelatedProcessTouched=false`。
 
-D54 网格为 `1809 x 540`，共 `976860` 个格点。冻结正式求解器、三份候选 mask、
-两个控制体字节数组、步前与步后人口副本，以及构造步后副本时仍存活的公开
-checkpoint 副本，给出第一次完整力身份步骤的静态已触碰 typed-array 下界：
+原始失败 JSON 必须保持逐字节不变，其 SHA-256 为：
 
-`423957240 B = 414020.7421875 KiB = 404.3171310425 MiB`。
+`750535af9a8836155d41496114a8371a14533661d9f9a043fc070ab55b007c6f`。
 
-机器比较向上取整为 `414021 kB`。该下界尚未计入 Node/V8、父监督进程、页表、GC
-和其他开销，已经比当前余量大 `135285 kB`。因此当前连一个 D54 全力身份 worker
-都不能守住 4 GiB 硬门，2、3、4 worker 可直接短路。
+该 JSON 不得覆盖或重写。若实体重算哈希不一致，应停止恢复并交回独立 Pro。
+
+`89858048 B` 只是约 `0.105 s` 终止前的最大外部观测值，不是 D54 完整力身份路径的
+峰值，不得用于反驳静态内存下界或推断两个 worker 可行。
 
 ## 下一步唯一固定顺序
 
-### 1. 保持旧运行 stopped 并完成 60 秒窗口
+### 1. 完成 60 秒纯静态窗口
 
-不启动求解器。以不超过 250 ms 的间隔记录：
+旧运行继续 stopped，不再启动任何求解器。按 `32...` 记录不少于 60 秒、最大采样
+间隔不超过 250 ms 的 `MemTotal`、`MemAvailable`、`SwapFree`、memory PSI、
+`memory.events`、旧进程身份、CPU/日志不变性和规范产物不存在性。
 
-- `MemTotal`、`MemAvailable`、`SwapFree`；
-- memory PSI 与 `memory.events`；
-- 旧进程组 PID、启动时间、状态、CPU 时间和 RSS；
-- 旧日志字节数、SHA-256 和不变性；
-- 规范 gzip、sidecar、`.partial-*` 不存在；
-- 没有触碰无关进程。
+若 `A_max < 4608325 kB`，静态分类为：
 
-定义窗口中的
+`STATIC_MEMORY_ADMISSION_NO_GO`。
 
-`A_max = max(MemAvailable)`。
+若资源自然恢复到或超过该阈值，分类为：
 
-若：
+`STATIC_WINDOW_RESOURCE_RECOVERY_AFTER_PRIOR_HARD_GATE_FAILURE`。
 
-`A_max < 4608325 kB`
+后一分类也不授权第二次探针；本次暂停事件仍结束性能优化分支并恢复原串行运行。
 
-则静态内存 NO-GO 成立，禁止启动任何 D54 探针。
+### 2. 闭合时间序列证据
 
-### 2. 写失败证据
+保留三层证据：
 
-在旧工作区之外写入并 `fsync` 结果盲证据，只允许包含：
+1. 原始探针失败 JSON及其 SHA-256；
+2. 60 秒静态窗口 JSON及其 SHA-256；
+3. 按最新裁决固定字段形成的时间序列、候选处置和恢复总记录。
 
-- 来源和进程身份；
-- 内存样本；
-- 静态数组计数与公式；
-- 规范产物不存在性；
-- `STATIC_MEMORY_ADMISSION_NO_GO`；
-- `probeExecuted=false`；
-- `unrelatedProcessTouched=false`。
+总记录结论码为：
 
-不得读取、显示或保存力、功、阻力、升力、周期、趋势、门值、堆、checkpoint 或
-人口数组。可以先恢复旧运行，再从独立克隆 commit/push 失败证据，不得为等待推送
-继续冻结旧进程。
+`NO-GO-A8R-V2P1-PARALLELIZATION-CURRENT-PAUSE-EPISODE-HARD-MEMORY-GATE`。
 
-### 3. 恢复原运行
+科学结论必须为 `NONE`。
 
-确认：
+### 3. 逐字节丢弃候选源码
 
-- 原 PID、启动时间、PGID、SID 未变化；
-- 进程仍 stopped；
-- 没有本任务探针或候选 cgroup 残留；
-- 规范和临时产物仍不存在；
-- 旧工作树没有 pull、checkout、rebase 或候选注入。
+在候选克隆之外先 `fsync` 保存证据，并记录候选克隆、基线、候选文件路径、字节数、
+逐文件 SHA-256、确定性 manifest SHA-256、实际命令和运行时身份。只保留这些哈希
+身份，不保留候选源正文、diff 或 patch。
 
-随后只向原专用进程组发送 `SIGCONT`，并验证同一 Node 从第五条暂停点继续增长，
-而不是从 step 0 重启。
+随后核验目标是独立候选克隆而不是旧运行工作区，并删除全部未提交候选调度器、worker、
+构建产物、缓存和临时目录。候选源码不得 commit 或 push。删除后必须证明候选路径已
+消失，或工作树与记录的基线一致，并记录 `discardVerified=true`。
 
-## 短路边界
+### 4. `SIGCONT` 恢复原运行
 
-- 静态证明一个 worker 不合格时，直接淘汰 2、3、4；
-- 若未来安全单 worker 探针证明两份私有工作集必然超过余量，可短路 2、3、4；
-- 若实际 2 worker 一次触碰硬内存门或候选 cgroup 上限，可直接淘汰 3、4；
-- 硬内存失败不得重复三次；
-- 三次重复计时和逐字节门只对已经通过内存准入的并发度执行；
-- 4 worker 失败不能在没有单调证明时跳过 3 和 2，3 worker 失败也不能自动跳过 2。
+恢复前核验：
 
-在资源自然增加且满足裁决中的 cgroup 防护前，不允许启动 D54 探针。
+- 原 PID、启动时间、PGID、SID 未变化且全部仍 stopped；
+- 暂停期间 CPU 时间、日志字节数和日志 SHA-256 不变；
+- 旧工作树未 pull、checkout、rebase、重载模块或注入候选文件；
+- 无调试器、heap dump、checkpoint 或人口读取；
+- 规范 gzip、sidecar、partial 仍不存在；
+- 探针、监督器子进程和候选 cgroup 无残留；
+- swap 增长为 0、无 OOM；
+- 无关 GPU/CPU 进程未被触碰；
+- 原始失败 JSON 与静态窗口证据哈希闭合。
 
-## 无关进程锁定
+随后只向原专用进程组发送 `SIGCONT`。必须证明同一 Node PID 和启动时间继续、CPU
+时间继续增长、日志从第五条同一 case 和暂停进度之后增长，没有从 step 0 重启。
 
-不得对无关 GPU 进程或其父子进程发送信号、迁移 cgroup、renice、ionice、改
-affinity、执行 GPU reset、清理显存或独占设备。不得 `drop_caches`、`swapoff`、
-强制回收或修改旧 stopped 进程的内存策略。禁止宽泛 `pkill`、`killall` 或未核验的
-负 PGID。
+不得为等待 GitHub 提交继续暂停。证据可在恢复原运行后从独立克隆 commit/push。
+
+## 禁止项与提交边界
+
+当前不允许：
+
+- 第二次 D54 探针；
+- 2、3、4 worker 启动；
+- 完整并行调度器实现；
+- 逐字节等价门或重复计时；
+- 提交候选调度器、worker、diff、patch、缓存或临时输出；
+- 读取或保存探针科学中间量；
+- 干预无关 GPU/CPU 进程；
+- 修改正式理论、正式程序、A8Q、A8R 合同、合同测试、矩阵、门值或科学实现。
+
+后续允许提交的性能材料仅限探针失败证据、静态窗口证据、时间序列与恢复证据、
+sidecar、非科学文字报告、验证记录和交接。
 
 ## 结果前身份与结论上限
 
@@ -132,10 +163,10 @@ A8R 结果前科学身份仍为：
 - 冻结 A8Q gzip SHA-256：
   `022cc54704ac542b5c148eed5ce026f5701ae79d50426ec3417073f1148ef451`。
 
-正式理论、正式程序、A8Q 科学证据、A8R v2.1 科学合同、合同测试和全部科学门均未
-修改。当前只有性能资源裁决，没有 A8R 数值 PASS、INCONCLUSIVE、NO-GO 或实验
-结论。
+先行探针在启动时获授权，但其结果只是硬内存门 fail-closed，不是有效性能测量，更不
+是 A8R 科学证据。原串行运行在上述证据和恢复门闭合后可以继续。
 
-旧运行完成后仍须完成原冻结独立复跑和再次 Pro 审查。长期终点仍是：
+旧运行完成后仍须生成规范主产物、执行原冻结独立完整复跑并再次交回独立 Pro。长期
+终点仍为：
 
 `EXPERIMENT_PREPARATION_PAUSE_READY_NO_EXECUTABLE_NONEXPERIMENTAL_TASKS`
