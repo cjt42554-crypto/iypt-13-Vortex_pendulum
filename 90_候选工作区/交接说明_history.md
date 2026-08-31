@@ -26,3 +26,12 @@ git show b11eea58dcf45518c0a086dc5dba1e065fd49213:"90_候选工作区/交接说�
 - 新增 `33_A8R_v2_1_先行W1探针时间序列证据真实性与恢复原运行裁决.md`，裁决提交 `ef66995f31b017522c51d42978f3069102a1023c`，文件 SHA-256 为 `2a1f90ff6809e60dbff50182723b9362f18fe769ecbe46a7704560514d966995`；当前交接提交为 `b11eea58dcf45518c0a086dc5dba1e065fd49213`。
 - 当前不得再次启动探针、2/3/4 worker、完整调度器、逐字节门或重复计时；完成 60 秒纯静态窗口和恢复前门后，应 `SIGCONT` 同一原串行进程组，不得为等待 GitHub 提交继续暂停。
 - 未提交候选并行源码、构建和临时字节在记录路径、大小和 SHA-256 manifest 后必须删除，不得 commit/push；只保留探针失败、静态准入、恢复证据和非科学摘要。正式理论、正式程序、A8Q、A8R 合同/测试和科学实现未修改，本轮未运行求解器或验证测试。
+
+## 2026-08-31 17:13:18 +08:00
+
+- 完成 60 秒纯静态内存窗口：302 个样本、最大间隔约 `201.31542 ms`、`A_min=6372104 kB`、`A_max=7001940 kB`；资源自然恢复，按最新裁决分类为 `STATIC_WINDOW_RESOURCE_RECOVERY_AFTER_PRIOR_HARD_GATE_FAILURE`，但不授权第二次探针。
+- 在独立候选克隆之外 `fsync` 保存五个失败候选文件的路径、大小与 SHA-256 manifest；随后清理三个未跟踪脚本、`node_modules`，并把 `package.json` 与 P1 身份源恢复到基线。候选源码未 commit/push，清理后工作树干净，`discardVerified=true`。
+- 闭合原始 `W=1` 失败、静态窗口、候选处置、恢复前和 `SIGCONT` 后五层证据；证据提交为 `654ca873cafe13caba822c1f59d86294c22b86ad`，新增 `34_A8R_v2_1_先行W1硬内存门失败候选处置与串行恢复证据报告.md`。
+- 只向原专用 PGID `51467` 发送 `SIGCONT`；PID `51467/51497/51498`、Node 启动时间、PGID 与 SID 未变化，Node CPU 时间重新增长，旧工作区仍干净且规范产物仍不存在。
+- 初始 7 秒终端轮询尚未出现下一条整十进度行；当前状态为 `A8R_ORIGINAL_SERIAL_RUN_SIGCONT_IDENTITY_CPU_VERIFIED_PENDING_NEXT_PROGRESS_EMISSION`。下一步只等待同一 D54 case 的下一条进度行并追加最终恢复记录，然后继续原冻结串行主运行。
+- 性能分支结论为 `NO-GO-A8R-V2P1-PARALLELIZATION-CURRENT-PAUSE-EPISODE-HARD-MEMORY-GATE`，科学结论仍为 `NONE`。正式理论、正式程序、A8Q、A8R 合同/测试、矩阵和科学实现均未修改。
