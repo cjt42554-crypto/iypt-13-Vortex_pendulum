@@ -1,0 +1,183 @@
+{
+  "readinessId": "VP-HW2R-PRE-OBSERVATION-READINESS-v2",
+  "supersedesReadinessId": "VP-HW2R-PRE-OBSERVATION-READINESS-v1",
+  "reviewBaselineCommit": "b864d4c22251ffc356f1b6c8c4d86cdd1d1e41ab",
+  "reviewDecisionId": "IYPT13-PR2A-B864-PREOBSERVATION-RECONCILIATION-v1",
+  "classification": "result-before-formal-performance-observation-gate",
+  "status": "NOT_READY",
+  "requiredPassCode": "PASS-PR2A-HW2R-FORMAL-OBSERVATION-READY",
+  "attainedPassCode": null,
+  "legacyPassCodesRejected": [
+    "PASS-HW2R-PRE-OBSERVATION-READINESS"
+  ],
+  "formalObservationAuthorized": false,
+  "resultBearingScientificRunAuthorized": false,
+  "blockedEntrypoints": [
+    "scripts/run-hw2r-qualification-v2.mjs",
+    "scripts/finalize-hw2-selection.mjs",
+    "HW1-primary",
+    "HW1-repeat",
+    "H3"
+  ],
+  "blockingFindings": [
+    {
+      "id": "P0-COMPARABLE-A8R-OPERATION-GRAPH-AND-PROTOCOL",
+      "status": "OPEN",
+      "requiredClosure": [
+        "freeze a superseding representative-measurement protocol without mutating v2 history",
+        "execute the shortened frozen A8R operation graph used for final comparison",
+        "derive the end-to-end case workload from the frozen eight-case definitions",
+        "reject cross-workload speedup and use one comparable final score"
+      ],
+      "closureEvidence": []
+    },
+    {
+      "id": "P0-DISTINCT-EXECUTORS-AND-EFFECTIVE-RESOURCES",
+      "status": "OPEN",
+      "requiredClosure": [
+        "bind every candidate to an immutable executor fingerprint",
+        "deduplicate identical persistent-worker fresh-process and shard candidates",
+        "bind workload identity to the actually executed path",
+        "record declared effective and active resources separately and score only effective resources"
+      ],
+      "closureEvidence": []
+    },
+    {
+      "id": "P0-RUN-LIFETIME-PERSISTENT-GPU-AND-HYBRID",
+      "status": "OPEN",
+      "requiredClosure": [
+        "persist GPU context program queue and reusable buffers across the multi-size formal repeat",
+        "separate cold initialization size transitions steady compute transfers synchronization audit and cleanup",
+        "freeze result-blind hybrid partitioning and validate unique case ownership",
+        "check foreign GPU compute processes before every GPU or hybrid candidate"
+      ],
+      "closureEvidence": []
+    },
+    {
+      "id": "P0-NUMERICAL-IDENTITY-ORDER-AND-UNRESOLVED-SELECTION",
+      "status": "OPEN",
+      "requiredClosure": [
+        "never write H2-X or H2-N numerical identity as passed before qualification",
+        "store surrogate correctness separately from numerical qualification",
+        "block material measurement-invalid deferred unavailable failed unknown and identity-pending candidates",
+        "compute the 95-percent set only from comparable measured safe and qualified candidates"
+      ],
+      "closureEvidence": []
+    },
+    {
+      "id": "P0-BIDIRECTIONAL-CALIBRATION-AND-FULL-PHASE-SAFETY",
+      "status": "OPEN",
+      "requiredClosure": [
+        "support deterministic workload increase and deterministic recovery from an overlong first calibration",
+        "freeze formal work after calibration",
+        "supervise calibration warmup and formal repeats under the same finite cgroup and host reserve",
+        "abort and retain evidence on swap OOM memory-high reserve thermal or foreign-GPU safety failure"
+      ],
+      "closureEvidence": []
+    },
+    {
+      "id": "P0-CHILD-CONTAINMENT-TIMEOUT-AND-FAILURE-EVIDENCE",
+      "status": "OPEN",
+      "requiredClosure": [
+        "apply frozen timeouts to every Node native and GPU child",
+        "place task children in a dedicated process group or equivalent containment boundary",
+        "terminate only task-owned processes on failure and verify no residual process or cgroup task",
+        "retain candidate stage failure code sanitized-message hash exit signal timeout resource and cleanup fields",
+        "use one-worker observed or conservative static memory evidence before wider launch"
+      ],
+      "closureEvidence": []
+    },
+    {
+      "id": "P0-PREOBSERVATION-SEAL-ENTRYPOINT-AND-UNIQUE-PASS-CODE",
+      "status": "OPEN",
+      "requiredClosure": [
+        "enforce the active machine gate inside the formal runner and finalizer entry paths",
+        "seal a pre-observation manifest and sidecar binding decision gate protocol implementation tests CI and host preflight",
+        "require clean main parity and committed pushed closure evidence for every P0",
+        "attain only PASS-PR2A-HW2R-FORMAL-OBSERVATION-READY and reject legacy pass codes"
+      ],
+      "closureEvidence": []
+    }
+  ],
+  "postObservationPrePr2bRequirements": [
+    {
+      "id": "POST-HW2R-H2X-FULL-MATRIX",
+      "required": true,
+      "scope": [
+        "all frozen worker counts",
+        "actual completion delivery receipt discovery and aggregation order permutations",
+        "three independent environments",
+        "all frozen negative cases",
+        "D54 memory and host safety evidence"
+      ]
+    },
+    {
+      "id": "POST-HW2R-H2N-CONDITIONAL-FULL-QUALIFICATION",
+      "required": true,
+      "scope": [
+        "run stage-0 against the accepted H2-X comparator",
+        "defer only when valid end-to-end net gain is not greater than 10 percent",
+        "implement and execute the full evaluator negative dispatcher and full qualification when gain is greater than 10 percent",
+        "block final selection on material toolchain or resource deferral"
+      ]
+    },
+    {
+      "id": "POST-HW2R-H3P-FAULT-MATRIX-AND-DUAL-ENVIRONMENT-SEAL",
+      "required": true,
+      "scope": [
+        "complete the H3P fault matrix",
+        "validate atomic shard sidecar recovery and cross-run rejection",
+        "create and seal two real independent environments without starting H3",
+        "close scientific execution and artifact provenance identities"
+      ]
+    },
+    {
+      "id": "POST-HW2R-PERFORMANCE-AND-RESOURCE-FINALIZATION",
+      "required": true,
+      "scope": [
+        "phase-resolved CPU and GPU utilization",
+        "CPU scaling or saturation evidence",
+        "GPU transfer synchronization thermal and soak evidence",
+        "at least 1.50 end-to-end speedup and at least 95 percent of the best qualified throughput",
+        "no unresolved candidate with possible material gain above 10 percent"
+      ]
+    }
+  ],
+  "preObservationSeal": {
+    "manifestPath": null,
+    "manifestStoredSha256": null,
+    "manifestCanonicalSha256": null,
+    "sidecarPath": null,
+    "sidecarSha256": null
+  },
+  "authorizationTransition": {
+    "allBlockingFindingsMustBeClosed": true,
+    "closureEvidenceCommittedAndPushedBeforeObservation": true,
+    "cleanMainParityRequired": true,
+    "preObservationManifestAndSidecarRequired": true,
+    "lightweightTestsRequired": [
+      "H1",
+      "H2",
+      "H3",
+      "_shared"
+    ],
+    "githubWorkflowsRequired": [
+      "Markdown check",
+      "Simulation foundation checks"
+    ],
+    "hostPreflightRequired": [
+      "finite dedicated cgroup",
+      "system memory reserve",
+      "zero swap growth baseline",
+      "zero OOM and memory-high event baseline",
+      "no foreign GPU compute process before every GPU or hybrid candidate",
+      "no active result-bearing run",
+      "no scientific payload read"
+    ],
+    "attainedPassCodeMustEqualRequiredPassCode": true,
+    "formalObservationMayStartWithoutAnotherProReviewWhenMachineGatePasses": true,
+    "mandatoryStopAfterQualification": "READY-FOR-PR2B-H3-UNLOCK-REVIEW"
+  },
+  "scientificConclusion": "NONE",
+  "conclusionCeiling": "implementation-and-formal-observation-readiness-only"
+}
