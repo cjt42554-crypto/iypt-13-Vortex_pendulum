@@ -1,0 +1,137 @@
+{
+  "readinessId": "VP-HW2R-PRE-OBSERVATION-READINESS-v1",
+  "reviewBaselineCommit": "fa73bda16c42a17a3c63f429c8b8c7e2709c7e66",
+  "reviewDecisionId": "IYPT13-PR2A-PRE-OBSERVATION-IMPLEMENTATION-REVIEW-v1",
+  "classification": "result-before-formal-performance-observation-gate",
+  "formalObservationAuthorized": false,
+  "resultBearingScientificRunAuthorized": false,
+  "blockedEntrypoints": [
+    "scripts/run-hw2r-qualification-v2.mjs",
+    "scripts/finalize-hw2-selection.mjs",
+    "HW1-primary",
+    "HW1-repeat",
+    "H3"
+  ],
+  "acceptedImplementationEvidence": {
+    "h1Tests": "45/45",
+    "h2Tests": "14/14",
+    "h3Tests": "8/8",
+    "sharedTests": "4/4",
+    "smallStage0MaximumNormalizedError": 4.22e-16,
+    "smallHybridSmoke": true,
+    "sustainedGpuTelemetrySmoke": true,
+    "h3DryRunSmoke": true,
+    "claimCeiling": "implementation-and-no-result-smoke-only"
+  },
+  "blockingFindings": [
+    {
+      "id": "P0-WORKLOAD-BASELINE-COMPARABILITY",
+      "status": "OPEN",
+      "requiredClosure": [
+        "one frozen serial baseline per workload identity",
+        "R2 surrogate cost weights derived from the frozen eight-case definitions",
+        "no speedup comparison across unlike R1 and R2 work units"
+      ]
+    },
+    {
+      "id": "P0-CANDIDATE-EXECUTOR-DISTINCTNESS",
+      "status": "OPEN",
+      "requiredClosure": [
+        "persistent worker, fresh case process, and shard aggregation candidates use distinct executor identities",
+        "candidate workloadIds match the actually executed workload",
+        "duplicate implementations cannot be independently selected"
+      ]
+    },
+    {
+      "id": "P0-GPU-PERSISTENT-LIFECYCLE",
+      "status": "OPEN",
+      "requiredClosure": [
+        "GPU context, program, queue, and reusable buffers persist across the frozen multi-size case sequence within a formal repeat",
+        "cold initialization and steady-state phases are separated",
+        "hybrid CPU and GPU lanes use frozen backend identities and result-blind partitioning"
+      ]
+    },
+    {
+      "id": "P0-NUMERICAL-IDENTITY-TEMPORAL-ORDER",
+      "status": "OPEN",
+      "requiredClosure": [
+        "HW2R cannot record H2-X or H2-N numerical identity before the corresponding qualification passes",
+        "surrogate digest equality is stored separately from numerical qualification",
+        "final selection re-evaluates all candidates against accepted H2-X or full H2-N evidence"
+      ]
+    },
+    {
+      "id": "P0-DEFERRED-AND-UNRESOLVED-SELECTION",
+      "status": "OPEN",
+      "requiredClosure": [
+        "measurement-invalid, deferred-unsafe, and accessible-unavailable candidates with possible gain above 10 percent block selection",
+        "all candidate classes have an auditable terminal disposition",
+        "95 percent best-throughput selection uses only comparable, qualified candidates"
+      ]
+    },
+    {
+      "id": "P0-RESOURCE-ADMISSION-AND-FAILURE-EVIDENCE",
+      "status": "OPEN",
+      "requiredClosure": [
+        "observed or static per-worker memory bound controls wider launches",
+        "cgroup peak plus headroom remains below the finite limit",
+        "GPU foreign-process safety is checked before each GPU or hybrid candidate",
+        "every failed candidate retains stage, code, sanitized message hash, and resource evidence"
+      ]
+    },
+    {
+      "id": "P0-H2X-ORDER-AND-SHARD-BINDING",
+      "status": "OPEN",
+      "requiredClosure": [
+        "worker counts include all frozen values after deduplication",
+        "downstream delivery or aggregation order permutations are explicitly exercised",
+        "case ordinal, worker count, completion-order identity, source, implementation, and run identity are validated"
+      ]
+    },
+    {
+      "id": "P0-H2N-FULL-EVIDENCE-VALIDATION",
+      "status": "OPEN",
+      "requiredClosure": [
+        "the finalizer cannot accept an unvalidated optional full H2-N summary",
+        "full H2-N evidence has a frozen envelope and fail-closed validator",
+        "full H2-N implementation may remain conditional until stage-0 shows material gain"
+      ]
+    },
+    {
+      "id": "P1-CI-COVERAGE",
+      "status": "OPEN",
+      "requiredClosure": [
+        "simulation-check covers H1, H2, H3, and _shared lightweight tests",
+        "no heavy performance or scientific run is executed in shared CI"
+      ]
+    }
+  ],
+  "authorizationTransition": {
+    "allBlockingFindingsMustBeClosed": true,
+    "closureEvidenceCommittedAndPushedBeforeObservation": true,
+    "cleanMainParityRequired": true,
+    "lightweightTestsRequired": {
+      "H1": true,
+      "H2": true,
+      "H3": true,
+      "_shared": true
+    },
+    "githubWorkflowsRequired": [
+      "Markdown check",
+      "Simulation foundation checks"
+    ],
+    "hostPreflightRequired": [
+      "finite dedicated cgroup",
+      "system memory reserve",
+      "zero swap growth baseline",
+      "zero OOM event baseline",
+      "no foreign GPU compute process before every GPU or hybrid candidate",
+      "distinct executor smoke",
+      "persistent multi-size GPU lifecycle smoke",
+      "one-worker memory measurement before wider launch"
+    ],
+    "formalObservationMayStartWithoutAnotherProReviewWhenMachineGatePasses": true,
+    "mandatoryStopAfterQualification": "READY-FOR-PR2B-H3-UNLOCK-REVIEW"
+  },
+  "conclusionCeiling": "implementation-review-only-scientific-conclusion-NONE"
+}
