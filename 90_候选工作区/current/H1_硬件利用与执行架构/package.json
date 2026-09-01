@@ -10,7 +10,9 @@
     "test:hw2:runtime": "node --test tests/hw2-runtime.test.mjs",
     "smoke:no-result": "node scripts/run-no-result-smoke.mjs",
     "build:hw2-native": "node scripts/build-hw2-native.mjs",
-    "qualify:hw2": "node scripts/run-hw2-qualification.mjs"
+    "qualify:hw2": "node scripts/run-hw2-qualification.mjs",
+    "qualify:hw2r:v2": "node --experimental-strip-types scripts/run-hw2r-qualification-v2.mjs",
+    "finalize:hw2": "node --experimental-strip-types scripts/finalize-hw2-selection.mjs"
   },
   "engines": {"node": ">=22"}
 }

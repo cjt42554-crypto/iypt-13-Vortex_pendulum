@@ -1,5 +1,5 @@
 import { execFile as execFileCallback } from "node:child_process";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import os from "node:os";
 import { promisify } from "node:util";
 
@@ -54,6 +54,26 @@ async function cgroupValue(directory, name) {
   return null;
 }
 
+function parseCpuStat(text) {
+  const values = {};
+  for (const line of String(text ?? "").split(/\r?\n/u)) {
+    const [key, raw] = line.trim().split(/\s+/u);
+    if (key && /^[0-9]+$/u.test(raw ?? "")) values[key] = Number(raw);
+  }
+  return values;
+}
+
+function parseProcStat(text) {
+  const line = String(text).split(/\r?\n/u).find((item) => item.startsWith("cpu "));
+  if (!line) return { total: 0, idle: 0 };
+  const values = line.trim().split(/\s+/u).slice(1).map(Number);
+  if (values.some((value) => !Number.isFinite(value))) return { total: 0, idle: 0 };
+  return {
+    total: values.reduce((sum, value) => sum + value, 0),
+    idle: (values[3] ?? 0) + (values[4] ?? 0),
+  };
+}
+
 async function cpuFrequencyMedianKHz() {
   const values = [];
   for (let index = 0; index < os.cpus().length; index += 1) {
@@ -61,6 +81,60 @@ async function cpuFrequencyMedianKHz() {
     if (/^[0-9]+$/u.test(value ?? "")) values.push(Number.parseInt(value, 10));
   }
   return median(values);
+}
+
+async function cpuTemperatureMaxCelsius() {
+  const values = [];
+  let hwmons;
+  try {
+    hwmons = await readdir("/sys/class/hwmon", { withFileTypes: true });
+  } catch (error) {
+    if (["ENOENT", "EACCES", "EPERM"].includes(error?.code)) return null;
+    throw error;
+  }
+  for (const hwmon of hwmons) {
+    if (!hwmon.isDirectory() && !hwmon.isSymbolicLink()) continue;
+    const root = `/sys/class/hwmon/${hwmon.name}`;
+    const deviceName = await optionalRead(`${root}/name`, "");
+    if (!/(?:coretemp|k10temp|zenpower|cpu_thermal)/iu.test(deviceName)) continue;
+    let files;
+    try {
+      files = await readdir(root);
+    } catch (error) {
+      if (["ENOENT", "EACCES", "EPERM"].includes(error?.code)) continue;
+      throw error;
+    }
+    for (const name of files.filter((value) => /^temp\d+_input$/u.test(value))) {
+      const raw = await optionalRead(`${root}/${name}`);
+      if (/^-?[0-9]+$/u.test(raw ?? "")) {
+        const celsius = Number(raw) / 1000;
+        if (Number.isFinite(celsius) && celsius > -100 && celsius < 200) {
+          values.push(celsius);
+        }
+      }
+    }
+  }
+  return values.length > 0 ? Math.max(...values) : null;
+}
+
+async function cpuThrottleCounter() {
+  const values = [];
+  for (let index = 0; index < os.cpus().length; index += 1) {
+    for (const name of ["core_throttle_count", "package_throttle_count"]) {
+      const raw = await optionalRead(
+        `/sys/devices/system/cpu/cpu${index}/thermal_throttle/${name}`,
+      );
+      if (/^[0-9]+$/u.test(raw ?? "")) values.push(Number(raw));
+    }
+  }
+  return values.length > 0 ? values.reduce((sum, value) => sum + value, 0) : null;
+}
+
+function memoryEventValue(text, key) {
+  const line = String(text ?? "").split(/\r?\n/u)
+    .find((item) => item.startsWith(`${key} `));
+  const value = line?.trim().split(/\s+/u)[1];
+  return /^[0-9]+$/u.test(value ?? "") ? Number(value) : 0;
 }
 
 async function gpuSample(gpuIndex) {
@@ -84,22 +158,39 @@ async function gpuSample(gpuIndex) {
 
 export async function captureResourceSnapshot({gpuIndex = 0} = {}) {
   const directory = await cgroupDirectory();
-  const [meminfo, eventsText, memoryCurrentText, cpuFrequency, gpu] = await Promise.all([
+  const [meminfo, eventsText, memoryCurrentText, memoryPeakText, cpuStatText, procStatText,
+    cpuFrequency, cpuTemperature, cpuThrottle, gpu] = await Promise.all([
     readFile("/proc/meminfo", "utf8").then(parseMeminfo),
     cgroupValue(directory, "memory.events"),
     cgroupValue(directory, "memory.current"),
+    cgroupValue(directory, "memory.peak"),
+    cgroupValue(directory, "cpu.stat"),
+    readFile("/proc/stat", "utf8"),
     cpuFrequencyMedianKHz(),
+    cpuTemperatureMaxCelsius(),
+    cpuThrottleCounter(),
     gpuIndex === null ? null : gpuSample(gpuIndex),
   ]);
   return {
     capturedAt: new Date().toISOString(),
+    monotonicNanoseconds: process.hrtime.bigint().toString(),
     memAvailableBytes: meminfo.MemAvailable,
+    memTotalBytes: meminfo.MemTotal,
     swapBytes: meminfo.SwapTotal - meminfo.SwapFree,
     memoryEvents: parseMemoryEvents(eventsText ?? ""),
+    memoryHighEvent: memoryEventValue(eventsText, "high"),
     cgroupMemoryCurrentBytes: /^[0-9]+$/u.test(memoryCurrentText ?? "")
       ? Number.parseInt(memoryCurrentText, 10)
       : 0,
+    cgroupMemoryKernelPeakBytes: /^[0-9]+$/u.test(memoryPeakText ?? "")
+      ? Number.parseInt(memoryPeakText, 10)
+      : null,
     cpuFrequencyMedianKHz: cpuFrequency,
+    cpuTemperatureCelsius: cpuTemperature,
+    cpuThrottleCounter: cpuThrottle,
+    processRssBytes: process.memoryUsage().rss,
+    cgroupCpuStat: parseCpuStat(cpuStatText),
+    procCpuStat: parseProcStat(procStatText),
     gpu,
   };
 }
@@ -117,18 +208,68 @@ export function summarizeResourceSamples(samples, baseline) {
     : 0;
   const gpuSamples = samples.map((sample) => sample.gpu).filter(Boolean);
   const last = samples.at(-1);
+  const elapsedSeconds = Number(
+    BigInt(last.monotonicNanoseconds) - BigInt(baseline.monotonicNanoseconds),
+  ) / 1e9;
+  const cgroupCpuSeconds = Math.max(
+    0,
+    ((last.cgroupCpuStat.usage_usec ?? 0)
+      - (baseline.cgroupCpuStat.usage_usec ?? 0)) / 1e6,
+  );
+  const totalCpuDelta = Math.max(
+    0,
+    last.procCpuStat.total - baseline.procCpuStat.total,
+  );
+  const idleCpuDelta = Math.max(
+    0,
+    last.procCpuStat.idle - baseline.procCpuStat.idle,
+  );
   return {
     memAvailableBytes: Math.min(...samples.map((sample) => sample.memAvailableBytes)),
     swapBytes: Math.max(...samples.map((sample) => sample.swapBytes)),
+    swapGrowthBytes: Math.max(
+      0,
+      Math.max(...samples.map((sample) => sample.swapBytes)) - baseline.swapBytes,
+    ),
     cgroupMemoryPeakBytes: Math.max(...samples.map((sample) => sample.cgroupMemoryCurrentBytes)),
+    cgroupMemoryKernelPeakBytes: (() => {
+      const values = samples.map((sample) => sample.cgroupMemoryKernelPeakBytes)
+        .filter(Number.isFinite);
+      return values.length > 0 ? Math.max(...values) : null;
+    })(),
     memoryEventsDelta: {
       max: Math.max(0, last.memoryEvents.max - baseline.memoryEvents.max),
       oom: Math.max(0, last.memoryEvents.oom - baseline.memoryEvents.oom),
       oomKill: Math.max(0, last.memoryEvents.oomKill - baseline.memoryEvents.oomKill),
+      high: Math.max(0, last.memoryHighEvent - baseline.memoryHighEvent),
     },
-    thermalThrottle: gpuSamples.some((sample) => sample.throttled === true),
+    processRssPeakBytes: Math.max(...samples.map((sample) => sample.processRssBytes)),
+    cpuTemperaturePeakCelsius: (() => {
+      const values = samples.map((sample) => sample.cpuTemperatureCelsius)
+        .filter(Number.isFinite);
+      return values.length > 0 ? Math.max(...values) : null;
+    })(),
+    cpuFrequencySampleCount: frequencies.length,
+    cpuThrottleCounterAvailable: Number.isFinite(baseline.cpuThrottleCounter)
+      && Number.isFinite(last.cpuThrottleCounter),
+    cpuThrottleCounterGrowth: Number.isFinite(baseline.cpuThrottleCounter)
+        && Number.isFinite(last.cpuThrottleCounter)
+      ? Math.max(0, last.cpuThrottleCounter - baseline.cpuThrottleCounter)
+      : null,
+    thermalThrottle: (Number.isFinite(baseline.cpuThrottleCounter)
+        && Number.isFinite(last.cpuThrottleCounter)
+        && last.cpuThrottleCounter > baseline.cpuThrottleCounter)
+      || gpuSamples.some((sample) => sample.throttled === true),
     frequencyDropFraction,
     gpuBusyFraction: median(gpuSamples.map((sample) => sample.busyFraction)) ?? 0,
+    elapsedSeconds,
+    cgroupCpuSeconds,
+    cgroupLogicalCpuUtilization: elapsedSeconds > 0
+      ? cgroupCpuSeconds / elapsedSeconds
+      : 0,
+    systemCpuUtilizationFraction: totalCpuDelta > 0
+      ? Math.max(0, Math.min(1, 1 - idleCpuDelta / totalCpuDelta))
+      : 0,
     sampleCount: samples.length,
   };
 }

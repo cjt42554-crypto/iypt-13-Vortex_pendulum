@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "test:contracts": "node --test tests/contracts.test.mjs"
+    "test:contracts": "node --test tests/contracts.test.mjs",
+    "dry-run:no-result": "node scripts/run-h3p-dry-run.mjs"
   },
   "engines": {
     "node": ">=24"
