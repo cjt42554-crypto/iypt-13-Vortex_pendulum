@@ -87,3 +87,38 @@ test("material deferred candidates block final selection", async () => {
   );
   assert.deepEqual(selection.unresolvedCandidateIds, ["gpu-deferred"]);
 });
+
+test("material candidates pending H2-X or H2-N block final selection", async () => {
+  const { protocol } = await loadHw2rProtocol();
+  const selection = selectFinalHw2rCandidate(protocol, [
+    {
+      candidateId: "qualified",
+      terminalState: "QUALIFIED",
+      workloadId: "R2",
+      throughput: 100,
+      possibleMaterialGainFraction: 0,
+      semanticRiskRank: 1,
+      memoryBytes: 1,
+      governanceComplexityRank: 1,
+    },
+    {
+      candidateId: "gpu-identity-pending",
+      terminalState: "NUMERICAL_IDENTITY_PENDING",
+      workloadId: "R2",
+      throughput: 250,
+      possibleMaterialGainFraction: 1.5,
+      semanticRiskRank: 3,
+      memoryBytes: 1,
+      governanceComplexityRank: 3,
+    },
+  ]);
+  assert.equal(selection.pass, false);
+  assert.equal(
+    selection.classification,
+    "INCONCLUSIVE-HW2R-MEASUREMENT-OR-RESOURCE",
+  );
+  assert.deepEqual(
+    selection.unresolvedCandidateIds,
+    ["gpu-identity-pending"],
+  );
+});
