@@ -2,220 +2,118 @@
 
 ## 当前状态
 
-PR-2A 页面回复与仓库机器门差异已经统一。当前状态为：
+ChatGPT Pro 已按 GitHub `main@eb679fe9d7469d133b72787ff177004b3c0f4255` 完成全项目独立复审。当前活动状态改为：
 
-`PR2A_RECONCILED_GATE_V2_SEVEN_P0_OPEN_FORMAL_HW2R_LOCKED`
+`SCIENCE_FIRST_ROUTE_ACTIVE_ENGINEERING_MAINLINE_STOPPED`
 
-科学结论仍为：
+Pro 的最终裁决是：项目已经明显且严重过度工程化；停止把 HW2R v3、全候选性能资格、H2-X/H2-N 和 H3 双环境闭合作为科学工作的前置主线，立即把主要精力转回装置标定、ROM 参数辨识、留出预测、模型形式检验和不确定度传播。
+
+正式理论、正式程序、顶层 `AGENTS.md` 和冻结科学证据未改变。当前科学结论仍为：
 
 `NONE`
 
-GitHub 当前实际基线已经不是 `fa73bda...`。PR-2A v1、旧 v1 机器门、候选修复和绿色 CI 均已存在于 `b864d4c...`；本轮新增差异统一裁决、活动 v2 机器门及正式入口强制。
-
-当前仍不允许启动：
-
-- 正式 HW2R，包括其 calibration、warmup 和 formal repeat；
-- H2-X 或 H2-N 正式矩阵；
-- H3；
-- `HW1-primary`；
-- `HW1-repeat`；
-- 完整八 case 结果承载运行；
-- 科学 payload 读取。
-
 仓库尚未达到“实验前可暂停”。
 
-## 唯一权威差异裁决
+## 当前活动计划
 
-裁决文件：
+唯一活动计划为：
 
-`90_候选工作区/current/G0_全项目完成度与实验前暂停治理/09_PR2A_b864页面回复与仓库机器门差异统一裁决.md`
+`90_候选工作区/current/G0_全项目完成度与实验前暂停治理/10_实验预测最小活动计划.md`
 
-裁决身份：
+核心完成标准是：对预先冻结的留出工况给出带不确定度的现象预测；趋势、主频、幅值和平均功率符号达到预先约定的误差要求；数值误差明显小于参数和模型形式误差；未通过定量物理资格的后端不得被包装成装置定量预测器。
 
-`IYPT13-PR2A-B864-PREOBSERVATION-RECONCILIATION-v1`
+实验前暂停标准限于：所有仍能实质提高上述预测能力、且不需要新实验数据的工作已经完成或由有上限的科学去留测试明确停止；剩余任务只依赖装置测量、标定数据或留出实验结果。
 
-指定审查基线：
+## 被废止的活动前置路线
 
-`b864d4c22251ffc356f1b6c8c4d86cdd1d1e41ab`
+下列旧活动批次和依赖链不再有效：
 
-裁决首次写入提交：
+`BATCH-PR2A-V2-CLOSE-SEVEN-P0-SEAL-THEN-HW2R-H2X-H2N-H3P`
 
-`25ec2349fab53970e01acf9e852a33f3d08afe6f`
+`HW2R v3 -> 全候选资格 -> H2-X/H2-N -> H3P -> 双全量独立环境`
 
-裁决文件 SHA-256：
+PR-2A v1/v2、七项 P0、机器门、通过码、manifest/sidecar、G0/H1/H2/H3/_shared 文件和既有证据保持历史字节不变，不删除、不改写。它们不再阻断 ROM、E1/F1/S1、公开物理基准或其他直接支撑预测准确度的工作。
 
-`161bc38d5c8fa57ae5b6d07a2c14bf37218aa56228b05f84fd593fbaf0eb3ba0`
+旧 v2 机器门仍可保护旧 HW2R runner，不能据此宣称旧正式 HW2R 已经就绪；但不再要求为恢复科学主线而关闭七项 P0。
 
-该裁决废止页面最终回复中“远端未写入、仍停在 `fa73bda...`”的事实陈述，并取代 PR-2A v1、current 和页面回复中互相冲突的活动时序。PR-2A v1 继续作为历史审查证据，不被改写。
+## 暂停并完整保留的本地 HW2R v3 工作
 
-## 唯一首次正式观测通过码
+未提交硬化工作仍保存在：
 
-首次正式 HW2R 的唯一合法通过码为：
+`/home/cjt/.codex/tmp/iypt13-a8r-evidence-20260831`
 
-`PASS-PR2A-HW2R-FORMAL-OBSERVATION-READY`
+该工作区基线为 `eb679fe9d7469d133b72787ff177004b3c0f4255`，含 HW2R v3、真实操作图、持久 worker、受控 child、遥测及 H2-N 相关修改和未跟踪文件。
 
-旧码：
+这些修改没有进入正式本地仓库或 GitHub。不得把它们写成已完成、已验证或已推送；也不得为了路线收缩而删除。只有当必要科学矩阵的实际周转时间证明轨迹级并行仍不足，并且其中某个小部分具有明确净收益时，才可选择性复用。
 
-`PASS-HW2R-PRE-OBSERVATION-READINESS`
+## 保留的最小工程保障
 
-只保留历史意义，不再解锁机器门、入口、manifest、sidecar 或正式观测。
+- 轨迹级并行；
+- 基础 timeout 和只清理本任务进程；
+- 峰值内存检查；
+- case 级原子 shard；
+- 对最终采用后端做小规模数值等价验证；
+- commit、完整配置、系数包来源、运行时版本、输出 checksum 和简短日志。
 
-## 活动机器门
+不再要求完整 CPU/GPU/hybrid 候选竞赛、95% 全局最优、三环境 H2-X、预建通用 H2-N full evaluator、双全量 H3、inode 认证隔离或多层封印。
 
-活动机器门：
+## 当前常规 CI
 
-`90_候选工作区/current/H1_硬件利用与执行架构/contracts/hw2r-pre-observation-readiness.v2.json`
+`.github/workflows/simulation-check.yml` 的活动范围收缩为：
 
-机器门身份：
+- 正式程序单元测试、构建和一次默认 forward smoke；
+- E1 实验准备与辨识合成资格；
+- F1 前向数值合成资格；
+- S1 结构/机械实验前工具合成资格；
+- A8 二维 CFD 候选组件测试和类型检查。
 
-`VP-HW2R-PRE-OBSERVATION-READINESS-v2`
+G0/H1/H2/H3/_shared 不再作为每次提交的必要矩阵。Markdown 通用检查范围保持不变，只覆盖：
 
-机器门 SHA-256：
-
-`ce787bdcff97b884dcb81289688a778f854dacb9b908aeab6eee6b41c4bd57a4`
-
-当前字段：
-
-- `status=NOT_READY`；
-- `formalObservationAuthorized=false`；
-- `attainedPassCode=null`；
-- 七项 P0 全部 `OPEN`；
-- pre-observation manifest 与 sidecar 尚未生成；
-- `resultBearingScientificRunAuthorized=false`。
-
-v1 机器门保持历史字节不变。正式 runner 和 finalizer 已通过活动 protocol loader 调用 v2 门，不能再仅靠跳过独立 audit 命令绕过。
-
-## 首次正式 HW2R 前的完整七项 P0
-
-### 1. `P0-COMPARABLE-A8R-OPERATION-GRAPH-AND-PROTOCOL`
-
-- 冻结取代旧 v2 测量语义的 superseding protocol；
-- 旧 v2 不得结果后原地改写；
-- 最终比较执行冻结 A8R 的缩短真实操作图；
-- R2 或等价端到端负载由冻结八 case 定义程序化生成；
-- 禁止跨 R1/R2 或不同工作单位计算 speedup；
-- 所有候选使用同一可比最终计分模型。
-
-### 2. `P0-DISTINCT-EXECUTORS-AND-EFFECTIVE-RESOURCES`
-
-- persistent worker、fresh process、shard/data-layout 使用实质不同 executor，或在候选入集前去重；
-- 每个候选绑定不可变 executor fingerprint；
-- workload 身份与实际执行路径一致；
-- declared、effective、active resource count 分开记录；
-- 评分和利用率只使用有效资源数。
-
-### 3. `P0-RUN-LIFETIME-PERSISTENT-GPU-AND-HYBRID`
-
-- GPU context、program、queue 和 reusable buffer 在一个多尺寸 formal repeat 内持久；
-- D24/D36/D54 尺寸切换和生命周期分项可审计；
-- GPU/hybrid 每个候选前检查外来 GPU 计算进程；
-- hybrid 按冻结成本结果盲分工；
-- combined hybrid 无缺失、无重复、无 silent fallback。
-
-### 4. `P0-NUMERICAL-IDENTITY-ORDER-AND-UNRESOLVED-SELECTION`
-
-- HW2R 不得在 H2-X/H2-N 之前写数值身份 PASS；
-- surrogate correctness 与 numerical qualification 分离；
-- exact/non-exact 路线分别保持 H2-X/H2-N pending；
-- 可能净快 10% 以上的 invalid、deferred、unavailable、failed、unknown 或 identity-pending 候选阻断选择；
-- 95% 集合只使用可比、有效、安全、已资格化候选。
-
-### 5. `P0-BIDIRECTIONAL-CALIBRATION-AND-FULL-PHASE-SAFETY`
-
-- calibration 可确定性放大过短工作量，也可从过长观测确定性缩小或预测；
-- formal repeat 工作量冻结；
-- calibration、warmup、formal repeat 均在同一有限 cgroup 和安全边界内；
-- 三阶段均监督内存保留、cgroup peak/high、swap、OOM、热和 GPU 安全；
-- 硬门越界立即 fail-closed 并保留证据。
-
-### 6. `P0-CHILD-CONTAINMENT-TIMEOUT-AND-FAILURE-EVIDENCE`
-
-- 所有 Node/native/GPU child 有冻结 timeout；
-- 使用任务专用 PGID 或等价收容范围；
-- 失败时只终止本任务进程，并核验无残留 PID/cgroup task/service；
-- 失败证据记录 stage、code、sanitized message hash、exit/signal、timeout、资源和 cleanup；
-- one-worker 实测或保守静态下界控制 wider launch；
-- cgroup peak 加 headroom 低于上限。
-
-### 7. `P0-PREOBSERVATION-SEAL-ENTRYPOINT-AND-UNIQUE-PASS-CODE`
-
-- 正式 runner 和 finalizer 强制读取 v2 门；
-- 七项 P0 全部 CLOSED 且各自有 committed/pushed closure evidence；
-- 生成 pre-observation manifest 与 sidecar；
-- manifest 绑定裁决、机器门、协议、实现、测试、CI、主机 preflight 和禁止科学运行声明；
-- `main` 干净且 `HEAD == origin/main`；
-- H1/H2/H3/_shared 轻量测试和两个 GitHub workflow 通过；
-- 唯一 attained pass code 精确为 `PASS-PR2A-HW2R-FORMAL-OBSERVATION-READY`。
-
-## HW2R 后、PR-2B 前的要求
-
-以下内容不再阻断首次正式 HW2R，但必须在 PR-2B 前闭合：
-
-1. H2-X 全矩阵：完整 worker 数、实际 completion/delivery/receipt/discovery/aggregation order、三环境、全负例、D54 安全；
-2. H2-N：先 stage-0；相对 H2-X 净收益不超过 10% 时可有效 DEFERRED，严格超过 10% 时实现并执行 full evaluator、negative dispatcher 和完整资格；
-3. H3P：全故障矩阵、atomic shard/sidecar/recovery、cross-run 拒绝和两个真实独立环境 seal；
-4. 性能终局：phase-resolved CPU/GPU、扩展或饱和、transfer/sync/热/soak、至少 1.50 加速、至少 95% 最优且无潜在大于 10% unresolved 候选。
-
-H2-N 的合同、evidence envelope、阈值、10% 触发器和 fail-closed validator 必须在首次观测前冻结；完整实现和执行只有触发后才要求。
+- `01_最终理论/**/*.md`；
+- 精确的 `90_候选工作区/交接说明_current.md`。
 
 ## 下一完整批次
 
 批次：
 
-`BATCH-PR2A-V2-CLOSE-SEVEN-P0-SEAL-THEN-HW2R-H2X-H2N-H3P`
+`BATCH-SCIENCE-FIRST-CFD-DISPOSITION-THEN-EXPERIMENT-INPUT-READY`
 
 顺序：
 
-1. 闭合七项 P0；
-2. 对每项写入 committed/pushed closure evidence；
-3. clean clone 执行 H1/H2/H3/_shared 和限定范围 Markdown 检查；
-4. 完成主机 preflight；
-5. 生成 pre-observation manifest 与 sidecar；
-6. 将 v2 门置为 READY，并只写唯一通过码；
-7. 直接启动正式 HW2R，无需再问“是否可开始”；
-8. 完成 H2-X；
-9. 完成 H2-N stage-0，并按 10% 触发器条件完成完整 H2-N；
-10. 形成最终硬件选择；
-11. 完成 H3P 全矩阵和两个真实环境 seal；
-12. 更新总账、报告和交接；
-13. 停在 `READY-FOR-PR2B-H3-UNLOCK-REVIEW`。
+1. 验证本轮路线切换、收缩后的 CI、E1/F1/S1、正式程序和 A8 组件；
+2. 对二维 CFD 只进行一次有上限的固定圆柱科学修正循环，检查平均阻力、升力 RMS 和 Strouhal 的文献符合性；
+3. 若仍明显失配，将二维 CFD 冻结为定性流场工具，停止 HW2R、H2-X/H2-N 和长时 A8R 性能路线；若进入合理文献误差范围，只保留为辅助模型；
+4. 核对装置测量、无流机械标定、ROM 流体参数辨识和留出工况所需的最小采集接口；
+5. 若所有非实验科学任务已经完成，停在“实验输入所需”的可审计边界；
+6. 真实装置数据到位后，执行 ROM 标定、最小数值资格、不确定度传播和留出预测；
+7. 只有必要科学矩阵无法在准备窗口内完成时，才先做轨迹级并行，并在达到所需周转时间后立即停止性能工程。
 
-当前步骤 1–6 均未完成，不得正式观测。
+## 路线切换本地验证
 
-## 当前写权限
+已实际执行：
 
-允许：
+- 正式程序 Vitest：17 个 suite、44/44 tests 通过；
+- 正式程序 TypeScript/Vite build 通过；
+- 默认 forward smoke 完成到 12 s，1201 个输出样本、1202 个接受步、0 个拒绝步，`energyClosureRelativeRms=0.00019483973412992808`；
+- E1：10/10 tests 通过，合成资格为 `PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY`；
+- F1：12/12 tests 通过，合成资格为 `PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY`；
+- S1：13/13 tests 通过，合成结构工具资格为 `PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS`；
+- A8 CFD 候选组件：97/97 tests 与 TypeScript typecheck 通过；
+- current 和最小活动计划的 Pandoc Markdown 解析通过；
+- 限定范围 Markdown 数学检查通过；
+- 收缩后的 GitHub Actions YAML 解析与 `git diff --check` 通过。
 
-- `90_候选工作区/current/G0_全项目完成度与实验前暂停治理/**`；
-- `90_候选工作区/current/H1_硬件利用与执行架构/**`；
-- `90_候选工作区/current/H2_代表性执行与数值资格/**`；
-- `90_候选工作区/current/H3_双全量运行产物与恢复合同/**`；
-- `90_候选工作区/current/_shared/**`；
-- `.github/workflows/simulation-check.yml`；
-- 两份交接。
+上述是实现级、合成级和默认前向 smoke 证据。没有执行新的固定圆柱修正矩阵、长时 A8R、装置参数标定、真实实验、留出预测或物理验证。推送后的 GitHub Actions 状态仍需在提交后核验。
 
-继续锁定：
+## 当前结论上限
 
-- `01_最终理论/**`；
-- `02_模拟程序/**`；
-- 顶层 `AGENTS.md`；
-- 既有 A2/A8 合同、实现、测试、报告、证据和产物；
-- R0、R1I、PR-1、PR-2、PR-2A v1、G1、HW2 v1 冻结证据；
-- H3、`HW1-primary` 和 `HW1-repeat`。
+Pro 的路线裁决只改变任务优先级和工程前置关系，不形成新的数值、物理或实验 PASS。
 
-## Markdown 格式门
+当前已知边界是：
 
-通用 Markdown 格式检查只覆盖：
+- 正式 ROM 可运行，但默认系数包尚未完成装置标定，不能作为装置定量预测器；
+- 二维 CFD 公开固定圆柱力幅值基准仍为 `NO-GO-A8-FIXED-REFERENCE-MISMATCH`；
+- 既有 A8R 双 40 步 smoke 只证明受限实现级路径和力身份检查，不证明长时、网格或装置物理资格；
+- 尚无装置专属参数、可辨识闭合系数、留出实验预测或完整不确定度证据。
 
-- `01_最终理论/**/*.md`；
-- 精确的 `90_候选工作区/交接说明_current.md`。
-
-其他 Markdown 不进入通用格式门。
-
-## 结论上限
-
-本轮只形成治理、机器门和入口强制结论。没有形成正式性能、H2-X、H2-N、H3、数值、物理或实验 PASS。科学结论仍为 `NONE`。
-
-长期终点仍为：
-
-`EXPERIMENT_PREPARATION_PAUSE_READY_NO_EXECUTABLE_NONEXPERIMENTAL_TASKS`
+因此当前科学结论仍为 `NONE`。

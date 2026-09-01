@@ -38,3 +38,15 @@ git show 1205067b04b213a6e04a766b422bfafec70c1e4c:"90_候选工作区/交接说�
 - 页面回复中额外提出的 H2-X 全负例和实际完成顺序、条件完整 H2-N evaluator/negative dispatcher、H3P 全故障矩阵和真实双环境 seal，被重新放回 HW2R 后、PR-2B 前；但其合同、阈值、触发器和 fail-closed 接受语义必须在首次观测前冻结。
 - 发现 v1 门虽有独立 audit 命令，正式 runner 可绕过；本轮更新 `hw2r-pre-observation.mjs` 和 `hw2r-contract.mjs`，使正式 runner 与 finalizer 通过 protocol loader 强制读取 v2 门。新增回归测试锁定七项 P0、旧码拒绝、seal 条件和入口强制。
 - current 更新为 `PR2A_RECONCILED_GATE_V2_SEVEN_P0_OPEN_FORMAL_HW2R_LOCKED`。本轮没有关闭任何 P0，没有启动正式观测、H2-X/H2-N/H3 或结果承载运行，没有读取科学 payload；正式理论、正式程序和冻结证据均未修改，科学结论仍为 `NONE`。
+
+## 2026-09-01 21:13:50 +08:00
+
+- 用户明确要求停止当前工程工作，并由 ChatGPT Pro 按项目真实用途审查是否过度工程化。Pro 以 GitHub `main@eb679fe9d7469d133b72787ff177004b3c0f4255` 为唯一基线完成全项目复审；根 README 和 Codex 本地未提交硬化均未计入现状。
+- Pro 最终裁决为项目已明显且严重过度工程化，废止 `HW2R v3 -> 全候选资格 -> H2-X/H2-N -> H3 双环境` 作为科学前置主线；活动目标改为装置标定、ROM 参数辨识、留出预测、模型形式判别和不确定度传播。
+- 新增 `G0_全项目完成度与实验前暂停治理/10_实验预测最小活动计划.md`，只保留轨迹级并行、基础 timeout/本任务进程清理、峰值内存、case 原子 shard、最终后端小规模数值等价和最小运行身份。
+- PR-2A、七项 P0、机器门、通过码、G0/H1/H2/H3/_shared 及既有证据全部保留历史字节，但不再是 ROM、E1/F1/S1 或公开物理基准的活动前置；未为去除过度工程而删除或重构历史包。
+- 常规 simulation CI 从 G0/H1/H2/H3/_shared/E1/F1/S1 八包矩阵收缩为正式程序测试、build、默认 forward smoke，E1/F1/S1 合成资格，以及 A8 CFD 组件测试和类型检查。
+- Codex 未提交 HW2R v3 硬化工作完整保留在 `/home/cjt/.codex/tmp/iypt13-a8r-evidence-20260831`，没有混入本轮正式仓库修改，也没有被删除或宣称已完成。
+- 下一批次改为一次有上限的固定圆柱 CFD 科学去留循环，然后准备装置测量、无流机械标定、ROM 辨识和留出工况接口。二维基准仍失配则冻结为定性工具；只有必要科学矩阵周转时间不足时才恢复最小性能优化。
+- 本地验证完成：正式程序 17 suite、44/44 tests、build 和默认 12 s forward smoke 通过；E1 10/10、F1 12/12、S1 13/13；A8 组件 97/97 与 typecheck；两份活动 Markdown 的 Pandoc 解析、限定数学检查、Actions YAML 解析和 `git diff --check` 均通过。证据上限仅为实现/合成/smoke，不是装置数值或物理 PASS。
+- 本轮路线变化不形成数值、物理或实验 PASS；正式理论、正式程序、顶层 AGENTS 和冻结科学证据均未修改，科学结论仍为 `NONE`。

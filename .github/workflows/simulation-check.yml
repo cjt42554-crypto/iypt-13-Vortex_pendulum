@@ -1,4 +1,4 @@
-name: Simulation foundation checks
+name: Scientific core checks
 
 on:
   push:
@@ -8,7 +8,30 @@ permissions:
   contents: read
 
 jobs:
-  result-before-package:
+  formal-program:
+    name: Formal program tests, build, and forward smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: 02_模拟程序
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: 02_模拟程序/package-lock.json
+      - name: Install formal program dependencies
+        run: npm ci
+      - name: Run formal program unit tests
+        run: npm test
+      - name: Build formal program
+        run: npm run build
+      - name: Run one forward-solver smoke
+        run: npm run simulate:forward
+
+  scientific-candidate-package:
     name: ${{ matrix.name }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -16,28 +39,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: G0 governance ledger
-            directory: 90_候选工作区/current/G0_全项目完成度与实验前暂停治理
-            qualification: npm run validate:ledger && npm run validate:r1i:sealed
-          - name: H1 no-result architecture and pre-observation gate
-            directory: 90_候选工作区/current/H1_硬件利用与执行架构
-            qualification: npm run smoke:no-result
-          - name: H2 exact and non-exact result-before architecture
-            directory: 90_候选工作区/current/H2_代表性执行与数值资格
-            qualification: npm run smoke:no-result
-          - name: H3 shard recovery dry-run
-            directory: 90_候选工作区/current/H3_双全量运行产物与恢复合同
-            qualification: npm run dry-run:no-result
-          - name: Candidate shared deterministic utilities
-            directory: 90_候选工作区/current/_shared
-            qualification: node --check src/atomic.mjs && node --check src/canonical.mjs && node --check src/identity.mjs
-          - name: E1 synthetic experiment preparation
+          - name: E1 experiment preparation and identification
             directory: 90_候选工作区/current/E1_实验准备与辨识协议
             qualification: npm run qualify:synthetic
-          - name: F1 synthetic numerical qualification
+          - name: F1 forward numerical qualification
             directory: 90_候选工作区/current/F1_前向数值资格与闭合包接口
             qualification: npm run qualify:synthetic
-          - name: S1 synthetic structural qualification
+          - name: S1 structural pre-experiment tools
             directory: 90_候选工作区/current/S1_结构分析实验前最小工具
             qualification: npm run qualify:synthetic
     steps:
@@ -48,6 +56,27 @@ jobs:
       - name: Run contract and implementation tests
         working-directory: ${{ matrix.directory }}
         run: npm test
-      - name: Run bounded result-before qualification
+      - name: Run bounded synthetic qualification
         working-directory: ${{ matrix.directory }}
         run: ${{ matrix.qualification }}
+
+  cfd-component:
+    name: CFD candidate component tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: 90_候选工作区/current/A8_二维特征开放边界实验后端
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: 90_候选工作区/current/A8_二维特征开放边界实验后端/package-lock.json
+      - name: Install CFD candidate dependencies
+        run: npm ci
+      - name: Run component tests
+        run: npm test
+      - name: Type-check CFD candidate components
+        run: npm run typecheck
