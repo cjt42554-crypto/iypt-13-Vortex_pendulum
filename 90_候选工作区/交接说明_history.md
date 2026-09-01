@@ -4,27 +4,26 @@
 
 截至本条之前的完整交接历史未删除，固定于：
 
-- 提交：`e4e98e63858385b38c34522ef23fe65b1ce3d4e6`；
+- 提交：`1205067b04b213a6e04a766b422bfafec70c1e4c`；
 - 文件路径：`90_候选工作区/交接说明_history.md`；
-- Git blob SHA：`4d42124877b3e93daed3323673b717f1069ea2d9`；
-- 文件字节数：`9274`。
+- Git blob SHA：`f2f611421b5428f89aed10b9f18076470a77cdcc`。
 
-该历史文件内部还保存更早历史的归档身份和恢复命令，因此以上提交与其内部归档共同构成截至 PR-2 前的完整历史链。需要追溯时使用：
+该文件内部还保存更早历史的归档身份和恢复命令，因此上述提交与其内部归档共同构成截至 PR-2A 前的完整历史链。需要追溯时使用：
 
 ```bash
-git show e4e98e63858385b38c34522ef23fe65b1ce3d4e6:"90_候选工作区/交接说明_history.md"
+git show 1205067b04b213a6e04a766b422bfafec70c1e4c:"90_候选工作区/交接说明_history.md"
 ```
 
 本文件自下条起继续记录新的交接历史。
 
-## 2026-09-01 16:27:26 +09:00
+## 2026-09-01 19:18:12 +09:00
 
-- 以 `main@9d4ff3305a7c6b356f4ea51a1d153253e6a40a87` 为指定基线，先读取顶层 `AGENTS.md`、current、HW2 报告和完整机器证据，再复核 H1 v2、HW2 协议/测量/遥测/选择器、A8R 冻结运行链、正式 LBM、worker/GUI、G1/E1/F1/S1、CI、总账和全项目剩余路线；根 README 正文未读取。
-- 接受 HW2 v1 十候选实际执行、摘要相等、swap/OOM 增量为零、无 fallback、无无关进程操作和结果盲边界，保留结论 `PASS-HW2-V1-SYNTHETIC-HARNESS-COVERAGE-SAFETY-AND-DETERMINISM`。
-- 独立裁定 v1 最终候选选择语义为 `INCONCLUSIVE-HW2-V1-CANDIDATE-SELECTION-MEASUREMENT-SEMANTICS`：固定约 55 秒串行工作量与 15 秒下限系统性排除加速超过约 3.67 的候选；选择器又只在 `PROBE_PASS` 子集中计算 95% 最优，无法证明 2 线程 OpenMP 充分利用本机硬件。
-- GPU 约 0.354 秒运行与 250 ms 采样不支持 GPU busy/CPU-feed 实质 NO-GO；native build、GPU context/JIT 生命周期不一致；u32 独立元素 workload、带宽估算和固定饱和增益不代表 A8R Float64 D2Q9、边界、Brinkman、人口复制、力身份、trace 和 shard。
-- 拒绝 `hw2-native-openmp-domain-v1-w02` 作为 H3 后端；WP-HW2 父包保持 `IN_PROGRESS`。新增活动子包 WP-HW2R、WP-H2X、条件 WP-H2N 和 WP-H3P，H3 继续锁定。
-- 新增完整裁决 `G0_全项目完成度与实验前暂停治理/07_PR2_HW2测量语义执行架构与全项目后续裁决.md`，提交 `d079d933c3afdfd78927ca857bdb94d784e085cf`。裁决规定 candidate-scaled 20–45 秒代表测量、完整 CPU/GPU 矩阵、A8R 代表 workload、H2-X、H2-N stage-0/完整资格、atomic case shard、故障恢复、H3 精确门和从当前状态到 pause-ready 的完整依赖路线。
-- 技术债裁决为：候选 H1/H2 执行与数据面需要中等至大范围重构；旧 A8R 科学源和正式 `lbm.ts` 先保持只读；大范围 native/GPU LBM 只在代表性 profiling 和 H2-N stage-0 证明收益后触发；正式程序只在 PR-3 后按逐文件条件授权定点对齐。
-- 下一完整批次为 `BATCH-PR2-HW2R-H2X-H2N-AND-H3-READINESS`，可连续执行到 `READY-FOR-PR2B-H3-UNLOCK-REVIEW`，但不得启动 `HW1-primary`、`HW1-repeat` 或 H3。
-- current 更新提交为 `e4e98e63858385b38c34522ef23fe65b1ce3d4e6`。科学 payload 未读，没有 H2-X/H2-N/H3/A8R 科学结论，正式理论和正式程序未修改。
+- 以 `main@fa73bda16c42a17a3c63f429c8b8c7e2709c7e66` 为指定基线，按顶层 `AGENTS.md` 先读取 current、PR-2 裁决和链接的 HW2 报告/机器证据，再审查 H1/H2/H3/_shared、冻结 A8R 单 case/聚合源、正式 LBM、GUI/worker、E1/F1/S1、CI、总账和全项目终点路线；根 README 正文未读取。
+- 接受 `fa73bda...` 为结果前候选实现基础，最高结论为 `PASS-PR2A-FA73BDA-RESULT-BEFORE-IMPLEMENTATION-BASELINE-ONLY`；正式 HW2R 就绪状态裁定为 `INCONCLUSIVE-PR2A-FA73BDA-FORMAL-HW2R-READINESS`，科学结论仍为 `NONE`。
+- 发现七类仍需观测前闭合的 P0：R1/R2 基线与权重、候选 executor 重复、GPU 多尺寸持久生命周期、数值身份时间顺序、deferred/unresolved 选择、资源准入与失败证据、H2-X 实际完成顺序与 worker 覆盖。当前不得启动正式 HW2R、H2-X/H2-N 正式矩阵、H3 或双全量运行。
+- 新增 `VP-HW2R-PRE-OBSERVATION-READINESS-v1` 机器门，当前 SHA-256 为 `73dc85806aafcc748d016e85ec90b65738ec66fc707741cf5505231566416699`，`formalObservationAuthorized=false`。closed blocker 必须绑定提交、路径和验证证据，复制 path 数组不能绕过入口门。
+- 直接修复跨 workload 比较、高收益 numerical-identity/deferred 阻断、H2-X shard/aggregator schedule 元数据、H2-N full evidence envelope、cgroup peak/headroom 和轻量 CI；`simulation-check.yml` 已扩展到 G0/H1/H2/H3/_shared/E1/F1/S1。
+- 中间提交 `c700560ef9de04156d2b27a2bd996c7c2685c224` 的预检字符串拼接语法错误由 `5366063fe7754ae1df42acf666ef95344a3d6cf7` 立即修正，未用于任何正式观测或科学运行。
+- 新增完整裁决 `G0_全项目完成度与实验前暂停治理/08_PR2A_fa73bda观测前实现复核与全项目终点规划裁决.md`，提交 `c98af01843bf1b39f01ec24397b02ecf1c4a113a`，文件 SHA-256 为 `acff1a5ccb41b909ad7c6c34e2c21600b774bbaf4ca3df1b6ec2d31e32cabaaf`。
+- 下一完整批次为 `BATCH-PR2A-CLOSE-PREOBSERVATION-GATE-THEN-HW2R-H2X-H2N-H3P`。七项及其证据、clean main、CI 和主机安全门全部通过后，Codex 可依据本裁决把机器门改为 `formalObservationAuthorized=true` 并开始正式 HW2R，无需另行询问；但完成 HW2R/H2-X/条件 H2-N/H3P 后必须停在 `READY-FOR-PR2B-H3-UNLOCK-REVIEW`。
+- 关键路径固定为 `PR-2A blocker closure -> HW2R -> H2-X -> conditional H2-N -> H3P -> PR-2B -> HW1-primary -> HW1-repeat -> PR-3 -> I1 -> DOC/Z1 -> PR-4`。正式理论、正式程序、AGENTS、冻结科学证据和科学门值均未修改。
