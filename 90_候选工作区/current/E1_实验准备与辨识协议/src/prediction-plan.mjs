@@ -75,12 +75,12 @@ function validateBlock(block, expectedRole, index, requireReady, issues) {
       issues,
       "BLOCK-REPLICATES",
       `${path}.replicates`,
-      "æ¯ä¸ªæ­£å¼å·¥å†µå •è‡³å°‘éœ€è¦ 2 ä¸ªé‡å¤ï¼›å»ºè®® 3 ä¸ªã€‚",
+      "æ¯ä¸ªæ­£å¼å·¥å†µå—è‡³å°‘éœ€è¦ 2 ä¸ªé‡å¤ï¼›å»ºè®® 3 ä¸ªã€‚",
       true,
-   );
+    );
   }
-  if (requireReady && (typeof block.releaseProtocol !== "string" || block.releaseProtocol.trim() === "") {
-    pushIssue(issues, "RELEASE-PROTOCOL", `${path}.releaseProtocol`, "éœ€è¦å‡»ç»“é‡‡é›†æ–¹æ–¹ã€‚", true);
+  if (requireReady && (typeof block.releaseProtocol !== "string" || block.releaseProtocol.trim() === "")) {
+    pushIssue(issues, "RELEASE-PROTOCOL", `${path}.releaseProtocol`, "éœ€è¦å†»ç»“é‡Šæ”¾æ–¹å¼ã€‚", true);
   }
 }
 
@@ -94,10 +94,10 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
     pushIssue(issues, "SCHEMA-MISMATCH", "schemaVersion", "é¢„æµ‹è®¡åˆ’ schemaVersion ä¸åŒ¹é…ã€‚");
   }
   if (plan.quantitativeBackend !== "forward") {
-    pushIssue(issues, "QUANTITATIVE-BACKEND", "quantitativeBackend", "å”¯ä¸€å…è®¸æ­£å¼è£…ç½®å®šé‡åç«¯æ˜¯ forward ROMã€‚");
+    pushIssue(issues, "QUANTITATIVE-BACKEND", "quantitativeBackend", "å”¯ä¸€å…è®¸çš„è£…ç½®å®šé‡åç«¯æ˜¯ forward ROMã€‚");
   }
   if (plan.cfd2dRole !== "qualitative-only") {
-    pushIssue(issues, "CFD-ROLE", "cfd2dRole", "äºŒç»´ CFD å·²å†³ç»“ä¸º qualitative-onlyã€‚");
+    pushIssue(issues, "CFD-ROLE", "cfd2dRole", "äºŒç»´ CFD å·²å†»ç»“ä¸º qualitative-onlyã€‚");
   }
   if (!isObject(plan.holdoutPolicy)
     || plan.holdoutPolicy.freezeBeforeCollection !== true
@@ -107,7 +107,7 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
       issues,
       "HOLDOUT-POLICY",
       "holdoutPolicy",
-      "ç•™å‡ºå¿…é¡»æŒ‰å®Œæ•´ condition block å†³ç»“ï¼Œä¸”æ‹ŸåˆæœŸé—´ä¸å¾—è¯»å–ç•™å‡ºç»“æœã€‚",
+      "ç•™å‡ºå¿…é¡»æŒ‰å®Œæ•´ condition block å†»ç»“ï¼Œä¸”æ‹ŸåˆæœŸé—´ä¸å¾—è¯»å–ç•™å‡ºç»“æœã€‚",
     );
   }
   if (!isObject(plan.channels)) {
@@ -136,7 +136,7 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
     pushIssue(issues, "CALIBRATION-BLOCKS-PENDING", "calibrationBlocks", "è‡³å°‘éœ€è¦ 3 ä¸ªå®Œæ•´æ ‡å®šå·¥å†µå—ã€‚", true);
   }
   if (requireReady && (plan.holdoutBlocks?.length ?? 0) < 2) {
-    pushIssue(issues, "HOLDOUT-BLOCKS-PENDING", "holdoutBlocks", "è‡³å°‘éœ€è¦ 2 ä¸ªé‡‡å…ˆå†³ç»“ç•™å‡ºå·¥å†µå—ã€‚", true);
+    pushIssue(issues, "HOLDOUT-BLOCKS-PENDING", "holdoutBlocks", "è‡³å°‘éœ€è¦ 2 ä¸ªé¢„å†»ç»“ç•™å‡ºå·¥å†µå—ã€‚", true);
   }
   const observed = new Map();
   for (const role of BLOCK_ROLES) {
@@ -148,7 +148,7 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
           issues,
           "CONDITION-BLOCK-OVERLAP",
           `${role}Blocks`,
-          `conditionBlockId ${id} åœ¨ ${observed.get(id)} ä¸ ${role} ä¸¬é‡å¤ã€‚à,
+          `conditionBlockId ${id} åœ¨ ${observed.get(id)} ä¸ ${role} ä¸­é‡å¤ã€‚`,
         );
       } else {
         observed.set(id, role);
@@ -165,7 +165,7 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
         issues,
         "TREND-ACCEPTANCE",
         "acceptance.growthTrend",
-        "å¢é•¿/è¡°å‡è¶‹åŠ¿å¿…é¡»ä»¥ 95% ç½®ä¿¡åŒºé›´åˆ¤å®šä¸”ç¬¦å·åŒ¹é…ã€‚",
+        "å¢é•¿/è¡°å‡è¶‹åŠ¿å¿…é¡»ä»¥ 95% ç½®ä¿¡åŒºé—´åˆ¤å®šä¸”ç¬¦å·åŒ¹é…ã€‚",
       );
     }
     for (const name of [
@@ -182,7 +182,7 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
           issues,
           "ACCEPTANCE-THRESHOLD",
           `acceptance.${name}`,
-          "åˆé¡¹ç´ ä¸æ˜¯æœ‰æ•ˆéªŒæ”¶é—¨æ …ã€‚",
+          `${name} éœ€è¦æ­£çš„è¯¯å·®ä¸Šé™å’Œä¸ç¡®å®šåº¦å€æ•°ã€‚`,
           requireReady,
         );
       }
@@ -193,8 +193,29 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
         issues,
         "LOAD-CLAIM-GUARD",
         "acceptance",
-        "ç›¸ä½å’Œå¹³å‡åŠ¯ç‡ç¬¦å·åªèƒ½åœ¨å­˜åœ¨æ ¡å‡†åŠ›ç¹é€šé“æ—¶éºŒæ”¶ã€‚",
+        "ç›¸ä½å’Œå¹³å‡åŠŸç‡ç¬¦å·åªèƒ½åœ¨å­˜åœ¨æ ¡å‡†åŠ›çŸ©é€šé“æ—¶éªŒæ”¶ã€‚",
       );
+    }
     if (plan.channels?.torque?.required !== true
       && (acceptance.phase?.required === true || acceptance.meanPowerSign?.required === true)) {
-      pushIssue(issues, "LOAD-CLAIM-WITHOUT-TORQUˆ°€‰…•ÁÑ…¹”ˆ°€‹šÊ‡šr'–*ovç¦k¦Oš^Û’â7–ú_¢¾ï–>[Vg–ë–êSjnã’ö7–J3–æÏ–v–*¿:²›–>ßˆ¤ì(€€€ô(€ô(€¥˜€ …¥Í=‰©•Ğ¡Á±…¸¹µ½‘•±Í…±…Ñ¥½¸¤(€€€ñğÁ±…¸¹µ½‘•±Í…±…Ñ¥½¸¹½¹•5•¡…¹¥ÍµÑQ¥µ”€„ôôÑÉÕ”(€€€ñğÁ±…¸¹µ½‘•±Í…±…Ñ¥½¸¹É•ÅÕ¥É•ÍMåÍÑ•µ…Ñ¥!½±‘½ÕÑI•Í¥‘Õ…°€„ôôÑÉÕ”(€€€ñğÁ±…¸¹µ½‘•±Í…±…Ñ¥½¸¹™‘…¹¹½Ñ…±¥‰É…Ñ•EÕ…¹Ñ¥Ñ…Ñ¥Ù•±ä€„ôôÑÉÕ”¤ì(€€€ÁÕÍ¡%ÍÍÕ” (€€€€€¥ÍÍÕ•Ì°(€€€€€€‰5=0µM1Q%=8ˆ°(€€€€€€‰µ½‘•±Í…±…Ñ¥½¸ˆ°(€€€€€€‹–>«¢÷ÇÎïîšŸVg–ëšº/–Ş»¢›–>G’âš²‡’â’â«šrë–"Ûjš¢‡–z/–6êŸ¾ò3’âPƒ’â7–ú_R£’ös–ºk¦?¢>#–’Ÿ–óˆ°(€€€€¤ì(€ô(€É•ÑÕÉ¸Ù…±¥‘…Ñ¥½¹I•ÍÕ±Ğ¡¥ÍÍÕ•Ì¤ì)ô(
+      pushIssue(
+        issues,
+        "LOAD-CLAIM-WITHOUT-TORQUE",
+        "acceptance",
+        "æ²¡æœ‰åŠ›çŸ©é€šé“æ—¶ä¸å¾—è¦æ±‚æˆ–å£°ç§°ç›¸ä½/å¹³å‡åŠŸç‡ç¬¦å·ã€‚",
+      );
+    }
+  }
+  if (!isObject(plan.modelEscalation)
+    || plan.modelEscalation.oneMechanismAtATime !== true
+    || plan.modelEscalation.requiresSystematicHoldoutResidual !== true
+    || plan.modelEscalation.cfdCannotCalibrateQuantitatively !== true) {
+    pushIssue(
+      issues,
+      "MODEL-ESCALATION",
+      "modelEscalation",
+      "åªèƒ½ç”±ç³»ç»Ÿæ€§ç•™å‡ºæ®‹å·®è§¦å‘ä¸€æ¬¡ä¸€ä¸ªæœºåˆ¶çš„æ¨¡å‹å‡çº§ï¼Œä¸” CFD ä¸å¾—ä½œå®šé‡æ ‡å®šçœŸå€¼ã€‚",
+    );
+  }
+  return validationResult(issues);
+}
