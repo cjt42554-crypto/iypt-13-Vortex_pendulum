@@ -1,0 +1,22 @@
+{
+  "matrixId": "VP-A8R-HW1-NO-RESULT-SYNTHETIC-SMOKE-MATRIX-v1",
+  "classification": "synthetic-non-scientific",
+  "caseIds": [
+    "SYNTH-CASE-01",
+    "SYNTH-CASE-02",
+    "SYNTH-CASE-03",
+    "SYNTH-CASE-04",
+    "SYNTH-CASE-05",
+    "SYNTH-CASE-06",
+    "SYNTH-CASE-07",
+    "SYNTH-CASE-08"
+  ],
+  "payloadSeed": "IYPT13-H1-RESULT-BLIND-SYNTHETIC-SEED-v1",
+  "completionOrders": {
+    "oneWorker": [0, 1, 2, 3, 4, 5, 6, 7],
+    "simulatedFourWorker": [3, 0, 6, 1, 4, 7, 2, 5],
+    "reversed": [7, 6, 5, 4, 3, 2, 1, 0]
+  },
+  "expectedCanonicalEquality": true,
+  "forbiddenPayloadSource": "A8R-or-experiment"
+}

@@ -1,0 +1,32 @@
+{
+  "matrixId": "VP-E1-SYNTHETIC-DATA-QUALIFICATION-MATRIX-v1",
+  "classification": "synthetic-only",
+  "seed": 130013,
+  "linearIdentification": {
+    "slope": 1.75,
+    "intercept": -0.2,
+    "xValues": [-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2],
+    "trainingConditionBlocks": ["SYNTH-TRAIN-A", "SYNTH-TRAIN-B"],
+    "holdoutConditionBlocks": ["SYNTH-HOLDOUT-A"],
+    "uNum": 1e-12,
+    "uFit": 1e-9
+  },
+  "timeseries": {
+    "sampleCount": 64,
+    "sampleIntervalSeconds": 0.02,
+    "angularFrequencyRadiansPerSecond": 6.283185307179586,
+    "phaseRadians": 0.25
+  },
+  "roundTripCopies": 2,
+  "negativeCases": [
+    "missing-unit",
+    "non-finite-value",
+    "time-regression",
+    "duplicate-primary-key",
+    "missing-calibration",
+    "expired-calibration",
+    "angle-displacement-mix",
+    "training-holdout-overlap",
+    "unsafe-run"
+  ]
+}

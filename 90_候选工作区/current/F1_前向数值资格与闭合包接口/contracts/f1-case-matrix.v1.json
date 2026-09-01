@@ -1,0 +1,48 @@
+{
+  "matrixId": "VP-F1-SYNTHETIC-NUMERICAL-CASE-MATRIX-v1",
+  "classification": "synthetic-only",
+  "fourStateOde": {
+    "initialState": [1, 0, 0.5, 0],
+    "angularFrequencies": [1, 1.4142135623730951],
+    "startTime": 0,
+    "endTime": 2,
+    "stepSizes": {"coarse": 0.1, "nominal": 0.05, "reference": 0.0125}
+  },
+  "wetGeometry": {
+    "circleRadius": 1,
+    "waterlineY": 0.25,
+    "simpsonPanels": {"coarse": 16, "nominal": 32, "reference": 128}
+  },
+  "conservativeOscillator": {
+    "mass": 1,
+    "stiffness": 1,
+    "initialPosition": 1,
+    "initialVelocity": 0,
+    "stepSize": 0.005,
+    "endTime": 10
+  },
+  "eventRoot": {
+    "function": "sin(t)-0.3",
+    "bracket": [0, 1],
+    "epsilonT": {"coarse": 1e-6, "fine": 1e-8, "reference": 1e-10}
+  },
+  "variableInertia": {
+    "time": 0.7,
+    "omega": 0.4,
+    "torque": 0.3,
+    "inertiaFunction": "exp(0.1*t)",
+    "derivativeSteps": {"fine": 0.0001, "finer": 0.00005}
+  },
+  "outputIntegration": {
+    "function": "sin(t)",
+    "interval": [0, 1.5707963267948966],
+    "simpsonPanels": 256,
+    "exactIntegral": 1
+  },
+  "canonicalRepeatCopies": 2,
+  "coefficientSourceCases": [
+    {"source": "synthetic", "claim": "synthetic-only", "accepted": true},
+    {"source": "literature-prior", "claim": "illustrative-only", "accepted": true},
+    {"source": "literature-prior", "claim": "apparatus-calibrated", "accepted": false}
+  ]
+}
