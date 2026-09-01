@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check Markdown math syntax used by the project."""
+"""Check Markdown math syntax in the project-wide gated document set."""
 
 from __future__ import annotations
 
@@ -7,6 +7,8 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
+THEORY_ROOT = ROOT / "01_最终理论"
+CURRENT_HANDOFF = ROOT / "90_候选工作区" / "交接说明_current.md"
 SKIP_DIRS = {".git", "node_modules", "dist", "coverage"}
 FENCE_RE = re.compile(r"^\s{0,3}(`{3,}|~{3,})")
 DISPLAY_RE = re.compile(r"^\s*\$\$\s*$")
@@ -17,11 +19,19 @@ ZERO_WIDTH_RE = re.compile("[\u200b\ufeff\u2060]")
 
 
 def markdown_files() -> list[Path]:
-    return sorted(
+    """Return only the Markdown files covered by the project format gate."""
+    if not THEORY_ROOT.is_dir():
+        raise FileNotFoundError(f"missing gated theory directory: {THEORY_ROOT}")
+    if not CURRENT_HANDOFF.is_file():
+        raise FileNotFoundError(f"missing gated current handoff: {CURRENT_HANDOFF}")
+
+    files = [
         path
-        for path in ROOT.rglob("*.md")
+        for path in THEORY_ROOT.rglob("*.md")
         if not any(part in SKIP_DIRS for part in path.relative_to(ROOT).parts)
-    )
+    ]
+    files.append(CURRENT_HANDOFF)
+    return sorted(set(files))
 
 
 def outside_code_spans(line: str) -> list[str]:
@@ -173,7 +183,7 @@ def main() -> int:
 
     print(
         "MARKDOWN MATH PASS: "
-        f"{len(files)} files, {inline_formulas} inline formulas, "
+        f"{len(files)} gated files, {inline_formulas} inline formulas, "
         f"{display_formulas} display formulas"
     )
     return 0
