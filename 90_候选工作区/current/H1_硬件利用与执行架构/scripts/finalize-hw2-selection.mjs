@@ -1,10 +1,16 @@
 import { resolve } from "node:path";
+
 import {
   readCanonicalGzipWithSidecar,
   writeCanonicalGzipWithSidecarExclusive,
 } from "../../_shared/src/atomic.mjs";
 import { canonicalSha256 } from "../../_shared/src/canonical.mjs";
-import { loadH2nContract, loadH2xContract } from "../../H2_代表性执行与数值资格/src/contract.mjs";
+import {
+  loadH2nContract,
+  loadH2xContract,
+} from "../../H2_代表性执行与数值资格/src/contract.mjs";
+import { validateH2nFullEvidenceEnvelope } from
+  "../../H2_代表性执行与数值资格/src/h2n-full-evidence.mjs";
 import {
   assertCleanMainParityAndIdentity,
   HW2_FINALIZATION_IMPLEMENTATION_PATHS,
@@ -62,7 +68,7 @@ const [
   hw2r,
   h2x,
   h2nStage0,
-  h2nFull,
+  h2nFullRaw,
   preflight,
 ] = await Promise.all([
   loadHw2rProtocol(),
@@ -80,14 +86,17 @@ if (hw2r.pass !== true
   || hw2r.format !== "VP-HW2R-REPRESENTATIVE-QUALIFICATION-EVIDENCE-v2"
   || hw2r.classification !== protocol.passCode
   || hw2r.protocolSha256 !== protocolSha256
-  || h2x.format !== "VP-H2X-THREE-INDEPENDENT-ENVIRONMENT-QUALIFICATION-v2"
+  || h2x.format
+    !== "VP-H2X-THREE-INDEPENDENT-ENVIRONMENT-QUALIFICATION-v2"
   || h2x.equivalencePass !== true
   || h2x.contractSha256 !== h2xContract.contractSha256
   || h2nStage0.format !== "VP-H2N-STAGE0-NUMERICAL-MATRIX-SUMMARY-v2"
   || h2nStage0.contractSha256 !== h2nContract.contractSha256
   || h2nStage0.matrixComplete !== true
   || h2nStage0.safety?.pass !== true) {
-  throw new Error("INCONCLUSIVE-HW2R-MEASUREMENT-OR-RESOURCE: qualification evidence");
+  throw new Error(
+    "INCONCLUSIVE-HW2R-MEASUREMENT-OR-RESOURCE: qualification evidence",
+  );
 }
 const implementationCommits = new Set([
   hw2r.implementationCommit,
@@ -95,8 +104,19 @@ const implementationCommits = new Set([
   h2nStage0.implementationCommit,
 ]);
 if (implementationCommits.size !== 1) {
-  throw new Error("INCONCLUSIVE-HW2R-MEASUREMENT-OR-RESOURCE: implementation drift");
+  throw new Error(
+    "INCONCLUSIVE-HW2R-MEASUREMENT-OR-RESOURCE: implementation drift",
+  );
 }
+const expectedImplementationCommit = hw2r.implementationCommit;
+const h2nFull = h2nFullRaw === null
+  ? null
+  : validateH2nFullEvidenceEnvelope(
+    h2nFullRaw,
+    h2nContract,
+    expectedImplementationCommit,
+  ).value;
+
 const h2nStage0Performance = classifyH2nStage0Performance(
   protocol,
   hw2r.candidates,
@@ -105,14 +125,9 @@ const h2nStage0Performance = classifyH2nStage0Performance(
 );
 const h2xPass = h2x.pass === true
   && h2x.classification === h2xContract.contract.passCode;
-let fullH2nVariants = [];
-if (h2nFull?.pass === true
-  && h2nFull.classification === h2nContract.contract.fullQualification.passCode
-  && (h2nFull.backendImplementationCommit ?? h2nFull.implementationCommit)
-    === hw2r.implementationCommit
-  && Array.isArray(h2nFull.qualifiedBackendVariants)) {
-  fullH2nVariants = [...h2nFull.qualifiedBackendVariants];
-}
+const fullH2nVariants = h2nFull === null
+  ? []
+  : [...h2nFull.qualifiedBackendVariants];
 const requiredVariantQualified = !h2nStage0Performance.fullQualificationRequired
   || fullH2nVariants.includes(h2nStage0Performance.backendVariant);
 const finalEvaluations = buildQualificationAwareEvaluations({
@@ -151,7 +166,8 @@ const summary = {
   h2nContractSha256: h2nContract.contractSha256,
   implementationCommit: hw2r.implementationCommit,
   finalizationExecutionCommit: preflight.executionCommit,
-  finalizationImplementationTreeSha256: preflight.implementationTreeSha256,
+  finalizationImplementationTreeSha256:
+    preflight.implementationTreeSha256,
   inputEvidence: {
     hw2rCanonicalSha256: canonicalSha256(hw2r),
     h2xCanonicalSha256: canonicalSha256(h2x),
