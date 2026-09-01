@@ -19,9 +19,18 @@ jobs:
           - name: G0 governance ledger
             directory: 90_候选工作区/current/G0_全项目完成度与实验前暂停治理
             qualification: npm run validate:ledger && npm run validate:r1i:sealed
-          - name: H1 no-result architecture
+          - name: H1 no-result architecture and pre-observation gate
             directory: 90_候选工作区/current/H1_硬件利用与执行架构
             qualification: npm run smoke:no-result
+          - name: H2 exact and non-exact result-before architecture
+            directory: 90_候选工作区/current/H2_代表性执行与数值资格
+            qualification: npm run smoke:no-result
+          - name: H3 shard recovery dry-run
+            directory: 90_候选工作区/current/H3_双全量运行产物与恢复合同
+            qualification: npm run dry-run:no-result
+          - name: Candidate shared deterministic utilities
+            directory: 90_候选工作区/current/_shared
+            qualification: node --check src/atomic.mjs && node --check src/canonical.mjs && node --check src/identity.mjs
           - name: E1 synthetic experiment preparation
             directory: 90_候选工作区/current/E1_实验准备与辨识协议
             qualification: npm run qualify:synthetic
