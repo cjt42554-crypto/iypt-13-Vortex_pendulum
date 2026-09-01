@@ -6,7 +6,8 @@
     "test": "node --test tests/*.test.mjs",
     "test:contract": "node --test tests/contract.test.mjs",
     "validate:ledger": "node scripts/validate-ledger.mjs",
-    "validate:r1i": "node scripts/validate-r1i.mjs"
+    "validate:r1i": "node scripts/validate-r1i.mjs",
+    "validate:r1i:sealed": "node scripts/validate-r1i.mjs --sealed-only"
   },
   "engines": {"node": ">=22"}
 }

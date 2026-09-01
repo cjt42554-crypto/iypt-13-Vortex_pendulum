@@ -27,6 +27,13 @@ const schemaPath = resolve(
   packageRoot,
   "contracts/r1i-interrupted-attempt-seal.schema.json",
 );
+const allowedArguments = new Set(["--sealed-only"]);
+for (const argument of process.argv.slice(2)) {
+  if (!allowedArguments.has(argument)) {
+    throw new Error(`R1I validation failed: unknown argument ${argument}`);
+  }
+}
+const sealedOnly = process.argv.includes("--sealed-only");
 
 async function exists(path) {
   try {
@@ -137,16 +144,29 @@ if (sidecar !== sidecarLine(manifestHash, basename(manifestPath))) {
   throw new Error("R1I seal sidecar content mismatch");
 }
 
-const snapshot = await collectLiveSnapshot(manifest);
-assertLiveSnapshotMatches(manifest, snapshot);
+if (sealedOnly) {
+  console.log(
+    JSON.stringify({
+      classification: manifest.classification,
+      validationMode: "SEALED-EVIDENCE-ONLY",
+      manifestSha256: manifestHash,
+      sourceEntityCount: 4,
+      liveOldWorktreeReinspectionPerformed: false,
+      scientificPayloadInspected: false,
+    }),
+  );
+} else {
+  const snapshot = await collectLiveSnapshot(manifest);
+  assertLiveSnapshotMatches(manifest, snapshot);
 
-console.log(
-  JSON.stringify({
-    classification: manifest.classification,
-    manifestSha256: manifestHash,
-    oldWorktreeHead: snapshot.head,
-    oldWorktreeClean: snapshot.porcelainV2Entries.length === 0,
-    canonicalArtifactAvailable: false,
-    scientificPayloadInspected: false,
-  }),
-);
+  console.log(
+    JSON.stringify({
+      classification: manifest.classification,
+      manifestSha256: manifestHash,
+      oldWorktreeHead: snapshot.head,
+      oldWorktreeClean: snapshot.porcelainV2Entries.length === 0,
+      canonicalArtifactAvailable: false,
+      scientificPayloadInspected: false,
+    }),
+  );
+}
