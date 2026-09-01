@@ -1,0 +1,276 @@
+{
+  "contractId": "VP-H2X-EXACT-EXECUTION-EQUIVALENCE-CONTRACT-v1",
+  "schemaVersion": "VP-H2X-EXACT-EXECUTION-EQUIVALENCE-SCHEMA-v1",
+  "classification": "candidate-only-exact-execution-equivalence",
+  "pr2Decision": {
+    "commit": "d079d933c3afdfd78927ca857bdb94d784e085cf",
+    "relativePath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/07_PR2_HW2测量语义执行架构与全项目后续裁决.md",
+    "sha256": "2631cda368e04d0d100150170b7eff5551d81e8305953915881a3a615931d4a1",
+    "requiredCode": "REQUIRE-H2X-EXACT-EQUIVALENCE-OR-H2N-INDEPENDENT-NUMERICAL-QUALIFICATION-BEFORE-H3",
+    "h3LockCode": "KEEP-HW1-PRIMARY-HW1-REPEAT-AND-H3-LOCKED"
+  },
+  "freeze": {
+    "repositoryBaseCommit": "6e27bf2cb7c6e1679d96a1d5bdd776ecd59ed8a6",
+    "resultBlind": true,
+    "oracleAndCandidateCommittedBeforeQualification": true,
+    "formalSourceReadOnly": true,
+    "caseInternalFloatingPointOrderMustRemainIdentical": true,
+    "scientificValueDisplayForbidden": true,
+    "scientificValuePersistenceBeforeHashForbidden": true,
+    "canonicalA8rArtifactWriteForbidden": true,
+    "fullEightCaseResultBearingRunForbidden": true,
+    "runtimeFallbackForbidden": true,
+    "formalTheoryAndProgramImmutable": true
+  },
+  "sourceBindings": [
+    {
+      "relativePath": "02_模拟程序/src/solvers/highFidelity/lbm.ts",
+      "sha256": "6949dd9f215595bde4162078f9cb026456bcbed83fd2ebd08131001e03ec2dc2",
+      "role": "formal-d2q9-mrt-brinkman-source",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract-v2-1.ts",
+      "sha256": "c629337a7199f6c51a23735ca75432eaa5019b633afcf8fb4f908a6f723c335b",
+      "role": "frozen-eight-case-definition",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts",
+      "sha256": "de65f3ab1c5ec4b17150cbd340faa111aa97811b55ddf613eb587413a0cc455c",
+      "role": "frozen-execution-scope-identity",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-runs-v2-1.ts",
+      "sha256": "4f9202cf473f702ec54524c894ebf41caa8cbe2ef2a28900586d6ceec2550262",
+      "role": "frozen-single-case-runner",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-support-v2-1.ts",
+      "sha256": "ff03aeaab0d8ab7b94277e803f007db6d9b36e4da7ca1ac6f046e311b158ba36",
+      "role": "frozen-force-identity-and-diagnostic-support",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-v2-1.ts",
+      "sha256": "09de8d0b2681375e50e38f074ea7a78b7e22861147363b6b016f212e73ea6c84",
+      "role": "frozen-qualification-aggregator",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-scaling-contract.ts",
+      "sha256": "791717a265a4a2a67647016ff251c38402ee37a2fcdd4d858bdcbe4aa702b686",
+      "role": "transitive-scaling-contract",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-scaling-runs.ts",
+      "sha256": "7f2c9b96e79a89ced8ae47750c4a976829f9d1c0eb5fc6825e0eab0db8736090",
+      "role": "transitive-analysis-source",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_二维特征开放边界实验后端/src/brinkman-scaling-support.ts",
+      "sha256": "437786f204c392876fa6237b98517404ef4767456e7f447a22a84df2320cdd15",
+      "role": "transitive-field-diagnostic-source",
+      "accessMode": "read-only-import"
+    },
+    {
+      "relativePath": "90_候选工作区/current/A8_公开规定横移圆柱基准/src/benchmark-metrics.ts",
+      "sha256": "625e3eb62c389d597ed0f22feb8e49fd2cad70d543ee9b19f2acff9fdd292e12",
+      "role": "transitive-benchmark-metric-source",
+      "accessMode": "read-only-import"
+    }
+  ],
+  "allowedExecutionChanges": [
+    "case-process-or-worker-isolation",
+    "result-blind-case-scheduling",
+    "atomic-case-shard-envelope",
+    "deterministic-shard-validation-and-aggregation",
+    "execution-provenance",
+    "failure-recovery-at-complete-case-boundary"
+  ],
+  "forbiddenExecutionChanges": [
+    "case-internal-floating-point-order",
+    "solver-algorithm",
+    "precision",
+    "population-layout",
+    "boundary-update-order",
+    "force-reduction-order",
+    "scientific-gates",
+    "case-definition",
+    "result-driven-scheduling",
+    "silent-backend-fallback"
+  ],
+  "qualificationCaseMatrix": [
+    {
+      "caseId": "a8r-v2p1-d24-mask-0p50-phase-baseline-eta-1p00",
+      "diameterCells": 24,
+      "maskHalfThicknessCells": 0.5,
+      "phaseId": "baseline",
+      "qualificationTotalSteps": 96,
+      "qualificationDiscardSteps": 32
+    },
+    {
+      "caseId": "a8r-v2p1-d24-mask-0p75-phase-baseline-eta-1p00",
+      "diameterCells": 24,
+      "maskHalfThicknessCells": 0.75,
+      "phaseId": "baseline",
+      "qualificationTotalSteps": 96,
+      "qualificationDiscardSteps": 32
+    },
+    {
+      "caseId": "a8r-v2p1-d36-mask-0p50-phase-baseline-eta-1p00",
+      "diameterCells": 36,
+      "maskHalfThicknessCells": 0.5,
+      "phaseId": "baseline",
+      "qualificationTotalSteps": 64,
+      "qualificationDiscardSteps": 24
+    },
+    {
+      "caseId": "a8r-v2p1-d36-mask-0p75-phase-baseline-eta-1p00",
+      "diameterCells": 36,
+      "maskHalfThicknessCells": 0.75,
+      "phaseId": "baseline",
+      "qualificationTotalSteps": 64,
+      "qualificationDiscardSteps": 24
+    },
+    {
+      "caseId": "a8r-v2p1-d54-mask-0p50-phase-baseline-eta-1p00",
+      "diameterCells": 54,
+      "maskHalfThicknessCells": 0.5,
+      "phaseId": "baseline",
+      "qualificationTotalSteps": 32,
+      "qualificationDiscardSteps": 8
+    },
+    {
+      "caseId": "a8r-v2p1-d54-mask-0p75-phase-baseline-eta-1p00",
+      "diameterCells": 54,
+      "maskHalfThicknessCells": 0.75,
+      "phaseId": "baseline",
+      "qualificationTotalSteps": 32,
+      "qualificationDiscardSteps": 8
+    },
+    {
+      "caseId": "a8r-v2p1-d54-mask-0p50-phase-minus-half-cell-eta-1p00",
+      "diameterCells": 54,
+      "maskHalfThicknessCells": 0.5,
+      "phaseId": "minus-half-cell",
+      "qualificationTotalSteps": 32,
+      "qualificationDiscardSteps": 8
+    },
+    {
+      "caseId": "a8r-v2p1-d54-mask-0p75-phase-minus-half-cell-eta-1p00",
+      "diameterCells": 54,
+      "maskHalfThicknessCells": 0.75,
+      "phaseId": "minus-half-cell",
+      "qualificationTotalSteps": 32,
+      "qualificationDiscardSteps": 8
+    }
+  ],
+  "definitionRule": {
+    "deriveFromFrozenDefinitionsThenOverrideOnlyQualificationStepCounts": true,
+    "oracleAndCandidateMustUseSameDerivedBytes": true,
+    "fullResearchDefinitionsRemainUnchanged": true,
+    "qualificationIdentityMustNeverBeNamedResearchMatrix": true
+  },
+  "exactComparisons": {
+    "sourceBindingSet": "exact",
+    "freshInitialPopulationBytes": "exact-sha256",
+    "preAnalysisPopulationBytes": "exact-sha256",
+    "analysisFirstStepPrePopulationBytes": "exact-sha256",
+    "analysisFirstStepPostPopulationBytes": "exact-sha256",
+    "frozenAuditStepPrePopulationBytes": "exact-sha256",
+    "frozenAuditStepPostPopulationBytes": "exact-sha256",
+    "everyAnalysisStepForceIdentitySummary": "exact-sha256",
+    "shortenedCompleteCaseScientificPayload": "exact-canonical-sha256",
+    "oneWorkerVsSelectedWorkers": "exact-canonical-sha256",
+    "completionOrderPermutations": "exact-canonical-sha256",
+    "executionFieldsExcludedFromScientificPayload": true
+  },
+  "checkpointRule": {
+    "initialStep": 0,
+    "preAnalysisStep": "qualificationDiscardSteps",
+    "analysisFirstStep": "qualificationDiscardSteps+1",
+    "frozenAuditStep": "qualificationTotalSteps",
+    "allPopulationArraysUseRawLittleEndianFloat64Bytes": true,
+    "hashAlgorithm": "sha256",
+    "scientificValuesDiscardedImmediatelyAfterHash": true
+  },
+  "schedulerMatrix": {
+    "workerCounts": [1, 2, 3, 4, "memory-safe-maximum", "selected-hw2r-worker-count"],
+    "completionOrders": [
+      "canonical-case-id",
+      "reverse-canonical-case-id",
+      "descending-frozen-cost"
+    ],
+    "scheduleMayUseOnly": [
+      "diameterCells",
+      "frozen-step-count",
+      "frozen-cost-weight",
+      "worker-resource-envelope"
+    ],
+    "scientificValueUseForbidden": true
+  },
+  "negativeCases": [
+    "missing-shard",
+    "duplicate-case-id",
+    "corrupt-shard-bytes",
+    "source-hash-drift",
+    "contract-hash-drift",
+    "worker-nonzero-exit",
+    "worker-signal",
+    "partial-shard",
+    "cross-run-shard",
+    "cross-implementation-shard",
+    "execution-field-in-scientific-payload",
+    "scientific-value-in-evidence",
+    "runtime-fallback"
+  ],
+  "independentEnvironmentCount": 3,
+  "independentEnvironmentRequirements": [
+    "fresh-directory",
+    "independent-dependency-install",
+    "same-frozen-source-and-candidate-commit",
+    "no-shared-shards-checkpoints-cache-temporary-files-or-inodes",
+    "no-result-read-between-environments"
+  ],
+  "safety": {
+    "d54RepresentativeRequired": true,
+    "dedicatedFiniteMemoryCgroupRequired": true,
+    "systemReserveBytesMinimum": 4294967296,
+    "systemReserveMemTotalFraction": 0.25,
+    "swapGrowthMaximumBytes": 0,
+    "oomEventGrowthMaximum": 0,
+    "unrelatedProcessMutationForbidden": true
+  },
+  "evidenceBoundary": {
+    "allowedPersistentFields": [
+      "identity-hash",
+      "equality-boolean",
+      "timing",
+      "resource-field",
+      "failure-code"
+    ],
+    "scientificScalarOrArrayPersistenceForbidden": true,
+    "scientificPayloadHumanReadForbidden": true,
+    "scientificConclusion": "NONE"
+  },
+  "passCode": "PASS-H2X-EXACT-SCIENTIFIC-EXECUTION-EQUIVALENCE-CANDIDATE-ONLY",
+  "failureCodes": [
+    "NO-GO-H2X-SOURCE-OR-CONTRACT-DRIFT",
+    "NO-GO-H2X-INITIAL-POPULATION-MISMATCH",
+    "NO-GO-H2X-POPULATION-CHECKPOINT-MISMATCH",
+    "NO-GO-H2X-FORCE-IDENTITY-HASH-MISMATCH",
+    "NO-GO-H2X-SCIENTIFIC-PAYLOAD-HASH-MISMATCH",
+    "NO-GO-H2X-SCHEDULER-OR-ORDER-MISMATCH",
+    "NO-GO-H2X-SHARD-OR-AGGREGATION",
+    "NO-GO-H2X-PROVENANCE-LEAK",
+    "NO-GO-H2X-RUNTIME-FALLBACK",
+    "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN"
+  ],
+  "conclusionCeiling": "exact-execution-equivalence-candidate-only-no-physical-validation",
+  "h3UnlockForbidden": true
+}

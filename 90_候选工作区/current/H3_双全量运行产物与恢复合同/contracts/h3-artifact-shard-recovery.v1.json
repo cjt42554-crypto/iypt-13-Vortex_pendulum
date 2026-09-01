@@ -1,0 +1,266 @@
+{
+  "contractId": "VP-H3-DUAL-FULL-RUN-ARTIFACT-SHARD-RECOVERY-CONTRACT-v1",
+  "schemaVersion": "VP-H3-DUAL-FULL-RUN-ARTIFACT-SHARD-RECOVERY-SCHEMA-v1",
+  "classification": "result-before-h3-readiness-only",
+  "pr2Decision": {
+    "commit": "d079d933c3afdfd78927ca857bdb94d784e085cf",
+    "relativePath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/07_PR2_HW2测量语义执行架构与全项目后续裁决.md",
+    "sha256": "2631cda368e04d0d100150170b7eff5551d81e8305953915881a3a615931d4a1",
+    "requiredPr2bUnlockCode": "UNLOCK-HW1-PRIMARY-AND-HW1-REPEAT-ONLY",
+    "currentLockCode": "KEEP-HW1-PRIMARY-HW1-REPEAT-AND-H3-LOCKED"
+  },
+  "freeze": {
+    "repositoryBaseCommit": "6e27bf2cb7c6e1679d96a1d5bdd776ecd59ed8a6",
+    "resultBlind": true,
+    "dryRunOnlyBeforePr2b": true,
+    "h3ExecutionBeforePr2bForbidden": true,
+    "scientificPayloadReadBeforePr3Forbidden": true,
+    "formalTheoryAndProgramImmutable": true,
+    "oldInterruptedSerialDataUseForbidden": true,
+    "oldCheckpointResumeForbidden": true,
+    "partialProgressCredit": 0,
+    "runtimeFallbackForbidden": true,
+    "contractMutationAfterEnvironmentSealForbidden": true
+  },
+  "runIdentities": [
+    {
+      "runId": "HW1-primary",
+      "ordinal": 1,
+      "environmentId": "H3-ENV-PRIMARY",
+      "mustCompleteBeforeNextRunStarts": true
+    },
+    {
+      "runId": "HW1-repeat",
+      "ordinal": 2,
+      "environmentId": "H3-ENV-REPEAT",
+      "mustCompleteBeforeNextRunStarts": false
+    }
+  ],
+  "sourceIdentity": {
+    "requiredBindings": [
+      "a8r-v2p1-contract-document",
+      "a8r-v2p1-machine-contract",
+      "a8r-v2p1-execution-authorization",
+      "a8r-v2p1-single-case-runner",
+      "a8r-v2p1-qualification-aggregator",
+      "formal-lbm-source",
+      "h2x-or-h2n-pass-evidence",
+      "hw2r-final-selection-evidence",
+      "h3-runner-implementation-tree"
+    ],
+    "sameImplementationCommitForBothRuns": true,
+    "sameDependencyLockForBothRuns": true,
+    "sameCompilerDriverAndDeviceIdentityRequired": true,
+    "sourceDriftFailsClosed": true
+  },
+  "environmentIsolation": {
+    "environmentCount": 2,
+    "freshDirectories": true,
+    "independentDependencyInstall": true,
+    "independentPreflight": true,
+    "independentTemporaryRoot": true,
+    "sharedShardCheckpointCacheTemporaryFileOrInodeForbidden": true,
+    "resultReadBetweenEnvironmentsForbidden": true,
+    "environmentCreatedBeforePr2bButRunNotStarted": true,
+    "sealRequiredFields": [
+      "environmentId",
+      "absoluteRootHash",
+      "sourceCommit",
+      "implementationTreeSha256",
+      "dependencyLockSha256",
+      "dependencyTreeSha256",
+      "nodeVersion",
+      "compilerVersion",
+      "compilerFlags",
+      "driverVersion",
+      "deviceIdentity",
+      "filesystemIdentity",
+      "createdBeforeAnyH3Run",
+      "firstCaseStarted"
+    ]
+  },
+  "caseMatrix": {
+    "caseCount": 8,
+    "canonicalOrder": [
+      "a8r-v2p1-d24-mask-0p50-phase-baseline-eta-1p00",
+      "a8r-v2p1-d24-mask-0p75-phase-baseline-eta-1p00",
+      "a8r-v2p1-d36-mask-0p50-phase-baseline-eta-1p00",
+      "a8r-v2p1-d36-mask-0p75-phase-baseline-eta-1p00",
+      "a8r-v2p1-d54-mask-0p50-phase-baseline-eta-1p00",
+      "a8r-v2p1-d54-mask-0p75-phase-baseline-eta-1p00",
+      "a8r-v2p1-d54-mask-0p50-phase-minus-half-cell-eta-1p00",
+      "a8r-v2p1-d54-mask-0p75-phase-minus-half-cell-eta-1p00"
+    ],
+    "everyCaseStartsAtStepZero": true,
+    "freshInitialState": true,
+    "resultBlindScheduling": true,
+    "scheduleInputs": [
+      "case-id",
+      "diameter-cells",
+      "frozen-step-count",
+      "frozen-cost-weight",
+      "worker-resource-envelope"
+    ],
+    "scientificValueSchedulingForbidden": true
+  },
+  "shard": {
+    "format": "VP-H3-A8R-V2P1-ATOMIC-CASE-SHARD-v1",
+    "candidateOutputTemplate": "90_候选工作区/current/H3_双全量运行产物与恢复合同/runs/{runId}/shards/{caseId}.json.gz",
+    "sidecarTemplate": "90_候选工作区/current/H3_双全量运行产物与恢复合同/runs/{runId}/shards/{caseId}.sha256",
+    "requiredFields": [
+      "format",
+      "runId",
+      "environmentId",
+      "caseId",
+      "caseOrdinal",
+      "sourceCommit",
+      "implementationCommit",
+      "implementationTreeSha256",
+      "contractSha256",
+      "dependencyIdentitySha256",
+      "executionIdentitySha256",
+      "caseStartedAtStepZero",
+      "completedSteps",
+      "expectedSteps",
+      "caseCompleteAndFinite",
+      "scientificPayload",
+      "scientificPayloadCanonicalSha256",
+      "artifactIdentity"
+    ],
+    "writeOnlyAfterCompleteCase": true,
+    "writeMode": "exclusive-create",
+    "atomicSequence": [
+      "write-partial-in-run-local-directory",
+      "fsync-partial-file",
+      "verify-canonical-hash",
+      "rename-to-final",
+      "fsync-parent-directory",
+      "write-sidecar-exclusive",
+      "fsync-sidecar-and-parent-directory"
+    ],
+    "gzipLevel": 9,
+    "gzipMtime": 0,
+    "timestampFieldsForbidden": true,
+    "nonFiniteJsonValuesForbidden": true,
+    "overwriteForbidden": true
+  },
+  "recovery": {
+    "sameRunCompletedShardReuseAllowed": true,
+    "completedShardValidationRequiredBeforeReuse": true,
+    "interruptedCaseRestartsAtStepZero": true,
+    "partialShardDisposition": "isolate-or-delete-never-promote",
+    "primaryRepeatCrossReuseForbidden": true,
+    "crossImplementationReuseForbidden": true,
+    "crossSourceReuseForbidden": true,
+    "crossDependencyReuseForbidden": true,
+    "crossEnvironmentReuseForbidden": true,
+    "checkpointResumeWithinIncompleteCaseForbidden": true,
+    "scientificValueInspectionForRecoveryForbidden": true,
+    "recoveryDecisionUsesOnlyIdentityAndCompletionFields": true
+  },
+  "aggregation": {
+    "format": "VP-H3-A8R-V2P1-DUAL-FULL-RUN-AGGREGATE-v1",
+    "canonicalSortKey": "caseId",
+    "expectedCaseCount": 8,
+    "rejectMissing": true,
+    "rejectDuplicate": true,
+    "rejectCorrupt": true,
+    "rejectSourceDrift": true,
+    "rejectImplementationDrift": true,
+    "rejectDependencyDrift": true,
+    "rejectRunIdentityDrift": true,
+    "executionFieldsExcludedFromScientificPayload": true,
+    "deterministicJson": true,
+    "gzipLevel": 9,
+    "gzipMtime": 0,
+    "sidecarRequired": true
+  },
+  "provenanceLayers": {
+    "scientific": [
+      "case-definition",
+      "solver-source",
+      "scientific-contract",
+      "scientific-payload-canonical-hash"
+    ],
+    "execution": [
+      "backend-id",
+      "scheduler-id",
+      "worker-count",
+      "device-id",
+      "compiler-driver",
+      "resource-window",
+      "implementation-commit"
+    ],
+    "artifact": [
+      "run-id",
+      "environment-id",
+      "shard-path",
+      "stored-sha256",
+      "canonical-sha256",
+      "sidecar-sha256",
+      "aggregation-sha256"
+    ],
+    "layerAliasingForbidden": true
+  },
+  "preflight": {
+    "requiredBeforeEachRun": [
+      "pr2b-exact-unlock-code",
+      "clean-main-parity",
+      "source-and-contract-hashes",
+      "implementation-commit-and-tree",
+      "dependency-identity",
+      "environment-seal",
+      "output-absence",
+      "finite-memory-cgroup",
+      "system-memory-reserve",
+      "swap-and-memory-events-baseline",
+      "gpu-foreign-process-safety-when-applicable",
+      "no-other-result-bearing-run"
+    ],
+    "systemReserveBytesMinimum": 4294967296,
+    "systemReserveMemTotalFraction": 0.25,
+    "swapGrowthMaximumBytes": 0,
+    "oomEventGrowthMaximum": 0,
+    "automaticUnlockForbidden": true
+  },
+  "dryRun": {
+    "allowedBeforePr2b": true,
+    "syntheticOnly": true,
+    "formalSolverConstructionForbidden": true,
+    "scientificPayloadForbidden": true,
+    "mustCover": [
+      "environment-seal",
+      "case-plan",
+      "atomic-shard-write",
+      "sidecar",
+      "resume-complete-shard",
+      "restart-incomplete-case",
+      "cross-run-reuse-rejection",
+      "cross-commit-reuse-rejection",
+      "missing-duplicate-corrupt-source-drift-worker-failure",
+      "deterministic-aggregation"
+    ],
+    "passCode": "PASS-H3P-ARTIFACT-SHARD-RECOVERY-AND-ENVIRONMENT-DRY-RUN"
+  },
+  "runOrder": {
+    "primaryBeforeRepeat": true,
+    "primaryMustBeCompleteAndSealedBeforeRepeat": true,
+    "bothUseSameFrozenImplementation": true,
+    "bothStartFromFirstCaseStepZero": true,
+    "bothExecuteCompleteEightCaseMatrix": true
+  },
+  "failureCodes": [
+    "NO-GO-H3P-CONTRACT-OR-SOURCE-DRIFT",
+    "NO-GO-H3P-ENVIRONMENT-ALIAS",
+    "NO-GO-H3P-SHARD-ATOMICITY",
+    "NO-GO-H3P-RECOVERY-IDENTITY",
+    "NO-GO-H3P-AGGREGATION",
+    "NO-GO-H3P-PROVENANCE-ALIAS",
+    "NO-GO-H3P-RUNTIME-FALLBACK",
+    "NO-GO-H3P-PREMATURE-H3-EXECUTION",
+    "INCONCLUSIVE-H3P-RESOURCE-OR-TOOLCHAIN"
+  ],
+  "readinessPassCode": "PASS-H3P-RESULT-BEFORE-READINESS-CANDIDATE-ONLY",
+  "conclusionCeiling": "h3-readiness-only-no-result-bearing-run-no-scientific-conclusion",
+  "stopState": "READY-FOR-PR2B-H3-UNLOCK-REVIEW"
+}

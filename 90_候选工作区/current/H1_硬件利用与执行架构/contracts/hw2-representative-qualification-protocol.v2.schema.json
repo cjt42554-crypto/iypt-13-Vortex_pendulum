@@ -1,0 +1,624 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "VP-HW2-REPRESENTATIVE-QUALIFICATION-PROTOCOL-SCHEMA-v2",
+  "title": "HW2R v2 representative hardware qualification protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolId",
+    "schemaVersion",
+    "parentContractId",
+    "supersedesMeasurementProtocolId",
+    "classification",
+    "pr2Decision",
+    "freeze",
+    "fieldBoundary",
+    "calibration",
+    "lifecyclePhases",
+    "workloads",
+    "candidateMatrix",
+    "telemetry",
+    "correctness",
+    "safety",
+    "selection",
+    "entryGate",
+    "failureCodes",
+    "passCode",
+    "conclusionCeiling",
+    "stopState"
+  ],
+  "properties": {
+    "protocolId": {
+      "const": "VP-HW2-REPRESENTATIVE-QUALIFICATION-PROTOCOL-v2"
+    },
+    "schemaVersion": {
+      "const": "VP-HW2-REPRESENTATIVE-QUALIFICATION-PROTOCOL-SCHEMA-v2"
+    },
+    "parentContractId": {
+      "const": "VP-A8R-HW1-MACHINE-CONTRACT-v2"
+    },
+    "supersedesMeasurementProtocolId": {
+      "const": "VP-HW2-RESULT-BLIND-QUALIFICATION-PROTOCOL-v1"
+    },
+    "classification": {
+      "const": "result-blind-representative-hardware-qualification-only"
+    },
+    "pr2Decision": {
+      "$ref": "#/$defs/pr2Decision"
+    },
+    "freeze": {
+      "$ref": "#/$defs/freeze"
+    },
+    "fieldBoundary": {
+      "$ref": "#/$defs/stringArrayPair"
+    },
+    "calibration": {
+      "$ref": "#/$defs/calibration"
+    },
+    "lifecyclePhases": {
+      "type": "array",
+      "minItems": 9,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "workloads": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/workload"
+      }
+    },
+    "candidateMatrix": {
+      "$ref": "#/$defs/candidateMatrix"
+    },
+    "telemetry": {
+      "$ref": "#/$defs/telemetry"
+    },
+    "correctness": {
+      "$ref": "#/$defs/booleanObject"
+    },
+    "safety": {
+      "$ref": "#/$defs/safety"
+    },
+    "selection": {
+      "$ref": "#/$defs/selection"
+    },
+    "entryGate": {
+      "$ref": "#/$defs/entryGate"
+    },
+    "failureCodes": {
+      "type": "array",
+      "minItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "passCode": {
+      "const": "PASS-HW2R-REPRESENTATIVE-MEASUREMENT"
+    },
+    "conclusionCeiling": {
+      "const": "hardware-measurement-candidate-only-no-scientific-conclusion"
+    },
+    "stopState": {
+      "const": "READY-FOR-PR2B-H3-UNLOCK-REVIEW"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "pr2Decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "relativePath",
+        "sha256",
+        "acceptedV1Code",
+        "inconclusiveV1SelectionCode",
+        "requiredV2Code",
+        "h3LockCode"
+      ],
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "relativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "acceptedV1Code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inconclusiveV1SelectionCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredV2Code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "h3LockCode": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositoryBaseCommit",
+        "resultBlind",
+        "candidateCodeCommittedBeforePerformanceObservation",
+        "cleanMainParityRequired",
+        "fullResultBearingRunForbidden",
+        "scientificPayloadHumanReadForbidden",
+        "scientificValuePersistenceForbidden",
+        "canonicalA8rArtifactWriteForbidden",
+        "runtimeFallbackForbidden",
+        "v1FilesImmutable",
+        "formalTheoryAndProgramImmutable",
+        "protocolMutationAfterFormalRepeatForbidden"
+      ],
+      "properties": {
+        "repositoryBaseCommit": {
+          "$ref": "#/$defs/commit"
+        },
+        "resultBlind": {
+          "const": true
+        },
+        "candidateCodeCommittedBeforePerformanceObservation": {
+          "const": true
+        },
+        "cleanMainParityRequired": {
+          "const": true
+        },
+        "fullResultBearingRunForbidden": {
+          "const": true
+        },
+        "scientificPayloadHumanReadForbidden": {
+          "const": true
+        },
+        "scientificValuePersistenceForbidden": {
+          "const": true
+        },
+        "canonicalA8rArtifactWriteForbidden": {
+          "const": true
+        },
+        "runtimeFallbackForbidden": {
+          "const": true
+        },
+        "v1FilesImmutable": {
+          "const": true
+        },
+        "formalTheoryAndProgramImmutable": {
+          "const": true
+        },
+        "protocolMutationAfterFormalRepeatForbidden": {
+          "const": true
+        }
+      }
+    },
+    "stringArrayPair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed",
+        "forbidden"
+      ],
+      "properties": {
+        "allowed": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "forbidden": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumShortCalibrationsPerCandidate",
+        "shortCalibrationTargetSeconds",
+        "formalTargetSecondsMinimum",
+        "formalTargetSecondsMaximum",
+        "formalHardSecondsMinimum",
+        "formalHardSecondsMaximum",
+        "validFormalRepeats",
+        "warmupBatchesMinimum",
+        "batchScaleRule",
+        "batchScaleMustStrictlyIncrease",
+        "formalBatchFrozenAfterCalibration",
+        "formalRepeatWorkMustBeIdentical",
+        "tooShortClassification",
+        "tooLongClassification"
+      ],
+      "properties": {
+        "maximumShortCalibrationsPerCandidate": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "shortCalibrationTargetSeconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "formalTargetSecondsMinimum": {
+          "const": 20
+        },
+        "formalTargetSecondsMaximum": {
+          "const": 45
+        },
+        "formalHardSecondsMinimum": {
+          "const": 15
+        },
+        "formalHardSecondsMaximum": {
+          "const": 60
+        },
+        "validFormalRepeats": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "warmupBatchesMinimum": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "batchScaleRule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "batchScaleMustStrictlyIncrease": {
+          "const": true
+        },
+        "formalBatchFrozenAfterCalibration": {
+          "const": true
+        },
+        "formalRepeatWorkMustBeIdentical": {
+          "const": true
+        },
+        "tooShortClassification": {
+          "const": "MEASUREMENT_INVALID-WORKLOAD-TOO-SHORT"
+        },
+        "tooLongClassification": {
+          "const": "MEASUREMENT_INVALID-WORKLOAD-TOO-LONG"
+        }
+      }
+    },
+    "workload": {
+      "type": "object",
+      "required": [
+        "workloadId",
+        "role",
+        "diameterCells",
+        "finalSelectionEligible",
+        "scientificValues",
+        "requiredOperations"
+      ],
+      "properties": {
+        "workloadId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "diameterCells": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "finalSelectionEligible": {
+          "type": "boolean"
+        },
+        "scientificValues": {
+          "const": false
+        },
+        "caseStructure": {
+          "type": "object"
+        },
+        "requiredOperations": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      },
+      "additionalProperties": false
+    },
+    "candidateMatrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allClassesMustReachTerminalClassification",
+        "classes",
+        "cpuPhysicalCoreCounts",
+        "cpuLogicalThreadCountsConditional",
+        "nodeWorkerCounts",
+        "caseProcessCounts",
+        "pinningLayouts",
+        "gpuModes",
+        "hybridCpuFractions",
+        "hybridSplitResultBlind",
+        "costAwareSchedulingRequired"
+      ],
+      "properties": {
+        "allClassesMustReachTerminalClassification": {
+          "const": true
+        },
+        "classes": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "cpuPhysicalCoreCounts": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "cpuLogicalThreadCountsConditional": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "nodeWorkerCounts": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "caseProcessCounts": {
+          "type": "array",
+          "minItems": 5
+        },
+        "pinningLayouts": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "gpuModes": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "hybridCpuFractions": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 1
+          }
+        },
+        "hybridSplitResultBlind": {
+          "const": true
+        },
+        "costAwareSchedulingRequired": {
+          "const": true
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cpu",
+        "gpu",
+        "gpuValidSamplesMinimum",
+        "higherFrequencyDeviceCounterAllowed",
+        "persistentContextRequired",
+        "persistentBuffersRequired"
+      ],
+      "properties": {
+        "cpu": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "gpu": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "gpuValidSamplesMinimum": {
+          "type": "integer",
+          "minimum": 30
+        },
+        "higherFrequencyDeviceCounterAllowed": {
+          "const": true
+        },
+        "persistentContextRequired": {
+          "const": true
+        },
+        "persistentBuffersRequired": {
+          "const": true
+        }
+      }
+    },
+    "booleanObject": {
+      "type": "object",
+      "minProperties": 5,
+      "additionalProperties": {
+        "const": true
+      }
+    },
+    "safety": {
+      "type": "object",
+      "minProperties": 10,
+      "properties": {
+        "dedicatedFiniteMemoryCgroupRequired": {
+          "const": true
+        },
+        "systemReserveBytesMinimum": {
+          "type": "integer",
+          "minimum": 4294967296
+        },
+        "systemReserveMemTotalFraction": {
+          "type": "number",
+          "minimum": 0.25
+        },
+        "candidateHeadroomFraction": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "swapGrowthMaximumBytes": {
+          "const": 0
+        },
+        "oomEventGrowthMaximum": {
+          "const": 0
+        },
+        "memoryHighEventGrowthMaximum": {
+          "const": 0
+        },
+        "unrelatedProcessMutationForbidden": {
+          "const": true
+        },
+        "foreignGpuProcessDisposition": {
+          "const": "DEFERRED-UNSAFE-TO-PROBE"
+        },
+        "thermalThrottleInvalidatesBatch": {
+          "const": true
+        },
+        "frequencyDropFractionMaximum": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.15
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "dedicatedFiniteMemoryCgroupRequired",
+        "systemReserveBytesMinimum",
+        "systemReserveMemTotalFraction",
+        "candidateHeadroomFraction",
+        "swapGrowthMaximumBytes",
+        "oomEventGrowthMaximum",
+        "memoryHighEventGrowthMaximum",
+        "unrelatedProcessMutationForbidden",
+        "foreignGpuProcessDisposition",
+        "thermalThrottleInvalidatesBatch",
+        "frequencyDropFractionMaximum"
+      ]
+    },
+    "selection": {
+      "type": "object",
+      "minProperties": 10,
+      "properties": {
+        "classificationOrder": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "candidateTerminalStates": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "representativeSpeedupMinimum": {
+          "type": "number",
+          "minimum": 1.5
+        },
+        "selectedThroughputFractionOfBestMinimum": {
+          "type": "number",
+          "minimum": 0.95
+        },
+        "unresolvedMaterialGainFractionMaximum": {
+          "type": "number",
+          "maximum": 0.1
+        },
+        "adjacentCpuGainAtSaturationMaximum": {
+          "type": "number",
+          "maximum": 0.05
+        },
+        "repeatWallTimeCvMaximum": {
+          "type": "number",
+          "maximum": 0.05
+        },
+        "repeatSlowestFastestRatioMaximum": {
+          "type": "number",
+          "maximum": 1.1
+        },
+        "soakThroughputDegradationMaximum": {
+          "type": "number",
+          "maximum": 0.1
+        },
+        "tieBreakOrder": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "failClosedIfMaterialMeasurementInvalidCandidateExists": {
+          "const": true
+        },
+        "v1OpenmpW02SelectionForbidden": {
+          "const": true
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "classificationOrder",
+        "candidateTerminalStates",
+        "representativeSpeedupMinimum",
+        "selectedThroughputFractionOfBestMinimum",
+        "unresolvedMaterialGainFractionMaximum",
+        "adjacentCpuGainAtSaturationMaximum",
+        "repeatWallTimeCvMaximum",
+        "repeatSlowestFastestRatioMaximum",
+        "soakThroughputDegradationMaximum",
+        "tieBreakOrder",
+        "failClosedIfMaterialMeasurementInvalidCandidateExists",
+        "v1OpenmpW02SelectionForbidden"
+      ]
+    },
+    "entryGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requiredPassCodes",
+        "noActiveResultBearingRunRequired",
+        "inventoryRequired",
+        "safeResourceWindowRequired",
+        "cleanMainParityRequired",
+        "contractTestAndImplementationCommitsPushedRequired",
+        "automaticUnlockOnlyWhenAllConditionsPass"
+      ],
+      "properties": {
+        "requiredPassCodes": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "noActiveResultBearingRunRequired": {
+          "const": true
+        },
+        "inventoryRequired": {
+          "const": true
+        },
+        "safeResourceWindowRequired": {
+          "const": true
+        },
+        "cleanMainParityRequired": {
+          "const": true
+        },
+        "contractTestAndImplementationCommitsPushedRequired": {
+          "const": true
+        },
+        "automaticUnlockOnlyWhenAllConditionsPass": {
+          "const": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "VP-H2X-EXACT-EXECUTION-EQUIVALENCE-SCHEMA-v1",
+  "title": "H2-X exact execution equivalence contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "schemaVersion",
+    "classification",
+    "pr2Decision",
+    "freeze",
+    "sourceBindings",
+    "allowedExecutionChanges",
+    "forbiddenExecutionChanges",
+    "qualificationCaseMatrix",
+    "definitionRule",
+    "exactComparisons",
+    "checkpointRule",
+    "schedulerMatrix",
+    "negativeCases",
+    "independentEnvironmentCount",
+    "independentEnvironmentRequirements",
+    "safety",
+    "evidenceBoundary",
+    "passCode",
+    "failureCodes",
+    "conclusionCeiling",
+    "h3UnlockForbidden"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "VP-H2X-EXACT-EXECUTION-EQUIVALENCE-CONTRACT-v1"
+    },
+    "schemaVersion": {
+      "const": "VP-H2X-EXACT-EXECUTION-EQUIVALENCE-SCHEMA-v1"
+    },
+    "classification": {
+      "const": "candidate-only-exact-execution-equivalence"
+    },
+    "pr2Decision": {
+      "$ref": "#/$defs/pr2Decision"
+    },
+    "freeze": {
+      "$ref": "#/$defs/closedBooleanObject"
+    },
+    "sourceBindings": {
+      "type": "array",
+      "minItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/sourceBinding"
+      }
+    },
+    "allowedExecutionChanges": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "forbiddenExecutionChanges": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "qualificationCaseMatrix": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    },
+    "definitionRule": {
+      "$ref": "#/$defs/closedBooleanObject"
+    },
+    "exactComparisons": {
+      "type": "object",
+      "minProperties": 10
+    },
+    "checkpointRule": {
+      "type": "object",
+      "minProperties": 7
+    },
+    "schedulerMatrix": {
+      "type": "object",
+      "minProperties": 4
+    },
+    "negativeCases": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "independentEnvironmentCount": {
+      "const": 3
+    },
+    "independentEnvironmentRequirements": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "safety": {
+      "type": "object",
+      "minProperties": 7
+    },
+    "evidenceBoundary": {
+      "type": "object",
+      "minProperties": 4
+    },
+    "passCode": {
+      "const": "PASS-H2X-EXACT-SCIENTIFIC-EXECUTION-EQUIVALENCE-CANDIDATE-ONLY"
+    },
+    "failureCodes": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "conclusionCeiling": {
+      "const": "exact-execution-equivalence-candidate-only-no-physical-validation"
+    },
+    "h3UnlockForbidden": {
+      "const": true
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "stringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "pr2Decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "relativePath",
+        "sha256",
+        "requiredCode",
+        "h3LockCode"
+      ],
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "relativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "requiredCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "h3LockCode": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "closedBooleanObject": {
+      "type": "object",
+      "minProperties": 3,
+      "additionalProperties": {
+        "type": [
+          "boolean",
+          "string"
+        ]
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relativePath",
+        "sha256",
+        "role",
+        "accessMode"
+      ],
+      "properties": {
+        "relativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accessMode": {
+          "const": "read-only-import"
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "diameterCells",
+        "maskHalfThicknessCells",
+        "phaseId",
+        "qualificationTotalSteps",
+        "qualificationDiscardSteps"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "diameterCells": {
+          "enum": [24, 36, 54]
+        },
+        "maskHalfThicknessCells": {
+          "enum": [0.5, 0.75]
+        },
+        "phaseId": {
+          "enum": ["baseline", "minus-half-cell"]
+        },
+        "qualificationTotalSteps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "qualificationDiscardSteps": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "VP-H2N-NUMERICAL-BACKEND-QUALIFICATION-SCHEMA-v1",
+  "title": "H2-N non-exact backend numerical qualification contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "schemaVersion",
+    "classification",
+    "pr2Decision",
+    "freeze",
+    "referenceBindings",
+    "triggerConditions",
+    "backendIdentity",
+    "stage0",
+    "fullQualification",
+    "resultBoundary",
+    "safety",
+    "failureCodes",
+    "conclusionCeiling",
+    "h3UnlockForbidden"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "VP-H2N-NUMERICAL-BACKEND-QUALIFICATION-CONTRACT-v1"
+    },
+    "schemaVersion": {
+      "const": "VP-H2N-NUMERICAL-BACKEND-QUALIFICATION-SCHEMA-v1"
+    },
+    "classification": {
+      "const": "candidate-only-nonexact-backend-numerical-qualification"
+    },
+    "pr2Decision": {
+      "type": "object",
+      "required": ["commit", "relativePath", "sha256", "requiredCode", "h3LockCode"],
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "relativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "requiredCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "h3LockCode": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "freeze": {
+      "type": "object",
+      "minProperties": 10
+    },
+    "referenceBindings": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "relativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accessMode": {
+            "const": "read-only-import"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["relativePath", "sha256", "role", "accessMode"]
+      }
+    },
+    "triggerConditions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "backendIdentity": {
+      "type": "object",
+      "minProperties": 3
+    },
+    "stage0": {
+      "type": "object",
+      "required": [
+        "stageId",
+        "fixtureSeed",
+        "precision",
+        "operatorCoverage",
+        "sizeMatrix",
+        "bodyModes",
+        "checkpointSteps",
+        "toleranceModel",
+        "performance",
+        "outcomes"
+      ],
+      "properties": {
+        "stageId": {
+          "const": "H2N-STAGE0-REPRESENTATIVE-FEASIBILITY-v1"
+        },
+        "fixtureSeed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "precision": {
+          "const": "float64"
+        },
+        "operatorCoverage": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "sizeMatrix": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["sizeId", "diameterCells", "nx", "ny", "steps"],
+            "additionalProperties": false,
+            "properties": {
+              "sizeId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "diameterCells": {
+                "enum": [24, 36, 54]
+              },
+              "nx": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ny": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "steps": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "bodyModes": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "checkpointSteps": {
+          "type": "array",
+          "minItems": 5
+        },
+        "toleranceModel": {
+          "type": "object",
+          "minProperties": 8
+        },
+        "performance": {
+          "type": "object",
+          "minProperties": 7
+        },
+        "outcomes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fullQualification": {
+      "type": "object",
+      "required": [
+        "trigger",
+        "independentReferenceRequirement",
+        "coverage",
+        "matrix",
+        "gates",
+        "negativeCases",
+        "passCode"
+      ],
+      "properties": {
+        "trigger": {
+          "type": "string",
+          "minLength": 1
+        },
+        "independentReferenceRequirement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "matrix": {
+          "type": "object",
+          "minProperties": 6
+        },
+        "gates": {
+          "type": "object",
+          "minProperties": 10
+        },
+        "negativeCases": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "passCode": {
+          "const": "PASS-H2N-NUMERICALLY-QUALIFIED-BACKEND-CANDIDATE-ONLY"
+        }
+      },
+      "additionalProperties": false
+    },
+    "resultBoundary": {
+      "type": "object",
+      "minProperties": 5
+    },
+    "safety": {
+      "type": "object",
+      "minProperties": 7
+    },
+    "failureCodes": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "conclusionCeiling": {
+      "const": "numerically-qualified-backend-candidate-only-no-physical-validation"
+    },
+    "h3UnlockForbidden": {
+      "const": true
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "stringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

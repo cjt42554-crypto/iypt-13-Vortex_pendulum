@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "VP-H3-DUAL-FULL-RUN-ARTIFACT-SHARD-RECOVERY-SCHEMA-v1",
+  "title": "H3 dual full-run artifact, shard, and recovery contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "schemaVersion",
+    "classification",
+    "pr2Decision",
+    "freeze",
+    "runIdentities",
+    "sourceIdentity",
+    "environmentIsolation",
+    "caseMatrix",
+    "shard",
+    "recovery",
+    "aggregation",
+    "provenanceLayers",
+    "preflight",
+    "dryRun",
+    "runOrder",
+    "failureCodes",
+    "readinessPassCode",
+    "conclusionCeiling",
+    "stopState"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "VP-H3-DUAL-FULL-RUN-ARTIFACT-SHARD-RECOVERY-CONTRACT-v1"
+    },
+    "schemaVersion": {
+      "const": "VP-H3-DUAL-FULL-RUN-ARTIFACT-SHARD-RECOVERY-SCHEMA-v1"
+    },
+    "classification": {
+      "const": "result-before-h3-readiness-only"
+    },
+    "pr2Decision": {
+      "type": "object",
+      "required": ["commit", "relativePath", "sha256", "requiredPr2bUnlockCode", "currentLockCode"],
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "relativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "requiredPr2bUnlockCode": {
+          "const": "UNLOCK-HW1-PRIMARY-AND-HW1-REPEAT-ONLY"
+        },
+        "currentLockCode": {
+          "const": "KEEP-HW1-PRIMARY-HW1-REPEAT-AND-H3-LOCKED"
+        }
+      }
+    },
+    "freeze": {
+      "type": "object",
+      "minProperties": 10
+    },
+    "runIdentities": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["runId", "ordinal", "environmentId", "mustCompleteBeforeNextRunStarts"],
+        "additionalProperties": false,
+        "properties": {
+          "runId": {
+            "enum": ["HW1-primary", "HW1-repeat"]
+          },
+          "ordinal": {
+            "enum": [1, 2]
+          },
+          "environmentId": {
+            "enum": ["H3-ENV-PRIMARY", "H3-ENV-REPEAT"]
+          },
+          "mustCompleteBeforeNextRunStarts": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "sourceIdentity": {
+      "type": "object",
+      "minProperties": 5
+    },
+    "environmentIsolation": {
+      "type": "object",
+      "required": [
+        "environmentCount",
+        "freshDirectories",
+        "independentDependencyInstall",
+        "independentPreflight",
+        "independentTemporaryRoot",
+        "sharedShardCheckpointCacheTemporaryFileOrInodeForbidden",
+        "resultReadBetweenEnvironmentsForbidden",
+        "environmentCreatedBeforePr2bButRunNotStarted",
+        "sealRequiredFields"
+      ],
+      "properties": {
+        "environmentCount": {
+          "const": 2
+        },
+        "freshDirectories": {
+          "const": true
+        },
+        "independentDependencyInstall": {
+          "const": true
+        },
+        "independentPreflight": {
+          "const": true
+        },
+        "independentTemporaryRoot": {
+          "const": true
+        },
+        "sharedShardCheckpointCacheTemporaryFileOrInodeForbidden": {
+          "const": true
+        },
+        "resultReadBetweenEnvironmentsForbidden": {
+          "const": true
+        },
+        "environmentCreatedBeforePr2bButRunNotStarted": {
+          "const": true
+        },
+        "sealRequiredFields": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": false
+    },
+    "caseMatrix": {
+      "type": "object",
+      "required": [
+        "caseCount",
+        "canonicalOrder",
+        "everyCaseStartsAtStepZero",
+        "freshInitialState",
+        "resultBlindScheduling",
+        "scheduleInputs",
+        "scientificValueSchedulingForbidden"
+      ],
+      "properties": {
+        "caseCount": {
+          "const": 8
+        },
+        "canonicalOrder": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "everyCaseStartsAtStepZero": {
+          "const": true
+        },
+        "freshInitialState": {
+          "const": true
+        },
+        "resultBlindScheduling": {
+          "const": true
+        },
+        "scheduleInputs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "scientificValueSchedulingForbidden": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "shard": {
+      "type": "object",
+      "required": [
+        "format",
+        "candidateOutputTemplate",
+        "sidecarTemplate",
+        "requiredFields",
+        "writeOnlyAfterCompleteCase",
+        "writeMode",
+        "atomicSequence",
+        "gzipLevel",
+        "gzipMtime",
+        "timestampFieldsForbidden",
+        "nonFiniteJsonValuesForbidden",
+        "overwriteForbidden"
+      ],
+      "properties": {
+        "format": {
+          "const": "VP-H3-A8R-V2P1-ATOMIC-CASE-SHARD-v1"
+        },
+        "candidateOutputTemplate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sidecarTemplate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredFields": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "writeOnlyAfterCompleteCase": {
+          "const": true
+        },
+        "writeMode": {
+          "const": "exclusive-create"
+        },
+        "atomicSequence": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "gzipLevel": {
+          "const": 9
+        },
+        "gzipMtime": {
+          "const": 0
+        },
+        "timestampFieldsForbidden": {
+          "const": true
+        },
+        "nonFiniteJsonValuesForbidden": {
+          "const": true
+        },
+        "overwriteForbidden": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "recovery": {
+      "type": "object",
+      "minProperties": 10
+    },
+    "aggregation": {
+      "type": "object",
+      "minProperties": 12
+    },
+    "provenanceLayers": {
+      "type": "object",
+      "required": ["scientific", "execution", "artifact", "layerAliasingForbidden"],
+      "properties": {
+        "scientific": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "execution": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "artifact": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "layerAliasingForbidden": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "preflight": {
+      "type": "object",
+      "minProperties": 6
+    },
+    "dryRun": {
+      "type": "object",
+      "required": ["allowedBeforePr2b", "syntheticOnly", "formalSolverConstructionForbidden", "scientificPayloadForbidden", "mustCover", "passCode"],
+      "properties": {
+        "allowedBeforePr2b": {
+          "const": true
+        },
+        "syntheticOnly": {
+          "const": true
+        },
+        "formalSolverConstructionForbidden": {
+          "const": true
+        },
+        "scientificPayloadForbidden": {
+          "const": true
+        },
+        "mustCover": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "passCode": {
+          "const": "PASS-H3P-ARTIFACT-SHARD-RECOVERY-AND-ENVIRONMENT-DRY-RUN"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runOrder": {
+      "type": "object",
+      "minProperties": 5
+    },
+    "failureCodes": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "readinessPassCode": {
+      "const": "PASS-H3P-RESULT-BEFORE-READINESS-CANDIDATE-ONLY"
+    },
+    "conclusionCeiling": {
+      "const": "h3-readiness-only-no-result-bearing-run-no-scientific-conclusion"
+    },
+    "stopState": {
+      "const": "READY-FOR-PR2B-H3-UNLOCK-REVIEW"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "stringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
