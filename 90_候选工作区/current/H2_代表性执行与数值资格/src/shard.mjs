@@ -1,6 +1,7 @@
-import { basename } from "node:path";
+import { basename, resolve } from "node:path";
 import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
+
 import {
   canonicalSha256,
   sha256Bytes,
@@ -22,13 +23,33 @@ const HASH_FIELDS = Object.freeze([
   "shortenedCompleteCaseScientificPayloadSha256",
 ]);
 
+function assertScheduleIdentity(shard, expected) {
+  if (!Number.isSafeInteger(shard.caseOrdinal)
+    || shard.caseOrdinal < 0
+    || shard.caseOrdinal > 7) {
+    throw new Error("NO-GO-H2X-SHARD-OR-AGGREGATION: caseOrdinal");
+  }
+  if (!Number.isSafeInteger(shard.workerCount) || shard.workerCount < 1) {
+    throw new Error("NO-GO-H2X-SHARD-OR-AGGREGATION: workerCount");
+  }
+  if (typeof shard.completionOrder !== "string"
+    || shard.completionOrder.length === 0) {
+    throw new Error("NO-GO-H2X-SHARD-OR-AGGREGATION: completionOrder");
+  }
+  for (const key of ["caseOrdinal", "workerCount", "completionOrder"]) {
+    if (expected[key] !== undefined && shard[key] !== expected[key]) {
+      throw new Error(`NO-GO-H2X-SHARD-OR-AGGREGATION: ${key}`);
+    }
+  }
+}
+
 export function buildH2xHashOnlyShard(input) {
   for (const field of HASH_FIELDS) {
     if (!/^[0-9a-f]{64}$/.test(input.hashes[field] ?? "")) {
       throw new Error(`NO-GO-H2X-SHARD-OR-AGGREGATION: ${field}`);
     }
   }
-  return Object.freeze({
+  const shard = Object.freeze({
     format: "VP-H2X-HASH-ONLY-QUALIFICATION-SHARD-v1",
     environmentId: input.environmentId,
     runId: input.runId,
@@ -47,6 +68,8 @@ export function buildH2xHashOnlyShard(input) {
     fullResultBearingRunPerformed: false,
     canonicalA8rArtifactWritten: false,
   });
+  assertScheduleIdentity(shard, input);
+  return shard;
 }
 
 export function validateH2xHashOnlyShard(shard, expected) {
@@ -66,6 +89,7 @@ export function validateH2xHashOnlyShard(shard, expected) {
       throw new Error(`NO-GO-H2X-SHARD-OR-AGGREGATION: ${field}`);
     }
   }
+  assertScheduleIdentity(shard, expected);
   for (const field of HASH_FIELDS) {
     if (!/^[0-9a-f]{64}$/.test(shard.hashes?.[field] ?? "")) {
       throw new Error(`NO-GO-H2X-SHARD-OR-AGGREGATION: ${field}`);
@@ -84,7 +108,9 @@ export function validateH2xHashOnlyShard(shard, expected) {
 export async function writeH2xHashOnlyShard(path, shard) {
   const artifact = await writeAtomicCanonicalGzipExclusive(path, shard);
   const sidecarPath = path.replace(/\.json\.gz$/, ".sha256");
-  if (sidecarPath === path) throw new Error("H2-X shard path must end in .json.gz");
+  if (sidecarPath === path) {
+    throw new Error("H2-X shard path must end in .json.gz");
+  }
   const sidecarText = [
     `${artifact.storedSha256}  ${basename(path)}`,
     `${artifact.canonicalSha256}  ${basename(path)}.canonical`,
@@ -109,6 +135,8 @@ export async function readH2xHashOnlyShard(path) {
     storedSha256: sha256Bytes(stored),
     canonicalSha256: sha256Bytes(canonical),
     shardEnvelopeSha256: canonicalSha256(value),
+    path: resolve(path),
+    sidecarPath: resolve(sidecarPath),
   });
 }
 
