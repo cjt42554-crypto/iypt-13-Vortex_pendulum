@@ -1,0 +1,44 @@
+name: Simulation foundation checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  result-before-package:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: G0 governance ledger
+            directory: 90_候选工作区/current/G0_全项目完成度与实验前暂停治理
+            qualification: npm run validate:ledger && npm run validate:r1i
+          - name: H1 no-result architecture
+            directory: 90_候选工作区/current/H1_硬件利用与执行架构
+            qualification: npm run smoke:no-result
+          - name: E1 synthetic experiment preparation
+            directory: 90_候选工作区/current/E1_实验准备与辨识协议
+            qualification: npm run qualify:synthetic
+          - name: F1 synthetic numerical qualification
+            directory: 90_候选工作区/current/F1_前向数值资格与闭合包接口
+            qualification: npm run qualify:synthetic
+          - name: S1 synthetic structural qualification
+            directory: 90_候选工作区/current/S1_结构分析实验前最小工具
+            qualification: npm run qualify:synthetic
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Run contract and implementation tests
+        working-directory: ${{ matrix.directory }}
+        run: npm test
+      - name: Run bounded result-before qualification
+        working-directory: ${{ matrix.directory }}
+        run: ${{ matrix.qualification }}
