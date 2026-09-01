@@ -91,3 +91,16 @@ test("contract mutations fail the frozen invariant audit", async () => {
   mixedRuns.fullRuns.identities = ["serial-reference", "HW1-repeat"];
   assert.throws(() => assertMachineContract(mixedRuns));
 });
+
+test("synthetic smoke matrix freezes eight cases and order permutations", async () => {
+  const matrix = await readJson("contracts/h1-synthetic-smoke-matrix.v1.json");
+  assert.equal(matrix.classification, "synthetic-non-scientific");
+  assert.equal(matrix.caseIds.length, 8);
+  assert.equal(new Set(matrix.caseIds).size, 8);
+  const expected = [0, 1, 2, 3, 4, 5, 6, 7];
+  for (const order of Object.values(matrix.completionOrders)) {
+    assert.deepEqual([...order].sort((a, b) => a - b), expected);
+  }
+  assert.equal(matrix.expectedCanonicalEquality, true);
+  assert.equal(matrix.forbiddenPayloadSource, "A8R-or-experiment");
+});

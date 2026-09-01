@@ -70,3 +70,18 @@ test("E1 contract freezes block holdout, channel coverage, safety and negative c
     "unsafe-run",
   ]) assert.ok(contract.negativeCases.includes(negative));
 });
+
+test("E1 synthetic matrix fixes identification, timeseries and negative inputs", async () => {
+  const matrix = await readJson("contracts/e1-synthetic-matrix.v1.json");
+  assert.equal(matrix.classification, "synthetic-only");
+  assert.equal(matrix.seed, 130013);
+  assert.equal(matrix.linearIdentification.slope, 1.75);
+  assert.equal(matrix.linearIdentification.intercept, -0.2);
+  assert.equal(matrix.linearIdentification.xValues.length, 9);
+  assert.equal(matrix.linearIdentification.uNum, 1e-12);
+  assert.equal(matrix.linearIdentification.uFit, 1e-9);
+  assert.deepEqual(matrix.linearIdentification.holdoutConditionBlocks, ["SYNTH-HOLDOUT-A"]);
+  assert.equal(matrix.timeseries.sampleCount, 64);
+  assert.equal(matrix.timeseries.sampleIntervalSeconds, 0.02);
+  assert.equal(new Set(matrix.negativeCases).size, matrix.negativeCases.length);
+});

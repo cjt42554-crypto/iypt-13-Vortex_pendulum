@@ -31,3 +31,24 @@ test("F1 record schema keeps synthetic evidence and decision explicit", async ()
   assert.ok(schema.required.includes("canonicalPayloadSha256"));
   assert.equal(schema.properties.cases.minItems, 8);
 });
+
+test("F1 case matrix fixes every numerical input before implementation", async () => {
+  const matrix = await readJson("contracts/f1-case-matrix.v1.json");
+  assert.equal(matrix.classification, "synthetic-only");
+  assert.deepEqual(matrix.fourStateOde.stepSizes, {
+    coarse: 0.1,
+    nominal: 0.05,
+    reference: 0.0125,
+  });
+  assert.deepEqual(matrix.wetGeometry.simpsonPanels, {
+    coarse: 16,
+    nominal: 32,
+    reference: 128,
+  });
+  assert.equal(matrix.conservativeOscillator.stepSize, 0.005);
+  assert.deepEqual(matrix.eventRoot.epsilonT, {coarse: 1e-6, fine: 1e-8, reference: 1e-10});
+  assert.deepEqual(matrix.variableInertia.derivativeSteps, {fine: 1e-4, finer: 5e-5});
+  assert.equal(matrix.outputIntegration.simpsonPanels, 256);
+  assert.equal(matrix.coefficientSourceCases.length, 3);
+  assert.equal(matrix.coefficientSourceCases.at(-1).accepted, false);
+});
