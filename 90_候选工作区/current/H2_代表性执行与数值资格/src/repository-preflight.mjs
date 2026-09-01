@@ -1,7 +1,10 @@
 import { spawn } from "node:child_process";
 import { readdir, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+
 import { canonicalSha256 } from "../../_shared/src/canonical.mjs";
+import { assertHw2rFormalObservationAuthorized } from
+  "../../H1_硬件利用与执行架构/src/hw2r-pre-observation.mjs";
 import { H2_REPOSITORY_ROOT } from "./contract.mjs";
 
 const CURRENT_ROOT = "90_候选工作区/current";
@@ -51,6 +54,7 @@ export const H2N_STAGE0_IMPLEMENTATION_PATHS = Object.freeze([
 export const HW2R_IMPLEMENTATION_PATHS = Object.freeze([
   `${H1_ROOT}/contracts/hw2-representative-qualification-protocol.v2.json`,
   `${H1_ROOT}/contracts/hw2-representative-qualification-protocol.v2.schema.json`,
+  `${H1_ROOT}/contracts/hw2r-pre-observation-readiness.v1.json`,
   `${H1_ROOT}/scripts/hw2r-js-case-worker.mjs`,
   `${H1_ROOT}/scripts/run-hw2r-qualification-v2.mjs`,
   `${H1_ROOT}/src/hw2-telemetry.mjs`,
@@ -62,6 +66,7 @@ export const HW2R_IMPLEMENTATION_PATHS = Object.freeze([
   `${H1_ROOT}/src/hw2r-executors.mjs`,
   `${H1_ROOT}/src/hw2r-finalization.mjs`,
   `${H1_ROOT}/src/hw2r-measurement.mjs`,
+  `${H1_ROOT}/src/hw2r-pre-observation.mjs`,
   `${H1_ROOT}/src/hw2r-telemetry.mjs`,
   `${H1_ROOT}/src/hw2r-utilization.mjs`,
   `${H1_ROOT}/src/linux-host.mjs`,
@@ -71,6 +76,7 @@ export const HW2R_IMPLEMENTATION_PATHS = Object.freeze([
 export const HW2_FINALIZATION_IMPLEMENTATION_PATHS = Object.freeze([
   ...HW2R_IMPLEMENTATION_PATHS,
   ...H2X_IMPLEMENTATION_PATHS,
+  `${H2_ROOT}/src/h2n-full-evidence.mjs`,
   `${H1_ROOT}/scripts/finalize-hw2-selection.mjs`,
 ]);
 
@@ -94,7 +100,8 @@ async function capture(command, args, options = {}) {
   if (code !== 0 || signal !== null) {
     throw new Error(
       `preflight command failed: ${command} ${args.join(" ")}; `
-        + `code=${code}; signal=${signal}; ${Buffer.concat(stderr).toString("utf8")}`,
+        + `code=${code}; signal=${signal}; `
+        + Buffer.concat(stderr).toString("utf8"),
     );
   }
   return Buffer.concat(stdout).toString("utf8").trim();
@@ -113,28 +120,44 @@ async function currentCgroupPath() {
   const line = (await readFile("/proc/self/cgroup", "utf8"))
     .split("\n")
     .find((item) => item.startsWith("0::"));
-  if (!line) throw new Error("DEFERRED-H2N-TOOLCHAIN-OR-RESOURCE: cgroup-v2 missing");
-  const relative = line.slice(3);
-  return resolve("/sys/fs/cgroup", `.${relative}`);
+  if (!line) {
+    throw new Error(
+      "DEFERRED-H2N-TOOLCHAIN-OR-RESOURCE: cgroup-v2 missing",
+    );
+  }
+  return resolve("/sys/fs/cgroup", `.${line.slice(3)}`);
 }
 
 async function readMemoryEvents(cgroupPath) {
   const text = await readFile(resolve(cgroupPath, "memory.events"), "utf8");
-  return Object.freeze(Object.fromEntries(text.trim().split("\n").map((line) => {
-    const [key, value] = line.split(" ");
-    return [key, Number(value)];
-  })));
+  return Object.freeze(Object.fromEntries(
+    text.trim().split("\n").map((line) => {
+      const [key, value] = line.split(" ");
+      return [key, Number(value)];
+    }),
+  ));
 }
 
 export async function readQualificationResourceSnapshot() {
   const cgroupPath = await currentCgroupPath();
-  const [memoryMaxText, memoryCurrentText, memoryEvents, meminfoText] =
-    await Promise.all([
-      readFile(resolve(cgroupPath, "memory.max"), "utf8"),
-      readFile(resolve(cgroupPath, "memory.current"), "utf8"),
-      readMemoryEvents(cgroupPath),
-      readFile("/proc/meminfo", "utf8"),
-    ]);
+  const [
+    memoryMaxText,
+    memoryCurrentText,
+    memoryPeakText,
+    memoryEvents,
+    meminfoText,
+  ] = await Promise.all([
+    readFile(resolve(cgroupPath, "memory.max"), "utf8"),
+    readFile(resolve(cgroupPath, "memory.current"), "utf8"),
+    readFile(resolve(cgroupPath, "memory.peak"), "utf8").catch((error) => {
+      if (new Set(["ENOENT", "EACCES", "EPERM"]).has(error?.code)) {
+        return "0";
+      }
+      throw error;
+    }),
+    readMemoryEvents(cgroupPath),
+    readFile("/proc/meminfo", "utf8"),
+  ]);
   const memoryMax = memoryMaxText.trim() === "max"
     ? Number.POSITIVE_INFINITY
     : Number(memoryMaxText.trim());
@@ -142,26 +165,35 @@ export async function readQualificationResourceSnapshot() {
     cgroupPath,
     memoryMax,
     memoryCurrent: Number(memoryCurrentText.trim()),
+    memoryPeak: Number(memoryPeakText.trim()),
     memoryEvents,
     meminfo: Object.freeze(parseMeminfo(meminfoText)),
   });
 }
 
 export function assertFiniteMemorySafety(contract, snapshot) {
-  if (!Number.isFinite(snapshot.memoryMax) || snapshot.memoryMax <= 0) {
-    throw new Error("DEFERRED-H2N-TOOLCHAIN-OR-RESOURCE: finite memory cgroup required");
+  if (!Number.isFinite(snapshot.memoryMax) || snapshot.memoryMax <= 0
+    || !Number.isFinite(snapshot.memoryCurrent)
+    || snapshot.memoryCurrent < 0
+    || snapshot.memoryCurrent >= snapshot.memoryMax) {
+    throw new Error(
+      "DEFERRED-H2N-TOOLCHAIN-OR-RESOURCE: finite memory cgroup required",
+    );
   }
   const reserve = Math.max(
     contract.safety.systemReserveBytesMinimum,
     contract.safety.systemReserveMemTotalFraction * snapshot.meminfo.MemTotal,
   );
   if (!(snapshot.meminfo.MemAvailable >= reserve)) {
-    throw new Error("DEFERRED-H2N-TOOLCHAIN-OR-RESOURCE: system reserve unavailable");
+    throw new Error(
+      "DEFERRED-H2N-TOOLCHAIN-OR-RESOURCE: system reserve unavailable",
+    );
   }
   return Object.freeze({
     pass: true,
     memoryMax: snapshot.memoryMax,
     memoryCurrent: snapshot.memoryCurrent,
+    memoryPeak: snapshot.memoryPeak,
     systemReserveRequired: reserve,
     systemMemAvailable: snapshot.meminfo.MemAvailable,
     swapUsed: snapshot.meminfo.SwapTotal - snapshot.meminfo.SwapFree,
@@ -175,10 +207,12 @@ export function compareResourceSnapshots(contract, before, after) {
   const swapBefore = before.meminfo.SwapTotal - before.meminfo.SwapFree;
   const swapAfter = after.meminfo.SwapTotal - after.meminfo.SwapFree;
   const swapGrowth = swapAfter - swapBefore;
-  const oomGrowth = (after.memoryEvents.oom ?? 0) - (before.memoryEvents.oom ?? 0);
+  const oomGrowth = (after.memoryEvents.oom ?? 0)
+    - (before.memoryEvents.oom ?? 0);
   const oomKillGrowth = (after.memoryEvents.oom_kill ?? 0)
     - (before.memoryEvents.oom_kill ?? 0);
-  const highGrowth = (after.memoryEvents.high ?? 0) - (before.memoryEvents.high ?? 0);
+  const highGrowth = (after.memoryEvents.high ?? 0)
+    - (before.memoryEvents.high ?? 0);
   const reserve = Math.max(
     contract.safety.systemReserveBytesMinimum,
     contract.safety.systemReserveMemTotalFraction * after.meminfo.MemTotal,
@@ -186,12 +220,17 @@ export function compareResourceSnapshots(contract, before, after) {
   const highGrowthMaximum = contract.safety.memoryHighEventGrowthMaximum
     ?? Number.POSITIVE_INFINITY;
   const systemReserveAfterPass = after.meminfo.MemAvailable >= reserve;
+  const headroomFraction = contract.safety.candidateHeadroomFraction ?? 0.1;
+  const cgroupHeadroomPass = Number.isFinite(after.memoryMax)
+    && Number.isFinite(after.memoryPeak)
+    && after.memoryPeak * (1 + headroomFraction) < after.memoryMax;
   return Object.freeze({
     pass: swapGrowth <= contract.safety.swapGrowthMaximumBytes
       && oomGrowth <= contract.safety.oomEventGrowthMaximum
       && oomKillGrowth <= contract.safety.oomEventGrowthMaximum
       && highGrowth <= highGrowthMaximum
-      && systemReserveAfterPass,
+      && systemReserveAfterPass
+      && cgroupHeadroomPass,
     swapGrowth,
     oomGrowth,
     oomKillGrowth,
@@ -202,6 +241,10 @@ export function compareResourceSnapshots(contract, before, after) {
     systemReserveRequired: reserve,
     systemMemAvailableAfter: after.meminfo.MemAvailable,
     systemReserveAfterPass,
+    memoryPeakAfter: after.memoryPeak,
+    memoryMax: after.memoryMax,
+    headroomFraction,
+    cgroupHeadroomPass,
   });
 }
 
@@ -211,6 +254,8 @@ async function activeResultBearingProcesses() {
     "run-brinkman-multiresolution-v2-1",
     "run-a8r-v2p1",
     "FORMAL_A8R",
+    "HW1-primary",
+    "HW1-repeat",
   ];
   const matches = [];
   for (const entry of entries) {
@@ -220,16 +265,25 @@ async function activeResultBearingProcesses() {
       const bytes = await readFile(`/proc/${entry.name}/cmdline`);
       const command = bytes.toString("utf8").replaceAll("\0", " ").trim();
       if (patterns.some((pattern) => command.includes(pattern))) {
-        matches.push(Object.freeze({ pid: Number(entry.name), command }));
+        matches.push(Object.freeze({
+          pid: Number(entry.name),
+          command,
+        }));
       }
     } catch (error) {
-      if (!new Set(["ENOENT", "EACCES", "EPERM"]).has(error?.code)) throw error;
+      if (!new Set(["ENOENT", "EACCES", "EPERM"]).has(error?.code)) {
+        throw error;
+      }
     }
   }
   return Object.freeze(matches);
 }
 
 export async function assertCleanMainParityAndIdentity(paths) {
+  if (paths === HW2R_IMPLEMENTATION_PATHS
+    || paths === HW2_FINALIZATION_IMPLEMENTATION_PATHS) {
+    await assertHw2rFormalObservationAuthorized();
+  }
   const [
     branch,
     head,
@@ -248,15 +302,20 @@ export async function assertCleanMainParityAndIdentity(paths) {
     activeResultBearingProcesses(),
   ]);
   if (branch !== "main" || head !== originMain || status !== "") {
-    throw new Error("INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: clean main parity required");
+    throw new Error(
+      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: clean main parity required",
+    );
   }
   if (active.length > 0) {
     throw new Error(
-      `INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: active result-bearing process ${active[0].pid}`,
+      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: "
+        + `active result-bearing process ${active[0].pid}`,
     );
   }
   if (!/^[0-9a-f]{40}$/.test(implementationCommit)) {
-    throw new Error("INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: implementation commit missing");
+    throw new Error(
+      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: implementation commit missing",
+    );
   }
   return Object.freeze({
     branch,
