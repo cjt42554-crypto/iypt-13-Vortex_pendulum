@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "R0-INTERRUPTED-RUNTIME-EVIDENCE-v1",
+  "evidenceId": "A8R-V2P1-SERIAL-REFERENCE-HOST-SHUTDOWN-20260901",
+  "observedAt": "2026-09-01T12:40:38.401326161+08:00",
+  "classification": "INCONCLUSIVE-R0-HOST-SHUTDOWN-NO-CANONICAL-ARTIFACT",
+  "scientificConclusion": "NONE",
+  "scientificPayloadInspected": false,
+  "runtime": {
+    "identity": "A8R-V2P1-SERIAL-REFERENCE",
+    "sourceCommit": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "command": "npm run brinkman-multiresolution-v2-1",
+    "processes": [
+      {
+        "pid": 51467,
+        "role": "npm",
+        "startedAt": "2026-08-31T03:00:25+08:00",
+        "currentState": "ABSENT"
+      },
+      {
+        "pid": 51497,
+        "role": "shell-wrapper",
+        "startedAt": "2026-08-31T03:00:25+08:00",
+        "currentState": "ABSENT"
+      },
+      {
+        "pid": 51498,
+        "role": "node-runner",
+        "startedAt": "2026-08-31T03:00:25+08:00",
+        "currentState": "ABSENT"
+      }
+    ],
+    "lastLiveObservation": {
+      "exactObservedAt": null,
+      "timestampLimitation": "The exact observation timestamp was not recoverable after the terminal session and host boot ended.",
+      "caseId": "D54",
+      "completedSteps": 77760,
+      "totalSteps": 86400,
+      "percent": 90,
+      "nodeState": "Rl+",
+      "nodeCpuTime": "1-01:03:54",
+      "nodeCpuPercent": 120,
+      "nodeRssKiB": 1162748
+    },
+    "terminalSession": {
+      "formerHandle": 99850,
+      "currentObservation": "UNKNOWN_PROCESS_ID",
+      "finalExitCode": null,
+      "finalSignal": null
+    }
+  },
+  "hostShutdown": {
+    "previousBootId": "efb29783e3c24b479fc9c7e07933aed2",
+    "previousBootStartedAt": "2026-08-31T02:10:43+08:00",
+    "shutdownAt": "2026-09-01T00:08:10+08:00",
+    "shutdownType": "ORDERLY_SYSTEM_POWEROFF",
+    "journalFinalAction": "systemd-shutdown sent SIGTERM to remaining processes",
+    "oomEvidenceInFinalWindow": "NONE_FOUND",
+    "currentBootIdAtObservation": "e1a15398140640c7b8d5c04ef5a7b282",
+    "currentBootStartedAt": "2026-09-01T12:37:38+08:00"
+  },
+  "artifacts": {
+    "expectedGzip": {
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-brinkman-cycle-resolved-multiresolution-phase-force-identity.json.gz",
+      "state": "ABSENT"
+    },
+    "expectedSidecar": {
+      "path": "90_候选工作区/current/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-brinkman-cycle-resolved-multiresolution-phase-force-identity.sha256",
+      "state": "ABSENT"
+    },
+    "partialArtifacts": [],
+    "artifactAsserterExecuted": false,
+    "artifactAsserterReason": "Canonical gzip and sidecar are absent."
+  },
+  "oldWorktree": {
+    "path": "/home/cjt/Desktop/iypt/13 涡流摆",
+    "branch": "main",
+    "head": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "originMainAfterRequiredPostBootFetch": "0c44ad25fecd82423e26fb7d6ff8dadd52d67eee",
+    "porcelainV2Entries": [],
+    "worktreeUpdatedAfterShutdown": false
+  },
+  "evidenceCommands": [
+    "ps -o pid,ppid,pgid,sid,lstart,etime,time,stat,pcpu,pmem,rss,vsz,cmd -p 51467,51497,51498",
+    "kill -0 51467; kill -0 51497; kill -0 51498",
+    "stat expected gzip and sidecar; find .partial-*",
+    "git rev-parse HEAD; git rev-parse origin/main; git status --porcelain=v2",
+    "uptime -s; who -b; journalctl --list-boots",
+    "journalctl -b -2 --since 2026-09-01T00:05:00",
+    "journalctl -b -2 -k --since 2026-08-31T23:30:00 | search OOM evidence"
+  ],
+  "failClosedActions": {
+    "restartOldSerialForbiddenPendingPr1": true,
+    "resumeFromCheckpointForbidden": true,
+    "inferScientificResultForbidden": true,
+    "deleteOrRewriteFailureEvidenceForbidden": true,
+    "pullMergeCheckoutOldWorktreeBeforePr1Forbidden": true,
+    "requiredNextGate": "PR-1"
+  }
+}

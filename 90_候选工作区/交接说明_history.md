@@ -68,3 +68,12 @@ git show b11eea58dcf45518c0a086dc5dba1e065fd49213:"90_候选工作区/交接说�
 - 完整路线包含 G0--G5、WP-R0/G1/HW1/E1/F1/S1/R1/HW2/HW3/A8T/I1/DOC/Z1，定义了依赖图、关键路径、统一 DoD、性能/数值/物理/实验验证边界、技术债处置、风险、资源、回滚、逐路径条件授权和最终 pause manifest。
 - 授权 Codex 下一完整批次 `BATCH-G1-RESULT-BEFORE-FOUNDATION-AND-EXPERIMENT-PREP` 连续完成总账/CI、H1 无结果基础、E1、F1、S1 和统一验证；禁止重型 probe、GPU/带宽压力、科学结果读取、正式路径修改、历史 A2/A8 修改和旧串行复跑。
 - 本轮只新增主规划并更新 current/history；正式理论、正式程序、科学合同、候选实现和机器产物均未修改。主规划和交接已在本地通过 Pandoc 严格解析；未执行 npm/TypeScript/数值/性能/实验验证。
+
+## 2026-09-01 12:40:38 +08:00
+
+- G1 的 G0/H1/E1/F1/S1 结果前合同、JSON schema 和冻结说明已作为独立提交 `0c44ad25fecd82423e26fb7d6ff8dadd52d67eee` 推送；该提交未包含实现、测试结果或长时计算，冻结的 H1 v1 Markdown 合同字节未改变。
+- 原 A8R 串行参考所在主机于 `2026-09-01 00:08:10 +08:00` 有序关机。关机前最后实际观察为同一 D54 case `77760/86400 (90%)`；新 boot 中 PID `51467/51497/51498` 均不存在，终端句柄不再保留最终退出码。
+- 规范 gzip、sidecar 和 `.partial-*` 均不存在，旧工作树仍为干净的 `main@88c4e9e8ba57b02a06315679e9b30dd10999b30c`。未读取科学 payload、未运行 artifact asserter，科学结论保持 `NONE`。
+- 新增 `03_R0_主运行因主机关机中断现场冻结报告.md` 和机器证据 `r0-host-shutdown-20260901.json`；机器证据 SHA-256 为 `889eafc3a340f60d5d5743b64df086ab6b603ed9173465a54b62ef42542fb85c`。
+- 现场分类为 `INCONCLUSIVE-R0-HOST-SHUTDOWN-NO-CANONICAL-ARTIFACT`，命中 PR-1。裁决前禁止旧串行重启、checkpoint 恢复、硬件 probe 和旧工作树同步；G1 纯合同测试与合成工作可继续。
+- 用户随后明确收窄 Markdown 格式检查：只检查 `01_最终理论/**/*.md` 与 `90_候选工作区/交接说明_current.md`；其他 Markdown 不进入格式门禁，原规划中的 A8O/A8P 历史 baseline 不再执行。

@@ -4,20 +4,33 @@
 
 全项目一次成型主规划已冻结。当前状态为：
 
-`PROJECT_MASTER_PLAN_FROZEN_G1_RESULT_BEFORE_BATCH_AUTHORIZED_SERIAL_REFERENCE_RUNNING`
+`PROJECT_MASTER_PLAN_FROZEN_G1_CONTRACTS_FROZEN_SERIAL_REFERENCE_INTERRUPTED_BY_HOST_SHUTDOWN_PR1_REQUIRED`
 
-用户提供的实时主机事实仍为：
+最新实时主机事实为：
 
 - 原 A8R v2.1 串行参考运行来源：
   `88c4e9e8ba57b02a06315679e9b30dd10999b30c`；
-- Node PID：`51498`，身份连续；
-- 同一 D54 case 最近输出 `77760/86400 (90%)`；
+- npm PID `51467`、shell PID `51497`、Node PID `51498` 均已不存在；
+- 关机前最后实际观察的同一 D54 case 为 `77760/86400 (90%)`；
 - 旧工作树干净；
 - 规范 gzip、sidecar 和 `.partial-*` 尚未出现；
 - 科学 payload 未读取，科学结论仍为 `NONE`。
 
-GitHub 无法独立核验上述实时主机状态。当前运行不得因规划、CI、H1 或实验准备工作被
-暂停、终止、改 affinity/cgroup、修改工作树、加载新代码或读取中间科学状态。
+主机在 `2026-09-01 00:08:10 +08:00` 有序关机，运行所在 boot ID 为
+`efb29783e3c24b479fc9c7e07933aed2`；关机日志达到 `System Power Off`，最终窗口没有
+发现 OOM 记录。终端会话未保留可查询的最终退出码，不能反推出精确信号。现场冻结为：
+
+`INCONCLUSIVE-R0-HOST-SHUTDOWN-NO-CANONICAL-ARTIFACT`
+
+报告和机器证据：
+
+- `90_候选工作区/current/G0_全项目完成度与实验前暂停治理/03_R0_主运行因主机关机中断现场冻结报告.md`；
+- `90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.json`；
+- 机器证据 SHA-256：
+  `889eafc3a340f60d5d5743b64df086ab6b603ed9173465a54b62ef42542fb85c`。
+
+该异常触发 `PR-1`。在 Pro 裁决前，不重启旧串行运行、不从 checkpoint 恢复、不执行
+硬件 probe，也不对旧工作树 pull/merge/checkout。G1 纯合同、测试和合成工作可继续。
 
 ## 全项目主规划
 
@@ -69,6 +82,10 @@ G0/G1 总账和 CI、H1 结果前架构、E1 实验准备、F1 前向数值资�
 批次：
 
 `BATCH-G1-RESULT-BEFORE-FOUNDATION-AND-EXPERIMENT-PREP`
+
+结果前合同已在提交 `0c44ad25fecd82423e26fb7d6ff8dadd52d67eee` 独立冻结并推送；
+该提交只包含 Markdown 合同、JSON schema 和机器合同，没有实现或运行结果。下一合法
+动作是独立提交合同测试，随后才写无结果实现。
 
 Codex 可以连续执行至统一验收，不需要每建一个文件再询问。批次包含：
 
@@ -124,6 +141,17 @@ Codex 可以连续执行至统一验收，不需要每建一个文件再询问�
 - 不修改历史 A2/A8 文件；
 - 不创建或使用其他分支。
 
+## Markdown 检查范围的最新用户覆盖
+
+用户于 `2026-09-01` 明确收窄 Markdown 格式检查范围。后续只检查：
+
+- `01_最终理论/**/*.md`；
+- `90_候选工作区/交接说明_current.md`。
+
+其他 Markdown，包括 history、候选合同、裁决、报告和验证记录，均不进入格式门禁。此前
+规划的 A8O/A8P 四处历史 Markdown baseline 因此不再需要；G1 应将检查器与 workflow
+直接限制到上述两个范围，不得继续扫描或修复其他 Markdown。
+
 ## 后续 Pro 复核点
 
 除异常外，只保留：
@@ -132,7 +160,7 @@ Codex 可以连续执行至统一验收，不需要每建一个文件再询问�
 2. `PR-3`：HW1 两次全量和 A8R 科学终局；
 3. `PR-4`：全项目实验前暂停终审。
 
-当前串行参考只有出现来源、进程或产物异常时才触发 `PR-1`。
+当前串行参考已经因主机关机、进程消失且无规范产物触发 `PR-1`；裁决待取得。
 
 ## 长期终点
 
