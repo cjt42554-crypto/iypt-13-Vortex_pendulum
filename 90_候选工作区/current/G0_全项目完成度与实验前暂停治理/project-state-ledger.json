@@ -1,9 +1,9 @@
 {
   "schemaVersion": "G0-PROJECT-STATE-CONTRACT-v1",
-  "ledgerId": "IYPT13-PREEXPERIMENT-STATE-20260901-POST-PR1-R1I",
+  "ledgerId": "IYPT13-PREEXPERIMENT-STATE-20260901-G1-PASS",
   "project": "IYPT-2027-P13-VORTEX-PENDULUM",
-  "baselineCommit": "43df2fd4cf61d804388d714acf53ea5d3a7ce580",
-  "generatedAt": "2026-09-01T13:11:51+08:00",
+  "baselineCommit": "7202e2f8195dd30c97460698547338632dc3c5b0",
+  "generatedAt": "2026-09-01T14:01:27+08:00",
   "conclusionCeiling": "EXPERIMENT_PREPARATION_ONLY",
   "workPackages": [
     {
@@ -65,7 +65,7 @@
       "title": "全仓状态总账、CI 和检查范围治理",
       "owner": "Codex",
       "priority": "P0",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "predecessors": [],
       "evidence": [
         {
@@ -85,17 +85,29 @@
           "path": ".github/workflows/markdown-check.yml",
           "sha256": "519577c8dff09d946f1ae5022e7702de59f0870040c914ba3182d01065f329a8",
           "claim": "GitHub Markdown workflow invokes only the scoped checker and is green at the recorded handoff."
+        },
+        {
+          "kind": "implementation-test",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+          "sha256": "7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276",
+          "claim": "Seventy contract and implementation tests, all five bounded entrypoints, a clean-clone replay, and both scoped GitHub workflows passed at baseline 7202e2f without a scientific payload or heavy probe."
+        },
+        {
+          "kind": "governance",
+          "path": ".github/workflows/simulation-check.yml",
+          "sha256": "400f2308b56c14c4e364d74587e10cb70d1b8666c1f296e8ed003b174012271f",
+          "claim": "The portable five-job simulation foundation workflow uses sealed R1I validation and passed as GitHub run 33475574515."
         }
       ],
-      "terminationCode": null,
-      "nextGate": "PASS-G1-RESULT-BEFORE-FOUNDATION"
+      "terminationCode": "PASS-G1-RESULT-BEFORE-FOUNDATION",
+      "nextGate": "WP-HW2"
     },
     {
       "id": "WP-HW1",
       "title": "H1 v2 机器合同、测试和无结果架构",
       "owner": "Codex",
       "priority": "P0",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "predecessors": ["WP-G1", "WP-R1I"],
       "evidence": [
         {
@@ -109,17 +121,23 @@
           "path": "90_候选工作区/current/H1_硬件利用与执行架构/tests/contract.v2.test.mjs",
           "sha256": "e8c80f95d8ccb0deb49b9c68ceb484214b1414ea7551ac3d9acac57fb31b6a72",
           "claim": "Active-v2, immutable-v1, no-fallback, no-rerun, no-partial-credit and scientific-field-leak contract tests."
+        },
+        {
+          "kind": "implementation-test",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+          "sha256": "7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276",
+          "claim": "The active H1 v2 loader, provenance layers, immutable shards, aggregator, inventory interface, planner and result-blind probe evaluator passed 22 tests and the bounded no-result smoke in both clean clone and CI."
         }
       ],
-      "terminationCode": null,
-      "nextGate": "PASS-HW1-V2-RESULT-BEFORE-FOUNDATION"
+      "terminationCode": "PASS-HW1-V2-RESULT-BEFORE-FOUNDATION",
+      "nextGate": "WP-HW2"
     },
     {
       "id": "WP-E1",
       "title": "实验准备、数据和辨识预注册包",
       "owner": "Codex",
       "priority": "P0",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "predecessors": ["WP-G1"],
       "evidence": [
         {
@@ -127,17 +145,23 @@
           "path": "90_候选工作区/current/E1_实验准备与辨识协议/contracts/e1-contract.v1.json",
           "sha256": "f71cc5a2450de9846eb5dd5b454a0012641a7c9b0543eba898b54cfc44b28dc3",
           "claim": "Experiment-preparation contract was frozen before synthetic implementation."
+        },
+        {
+          "kind": "implementation-test",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+          "sha256": "7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276",
+          "claim": "Five run families, eight channel kinds, deterministic records, frozen block holdout, parameter recovery and all twelve pre-registered negative cases passed synthetic-only qualification."
         }
       ],
-      "terminationCode": null,
-      "nextGate": "PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY"
+      "terminationCode": "PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY",
+      "nextGate": "WP-I1"
     },
     {
       "id": "WP-F1",
       "title": "正式前向数值资格候选包",
       "owner": "Codex",
       "priority": "P1",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "predecessors": ["WP-G1"],
       "evidence": [
         {
@@ -145,17 +169,23 @@
           "path": "90_候选工作区/current/F1_前向数值资格与闭合包接口/contracts/f1-contract.v1.json",
           "sha256": "ed8fefaeda74621d00aef2e7d24d6258a90358b2babf55ecfdfcadf46aaaabce",
           "claim": "Synthetic forward numerical qualification thresholds were frozen before implementation."
+        },
+        {
+          "kind": "numerical-qualification",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+          "sha256": "7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276",
+          "claim": "The frozen analytic and synthetic matrix passed ODE convergence, wet geometry, conservative energy, event root, variable inertia, output integration, repeatability and source-label gates."
         }
       ],
-      "terminationCode": null,
-      "nextGate": "PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY"
+      "terminationCode": "PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY",
+      "nextGate": "WP-I1"
     },
     {
       "id": "WP-S1",
       "title": "结构分析实验前最小工具闭合",
       "owner": "Codex",
       "priority": "P1",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "predecessors": ["WP-G1"],
       "evidence": [
         {
@@ -163,21 +193,27 @@
           "path": "90_候选工作区/current/S1_结构分析实验前最小工具/contracts/s1-contract.v1.json",
           "sha256": "e2b22e590d01751bf097316317b46689f152ac26a35475345c5c936cc0d4d88a",
           "claim": "Synthetic structural qualification thresholds were frozen before implementation."
+        },
+        {
+          "kind": "numerical-qualification",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+          "sha256": "7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276",
+          "claim": "Jacobian convergence, characteristic roots, synthetic Hopf transversality, identifiable-combination guards, frequency-phase, average power and canonical repeat all passed without apparatus claims."
         }
       ],
-      "terminationCode": null,
-      "nextGate": "PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS"
+      "terminationCode": "PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS",
+      "nextGate": "WP-I1"
     },
     {
       "id": "WP-HW2",
       "title": "硬件 inventory、probe 和候选选择",
       "owner": "Codex",
       "priority": "P0",
-      "status": "WAITING_PREDECESSOR",
+      "status": "NOT_STARTED",
       "predecessors": ["WP-G1", "WP-HW1", "WP-R1I"],
       "evidence": [],
       "terminationCode": null,
-      "nextGate": "PR-2"
+      "nextGate": "Static inventory and bounded result-blind probe, then PR-2"
     },
     {
       "id": "WP-HW3",

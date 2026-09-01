@@ -37,3 +37,13 @@ git show 53c33f30c72613fafb49066aaab0b4552c46de73:"90_候选工作区/交接说�
 - 提交 `c81f7bd9780a6c49a3cefb838efd0bc5a54e3ec2` 将 workflow 步骤名称改为明示检查最终理论与 current 交接；GitHub Actions 运行 `33471940558` 结论为 `success`。
 - 其他 Markdown 不再进入通用格式门；不创建历史 baseline，也不为格式检查修改 A8O、A8P、history、候选合同或报告。其他文档仍可受来源哈希、合同身份和专用语义测试约束。
 - current 最终收口提交为 `df9411d1b7d4a8eafe911d17c1941a78883ae546`。正式理论正文、正式模拟程序、R0 证据、H1 v1 文件和全部科学合同/产物均未修改。
+
+## 2026-09-01 14:06:02 +08:00
+
+- 提交并推送 H1 v2 无结果执行架构 `714c2e2c4b3b3e1217971f83e7e0449e1d44153d`、E1 合成资格 `57e924b073ee6e2a03e7a9708167dcf4ec283612`、F1 合成数值资格 `c0dcadfbd670a05e921d546eb47b81101a88bfb7` 和 S1 合成结构资格 `e6e5ff769a03e1f167e6c585c4301f7b61da9e77`。
+- H1/E1/F1/S1 分别通过 22、10、12、13 项测试；G0 13 项测试、ledger 和 R1I 封存验证通过。干净克隆 `main@7202e2f8195dd30c97460698547338632dc3c5b0` 合计通过 70 项测试和五个有界入口，验收前后工作树干净。
+- 新增轻量 `.github/workflows/simulation-check.yml`。本地 OAuth 凭据因缺少 `workflow` scope 被 GitHub 明确拒绝后，使用仓库 GitHub 写接口提交工作流；没有报告虚假的 push 成功。
+- 首次 GitHub 运行 `33475419734` 与随后旧 workflow 运行 `33475552913` 因调用绑定本机旧路径的 R1I 现场复核失败，失败记录保留。新增 `SEALED-EVIDENCE-ONLY` 模式后，运行 `33475574515` 的五个 job 全部成功；该模式复算封存 manifest、四个来源实体、sidecar 与 Git blob，但明确不冒充本机现场重访。本机完整现场模式另行再次通过。
+- 限定范围 Markdown 运行 `33475574501` 成功；通用格式门仍只覆盖 `01_最终理论/**/*.md` 与 `90_候选工作区/交接说明_current.md`，没有检查其他 Markdown。
+- 新增 G1 机器证据 `g1-result-before-foundation-20260901.json`，SHA-256 为 `7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276`，并新增统一验证报告。总账将 WP-G1、WP-HW1、WP-E1、WP-F1 和 WP-S1 更新为有限 PASS，WP-HW2 更新为 `NOT_STARTED`。
+- 当前最高结论仍不是科学结论：科学 payload 未读、重型 probe 未运行、正式理论与程序未改，科学结论为 `NONE`。下一批次从 WP-HW2 静态 inventory 和有界结果盲 probe 开始，候选选择后停止在 PR-2，并要求 Pro 同时独立审查全项目技术债与重构必要性。
