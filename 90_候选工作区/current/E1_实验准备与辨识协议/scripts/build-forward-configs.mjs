@@ -50,10 +50,8 @@ for (const [name, validation] of [
 }
 
 const outputRoot = resolve(outputDirectory);
-await mkdir(outputRoot, { recursive: true });
 const blocks = [...plan.calibrationBlocks, ...plan.holdoutBlocks];
-const manifestEntries = [];
-for (const block of blocks) {
+const prepared = blocks.map((block) => {
   const config = buildFormalForwardConfig(
     baseConfig,
     apparatus,
@@ -66,12 +64,20 @@ for (const block of blocks) {
   if (basename(fileName) !== fileName || dirname(outputPath) !== outputRoot) {
     throw new Error(`unsafe conditionBlockId output path: ${block.conditionBlockId}`);
   }
+  return Object.freeze({ block, config, fileName, outputPath });
+});
+
+// Validate every frozen condition before publishing any file. A late holdout
+// domain error must not leave a partial set of apparently usable configs.
+await mkdir(outputRoot, { recursive: true });
+const manifestEntries = [];
+for (const { block, config, fileName, outputPath } of prepared) {
   const text = `${JSON.stringify(config, null, 2)}\n`;
   await writeFile(outputPath, text, { encoding: "utf8", flag: "wx" });
   manifestEntries.push({
     conditionBlockId: block.conditionBlockId,
     role: block.role,
-    file: basename(outputPath),
+    file: fileName,
     configSha256: canonicalSha256(config),
   });
 }
