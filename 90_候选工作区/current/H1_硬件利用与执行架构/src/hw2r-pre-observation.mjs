@@ -23,6 +23,33 @@ function assertStringArray(value, label) {
   }
 }
 
+function assertClosureEvidence(finding) {
+  if (!Array.isArray(finding.closureEvidence)) {
+    throw new Error(
+      `NO-GO-HW2R-PRE-OBSERVATION-GATE: ${finding.id} closureEvidence`,
+    );
+  }
+  if (finding.status === "CLOSED" && finding.closureEvidence.length === 0) {
+    throw new Error(
+      `NO-GO-HW2R-PRE-OBSERVATION-GATE: ${finding.id} closed without evidence`,
+    );
+  }
+  for (const [index, evidence] of finding.closureEvidence.entries()) {
+    if (!evidence || typeof evidence !== "object" || Array.isArray(evidence)
+      || !/^[0-9a-f]{40}$/u.test(evidence.commit ?? "")
+      || typeof evidence.validation !== "string"
+      || evidence.validation.length === 0) {
+      throw new Error(
+        `NO-GO-HW2R-PRE-OBSERVATION-GATE: ${finding.id} evidence ${index}`,
+      );
+    }
+    assertStringArray(
+      evidence.paths,
+      `${finding.id}.closureEvidence[${index}].paths`,
+    );
+  }
+}
+
 export async function loadHw2rPreObservationReadiness(
   path = HW2R_PRE_OBSERVATION_READINESS_PATH,
 ) {
@@ -49,6 +76,7 @@ export async function loadHw2rPreObservationReadiness(
     }
     ids.add(finding.id);
     assertStringArray(finding.requiredClosure, `${finding.id}.requiredClosure`);
+    assertClosureEvidence(finding);
   }
   const transition = value.authorizationTransition;
   if (!transition || transition.allBlockingFindingsMustBeClosed !== true
