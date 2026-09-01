@@ -1,0 +1,33 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import {
+  assertHw2rFormalObservationAuthorized,
+  loadHw2rPreObservationReadiness,
+} from "../src/hw2r-pre-observation.mjs";
+
+test("formal HW2R observation remains fail-closed until every PR-2A blocker is closed", async () => {
+  const loaded = await loadHw2rPreObservationReadiness();
+  assert.equal(loaded.value.formalObservationAuthorized, false);
+  assert.equal(loaded.authorized, false);
+  assert.ok(loaded.openFindings.includes("P0-WORKLOAD-BASELINE-COMPARABILITY"));
+  assert.ok(loaded.openFindings.includes("P0-GPU-PERSISTENT-LIFECYCLE"));
+  assert.ok(loaded.openFindings.includes("P0-H2N-FULL-EVIDENCE-VALIDATION"));
+  await assert.rejects(
+    () => assertHw2rFormalObservationAuthorized(),
+    /INCONCLUSIVE-HW2R-PRE-OBSERVATION-IMPLEMENTATION-NOT-READY/u,
+  );
+});
+
+test("readiness transition cannot authorize while any blocker remains open", async () => {
+  const loaded = await loadHw2rPreObservationReadiness();
+  assert.equal(
+    loaded.value.authorizationTransition.allBlockingFindingsMustBeClosed,
+    true,
+  );
+  assert.ok(loaded.openFindings.length >= 1);
+  assert.equal(
+    loaded.value.authorizationTransition.mandatoryStopAfterQualification,
+    "READY-FOR-PR2B-H3-UNLOCK-REVIEW",
+  );
+});
