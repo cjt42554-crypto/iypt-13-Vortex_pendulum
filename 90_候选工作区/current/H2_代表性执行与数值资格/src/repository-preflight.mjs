@@ -317,7 +317,8 @@ export async function assertCleanMainParityAndIdentity(paths) {
   }
   if (active.length > 0) {
     throw new Error(
-      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: "n        + `active result-bearing process ${active[0].pid}`,
+      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: "
+        + `active result-bearing process ${active[0].pid}`,
     );
   }
   if (!/^[0-9a-f]{40}$/.test(implementationCommit)) {
