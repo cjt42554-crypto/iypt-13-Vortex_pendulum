@@ -42,6 +42,22 @@
         "one frozen serial baseline per workload identity",
         "R2 surrogate cost weights derived from the frozen eight-case definitions",
         "no speedup comparison across unlike R1 and R2 work units"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "32cd58e79e22f150baacd8064ad11e921f0d3d19",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/src/hw2r-evaluator.mjs"
+          ],
+          "validation": "Cross-workload baseline comparisons now fail closed; representative R2 baseline construction remains open."
+        },
+        {
+          "commit": "50ccf2b3d34bcd2df99977704f44f7cffde3f17f",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/tests/pr2a-hardening.test.mjs"
+          ],
+          "validation": "Regression test rejects R1/R2 workload identity mismatch."
+        }
       ]
     },
     {
@@ -51,7 +67,8 @@
         "persistent worker, fresh case process, and shard aggregation candidates use distinct executor identities",
         "candidate workloadIds match the actually executed workload",
         "duplicate implementations cannot be independently selected"
-      ]
+      ],
+      "closureEvidence": []
     },
     {
       "id": "P0-GPU-PERSISTENT-LIFECYCLE",
@@ -60,7 +77,8 @@
         "GPU context, program, queue, and reusable buffers persist across the frozen multi-size case sequence within a formal repeat",
         "cold initialization and steady-state phases are separated",
         "hybrid CPU and GPU lanes use frozen backend identities and result-blind partitioning"
-      ]
+      ],
+      "closureEvidence": []
     },
     {
       "id": "P0-NUMERICAL-IDENTITY-TEMPORAL-ORDER",
@@ -69,6 +87,22 @@
         "HW2R cannot record H2-X or H2-N numerical identity before the corresponding qualification passes",
         "surrogate digest equality is stored separately from numerical qualification",
         "final selection re-evaluates all candidates against accepted H2-X or full H2-N evidence"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "1b4296eeea4a5596933893f6ed4a5d8ce73415a1",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/src/hw2r-evaluator.mjs"
+          ],
+          "validation": "Numerical identity is represented as pending rather than surrogate-pass."
+        },
+        {
+          "commit": "86c0151ccec9b8eeea8b0d54d2fad0e3e3cfe708",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/tests/pr2a-hardening.test.mjs"
+          ],
+          "validation": "Material candidates pending H2-X or H2-N block final selection."
+        }
       ]
     },
     {
@@ -78,6 +112,22 @@
         "measurement-invalid, deferred-unsafe, accessible-unavailable, and numerical-identity-pending candidates with possible gain above 10 percent block selection",
         "all candidate classes have an auditable terminal disposition",
         "95 percent best-throughput selection uses only comparable, qualified candidates"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "1b4296eeea4a5596933893f6ed4a5d8ce73415a1",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/src/hw2r-evaluator.mjs"
+          ],
+          "validation": "Deferred and numerical-identity-pending candidates above the material-gain threshold are unresolved."
+        },
+        {
+          "commit": "86c0151ccec9b8eeea8b0d54d2fad0e3e3cfe708",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/tests/pr2a-hardening.test.mjs"
+          ],
+          "validation": "Regression tests cover deferred and numerical-identity-pending blockers; terminal class coverage remains open."
+        }
       ]
     },
     {
@@ -88,6 +138,15 @@
         "cgroup peak plus headroom remains below the finite limit",
         "GPU foreign-process safety is checked before each GPU or hybrid candidate",
         "every failed candidate retains stage, code, sanitized message hash, and resource evidence"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "2b83cce7f29eaca278e587da20375a86007fa97c",
+          "paths": [
+            "90_候选工作区/current/H2_代表性执行与数值资格/src/repository-preflight.mjs"
+          ],
+          "validation": "Cgroup memory peak plus headroom is checked; one-worker admission, per-candidate GPU process checks, and structured failure evidence remain open."
+        }
       ]
     },
     {
@@ -97,6 +156,29 @@
         "worker counts include all frozen values after deduplication",
         "downstream delivery or aggregation order permutations are explicitly exercised",
         "case ordinal, worker count, completion-order identity, source, implementation, and run identity are validated"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "e9c7149354f6ea26585b0d3d739418a73a2d7378",
+          "paths": [
+            "90_候选工作区/current/H2_代表性执行与数值资格/src/shard.mjs"
+          ],
+          "validation": "Shard validation binds case ordinal, worker count, and completion-order identity."
+        },
+        {
+          "commit": "2a63c56bad46292a8a205cf911385f2aca779452",
+          "paths": [
+            "90_候选工作区/current/H2_代表性执行与数值资格/src/aggregator.mjs"
+          ],
+          "validation": "Aggregator verifies complete ordinals and coherent schedule metadata."
+        },
+        {
+          "commit": "269dc014894c29fc1adbe4bfa65d0da1cfeb50d1",
+          "paths": [
+            "90_候选工作区/current/H2_代表性执行与数值资格/tests/h2x-schedule-identity.test.mjs"
+          ],
+          "validation": "Schedule metadata regression tests pass; actual delivery-order perturbation and full worker-count coverage remain open."
+        }
       ]
     },
     {
@@ -106,6 +188,29 @@
         "the finalizer cannot accept an unvalidated optional full H2-N summary",
         "full H2-N evidence has a frozen envelope and fail-closed validator",
         "full H2-N implementation may remain conditional until stage-0 shows material gain"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "9579c347fce8c7e72e9c9db0324a2bf24863c626",
+          "paths": [
+            "90_候选工作区/current/H2_代表性执行与数值资格/src/h2n-full-evidence.mjs"
+          ],
+          "validation": "Full H2-N evidence now requires a frozen, hashed, complete envelope."
+        },
+        {
+          "commit": "afd28d8d9cbb82aced733565dd66efd9698dfc4e",
+          "paths": [
+            "90_候选工作区/current/H2_代表性执行与数值资格/tests/h2n-full-evidence.test.mjs"
+          ],
+          "validation": "Minimal and self-asserted full H2-N summaries fail closed."
+        },
+        {
+          "commit": "618534ffebb081b7a0cc8de521020736a5551680",
+          "paths": [
+            "90_候选工作区/current/H1_硬件利用与执行架构/scripts/finalize-hw2-selection.mjs"
+          ],
+          "validation": "Final selection consumes only validated full H2-N evidence."
+        }
       ]
     },
     {
@@ -114,6 +219,23 @@
       "requiredClosure": [
         "simulation-check covers H1, H2, H3, and _shared lightweight tests",
         "no heavy performance or scientific run is executed in shared CI"
+      ],
+      "closureEvidence": [
+        {
+          "commit": "d47e238bc019b1991cd81be5eb3b84db087fac66",
+          "paths": [
+            ".github/workflows/simulation-check.yml"
+          ],
+          "validation": "Lightweight CI covers G0, H1, H2, H3, shared, E1, F1, and S1 without formal performance or science runs."
+        },
+        {
+          "commit": "875ee322541904ab2dfea627819df803da7b16c4",
+          "paths": [
+            ".github/workflows/simulation-check.yml",
+            "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/tests/ledger.test.mjs"
+          ],
+          "validation": "GitHub Actions Simulation foundation checks run 33495831029 completed successfully."
+        }
       ]
     }
   ],
