@@ -18,7 +18,7 @@ jobs:
         include:
           - name: G0 governance ledger
             directory: 90_候选工作区/current/G0_全项目完成度与实验前暂停治理
-            qualification: npm run validate:ledger && npm run validate:r1i
+            qualification: npm run validate:ledger && npm run validate:r1i:sealed
           - name: H1 no-result architecture
             directory: 90_候选工作区/current/H1_硬件利用与执行架构
             qualification: npm run smoke:no-result
