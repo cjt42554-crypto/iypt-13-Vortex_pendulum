@@ -1,9 +1,9 @@
 {
   "schemaVersion": "G0-PROJECT-STATE-CONTRACT-v1",
-  "ledgerId": "IYPT13-PREEXPERIMENT-STATE-20260901-G1-PASS",
+  "ledgerId": "IYPT13-PREEXPERIMENT-STATE-20260901-HW2-PR2-PENDING",
   "project": "IYPT-2027-P13-VORTEX-PENDULUM",
-  "baselineCommit": "7202e2f8195dd30c97460698547338632dc3c5b0",
-  "generatedAt": "2026-09-01T14:01:27+08:00",
+  "baselineCommit": "998e200960a902f30258e3a5f069aae33d3c6c71",
+  "generatedAt": "2026-09-01T15:05:14+08:00",
   "conclusionCeiling": "EXPERIMENT_PREPARATION_ONLY",
   "workPackages": [
     {
@@ -209,11 +209,18 @@
       "title": "硬件 inventory、probe 和候选选择",
       "owner": "Codex",
       "priority": "P0",
-      "status": "NOT_STARTED",
+      "status": "IN_PROGRESS",
       "predecessors": ["WP-G1", "WP-HW1", "WP-R1I"],
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "implementation-test",
+          "path": "90_候选工作区/current/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901-attempt-02.json",
+          "sha256": "bfcdcabb91ac7f12d10afb7efaa46460ddcc8d59f15b95049ff340a85be835e6",
+          "claim": "All ten frozen result-blind synthetic hardware candidates were retained and probed under an 8 GiB cgroup; three passed the frozen machine evaluator and native OpenMP w02 was selected candidate-only, while H2-X/H2-N and H3 remain unestablished pending PR-2."
+        }
+      ],
       "terminationCode": null,
-      "nextGate": "Static inventory and bounded result-blind probe, then PR-2"
+      "nextGate": "PR-2 independent whole-project review; H3 remains unauthorized"
     },
     {
       "id": "WP-HW3",

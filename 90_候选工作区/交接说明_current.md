@@ -2,9 +2,10 @@
 
 ## 当前状态
 
-G1 结果前基础、R1I、H1 v2 无结果架构以及 E1/F1/S1 合成资格已经闭合。当前状态为：
+G1 结果前基础、R1I、H1 v2 无结果架构以及 E1/F1/S1 合成资格已经闭合。HW2
+静态 inventory 和固定矩阵结果盲 probe 已完成，当前停在 PR-2。状态为：
 
-`G1_RESULT_BEFORE_FOUNDATION_PASS_HW2_READY_FOR_STATIC_INVENTORY`
+`HW2_CANDIDATE_ONLY_PASS_PR2_INDEPENDENT_REVIEW_REQUIRED`
 
 已经成立的有限结论为：
 
@@ -13,7 +14,8 @@ G1 结果前基础、R1I、H1 v2 无结果架构以及 E1/F1/S1 合成资格已�
 - `PASS-HW1-V2-RESULT-BEFORE-FOUNDATION`；
 - `PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY`；
 - `PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY`；
-- `PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS`。
+- `PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS`；
+- `PASS-A8R-HW1-HARDWARE-UTILIZATION-CANDIDATE-ONLY`。
 
 科学结论仍为：
 
@@ -21,42 +23,45 @@ G1 结果前基础、R1I、H1 v2 无结果架构以及 E1/F1/S1 合成资格已�
 
 仓库尚未达到“实验前可暂停”，长期任务继续。
 
-## G1 证据
+## HW2 证据与边界
 
-统一验证报告：
+候选资格与 PR-2 输入报告：
 
-`90_候选工作区/current/G0_全项目完成度与实验前暂停治理/06_G1_结果前基础统一验证报告.md`
+`90_候选工作区/current/H1_硬件利用与执行架构/04_HW2_结果盲硬件候选资格与PR2输入报告.md`
 
 机器证据：
 
-`90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json`
+`90_候选工作区/current/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901-attempt-02.json`
 
 机器证据 SHA-256：
 
-`7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276`
+`bfcdcabb91ac7f12d10afb7efaa46460ddcc8d59f15b95049ff340a85be835e6`
 
-实现与验证基线：
+证据内部哈希：
 
-`7202e2f8195dd30c97460698547338632dc3c5b0`
+`a52cee68089a814a2eedc61bf8018008b8b71957a6b35763beccaf7eefa40baa`
 
-干净克隆在该基线上执行并通过：
+性能观察前已提交并推送的源提交：
 
-- G0：13/13；
-- H1 v2：22/22；
-- E1：10/10；
-- F1：12/12；
-- S1：13/13。
+`998e200960a902f30258e3a5f069aae33d3c6c71`
 
-共 70 项测试，失败 0。五个有界结果前入口全部通过，验收前后工作树均干净。
+关键事实：
 
-GitHub Actions：
+- 十个固定候选全部实际执行并保留，三个 `PROBE_PASS`，七个 `PROBE_NO_GO`；
+- 冻结评估器在已通过候选中选出 `hw2-native-openmp-domain-v1-w02`，加速比
+  1.995669，吞吐 1355.535 MLUPS；
+- 所有候选的正确性摘要和三次重复摘要均相等；swap 增长、OOM 事件增长均为零；
+- 16 核 OpenMP 原始吞吐为 9805.743 MLUPS，GPU 合成原始吞吐为 104580.953 MLUPS，
+  但都因 15–60 秒计时窗等冻结门而不是 `PROBE_PASS`；
+- 冻结选择器只在已通过候选中计算“最优吞吐”。该语义是否实现原合同对“全部安全候选
+  最优吞吐 95%”和充分利用硬件的本意，必须由 PR-2 独立判断；
+- 本轮没有读取科学 payload，没有执行结果承载运行，没有写入规范 A8R 产物。
 
-- Simulation foundation checks：运行 `33475574515`，五个 job 全部 `success`；
-- Markdown check：运行 `33475574501`，结论 `success`。
+首次尝试在任何校准或性能观察前因 Git Unicode 路径预检缺陷 fail-closed，失败证据已保留。
+修正在提交 `998e200...` 推送且 CI 成功后，从首个 probe 开始新的 attempt 02。
 
-两次 simulation 红灯 `33475419734` 和 `33475552913` 保留为失败历史。根因是旧版 workflow
-在干净 runner 调用了绑定本机旧路径的 R1I 现场复核。当前 workflow 改用仍会复算封存
-manifest、来源实体、sidecar 与 Git blob 的可移植模式；本机完整现场模式另行再次通过。
+成功证据的 sidecar 和内部 evidence hash 已实际重算通过。运行结束后 cgroup unit
+为 `inactive/dead`、退出码为 0，无残留 probe 进程或临时 native 构建目录。
 
 ## 当前总账
 
@@ -67,9 +72,9 @@ manifest、来源实体、sidecar 与 Git blob 的可移植模式；本机完整
 状态要点：
 
 - WP-R0：`INCONCLUSIVE`，仅为主机关机治理事实；
-- WP-R1：`SUPERSEDED`，正常串行产物封存分支不可达；
+- WP-R1：`INCONCLUSIVE` 且已被 R1I 取代，正常串行产物封存分支不可达；
 - WP-R1I、WP-G1、WP-HW1、WP-E1、WP-F1、WP-S1：`PASS`；
-- WP-HW2：`NOT_STARTED`，前置工作包已经通过；
+- WP-HW2：`IN_PROGRESS`，候选专用 PASS 已有证据，但 H2-X/H2-N 与 PR-2 未闭合；
 - WP-HW3、WP-A8T、WP-I1 和 WP-Z1：仍等待前置；
 - WP-PHY：仍为条件推迟；
 - WP-DOC：持续进行中。
@@ -78,30 +83,23 @@ manifest、来源实体、sidecar 与 Git blob 的可移植模式；本机完整
 
 下一批次为：
 
-`BATCH-HW2-STATIC-INVENTORY-BOUNDED-RESULT-BLIND-PROBE-AND-PR2`
+`BATCH-PR2-WHOLE-PROJECT-INDEPENDENT-REVIEW-AND-NEXT-STAGE-PLAN`
 
 顺序如下：
 
-1. 重新读取顶层 `AGENTS.md`，fetch，并确认 `main`、工作树干净且
-   `HEAD == origin/main`；
-2. 确认没有活动结果承载运行，不访问旧历史工作区，不读取科学 payload；
-3. 只采集静态 CPU、GPU、内存、swap、cgroup、温度能力和无关进程 inventory；
-4. 若实际 host adapter、oracle 或 probe runner 尚未完整实现，先以结果盲方式实现、测试、
-   commit 并 push，性能观察必须发生在代码提交之后；
-5. 按 H1 v2 的六类候选和安全门执行有界非科学资格；禁止完整八轨迹、规范 A8R 产物和
-   科学值输出；
-6. 保存所有候选，包括失败、不可用和因 GPU 占用而推迟的候选；不得只保留最快者；
-7. 只有完整候选覆盖、重复性、加速、CPU/GPU 利用率、内存、swap、OOM、热、cgroup 和
-   soak 门全部按冻结合同判定后，才能形成 H2 候选选择；
-8. 候选选择后停止在 PR-2，不运行 `HW1-primary` 或 `HW1-repeat`。
+1. 将已提交并推送的 HW2 证据、报告和当前总账交给 Pro；
+2. 请 Pro 先审查整个项目，不限定技术债范围，再对下一阶段给出完整规划；
+3. 请 Pro 独立判断冻结选择器、计时窗、GPU 采样、H2-X/H2-N、受保护路径和 H3
+   解锁；
+4. 在 Pro 完整回复并形成 PR-2 裁决前，不修改结果后门值，不重试部分候选，不开始 H3。
 
 PR-2 应请 Pro 独立详细审查：
 
-- H2 候选选择与是否存在 H2-N；
+- 当前候选选择是否有效，是否应继续 H2-X、冻结 H2-N 或重建资格协议；
 - 是否需要受保护路径修改及其逐文件授权；
-- 整个项目的技术债是否过重，是否需要局部或大范围重构；
+- 整个项目的技术债、重复实现和治理成本，是否需要局部或大范围重构；
 - 硬件利用和执行架构是否真正充分利用本机算力；
-- H3 的精确解锁条件和结论边界。
+- 具有依赖关系、验收门、停止点和结论上限的完整下一阶段规划。
 
 给 Pro 的请求以目标、证据、提交和独立判断问题为主，不预设实现路线或预期结论。
 
@@ -147,8 +145,9 @@ PR-2 应请 Pro 独立详细审查：
 
 ## 结论上限
 
-G1、H1 v2、E1、F1 和 S1 的 PASS 只证明结果前候选实现与合成资格。它们不证明硬件
-性能候选、A8R 数值结果、公共流动物理、装置参数、装置分岔、实验趋势或实验状态。
+G1、H1 v2、E1、F1 和 S1 的 PASS 只证明结果前候选实现与合成资格。HW2 的 PASS
+只是固定合成工作负载下的硬件候选资格，不证明 H2-X、H2-N、A8R 数值结果、公共流动
+物理、装置参数、装置分岔、实验趋势或实验状态。
 
 长期终点仍为：
 

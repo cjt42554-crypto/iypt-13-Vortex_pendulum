@@ -47,3 +47,15 @@ git show 53c33f30c72613fafb49066aaab0b4552c46de73:"90_候选工作区/交接说�
 - 限定范围 Markdown 运行 `33475574501` 成功；通用格式门仍只覆盖 `01_最终理论/**/*.md` 与 `90_候选工作区/交接说明_current.md`，没有检查其他 Markdown。
 - 新增 G1 机器证据 `g1-result-before-foundation-20260901.json`，SHA-256 为 `7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276`，并新增统一验证报告。总账将 WP-G1、WP-HW1、WP-E1、WP-F1 和 WP-S1 更新为有限 PASS，WP-HW2 更新为 `NOT_STARTED`。
 - 当前最高结论仍不是科学结论：科学 payload 未读、重型 probe 未运行、正式理论与程序未改，科学结论为 `NONE`。下一批次从 WP-HW2 静态 inventory 和有界结果盲 probe 开始，候选选择后停止在 PR-2，并要求 Pro 同时独立审查全项目技术债与重构必要性。
+
+## 2026-09-01 15:05:14 +08:00
+
+- 确认无活动 A8R/D54/结果承载运行后，完成本机静态 inventory：Ryzen 9 9955HX 16 核/32 线程、AVX2/AVX-512、RTX 5060 Laptop 8 GB、CUDA Driver JIT、约 15.9 GB 主存和有限 8 GiB user cgroup 均可用；无外来 GPU 计算进程。
+- 在任何性能观察前新增并提交、推送 HW2 固定协议、合成 oracle、Linux host adapter、六类十个候选、native OpenMP/SIMD/CUDA Driver JIT/hybrid 路径、遥测、runner 和测试；主要实现提交为 `6a5c1c974072705e0242800653154147f6167446`、`f6e192c175e7d8d84be697645c32268952f94677` 和 `998e200960a902f30258e3a5f069aae33d3c6c71`。
+- 首次形式尝试在任何校准或性能观察前 fail-closed，原因是 `git ls-files` 的 Unicode C 转义路径与未转义路径误比较。失败证据 `hw2-qualification-20260901.json` 保留，文件 SHA-256 为 `dcc17a5c438b1ddb271d1aef3f027014280d601004120fa9babf39d5a378046d`。修正使用 NUL 分隔与 `core.quotepath=false`，并增加 Unicode 回归测试。
+- attempt 02 在 `main@998e200...`、干净且与 `origin/main` 相等的身份下从第一个 probe 开始。十个候选全部实际执行三次，正确性和重复摘要全部相等，swap 增长为零，`memory.events` 的 max/OOM/OOM-kill 增量为零，无 fallback 或无关进程操作。
+- 机器证据结论为 `PASS-A8R-HW1-HARDWARE-UTILIZATION-CANDIDATE-ONLY`，选中 `hw2-native-openmp-domain-v1-w02`；成功证据文件 SHA-256 为 `bfcdcabb91ac7f12d10afb7efaa46460ddcc8d59f15b95049ff340a85be835e6`，内部 evidence hash 为 `a52cee68089a814a2eedc61bf8018008b8b71957a6b35763beccaf7eefa40baa`，sidecar 与内部哈希均重算通过。
+- 冻结选择也暴露了 PR-2 必须裁决的边界：16 核 OpenMP 和 GPU 的合成原始吞吐显著高于被选 2 线程候选，却因高加速导致计时窗小于 15 秒及 GPU 采样门被排除；冻结选择器只在 `PROBE_PASS` 子集内计算 95% 最优吞吐。本地未在结果后修改门、调参或局部重试。
+- 新增 `04_HW2_结果盲硬件候选资格与PR2输入报告.md`，总账将 WP-HW2 保持为 `IN_PROGRESS`，因为尚无 H2-X、H2-N 或 PR-2 接受。下一动作是请 Pro 先审查整个项目，独立裁决候选有效性、全仓技术债/重构、受保护路径授权、H2-X/H2-N 与 H3 条件，然后给出完整下阶段规划。
+- 用户最新 Markdown 覆盖继续生效：通用格式检查只覆盖 `01_最终理论/**/*.md` 与精确的 `90_候选工作区/交接说明_current.md`；本次新报告和 history 不进入通用 Markdown 格式检查。
+- 本轮未读取科学 payload，未运行 D54、完整八轨迹、`HW1-primary`、`HW1-repeat` 或 H3，未修改正式理论、正式模拟程序、顶层 `AGENTS.md` 或既有 A2/A8 文件；科学结论仍为 `NONE`。

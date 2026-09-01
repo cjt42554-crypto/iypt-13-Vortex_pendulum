@@ -68,6 +68,7 @@ test("terminal PASS without evidence fails closed", async () => {
   const bad = structuredClone(ledger);
   const hw2 = bad.workPackages.find((entry) => entry.id === "WP-HW2");
   hw2.status = "PASS";
+  hw2.evidence = [];
   hw2.terminationCode = "PASS-WITHOUT-EVIDENCE";
   await assert.rejects(validateProjectState(bad), /cannot PASS without evidence/u);
 });
