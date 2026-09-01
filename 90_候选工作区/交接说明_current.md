@@ -105,7 +105,29 @@ G0/H1/H2/H3/_shared 不再作为每次提交的必要矩阵。Markdown 通用检
 
 上述是实现级、合成级和默认前向 smoke 证据。没有执行新的固定圆柱修正矩阵、长时 A8R、装置参数标定、真实实验、留出预测或物理验证。
 
-首次推送 `a820323ea1a649e25430fe8c0057b8eaa046842e` 后，Markdown workflow、正式程序、E1、F1 和 S1 均通过；A8 全套测试在干净 checkout 中只有一项历史证据身份测试失败，原因是 CI 没有下载 22 MB A8Q Git LFS 产物，不是 CFD 数值组件失败。常规 CI 因此改为上述 32 项直接组件测试，避免每次提交为历史身份检查下载大型冻结证据。修正推送后的 Actions 状态仍需核验。
+首次推送 `a820323ea1a649e25430fe8c0057b8eaa046842e` 后，Markdown workflow、正式程序、E1、F1 和 S1 均通过；A8 全套测试在干净 checkout 中只有一项历史证据身份测试失败，原因是 CI 没有下载 22 MB A8Q Git LFS 产物，不是 CFD 数值组件失败。常规 CI 因此改为上述 32 项直接组件测试，避免每次提交为历史身份检查下载大型冻结证据。
+
+修正提交 `2540d252c3a5fd5c1916487b40e3c79a2104181b` 的 Markdown workflow 与 Scientific core checks 均已通过；后者包含正式程序、E1、F1、S1 和精简后的 CFD 组件共五个成功 job。Actions 仅给出其官方 checkout/setup-node 动作的 Node 20 弃用提示，不是项目测试失败。
+
+## A8S 无结果实现状态
+
+已在候选 A8 包建立一次性固定圆柱科学去留循环，但尚未执行任何承载结果的 A8S 算例：
+
+- 主网格只有 $D=16,24,36$，域为上游 $14D$、下游 $25D$、横向 $20D$；
+- 只在 $D=16$ 增加宽域、低 Mach、半格相位和旧半格 mask 四个有界对照，共 7 条轨迹；
+- 主路线的紧致正弦 mask 半厚度由体积惩罚零位移条件固定为 $h_\chi/\sqrt{\nu\eta}=2.949029420641545$，不按本仓结果调参；
+- 每条轨迹运行 80 个对流时间、舍弃前 40 个，只保存载荷序列、统计、采样密度/Mach、运行时间、峰值内存、来源身份与校验和；
+- 任一文献、网格、域、Mach、相位或稳定门失败，终局直接为 `FREEZE-A8S-2D-CFD-QUALITATIVE-ONLY`，不追加调参或工程资格；
+- 无结果实现的 A8 包完整测试为 100/100，TypeScript typecheck、Pandoc 解析、限定数学检查和 `git diff --check` 均通过。
+
+活动文件为：
+
+- `A8_二维特征开放边界实验后端/36_A8S_固定圆柱有限科学去留循环.md`；
+- `A8_二维特征开放边界实验后端/src/fixed-cylinder-disposition.ts`；
+- `A8_二维特征开放边界实验后端/scripts/run-fixed-cylinder-disposition.mjs`；
+- `A8_二维特征开放边界实验后端/tests/fixed-cylinder-disposition.test.ts`。
+
+下一步必须先把这些无结果文件提交并推送到 `main`，确认远端检查通过且本地 `HEAD == origin/main`；然后才可并行执行 7 条轨迹并聚合一次终局。当前没有 A8S 数值结果。
 
 ## 当前结论上限
 
