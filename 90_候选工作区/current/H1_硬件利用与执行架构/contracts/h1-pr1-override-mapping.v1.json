@@ -1,0 +1,36 @@
+{
+  "mappingId": "VP-A8R-HW1-PR1-OVERRIDE-MAPPING-v1",
+  "decisionId": "IYPT13-PR1-R0-HOST-SHUTDOWN-ROUTE-DECISION-v1",
+  "decisionCommit": "0f8085b1fda43e4f83d5152cfd99294bc3c0fc29",
+  "decisionPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md",
+  "decisionSha256": "65f964ea9973c688b1d16b517808fb45efaab75fb74f16e734977cd5c2203aee",
+  "immutableParentMarkdown": {
+    "path": "90_候选工作区/current/H1_硬件利用与执行架构/01_A8R_HW1_结果盲硬件资格预注册合同.md",
+    "sha256": "91d3c8aa916321144f0ef5f50dc44394df6c7cba22a420063a4f96a724db4b25"
+  },
+  "supersededMachineContract": {
+    "contractId": "VP-A8R-HW1-MACHINE-CONTRACT-v1",
+    "path": "90_候选工作区/current/H1_硬件利用与执行架构/contracts/h1-machine-contract.v1.json",
+    "sha256": "b8f55bd4b796bd3a22b48ab1e1ce41c43847b74cef1b24fd90d599fa00226538",
+    "status": "SUPERSEDED-BEFORE-AFFECTED-IMPLEMENTATION-OR-PERFORMANCE-BY-PR1-HOST-SHUTDOWN",
+    "preserveBytes": true
+  },
+  "activeMachineContract": {
+    "contractId": "VP-A8R-HW1-MACHINE-CONTRACT-v2",
+    "path": "90_候选工作区/current/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.json"
+  },
+  "unaffectedContracts": [
+    "G0-PROJECT-STATE-CONTRACT-v1",
+    "G0-SUPERSESSION-CONTRACT-v1",
+    "VP-E1-EXPERIMENT-PREPARATION-CONTRACT-v1",
+    "VP-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-CONTRACT-v1",
+    "VP-S1-SYNTHETIC-STRUCTURAL-QUALIFICATION-CONTRACT-v1"
+  ],
+  "activityRules": {
+    "v1ActiveUseForbidden": true,
+    "v1AutomaticFallbackForbidden": true,
+    "legacyFullSerialRerunForbidden": true,
+    "partialProgressCreditForbidden": true,
+    "r1iPassRequiredBeforeH2": true
+  }
+}

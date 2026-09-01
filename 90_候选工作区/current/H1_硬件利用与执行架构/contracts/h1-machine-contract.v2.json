@@ -1,0 +1,227 @@
+{
+  "contractId": "VP-A8R-HW1-MACHINE-CONTRACT-v2",
+  "parentContractId": "VP-A8R-HW1-RESULT-BLIND-HARDWARE-QUALIFICATION-CONTRACT-v1",
+  "overrideDecisionId": "IYPT13-PR1-R0-HOST-SHUTDOWN-ROUTE-DECISION-v1",
+  "supersedes": "VP-A8R-HW1-MACHINE-CONTRACT-v1",
+  "phaseOrder": ["H0", "H1", "H2", "H3"],
+  "incidentEvidence": {
+    "r0EventCommit": "b522f1a37814164dff18390ee23d5153d4499375",
+    "r0ReportPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/03_R0_主运行因主机关机中断现场冻结报告.md",
+    "r0ReportSha256": "7f5acf8338f0621ecbe7ea262f4dce8444b9cd955ef79a843f08f0c3e0ad169f",
+    "r0EvidencePath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.json",
+    "r0EvidenceSha256": "889eafc3a340f60d5d5743b64df086ab6b603ed9173465a54b62ef42542fb85c",
+    "pr1DecisionCommit": "0f8085b1fda43e4f83d5152cfd99294bc3c0fc29",
+    "pr1DecisionPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md",
+    "pr1DecisionSha256": "65f964ea9973c688b1d16b517808fb45efaab75fb74f16e734977cd5c2203aee"
+  },
+  "serialPredecessor": {
+    "intendedIdentity": "A8R-V2P1-SERIAL-REFERENCE",
+    "terminalIdentity": "A8R-V2P1-INTERRUPTED-SERIAL-ATTEMPT-20260831",
+    "terminalClassification": "INCONCLUSIVE-R0-HOST-SHUTDOWN-NO-CANONICAL-ARTIFACT",
+    "sourceCommit": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "canonicalArtifactAvailable": false,
+    "scientificPayloadAvailable": false,
+    "attainedReferenceStatus": false,
+    "fullSerialRerunRequired": false,
+    "fullSerialRerunAuthorized": false,
+    "checkpointResumeAuthorized": false,
+    "partialProgressCredit": 0,
+    "requiredStateBeforeH2": "PASS-R1I-INTERRUPTED-SERIAL-ATTEMPT-EVIDENCE-SEALED",
+    "forbiddenActions": [
+      "legacy-full-serial-rerun",
+      "checkpoint-resume",
+      "partial-progress-credit",
+      "scientific-payload-read",
+      "mixed-interrupted-serial-HW1-provenance",
+      "old-worktree-reuse"
+    ]
+  },
+  "serialOracle": {
+    "sourceCommit": "88c4e9e8ba57b02a06315679e9b30dd10999b30c",
+    "scope": "bounded-nonscientific-qualification-only",
+    "fullResultBearingRunForbidden": true,
+    "scientificValuePersistenceForbidden": true,
+    "canonicalA8rArtifactWriteForbidden": true,
+    "allowedOutputs": [
+      "hash",
+      "equality-boolean",
+      "timing",
+      "resource-field"
+    ]
+  },
+  "fieldBoundary": {
+    "allowed": [
+      "contractHash",
+      "sourceHash",
+      "dependencyHash",
+      "implementationHash",
+      "environmentHash",
+      "backendId",
+      "schedulerId",
+      "workerCount",
+      "deviceId",
+      "wallTimeSeconds",
+      "throughputMlups",
+      "speedup",
+      "parallelEfficiency",
+      "cpuUtilizationFraction",
+      "memoryBandwidthFraction",
+      "gpuBusyFraction",
+      "transferFraction",
+      "rssBytes",
+      "memAvailableBytes",
+      "swapBytes",
+      "memoryEventsDelta",
+      "thermalThrottle",
+      "shardHash",
+      "canonicalPayloadHash",
+      "exitCode",
+      "signal",
+      "classification"
+    ],
+    "forbidden": [
+      "drag",
+      "lift",
+      "torque",
+      "power",
+      "pressure",
+      "velocity",
+      "period",
+      "frequency",
+      "strouhal",
+      "phase",
+      "spectrumPeak",
+      "scientificMargin",
+      "scientificGateCount",
+      "scientificDecision",
+      "literatureDistance"
+    ]
+  },
+  "candidateClasses": [
+    "trajectory-process-parallel",
+    "single-trajectory-cpu-domain-or-thread",
+    "native-or-wasm-simd",
+    "gpu-compute",
+    "cpu-gpu-hybrid",
+    "data-layout-shard-aggregation"
+  ],
+  "inventory": {
+    "required": [
+      "cpu",
+      "numa",
+      "cache",
+      "isa",
+      "memory",
+      "cgroup",
+      "swap",
+      "gpu",
+      "operatingSystem",
+      "kernel",
+      "node",
+      "v8",
+      "compiler",
+      "filesystem",
+      "thermalProxy"
+    ],
+    "mutationForbidden": true
+  },
+  "probe": {
+    "resultBlind": true,
+    "warmupStepsMinimum": 32,
+    "timedWindowSecondsMinimum": 15,
+    "timedWindowSecondsMaximum": 60,
+    "validRepeatsMinimum": 3,
+    "soakSecondsMaximum": 600,
+    "includeEndToEndOverheads": true,
+    "heavyProbeForbiddenDuringG1": true
+  },
+  "gates": {
+    "repeatWallTimeCvMaximum": 0.05,
+    "repeatSlowestFastestRatioMaximum": 1.1,
+    "speedupMinimum": 1.5,
+    "selectedThroughputFractionOfBestMinimum": 0.95,
+    "cpuParallelEfficiencyMinimum": 0.55,
+    "cpuAssignedUtilizationFractionMinimum": 0.7,
+    "memoryBandwidthFractionMinimum": 0.7,
+    "additionalCpuGainAtBandwidthSaturationMaximum": 0.05,
+    "gpuBusyMedianFractionMinimum": 0.6,
+    "gpuTransferSyncSerializationFractionMaximum": 0.35,
+    "soakThroughputDegradationMaximum": 0.1,
+    "systemReserveBytesMinimum": 4294967296,
+    "systemReserveMemTotalFraction": 0.25,
+    "candidateHeadroomFraction": 0.1,
+    "frequencyDropFractionMaximum": 0.15,
+    "swapGrowthMaximumBytes": 0,
+    "oomEventGrowthMaximum": 0
+  },
+  "equivalence": {
+    "exactMode": "H2-X",
+    "nonExactMode": "H2-N",
+    "exactRequiredComparisons": [
+      "all-eight-case-definitions-and-source-hashes",
+      "pre-analysis-population-bytes",
+      "analysis-first-step-population-bytes",
+      "frozen-audit-step-population-bytes",
+      "per-step-force-identity-summary-hash",
+      "shortened-complete-case-scientific-payload-hash",
+      "one-worker-vs-selected-workers",
+      "permuted-completion-order",
+      "missing-duplicate-corrupt-source-drift-worker-failure",
+      "three-independent-lightweight-environments"
+    ],
+    "absentLegacyFullArtifactComparisonForbidden": true,
+    "nonExactRequiresNewFrozenContractAndProReview": true,
+    "runtimeFallbackForbidden": true
+  },
+  "shards": {
+    "expectedCaseCount": 8,
+    "atomicAfterCompleteCase": true,
+    "completeFromStepZero": true,
+    "canonicalSortKey": "caseId",
+    "rejectMissing": true,
+    "rejectDuplicate": true,
+    "rejectCorrupt": true,
+    "rejectSourceDrift": true,
+    "rejectWorkerFailure": true,
+    "crossRunReuseForbidden": true
+  },
+  "provenanceLayers": ["scientific", "execution", "artifact"],
+  "fullRuns": {
+    "identities": ["HW1-primary", "HW1-repeat"],
+    "sameFrozenImplementation": true,
+    "independentCleanEnvironments": true,
+    "freshInitialState": true,
+    "startAtFirstCaseStepZero": true,
+    "sharedShardCheckpointCacheTemporaryStateForbidden": true,
+    "interruptedSerialDataUseForbidden": true
+  },
+  "h2Entry": {
+    "requiredPassCodes": [
+      "PASS-R1I-INTERRUPTED-SERIAL-ATTEMPT-EVIDENCE-SEALED",
+      "PASS-G1-RESULT-BEFORE-FOUNDATION",
+      "PASS-HW1-V2-RESULT-BEFORE-FOUNDATION"
+    ],
+    "noActiveResultBearingRunRequired": true,
+    "inventoryRequired": true,
+    "safeResourceWindowRequired": true,
+    "cleanMainParityRequired": true,
+    "candidateCodeCommittedBeforePerformanceObservation": true,
+    "automaticUnlockOnlyWhenAllConditionsPass": true
+  },
+  "activeImplementation": {
+    "requiredContractId": "VP-A8R-HW1-MACHINE-CONTRACT-v2",
+    "v1FallbackForbidden": true,
+    "automaticFallbackForbidden": true,
+    "contractSelectionResultBlind": true
+  },
+  "failureCodes": [
+    "NO-GO-HW1-CONTRACT-MAPPING",
+    "NO-GO-HW1-PROVENANCE-ALIASING",
+    "NO-GO-HW1-SCIENTIFIC-FIELD-LEAK",
+    "NO-GO-HW1-V1-ACTIVE-MISUSE",
+    "NO-GO-HW1-LEGACY-SERIAL-RERUN-OR-PARTIAL-CREDIT",
+    "INCONCLUSIVE-HW1-BACKEND-INTERFACE",
+    "NO-GO-A8R-HW1-HARDWARE-QUALIFICATION",
+    "DEFERRED-UNSAFE-TO-PROBE"
+  ]
+}

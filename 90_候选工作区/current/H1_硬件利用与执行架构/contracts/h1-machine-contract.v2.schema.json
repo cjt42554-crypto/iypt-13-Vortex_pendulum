@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iypt13:h1:machine-contract:v2",
+  "title": "A8R HW1 result-blind machine contract v2 after PR-1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "parentContractId",
+    "overrideDecisionId",
+    "supersedes",
+    "phaseOrder",
+    "incidentEvidence",
+    "serialPredecessor",
+    "serialOracle",
+    "fieldBoundary",
+    "candidateClasses",
+    "inventory",
+    "probe",
+    "gates",
+    "equivalence",
+    "shards",
+    "provenanceLayers",
+    "fullRuns",
+    "h2Entry",
+    "activeImplementation",
+    "failureCodes"
+  ],
+  "properties": {
+    "contractId": {"const": "VP-A8R-HW1-MACHINE-CONTRACT-v2"},
+    "parentContractId": {
+      "const": "VP-A8R-HW1-RESULT-BLIND-HARDWARE-QUALIFICATION-CONTRACT-v1"
+    },
+    "overrideDecisionId": {
+      "const": "IYPT13-PR1-R0-HOST-SHUTDOWN-ROUTE-DECISION-v1"
+    },
+    "supersedes": {"const": "VP-A8R-HW1-MACHINE-CONTRACT-v1"},
+    "phaseOrder": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "H0"},
+        {"const": "H1"},
+        {"const": "H2"},
+        {"const": "H3"}
+      ],
+      "items": false
+    },
+    "incidentEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "r0EventCommit",
+        "r0ReportPath",
+        "r0ReportSha256",
+        "r0EvidencePath",
+        "r0EvidenceSha256",
+        "pr1DecisionCommit",
+        "pr1DecisionPath",
+        "pr1DecisionSha256"
+      ],
+      "properties": {
+        "r0EventCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "r0ReportPath": {"type": "string", "minLength": 1},
+        "r0ReportSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "r0EvidencePath": {"type": "string", "minLength": 1},
+        "r0EvidenceSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "pr1DecisionCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "pr1DecisionPath": {"type": "string", "minLength": 1},
+        "pr1DecisionSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "serialPredecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intendedIdentity",
+        "terminalIdentity",
+        "terminalClassification",
+        "sourceCommit",
+        "canonicalArtifactAvailable",
+        "scientificPayloadAvailable",
+        "attainedReferenceStatus",
+        "fullSerialRerunRequired",
+        "fullSerialRerunAuthorized",
+        "checkpointResumeAuthorized",
+        "partialProgressCredit",
+        "requiredStateBeforeH2",
+        "forbiddenActions"
+      ],
+      "properties": {
+        "intendedIdentity": {"const": "A8R-V2P1-SERIAL-REFERENCE"},
+        "terminalIdentity": {"const": "A8R-V2P1-INTERRUPTED-SERIAL-ATTEMPT-20260831"},
+        "terminalClassification": {
+          "const": "INCONCLUSIVE-R0-HOST-SHUTDOWN-NO-CANONICAL-ARTIFACT"
+        },
+        "sourceCommit": {"const": "88c4e9e8ba57b02a06315679e9b30dd10999b30c"},
+        "canonicalArtifactAvailable": {"const": false},
+        "scientificPayloadAvailable": {"const": false},
+        "attainedReferenceStatus": {"const": false},
+        "fullSerialRerunRequired": {"const": false},
+        "fullSerialRerunAuthorized": {"const": false},
+        "checkpointResumeAuthorized": {"const": false},
+        "partialProgressCredit": {"const": 0},
+        "requiredStateBeforeH2": {
+          "const": "PASS-R1I-INTERRUPTED-SERIAL-ATTEMPT-EVIDENCE-SEALED"
+        },
+        "forbiddenActions": {"type": "array", "minItems": 6, "uniqueItems": true}
+      }
+    },
+    "serialOracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceCommit",
+        "scope",
+        "fullResultBearingRunForbidden",
+        "scientificValuePersistenceForbidden",
+        "canonicalA8rArtifactWriteForbidden",
+        "allowedOutputs"
+      ],
+      "properties": {
+        "sourceCommit": {"const": "88c4e9e8ba57b02a06315679e9b30dd10999b30c"},
+        "scope": {"const": "bounded-nonscientific-qualification-only"},
+        "fullResultBearingRunForbidden": {"const": true},
+        "scientificValuePersistenceForbidden": {"const": true},
+        "canonicalA8rArtifactWriteForbidden": {"const": true},
+        "allowedOutputs": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "hash"},
+            {"const": "equality-boolean"},
+            {"const": "timing"},
+            {"const": "resource-field"}
+          ],
+          "items": false
+        }
+      }
+    },
+    "fieldBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "forbidden"],
+      "properties": {
+        "allowed": {"type": "array", "minItems": 20, "uniqueItems": true},
+        "forbidden": {"type": "array", "minItems": 15, "uniqueItems": true}
+      }
+    },
+    "candidateClasses": {"type": "array", "minItems": 6, "uniqueItems": true},
+    "inventory": {"type": "object"},
+    "probe": {"type": "object"},
+    "gates": {"type": "object"},
+    "equivalence": {"type": "object"},
+    "shards": {"type": "object"},
+    "provenanceLayers": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "scientific"},
+        {"const": "execution"},
+        {"const": "artifact"}
+      ],
+      "items": false
+    },
+    "fullRuns": {"type": "object"},
+    "h2Entry": {"type": "object"},
+    "activeImplementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requiredContractId",
+        "v1FallbackForbidden",
+        "automaticFallbackForbidden",
+        "contractSelectionResultBlind"
+      ],
+      "properties": {
+        "requiredContractId": {"const": "VP-A8R-HW1-MACHINE-CONTRACT-v2"},
+        "v1FallbackForbidden": {"const": true},
+        "automaticFallbackForbidden": {"const": true},
+        "contractSelectionResultBlind": {"const": true}
+      }
+    },
+    "failureCodes": {"type": "array", "minItems": 8, "uniqueItems": true}
+  }
+}
