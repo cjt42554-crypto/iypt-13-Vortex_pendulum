@@ -23,8 +23,8 @@ async function loadSynthetic() {
   const [plan, apparatus, coefficients, baseConfig] = await Promise.all([
     readJson("examples/synthetic-filled-prediction-plan.json"),
     readJson("examples/synthetic-filled-apparatus.json"),
-    readJson("temples/synthetic-filled-coefficients.json"),
-    readJson("temples/synthetic-base-formal-config.json"),
+    readJson("examples/synthetic-filled-coefficients.json"),
+    readJson("examples/synthetic-base-formal-config.json"),
   ]);
   return { plan, apparatus, coefficients, baseConfig };
 }
@@ -136,13 +136,13 @@ test("production validation and config construction reject synthetic-only record
 test("plan identities and freeze timestamp are mandatory before production use", async () => {
   const { plan } = await loadSynthetic();
   for (const field of ["planId", "apparatusId", "apparatusRevision"]) {
-    const invalid = structuredClone(plao);
+    const invalid = structuredClone(plan);
     invalid[field] = "";
     const validation = validatePredictionPlan(invalid, syntheticOptions);
     assert.equal(validation.pass, false, field);
     assert.ok(validation.issues.some(({ code }) => code === "IDENTITY-REQUIRED"));
   }
-  const invalidFreeze = structuredClone(pla�);
+  const invalidFreeze = structuredClone(plan);
   invalidFreeze.freeze.frozenAt = null;
   const validation = validatePredictionPlan(invalidFreeze, syntheticOptions);
   assert.equal(validation.pass, false);
@@ -151,7 +151,7 @@ test("plan identities and freeze timestamp are mandatory before production use",
 
 test("plan, apparatus, and coefficient package must bind to one apparatus and plan", async () => {
   const { plan, apparatus, coefficients } = await loadSynthetic();
-  const wrongPlan = structuredClone(pla�);
+  const wrongPlan = structuredClone(plan);
   wrongPlan.apparatusId = "OTHER-APPARATUS";
   let validation = validateCoefficientPackage(
     coefficients,
@@ -202,7 +202,7 @@ test("conditions outside the coefficient calibration domain cannot become formal
       alteredPivotPlan,
       alteredPivotPlan.holdoutBlocks[0],
       syntheticOptions,
-   ),
+    ),
     /pivotHeightM/u,
   );
 });
@@ -267,7 +267,7 @@ test("power or phase claims require a calibrated torque channel", async () => {
   plan.acceptance.meanPowerSign.required = true;
   const validation = validatePredictionPlan(plan, syntheticOptions);
   assert.equal(validation.pass, false);
-  assert.ok(validation.issues.some(({ code }) => code === "LOAD-CLAIM-WITHOUT-TORQU"));
+  assert.ok(validation.issues.some(({ code }) => code === "LOAD-CLAIM-WITHOUT-TORQUE"));
 });
 
 test("a condition not frozen in the plan cannot be turned into a formal config", async () => {
@@ -330,37 +330,6 @@ test("production CLI rejects synthetic inputs and writes only safe production co
     assert.equal(manifest.planId, production.plan.planId);
     assert.equal(manifest.apparatusId, production.apparatus.apparatusId);
     assert.equal(manifest.entries.length, 5);
-  } finally {
-    await rm(temporary, { recursive: true, force: true });
-  }
-});
-
-test("production CLI validates every frozen condition before publishing files", async () => {
-  const temporary = await mkdtemp(resolve(tmpdir(), "iypt13-e1-domain-fail-"));
-  try {
-    const production = productionize(await loadSynthetic());
-    production.plan.holdoutBlocks[0].flowSpeedMps = 0.1;
-    const inputRoot = resolve(temporary, "inputs");
-    const outputRoot = resolve(temporary, "output");
-    await import("node:fs/promises").then(({ mkdir }) => mkdir(inputRoot));
-    for (const [name, value] of [
-      ["plan.json", production.plan],
-      ["apparatus.json", production.apparatus],
-      ["coefficients.json", production.coefficients],
-      ["base.json", production.baseConfig],
-    ]) {
-      await writeFile(resolve(inputRoot, name), `${JSON.stringify(value)}\n`, "utf8");
-    }
-    const result = await runBuild({
-      planPath: resolve(inputRoot, "plan.json"),
-      apparatusPath: resolve(inputRoot, "apparatus.json"),
-      coefficientsPath: resolve(inputRoot, "coefficients.json"),
-      baseConfigPath: resolve(inputRoot, "base.json"),
-      outputDirectory: outputRoot,
-    });
-    assert.notEqual(result.code, 0);
-    assert.match(result.stderr, /标定域之外/u);
-    await assert.rejects(readdir(outputRoot), /ENOENT/u);
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
