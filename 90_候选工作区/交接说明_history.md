@@ -27,5 +27,13 @@ git show 53c33f30c72613fafb49066aaab0b4552c46de73:"90_候选工作区/交接说�
 - `0c44ad25...` 中 G0、E1、F1、S1 五组合同继续有效。审查期间远端新增的 G0/H1/E1/F1/S1 合同测试和合成矩阵截至 `c7667f4...`，没有重型 probe、科学 payload 或正式路径修改，予以保留；H1 v1 测试只作历史映射，不能单独解锁 H2。
 - 下一两个结果承载长时运行必须是同一结果前实现下两个独立环境的 `HW1-primary` 与 `HW1-repeat`，均从第一个 case、step 0、新鲜初态完整执行八轨迹；PR-3 比较这两个产物，不要求与不存在的旧完整 gzip 比较。
 - 用户最新 Markdown 格式门覆盖优先：只检查 `01_最终理论/**/*.md` 和 `90_候选工作区/交接说明_current.md`。其他 Markdown 不进入通用格式门；不创建历史 baseline，不为格式绿灯修改 A8O/A8P/history 等历史文件。
-- 新增裁决 `G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md`，裁决提交 `0f8085b1fda43e4f83d5152cfd99294bc3c0fc29`，Git blob `7f960f8a32849736532766c972f6ab4bdb0187d8`；current 收口提交为 `53c33f30c72613fafb49066aaab0b4552c46de73`。
+- 新增裁决 `G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md`，裁决提交 `0f8085b1fda43e4f83d5152cfd99294bc3c0fc29`，Git blob `7f960f8a32849736532766c972f6ab4bdb0187d8`；current 首次收口提交为 `53c33f30c72613fafb49066aaab0b4552c46de73`。
 - 下一完整批次为 `BATCH-G1-PR1-REBASE-R1I-H1V2-AND-FOUNDATION`，统一目标是 R1I、G1、H1 v2、限定范围 Markdown CI 和轻量 simulation CI 同时通过；在此之前不授权 H2/D54/GPU/带宽 probe、旧串行重跑、H3、正式理论/程序修改或科学 payload 读取。
+
+## 2026-09-01 14:00:25 +09:00
+
+- 核验原 Markdown workflow 仍因全仓枚举而只命中被用户排除的 A8O/A8P 四处历史标记；没有修改这些历史文件。
+- 提交 `31672d194528ab954510c061d277bc1374bbd835` 将 `tools/check_markdown_math.py` 的唯一默认范围收窄为 `01_最终理论/**/*.md` 与 `90_候选工作区/交接说明_current.md`。
+- 提交 `c81f7bd9780a6c49a3cefb838efd0bc5a54e3ec2` 将 workflow 步骤名称改为明示检查最终理论与 current 交接；GitHub Actions 运行 `33471940558` 结论为 `success`。
+- 其他 Markdown 不再进入通用格式门；不创建历史 baseline，也不为格式检查修改 A8O、A8P、history、候选合同或报告。其他文档仍可受来源哈希、合同身份和专用语义测试约束。
+- current 最终收口提交为 `df9411d1b7d4a8eafe911d17c1941a78883ae546`。正式理论正文、正式模拟程序、R0 证据、H1 v1 文件和全部科学合同/产物均未修改。
