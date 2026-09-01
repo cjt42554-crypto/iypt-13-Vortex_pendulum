@@ -29,6 +29,7 @@ try {
     fullResultBearingRunPerformed: false,
     scientificPayloadInspected: false,
     canonicalA8rArtifactWritten: false,
+    failureCode: String(error?.message ?? error).split(":", 1)[0],
     failureMessageHash: canonicalSha256({message: String(error?.message ?? error)}),
   };
   const evidence = {...failure, evidenceHash: canonicalSha256(failure)};

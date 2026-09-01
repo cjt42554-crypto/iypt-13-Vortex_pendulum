@@ -34,13 +34,13 @@ export const HW2_IMPLEMENTATION_PATHS = Object.freeze([
   "90_候选工作区/current/H1_硬件利用与执行架构/src/provenance.mjs",
 ]);
 
-async function git(repoRoot, args) {
+async function git(repoRoot, args, {trim = true} = {}) {
   const {stdout} = await execFile("git", ["-C", repoRoot, ...args], {
     encoding: "utf8",
     timeout: 30_000,
     maxBuffer: 16 * 1024 * 1024,
   });
-  return stdout.trim();
+  return trim ? stdout.trim() : stdout;
 }
 
 function fail(message) {
@@ -54,12 +54,12 @@ export async function assertHw2CommittedPreflight({repoRoot}) {
     git(root, ["rev-parse", "HEAD"]),
     git(root, ["rev-parse", "origin/main"]),
     git(root, ["status", "--porcelain=v1", "--untracked-files=all"]),
-    git(root, ["ls-files", "--", ...HW2_IMPLEMENTATION_PATHS]),
+    git(root, ["-c", "core.quotepath=false", "ls-files", "-z", "--", ...HW2_IMPLEMENTATION_PATHS], {trim: false}),
   ]);
   if (branch !== "main") fail(`branch is ${branch}, not main`);
   if (head !== remote) fail(`HEAD ${head} differs from origin/main ${remote}`);
   if (status !== "") fail("worktree is not clean");
-  const trackedSet = new Set(tracked.split(/\r?\n/u).filter(Boolean));
+  const trackedSet = new Set(tracked.split("\0").filter(Boolean));
   const missing = HW2_IMPLEMENTATION_PATHS.filter((path) => !trackedSet.has(path));
   if (missing.length > 0) fail(`implementation paths are not committed: ${missing.join(",")}`);
   const files = [];

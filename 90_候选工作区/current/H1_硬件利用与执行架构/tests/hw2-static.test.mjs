@@ -5,6 +5,7 @@ import { buildInventorySnapshot } from "../src/inventory.mjs";
 import { loadActiveContract } from "../src/contract.mjs";
 import { discoverHw2BackendDescriptors, hw2CandidateDefinitions } from "../src/hw2-candidates.mjs";
 import { partitionRanges } from "../src/hw2-js-execution.mjs";
+import { HW2_IMPLEMENTATION_PATHS } from "../src/hw2-preflight.mjs";
 import { HW2_PROTOCOL_SHA256, loadHw2Protocol } from "../src/hw2-protocol.mjs";
 import {
   HW2_SYNTHETIC_SOURCE_HASH,
@@ -102,4 +103,11 @@ test("HW2 protocol loader binds exact bytes, workload identity, and PR-2 stop", 
   assert.equal(protocol.syntheticSourceHash, HW2_SYNTHETIC_SOURCE_HASH);
   assert.equal(protocol.selection.stopsAtPr2, true);
   assert.match(HW2_PROTOCOL_SHA256, /^[0-9a-f]{64}$/u);
+});
+
+test("committed implementation inventory retains raw Unicode path identities", () => {
+  assert.equal(HW2_IMPLEMENTATION_PATHS.length, 24);
+  assert.equal(HW2_IMPLEMENTATION_PATHS.every((path) => path.startsWith("90_候选工作区/")), true);
+  const nulSeparated = `${HW2_IMPLEMENTATION_PATHS.join("\0")}\0`;
+  assert.deepEqual(nulSeparated.split("\0").filter(Boolean), [...HW2_IMPLEMENTATION_PATHS]);
 });
