@@ -49,4 +49,5 @@ git show 1205067b04b213a6e04a766b422bfafec70c1e4c:"90_候选工作区/交接说�
 - Codex 未提交 HW2R v3 硬化工作完整保留在 `/home/cjt/.codex/tmp/iypt13-a8r-evidence-20260831`，没有混入本轮正式仓库修改，也没有被删除或宣称已完成。
 - 下一批次改为一次有上限的固定圆柱 CFD 科学去留循环，然后准备装置测量、无流机械标定、ROM 辨识和留出工况接口。二维基准仍失配则冻结为定性工具；只有必要科学矩阵周转时间不足时才恢复最小性能优化。
 - 本地验证完成：正式程序 17 suite、44/44 tests、build 和默认 12 s forward smoke 通过；E1 10/10、F1 12/12、S1 13/13；A8 组件 97/97 与 typecheck；两份活动 Markdown 的 Pandoc 解析、限定数学检查、Actions YAML 解析和 `git diff --check` 均通过。证据上限仅为实现/合成/smoke，不是装置数值或物理 PASS。
+- 首次远端 Scientific core checks 中正式程序、E1/F1/S1 全部通过；A8 全套 97 项只有绑定 22 MB A8Q Git LFS 产物的历史身份测试在浅 checkout 失败。未扩大 CI 下载历史证据，改为 32 项直接 CFD 数值组件测试加 typecheck；这项修正不改 A8 源、测试、冻结产物或物理门值。
 - 本轮路线变化不形成数值、物理或实验 PASS；正式理论、正式程序、顶层 AGENTS 和冻结科学证据均未修改，科学结论仍为 `NONE`。

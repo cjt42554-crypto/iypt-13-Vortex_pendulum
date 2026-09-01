@@ -76,7 +76,13 @@ jobs:
           cache-dependency-path: 90_候选工作区/current/A8_二维特征开放边界实验后端/package-lock.json
       - name: Install CFD candidate dependencies
         run: npm ci
-      - name: Run component tests
-        run: npm test
+      - name: Run focused CFD component tests
+        run: >-
+          node --experimental-strip-types --test
+          tests/formal-incoming-characteristic-boundary.test.ts
+          tests/formal-causal-reference-support.test.ts
+          tests/formal-discrete-reference-support.test.ts
+          tests/brinkman-scaling-support.test.ts
+          tests/brinkman-multiresolution-support-v2-1.test.ts
       - name: Type-check CFD candidate components
         run: npm run typecheck

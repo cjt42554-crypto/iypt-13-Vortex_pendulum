@@ -98,12 +98,14 @@ G0/H1/H2/H3/_shared 不再作为每次提交的必要矩阵。Markdown 通用检
 - E1：10/10 tests 通过，合成资格为 `PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY`；
 - F1：12/12 tests 通过，合成资格为 `PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY`；
 - S1：13/13 tests 通过，合成结构工具资格为 `PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS`；
-- A8 CFD 候选组件：97/97 tests 与 TypeScript typecheck 通过；
+- A8 CFD 候选完整本地测试：97/97 tests 与 TypeScript typecheck 通过；常规 CI 只保留 32 项直接数值组件测试，不读取大型冻结 LFS 证据；
 - current 和最小活动计划的 Pandoc Markdown 解析通过；
 - 限定范围 Markdown 数学检查通过；
 - 收缩后的 GitHub Actions YAML 解析与 `git diff --check` 通过。
 
-上述是实现级、合成级和默认前向 smoke 证据。没有执行新的固定圆柱修正矩阵、长时 A8R、装置参数标定、真实实验、留出预测或物理验证。推送后的 GitHub Actions 状态仍需在提交后核验。
+上述是实现级、合成级和默认前向 smoke 证据。没有执行新的固定圆柱修正矩阵、长时 A8R、装置参数标定、真实实验、留出预测或物理验证。
+
+首次推送 `a820323ea1a649e25430fe8c0057b8eaa046842e` 后，Markdown workflow、正式程序、E1、F1 和 S1 均通过；A8 全套测试在干净 checkout 中只有一项历史证据身份测试失败，原因是 CI 没有下载 22 MB A8Q Git LFS 产物，不是 CFD 数值组件失败。常规 CI 因此改为上述 32 项直接组件测试，避免每次提交为历史身份检查下载大型冻结证据。修正推送后的 Actions 状态仍需核验。
 
 ## 当前结论上限
 
