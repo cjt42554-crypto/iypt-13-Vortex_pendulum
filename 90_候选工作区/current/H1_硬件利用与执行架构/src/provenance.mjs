@@ -22,6 +22,12 @@ const STRUCTURAL_KEYS = new Set([
   "completionOrderHidden",
 ]);
 
+const RESULT_BLIND_HARDWARE_CLASSIFICATIONS = new Set([
+  "PASS-A8R-HW1-HARDWARE-UTILIZATION-CANDIDATE-SELECTION",
+  "PASS-A8R-HW1-HARDWARE-UTILIZATION-CANDIDATE-ONLY",
+  "NO-GO-A8R-HW1-HARDWARE-QUALIFICATION",
+]);
+
 function fail(message) {
   throw new Error(`NO-GO-HW1-SCIENTIFIC-FIELD-LEAK: ${message}`);
 }
@@ -75,6 +81,7 @@ export function assertResultBlind(value, contract, { allowStructural = true } = 
     }
     if (
       typeof child === "string" &&
+      !RESULT_BLIND_HARDWARE_CLASSIFICATIONS.has(child) &&
       /(?:PASS|NO-GO|INCONCLUSIVE).*(?:A8R|SCIENTIFIC)|(?:A8R|SCIENTIFIC).*(?:PASS|NO-GO|INCONCLUSIVE)/iu.test(child)
     ) {
       fail(`${path} contains a scientific classification string`);
