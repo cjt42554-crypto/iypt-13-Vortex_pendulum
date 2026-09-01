@@ -80,6 +80,16 @@ export const HW2_FINALIZATION_IMPLEMENTATION_PATHS = Object.freeze([
   `${H1_ROOT}/scripts/finalize-hw2-selection.mjs`,
 ]);
 
+const FORMAL_OBSERVATION_ENTRYPOINTS = Object.freeze(new Set([
+  `${H1_ROOT}/scripts/run-hw2r-qualification-v2.mjs`,
+  `${H1_ROOT}/scripts/finalize-hw2-selection.mjs`,
+]));
+
+export function requiresHw2rFormalObservationAuthorization(paths) {
+  if (!Array.isArray(paths)) return false;
+  return paths.some((path) => FORMAL_OBSERVATION_ENTRYPOINTS.has(path));
+}
+
 async function capture(command, args, options = {}) {
   const child = spawn(command, args, {
     cwd: options.cwd ?? H2_REPOSITORY_ROOT,
@@ -280,8 +290,7 @@ async function activeResultBearingProcesses() {
 }
 
 export async function assertCleanMainParityAndIdentity(paths) {
-  if (paths === HW2R_IMPLEMENTATION_PATHS
-    || paths === HW2_FINALIZATION_IMPLEMENTATION_PATHS) {
+  if (requiresHw2rFormalObservationAuthorization(paths)) {
     await assertHw2rFormalObservationAuthorized();
   }
   const [
@@ -308,8 +317,7 @@ export async function assertCleanMainParityAndIdentity(paths) {
   }
   if (active.length > 0) {
     throw new Error(
-      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: "
-        + `active result-bearing process ${active[0].pid}`,
+      "INCONCLUSIVE-H2X-RESOURCE-OR-TOOLCHAIN: "n        + `active result-bearing process ${active[0].pid}`,
     );
   }
   if (!/^[0-9a-f]{40}$/.test(implementationCommit)) {
