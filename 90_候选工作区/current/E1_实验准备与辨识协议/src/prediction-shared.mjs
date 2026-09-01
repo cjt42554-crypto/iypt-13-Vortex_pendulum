@@ -60,10 +60,16 @@ export const FIXED_WAKE_GAUGE = Object.freeze({
   }),
 });
 
-export const READY_CLASSIFICATIONS = new Set([
-  "apparatus-calibrated",
-  "synthetic-only",
-]);
+export const INPUT_CLASSIFICATIONS = Object.freeze({
+  productionPlan: "experiment-frozen",
+  productionApparatus: "apparatus-calibrated",
+  productionCoefficients: "rom-calibrated",
+  synthetic: "synthetic-only",
+  waitingPlan: "waiting-for-definition",
+  waitingApparatus: "waiting-for-measurement",
+  waitingCoefficients: "waiting-for-calibration",
+});
+
 export const ALLOWED_COEFFICIENT_SOURCES = new Set([
   "measured",
   "prescribed-motion",
@@ -77,6 +83,8 @@ export const PARAMETER_STATUSES = new Set([
 ]);
 export const BLOCK_ROLES = new Set(["pilot", "calibration", "holdout"]);
 
+const SAFE_CONDITION_BLOCK_ID = /^[A-Za-z0-9](?:[A-Za-z0-9._-]{0,94}[A-Za-z0-9_-])?$/u;
+
 export function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
@@ -85,8 +93,58 @@ export function finite(value) {
   return typeof value === "number" && Number.isFinite(value);
 }
 
+export function nonEmptyText(value) {
+  return typeof value === "string" && value.trim() !== "";
+}
+
+export function validTimestamp(value) {
+  return nonEmptyText(value) && Number.isFinite(Date.parse(value));
+}
+
+export function safeConditionBlockId(value) {
+  return typeof value === "string" && SAFE_CONDITION_BLOCK_ID.test(value);
+}
+
 export function pushIssue(issues, code, path, message, dependency = false) {
   issues.push(Object.freeze({ code, path, message, dependency }));
+}
+
+export function validateReadyClassification({
+  value,
+  production,
+  waiting,
+  allowSynthetic,
+  requireReady,
+  path = "classification",
+  label,
+  issues,
+}) {
+  const accepted = value === production
+    || (allowSynthetic && value === INPUT_CLASSIFICATIONS.synthetic);
+  if (requireReady) {
+    if (!accepted) {
+      pushIssue(
+        issues,
+        "CLASSIFICATION-NOT-READY",
+        path,
+        `${label} classification 必须为 ${production}${allowSynthetic ? " 或 synthetic-only" : ""}。`,
+        value === waiting || value === null || value === undefined || value === "",
+      );
+    }
+    return;
+  }
+  if (![production, waiting, INPUT_CLASSIFICATIONS.synthetic].includes(value)) {
+    pushIssue(issues, "CLASSIFICATION-INVALID", path, `${label} classification 无效。`);
+  }
+}
+
+export function validateRequiredIdentity(value, path, label, requireReady, issues) {
+  if (nonEmptyText(value)) return;
+  if (requireReady) {
+    pushIssue(issues, "IDENTITY-REQUIRED", path, `需要填写 ${label}。`, true);
+  } else if (value !== "" && value !== null && value !== undefined) {
+    pushIssue(issues, "IDENTITY-INVALID", path, `${label} 必须是非空字符串。`);
+  }
 }
 
 export function validateMeasuredEntry(
@@ -130,10 +188,10 @@ export function validateMeasuredEntry(
       "标准不确定度必须为非负有限数或 null。",
     );
   }
-  if (readyRequired && (typeof entry.method !== "string" || entry.method.trim() === "")) {
+  if (readyRequired && !nonEmptyText(entry.method)) {
     pushIssue(issues, "METHOD-REQUIRED", `${path}.method`, "需要记录测量或拟合方法。", true);
   }
-  if (readyRequired && (typeof entry.source !== "string" || entry.source.trim() === "")) {
+  if (readyRequired && !nonEmptyText(entry.source)) {
     pushIssue(issues, "SOURCE-REQUIRED", `${path}.source`, "需要记录来源。", true);
   }
 }

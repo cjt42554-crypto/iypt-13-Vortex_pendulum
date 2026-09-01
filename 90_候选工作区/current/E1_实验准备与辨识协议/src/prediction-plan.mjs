@@ -1,8 +1,14 @@
 import {
   BLOCK_ROLES,
+  INPUT_CLASSIFICATIONS,
   finite,
   isObject,
+  nonEmptyText,
   pushIssue,
+  safeConditionBlockId,
+  validTimestamp,
+  validateReadyClassification,
+  validateRequiredIdentity,
   validationResult,
 } from "./prediction-shared.mjs";
 
@@ -14,7 +20,7 @@ function validateChannel(channel, path, requireReady, issues) {
   if (channel.required !== true && channel.required !== false) {
     pushIssue(issues, "CHANNEL-REQUIRED-FLAG", `${path}.required`, "required 必须是布尔值。");
   }
-  if (typeof channel.unit !== "string" || channel.unit.trim() === "") {
+  if (!nonEmptyText(channel.unit)) {
     pushIssue(issues, "CHANNEL-UNIT", `${path}.unit`, "通道需要单位。");
   }
   if (
@@ -41,7 +47,7 @@ function validateBlock(block, expectedRole, index, requireReady, issues) {
   if (block.role !== expectedRole || !BLOCK_ROLES.has(block.role)) {
     pushIssue(issues, "BLOCK-ROLE", `${path}.role`, `role 必须为 ${expectedRole}。`);
   }
-  if (typeof block.conditionBlockId !== "string" || block.conditionBlockId.trim() === "") {
+  if (!nonEmptyText(block.conditionBlockId)) {
     pushIssue(
       issues,
       "BLOCK-ID",
@@ -49,10 +55,18 @@ function validateBlock(block, expectedRole, index, requireReady, issues) {
       "工况块需要唯一 conditionBlockId。",
       requireReady,
     );
+  } else if (!safeConditionBlockId(block.conditionBlockId)) {
+    pushIssue(
+      issues,
+      "BLOCK-ID-UNSAFE",
+      `${path}.conditionBlockId`,
+      "conditionBlockId 只能使用 1–96 个 ASCII 字母、数字、点、下划线或连字符，且不能以点结尾。",
+    );
   }
   const numericFields = [
     ["flowSpeedMps", 0, false],
     ["waterDepthM", 0, true],
+    ["pivotHeightM", null, false],
     ["initialThetaRad", null, false],
     ["initialOmegaRadPerS", null, false],
     ["initialWakeReal", null, false],
@@ -79,12 +93,15 @@ function validateBlock(block, expectedRole, index, requireReady, issues) {
       true,
     );
   }
-  if (requireReady && (typeof block.releaseProtocol !== "string" || block.releaseProtocol.trim() === "")) {
+  if (requireReady && !nonEmptyText(block.releaseProtocol)) {
     pushIssue(issues, "RELEASE-PROTOCOL", `${path}.releaseProtocol`, "需要冻结释放方式。", true);
   }
 }
 
-export function validatePredictionPlan(plan, { requireReady = true } = {}) {
+export function validatePredictionPlan(
+  plan,
+  { requireReady = true, allowSynthetic = false } = {},
+) {
   const issues = [];
   if (!isObject(plan)) {
     pushIssue(issues, "PLAN-INVALID", "$", "预测计划必须是对象。");
@@ -92,6 +109,22 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
   }
   if (plan.schemaVersion !== "VP-EXPERIMENT-PREDICTION-PLAN-v1") {
     pushIssue(issues, "SCHEMA-MISMATCH", "schemaVersion", "预测计划 schemaVersion 不匹配。");
+  }
+  validateReadyClassification({
+    value: plan.classification,
+    production: INPUT_CLASSIFICATIONS.productionPlan,
+    waiting: INPUT_CLASSIFICATIONS.waitingPlan,
+    allowSynthetic,
+    requireReady,
+    label: "预测计划",
+    issues,
+  });
+  for (const [field, label] of [
+    ["planId", "planId"],
+    ["apparatusId", "apparatusId"],
+    ["apparatusRevision", "apparatusRevision"],
+  ]) {
+    validateRequiredIdentity(plan[field], field, label, requireReady, issues);
   }
   if (plan.quantitativeBackend !== "forward") {
     pushIssue(issues, "QUANTITATIVE-BACKEND", "quantitativeBackend", "唯一允许的装置定量后端是 forward ROM。");
@@ -109,6 +142,31 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
       "holdoutPolicy",
       "留出必须按完整 condition block 冻结，且拟合期间不得读取留出结果。",
     );
+  }
+  if (!isObject(plan.freeze)) {
+    pushIssue(issues, "FREEZE-MISSING", "freeze", "缺少预测计划冻结记录。", requireReady);
+  } else {
+    if (requireReady && !validTimestamp(plan.freeze.frozenAt)) {
+      pushIssue(
+        issues,
+        "FREEZE-TIME-REQUIRED",
+        "freeze.frozenAt",
+        "正式预测计划需要有效的 ISO 时间戳。",
+        true,
+      );
+    } else if (plan.freeze.frozenAt !== null
+      && plan.freeze.frozenAt !== undefined
+      && !validTimestamp(plan.freeze.frozenAt)) {
+      pushIssue(issues, "FREEZE-TIME-INVALID", "freeze.frozenAt", "frozenAt 不是有效时间戳。");
+    }
+    if (plan.freeze.holdoutOutcomesUnread !== true) {
+      pushIssue(
+        issues,
+        "HOLDOUT-FREEZE-STATE",
+        "freeze.holdoutOutcomesUnread",
+        "冻结时必须确认尚未读取 holdout 结果。",
+      );
+    }
   }
   if (!isObject(plan.channels)) {
     pushIssue(issues, "CHANNELS-INVALID", "channels", "channels 必须是对象。");
@@ -142,7 +200,7 @@ export function validatePredictionPlan(plan, { requireReady = true } = {}) {
   for (const role of BLOCK_ROLES) {
     for (const block of plan[`${role}Blocks`] ?? []) {
       const id = block?.conditionBlockId;
-      if (typeof id !== "string" || id === "") continue;
+      if (!nonEmptyText(id)) continue;
       if (observed.has(id)) {
         pushIssue(
           issues,

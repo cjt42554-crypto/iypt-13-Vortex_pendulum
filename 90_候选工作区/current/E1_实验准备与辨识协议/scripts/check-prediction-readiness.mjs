@@ -43,15 +43,23 @@ if (!synthetic) {
     readJson(path("examples/synthetic-filled-coefficients.json")),
     readJson(path("examples/synthetic-base-formal-config.json")),
   ]);
-  assertPass("prediction plan", validatePredictionPlan(plan));
-  assertPass("apparatus", validateApparatusRecord(apparatus));
+  const options = { allowSynthetic: true };
+  assertPass("prediction plan", validatePredictionPlan(plan, options));
+  assertPass("apparatus", validateApparatusRecord(apparatus, options));
   assertPass(
     "coefficient package",
-    validateCoefficientPackage(coefficients, plan),
+    validateCoefficientPackage(coefficients, plan, apparatus, options),
   );
   const blocks = [...plan.calibrationBlocks, ...plan.holdoutBlocks];
   const configs = blocks.map((block) =>
-    buildFormalForwardConfig(baseConfig, apparatus, coefficients, plan, block));
+    buildFormalForwardConfig(
+      baseConfig,
+      apparatus,
+      coefficients,
+      plan,
+      block,
+      options,
+    ));
   const report = {
     decision: "PASS-EXPERIMENT-PREDICTION-INPUT-TOOLING-SYNTHETIC-ONLY",
     classification: "synthetic-only",

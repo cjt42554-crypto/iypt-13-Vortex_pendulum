@@ -7,13 +7,17 @@ import {
   readJson,
 } from "./prediction-shared.mjs";
 import { validateApparatusRecord } from "./prediction-apparatus.mjs";
-import { validateCoefficientPackage } from "./prediction-coefficients.mjs";
+import {
+  validateCoefficientPackage,
+  validateConditionAgainstCalibrationDomain,
+} from "./prediction-coefficients.mjs";
 import { validatePredictionPlan } from "./prediction-plan.mjs";
 
 export {
   readJson,
   validateApparatusRecord,
   validateCoefficientPackage,
+  validateConditionAgainstCalibrationDomain,
   validatePredictionPlan,
 };
 
@@ -43,12 +47,19 @@ export function buildFormalForwardConfig(
   coefficients,
   plan,
   conditionBlock,
+  { allowSynthetic = false } = {},
 ) {
-  requireReady("prediction plan", validatePredictionPlan(plan));
-  requireReady("apparatus", validateApparatusRecord(apparatus));
+  requireReady(
+    "prediction plan",
+    validatePredictionPlan(plan, { allowSynthetic }),
+  );
+  requireReady(
+    "apparatus",
+    validateApparatusRecord(apparatus, { allowSynthetic }),
+  );
   requireReady(
     "coefficient package",
-    validateCoefficientPackage(coefficients, plan),
+    validateCoefficientPackage(coefficients, plan, apparatus, { allowSynthetic }),
   );
   if (!isObject(baseConfig)
     || baseConfig.schemaVersion !== "3.0.0"
@@ -67,6 +78,15 @@ export function buildFormalForwardConfig(
     || JSON.stringify(canonicalBlock) !== JSON.stringify(conditionBlock)) {
     throw new Error("condition block is not frozen in the prediction plan");
   }
+  requireReady(
+    "condition calibration domain",
+    validateConditionAgainstCalibrationDomain(
+      coefficients,
+      apparatus,
+      conditionBlock,
+      { path: `conditionBlock.${conditionBlock.conditionBlockId}` },
+    ),
+  );
   const config = structuredClone(baseConfig);
   config.backend = "forward";
   for (const path of Object.keys(APPARATUS_PARAMETERS)) {
@@ -82,6 +102,7 @@ export function buildFormalForwardConfig(
   config.fluid.flowModulationAmplitude = 0;
   config.fluid.flowModulationFrequency = 0;
   config.geometry.waterDepth = conditionBlock.waterDepthM;
+  config.geometry.pivotHeight = conditionBlock.pivotHeightM;
   config.initial.theta = conditionBlock.initialThetaRad;
   config.initial.omega = conditionBlock.initialOmegaRadPerS;
   config.initial.wakeReal = conditionBlock.initialWakeReal;
@@ -103,6 +124,7 @@ export function inspectTemplateBundle({ plan, apparatus, coefficients }) {
   const coefficientValidation = validateCoefficientPackage(
     coefficients,
     plan,
+    apparatus,
     { requireReady: false },
   );
   issues.push(...planValidation.structuralIssues);
@@ -132,7 +154,7 @@ export function inspectTemplateBundle({ plan, apparatus, coefficients }) {
   const dependencies = [
     ...validatePredictionPlan(plan).dependencies,
     ...validateApparatusRecord(apparatus).dependencies,
-    ...validateCoefficientPackage(coefficients, plan).dependencies,
+    ...validateCoefficientPackage(coefficients, plan, apparatus).dependencies,
   ];
   return Object.freeze({
     decision: issues.length === 0

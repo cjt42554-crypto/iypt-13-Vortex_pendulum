@@ -20,20 +20,20 @@
   },
   "pilotBlocks": [{
     "conditionBlockId": "PILOT-01", "role": "pilot",
-    "flowSpeedMps": null, "waterDepthM": null,
+    "flowSpeedMps": null, "waterDepthM": null, "pivotHeightM": null,
     "initialThetaRad": null, "initialOmegaRadPerS": null,
     "initialWakeReal": null, "initialWakeImaginary": null,
     "flowRampTimeS": null, "durationS": null,
     "replicates": null, "releaseProtocol": ""
   }],
   "calibrationBlocks": [
-    {"conditionBlockId": "CAL-01", "role": "calibration", "flowSpeedMps": null, "waterDepthM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""},
-    {"conditionBlockId": "CAL-02", "role": "calibration", "flowSpeedMps": null, "waterDepthM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""},
-    {"conditionBlockId": "CAL-03", "role": "calibration", "flowSpeedMps": null, "waterDepthM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""}
+    {"conditionBlockId": "CAL-01", "role": "calibration", "flowSpeedMps": null, "waterDepthM": null, "pivotHeightM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""},
+    {"conditionBlockId": "CAL-02", "role": "calibration", "flowSpeedMps": null, "waterDepthM": null, "pivotHeightM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""},
+    {"conditionBlockId": "CAL-03", "role": "calibration", "flowSpeedMps": null, "waterDepthM": null, "pivotHeightM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""}
   ],
   "holdoutBlocks": [
-    {"conditionBlockId": "HOLDOUT-01", "role": "holdout", "flowSpeedMps": null, "waterDepthM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""},
-    {"conditionBlockId": "HOLDOUT-02", "role": "holdout", "flowSpeedMps": null, "waterDepthM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""}
+    {"conditionBlockId": "HOLDOUT-01", "role": "holdout", "flowSpeedMps": null, "waterDepthM": null, "pivotHeightM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""},
+    {"conditionBlockId": "HOLDOUT-02", "role": "holdout", "flowSpeedMps": null, "waterDepthM": null, "pivotHeightM": null, "initialThetaRad": null, "initialOmegaRadPerS": null, "initialWakeReal": null, "initialWakeImaginary": null, "flowRampTimeS": null, "durationS": null, "replicates": null, "releaseProtocol": ""}
   ],
   "acceptance": {
     "growthTrend": {"signMustMatch": true, "confidenceLevel": 0.95},

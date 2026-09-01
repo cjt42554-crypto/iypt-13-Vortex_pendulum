@@ -2,6 +2,9 @@
   "schemaVersion": "VP-ROM-COEFFICIENT-PACKAGE-v1",
   "packageId": "",
   "classification": "waiting-for-calibration",
+  "apparatusId": "",
+  "apparatusRevision": "",
+  "predictionPlanId": "",
   "modelId": "VP-FWD-P0-SL1-v1",
   "coefficientSource": "measured",
   "wakeGauge": {
@@ -40,6 +43,7 @@
   "calibrationDomain": {
     "flowSpeedMps": {"minimum": null, "maximum": null},
     "waterDepthM": {"minimum": null, "maximum": null},
+    "pivotHeightM": {"minimum": null, "maximum": null},
     "reynolds": {"minimum": null, "maximum": null}
   },
   "covariance": null
