@@ -10,11 +10,10 @@ const repositoryRoot = resolve(packageRoot, "../../..");
 const readJson = async (name) => JSON.parse(await readFile(resolve(packageRoot, name), "utf8"));
 
 test("current project ledger closes hashes and predecessor graph", async () => {
-  const result = await validateProjectState(
-    await readJson("project-state-ledger.json"),
-    { repositoryRoot },
-  );
-  assert.equal(result.packageCount, 15);
+  const ledger = await readJson("project-state-ledger.json");
+  const result = await validateProjectState(ledger, { repositoryRoot });
+  assert.equal(result.packageCount, ledger.workPackages.length);
+  assert.equal(result.packageCount, 19);
   assert.match(result.canonicalSha256, /^[0-9a-f]{64}$/u);
 });
 
@@ -40,6 +39,23 @@ test("PR-1 route uses R1I and active H1 v2 without the superseded R1 predecessor
   assert.ok(
     byId.get("WP-HW1").evidence.some((item) =>
       item.path.endsWith("h1-machine-contract.v2.json"),
+    ),
+  );
+});
+
+test("PR-2A route exposes HW2R, H2-X, conditional H2-N, and H3 readiness without unlocking HW3", async () => {
+  const ledger = await readJson("project-state-ledger.json");
+  const byId = new Map(ledger.workPackages.map((entry) => [entry.id, entry]));
+  assert.equal(byId.get("WP-HW2").status, "IN_PROGRESS");
+  assert.equal(byId.get("WP-HW2R").status, "IN_PROGRESS");
+  assert.equal(byId.get("WP-H2X").status, "WAITING_PREDECESSOR");
+  assert.equal(byId.get("WP-H2N").status, "DEFERRED_CONDITIONAL");
+  assert.equal(byId.get("WP-H3P").status, "WAITING_PREDECESSOR");
+  assert.equal(byId.get("WP-HW3").status, "WAITING_PREDECESSOR");
+  assert.match(byId.get("WP-HW3").nextGate, /PR-2B/u);
+  assert.ok(
+    byId.get("WP-HW2R").evidence.some((item) =>
+      item.path.endsWith("hw2r-pre-observation-readiness.v1.json"),
     ),
   );
 });
