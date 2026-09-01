@@ -1,0 +1,261 @@
+{
+  "schemaVersion": "G0-PROJECT-STATE-CONTRACT-v1",
+  "ledgerId": "IYPT13-PREEXPERIMENT-STATE-20260901-POST-PR1-R1I",
+  "project": "IYPT-2027-P13-VORTEX-PENDULUM",
+  "baselineCommit": "43df2fd4cf61d804388d714acf53ea5d3a7ce580",
+  "generatedAt": "2026-09-01T13:11:51+08:00",
+  "conclusionCeiling": "EXPERIMENT_PREPARATION_ONLY",
+  "workPackages": [
+    {
+      "id": "WP-R0",
+      "title": "中断串行尝试的运行终止事实",
+      "owner": "runtime",
+      "priority": "P0",
+      "status": "INCONCLUSIVE",
+      "predecessors": [],
+      "evidence": [
+        {
+          "kind": "runtime-observation",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.json",
+          "sha256": "889eafc3a340f60d5d5743b64df086ab6b603ed9173465a54b62ef42542fb85c",
+          "claim": "Host shutdown terminated the intended serial reference before canonical artifact creation; this is a governance incident, not a scientific result."
+        }
+      ],
+      "terminationCode": "INCONCLUSIVE-R0-HOST-SHUTDOWN-NO-CANONICAL-ARTIFACT",
+      "nextGate": "WP-R1I"
+    },
+    {
+      "id": "WP-R1",
+      "title": "正常串行参考产物封存分支（不可达）",
+      "owner": "Codex",
+      "priority": "P0",
+      "status": "INCONCLUSIVE",
+      "predecessors": ["WP-R0"],
+      "evidence": [
+        {
+          "kind": "governance",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md",
+          "sha256": "65f964ea9973c688b1d16b517808fb45efaab75fb74f16e734977cd5c2203aee",
+          "claim": "PR-1 makes the normal serial artifact-seal branch unreachable and replaces it with WP-R1I."
+        }
+      ],
+      "terminationCode": "SUPERSEDED-R1-NORMAL-ARTIFACT-SEAL-BY-R1I-AFTER-R0-INTERRUPTION",
+      "nextGate": "WP-R1I"
+    },
+    {
+      "id": "WP-R1I",
+      "title": "中断串行尝试证据封存与旧工作区退役",
+      "owner": "Codex",
+      "priority": "P0",
+      "status": "PASS",
+      "predecessors": ["WP-R0"],
+      "evidence": [
+        {
+          "kind": "runtime-observation",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/r1i-interrupted-serial-attempt-seal-20260901.json",
+          "sha256": "d459f1fa42e1f1bfdec93ad4ee37fdf25d230c6d8fdc383ed83ac47e9490f79e",
+          "claim": "R0 entity hashes and the untouched old-worktree state were revalidated read-only; no canonical artifact, payload inspection, restart authority, or partial credit exists."
+        }
+      ],
+      "terminationCode": "PASS-R1I-INTERRUPTED-SERIAL-ATTEMPT-EVIDENCE-SEALED",
+      "nextGate": "WP-G1 + WP-HW1"
+    },
+    {
+      "id": "WP-G1",
+      "title": "全仓状态总账、CI 和检查范围治理",
+      "owner": "Codex",
+      "priority": "P0",
+      "status": "IN_PROGRESS",
+      "predecessors": [],
+      "evidence": [
+        {
+          "kind": "governance",
+          "path": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+          "sha256": "5d2fd4ffbc57bbdd9e056462e085f5f673efe5daed269e024cf82f01ad9f50e7",
+          "claim": "Frozen whole-project route and result-before G1 authorization."
+        },
+        {
+          "kind": "governance",
+          "path": "tools/check_markdown_math.py",
+          "sha256": "9f07c84ee25850fb73914bd6de9a0f67fb7b4a46b63b76a105da05c64439ca0e",
+          "claim": "Markdown format enumeration is limited to final theory and the current handoff."
+        },
+        {
+          "kind": "governance",
+          "path": ".github/workflows/markdown-check.yml",
+          "sha256": "519577c8dff09d946f1ae5022e7702de59f0870040c914ba3182d01065f329a8",
+          "claim": "GitHub Markdown workflow invokes only the scoped checker and is green at the recorded handoff."
+        }
+      ],
+      "terminationCode": null,
+      "nextGate": "PASS-G1-RESULT-BEFORE-FOUNDATION"
+    },
+    {
+      "id": "WP-HW1",
+      "title": "H1 v2 机器合同、测试和无结果架构",
+      "owner": "Codex",
+      "priority": "P0",
+      "status": "IN_PROGRESS",
+      "predecessors": ["WP-G1", "WP-R1I"],
+      "evidence": [
+        {
+          "kind": "contract",
+          "path": "90_候选工作区/current/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.json",
+          "sha256": "387c644be55f6f9c479ccc84ae8ed68668b4ecafab73e2e3608a1a5a3805e311",
+          "claim": "Active result-blind H1 v2 machine contract incorporates PR-1 without weakening inherited gates."
+        },
+        {
+          "kind": "implementation-test",
+          "path": "90_候选工作区/current/H1_硬件利用与执行架构/tests/contract.v2.test.mjs",
+          "sha256": "e8c80f95d8ccb0deb49b9c68ceb484214b1414ea7551ac3d9acac57fb31b6a72",
+          "claim": "Active-v2, immutable-v1, no-fallback, no-rerun, no-partial-credit and scientific-field-leak contract tests."
+        }
+      ],
+      "terminationCode": null,
+      "nextGate": "PASS-HW1-V2-RESULT-BEFORE-FOUNDATION"
+    },
+    {
+      "id": "WP-E1",
+      "title": "实验准备、数据和辨识预注册包",
+      "owner": "Codex",
+      "priority": "P0",
+      "status": "IN_PROGRESS",
+      "predecessors": ["WP-G1"],
+      "evidence": [
+        {
+          "kind": "contract",
+          "path": "90_候选工作区/current/E1_实验准备与辨识协议/contracts/e1-contract.v1.json",
+          "sha256": "f71cc5a2450de9846eb5dd5b454a0012641a7c9b0543eba898b54cfc44b28dc3",
+          "claim": "Experiment-preparation contract was frozen before synthetic implementation."
+        }
+      ],
+      "terminationCode": null,
+      "nextGate": "PASS-E1-EXPERIMENT-PREPARATION-CANDIDATE-ONLY"
+    },
+    {
+      "id": "WP-F1",
+      "title": "正式前向数值资格候选包",
+      "owner": "Codex",
+      "priority": "P1",
+      "status": "IN_PROGRESS",
+      "predecessors": ["WP-G1"],
+      "evidence": [
+        {
+          "kind": "contract",
+          "path": "90_候选工作区/current/F1_前向数值资格与闭合包接口/contracts/f1-contract.v1.json",
+          "sha256": "ed8fefaeda74621d00aef2e7d24d6258a90358b2babf55ecfdfcadf46aaaabce",
+          "claim": "Synthetic forward numerical qualification thresholds were frozen before implementation."
+        }
+      ],
+      "terminationCode": null,
+      "nextGate": "PASS-F1-SYNTHETIC-NUMERICAL-QUALIFICATION-ONLY"
+    },
+    {
+      "id": "WP-S1",
+      "title": "结构分析实验前最小工具闭合",
+      "owner": "Codex",
+      "priority": "P1",
+      "status": "IN_PROGRESS",
+      "predecessors": ["WP-G1"],
+      "evidence": [
+        {
+          "kind": "contract",
+          "path": "90_候选工作区/current/S1_结构分析实验前最小工具/contracts/s1-contract.v1.json",
+          "sha256": "e2b22e590d01751bf097316317b46689f152ac26a35475345c5c936cc0d4d88a",
+          "claim": "Synthetic structural qualification thresholds were frozen before implementation."
+        }
+      ],
+      "terminationCode": null,
+      "nextGate": "PASS-S1-EXPERIMENT-PREPARATION-STRUCTURAL-TOOLS"
+    },
+    {
+      "id": "WP-HW2",
+      "title": "硬件 inventory、probe 和候选选择",
+      "owner": "Codex",
+      "priority": "P0",
+      "status": "WAITING_PREDECESSOR",
+      "predecessors": ["WP-G1", "WP-HW1", "WP-R1I"],
+      "evidence": [],
+      "terminationCode": null,
+      "nextGate": "PR-2"
+    },
+    {
+      "id": "WP-HW3",
+      "title": "HW1-primary 与 HW1-repeat 两次新鲜硬件全量运行",
+      "owner": "runtime",
+      "priority": "P0",
+      "status": "WAITING_PREDECESSOR",
+      "predecessors": ["WP-HW2"],
+      "evidence": [],
+      "terminationCode": null,
+      "nextGate": "PR-2"
+    },
+    {
+      "id": "WP-A8T",
+      "title": "A8R 科学终局和路线处置",
+      "owner": "Pro",
+      "priority": "P0",
+      "status": "WAITING_PREDECESSOR",
+      "predecessors": ["WP-HW3"],
+      "evidence": [],
+      "terminationCode": null,
+      "nextGate": "PR-3"
+    },
+    {
+      "id": "WP-I1",
+      "title": "正式软件对齐与候选集成",
+      "owner": "Codex",
+      "priority": "P1",
+      "status": "WAITING_PREDECESSOR",
+      "predecessors": ["WP-E1", "WP-F1", "WP-S1", "WP-A8T"],
+      "evidence": [],
+      "terminationCode": null,
+      "nextGate": "G4 formal alignment"
+    },
+    {
+      "id": "WP-PHY",
+      "title": "新物理或高保真路线",
+      "owner": "Pro",
+      "priority": "P3",
+      "status": "DEFERRED_CONDITIONAL",
+      "predecessors": ["WP-A8T"],
+      "evidence": [],
+      "terminationCode": "DEFERRED-PHY-AWAITING-PR3-OR-EXPERIMENT-TRIGGER",
+      "nextGate": "PR-3 or experimental trigger"
+    },
+    {
+      "id": "WP-DOC",
+      "title": "活动文档、证据索引和交接闭合",
+      "owner": "Codex",
+      "priority": "P1",
+      "status": "IN_PROGRESS",
+      "predecessors": ["WP-G1"],
+      "evidence": [],
+      "terminationCode": null,
+      "nextGate": "WP-Z1"
+    },
+    {
+      "id": "WP-Z1",
+      "title": "最终无剩余非实验任务审计",
+      "owner": "Pro",
+      "priority": "P0",
+      "status": "WAITING_PREDECESSOR",
+      "predecessors": [
+        "WP-G1",
+        "WP-HW1",
+        "WP-E1",
+        "WP-F1",
+        "WP-S1",
+        "WP-R1I",
+        "WP-HW2",
+        "WP-HW3",
+        "WP-A8T",
+        "WP-I1",
+        "WP-DOC"
+      ],
+      "evidence": [],
+      "terminationCode": null,
+      "nextGate": "PR-4"
+    }
+  ]
+}

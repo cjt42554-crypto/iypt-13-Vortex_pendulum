@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "G0-SUPERSESSION-CONTRACT-v1",
+  "baselineCommit": "43df2fd4cf61d804388d714acf53ea5d3a7ce580",
+  "entries": [
+    {
+      "subject": "whole-project route after hardware ruling 35",
+      "olderPath": "90_候选工作区/current/A8_二维特征开放边界实验后端/35_A8R_硬件充分利用结果身份迁移与全仓模拟技术债裁决.md",
+      "olderCommit": "27dbd7e5971317469cbbcdb7ded1da1b34e82df3",
+      "newerPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+      "newerCommit": "cd0a6beb5e6878d9141b063348b8e6399dba6c7c",
+      "relation": "supersedes",
+      "retainedClauses": [
+        "result-blind hardware selection",
+        "no mixed serial and HW1 repeat identity",
+        "protected formal paths remain locked before qualification"
+      ]
+    },
+    {
+      "subject": "H1 v1 Markdown contract to immutable v1 machine mapping",
+      "olderPath": "90_候选工作区/current/H1_硬件利用与执行架构/01_A8R_HW1_结果盲硬件资格预注册合同.md",
+      "olderCommit": "bdfc96b0434cf1aa8db25d479235576890c489e8",
+      "newerPath": "90_候选工作区/current/H1_硬件利用与执行架构/contracts/h1-machine-contract.v1.json",
+      "newerCommit": "0c44ad25fecd82423e26fb7d6ff8dadd52d67eee",
+      "relation": "clarifies",
+      "retainedClauses": [
+        "H1 v1 Markdown bytes remain immutable",
+        "machine conflict fails closed",
+        "H2 and H3 remain locked until their gates"
+      ]
+    },
+    {
+      "subject": "active H1 machine route after PR-1 host shutdown",
+      "olderPath": "90_候选工作区/current/H1_硬件利用与执行架构/contracts/h1-machine-contract.v1.json",
+      "olderCommit": "0c44ad25fecd82423e26fb7d6ff8dadd52d67eee",
+      "newerPath": "90_候选工作区/current/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.json",
+      "newerCommit": "1c236f45f97bdfdef7039ea8d1dce9ae1aa8f98b",
+      "relation": "supersedes",
+      "retainedClauses": [
+        "all v1 result-blind and performance thresholds remain unchanged",
+        "v1 files remain immutable historical evidence",
+        "active implementations must reject v1 fallback"
+      ]
+    },
+    {
+      "subject": "R0 serial-reference natural-completion assumption",
+      "olderPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+      "olderCommit": "cd0a6beb5e6878d9141b063348b8e6399dba6c7c",
+      "newerPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md",
+      "newerCommit": "0f8085b1fda43e4f83d5152cfd99294bc3c0fc29",
+      "relation": "supersedes",
+      "retainedClauses": [
+        "no scientific inference from partial progress",
+        "no checkpoint resume or full legacy serial rerun",
+        "two fresh HW1 full runs remain required"
+      ]
+    },
+    {
+      "subject": "normal WP-R1 artifact seal after R0 interruption",
+      "olderPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+      "olderCommit": "cd0a6beb5e6878d9141b063348b8e6399dba6c7c",
+      "newerPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/evidence/r1i-interrupted-serial-attempt-seal-20260901.json",
+      "newerCommit": "43df2fd4cf61d804388d714acf53ea5d3a7ce580",
+      "relation": "supersedes",
+      "retainedClauses": [
+        "R0 incident bytes and hashes remain immutable",
+        "old worktree is archived read-only in place",
+        "scientific payload inspection and partial credit remain forbidden"
+      ]
+    },
+    {
+      "subject": "Markdown formatting check scope",
+      "olderPath": "90_候选工作区/current/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+      "olderCommit": "cd0a6beb5e6878d9141b063348b8e6399dba6c7c",
+      "newerPath": "tools/check_markdown_math.py",
+      "newerCommit": "31672d194528ab954510c061d277bc1374bbd835",
+      "relation": "narrows",
+      "retainedClauses": [
+        "check 01_最终理论/**/*.md",
+        "check 90_候选工作区/交接说明_current.md",
+        "exclude every other Markdown file from the generic format gate"
+      ]
+    }
+  ]
+}
