@@ -124,7 +124,16 @@ async function warmup({family, mode, binaryPath, resourceUnits, cpuThreads, step
   });
 }
 
-async function formalRepeats({execute, warm, expectedDigest, resourceUnits, elements, sustainableBandwidth, contract}) {
+async function formalRepeats({
+  execute,
+  warm,
+  expectedDigest,
+  resourceUnits,
+  elements,
+  sustainableBandwidth,
+  contract,
+  gpuIndex = null,
+}) {
   const repeats = [];
   const internal = [];
   for (let index = 0; index < contract.probe.validRepeatsMinimum; index += 1) {
@@ -135,6 +144,7 @@ async function formalRepeats({execute, warm, expectedDigest, resourceUnits, elem
       resourceUnits,
       estimatedBytesMoved: elements * Uint32Array.BYTES_PER_ELEMENT,
       sustainableBandwidthBytesPerSecond: sustainableBandwidth,
+      gpuIndex,
     });
     repeats.push(toProbeRepeat(measurement));
     internal.push({correctnessPass: measurement.correctnessPass, digest: measurement.digest});
@@ -261,6 +271,9 @@ export async function runHw2Qualification({repoRoot, authorization, contract}) {
           elements: familyPlan.elements,
           sustainableBandwidth: bandwidth.sustainableBandwidthBytesPerSecond,
           contract,
+          gpuIndex: configuration.candidateClass === "gpu-compute" || configuration.candidateClass === "cpu-gpu-hybrid"
+            ? 0
+            : null,
         });
         const candidate = {
           classification: "synthetic-result-blind-probe",

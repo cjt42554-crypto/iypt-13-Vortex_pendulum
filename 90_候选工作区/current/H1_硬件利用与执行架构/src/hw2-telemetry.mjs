@@ -89,7 +89,7 @@ export async function captureResourceSnapshot({gpuIndex = 0} = {}) {
     cgroupValue(directory, "memory.events"),
     cgroupValue(directory, "memory.current"),
     cpuFrequencyMedianKHz(),
-    gpuSample(gpuIndex),
+    gpuIndex === null ? null : gpuSample(gpuIndex),
   ]);
   return {
     capturedAt: new Date().toISOString(),
