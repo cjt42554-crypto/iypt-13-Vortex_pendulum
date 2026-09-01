@@ -18,6 +18,7 @@ const UNRESOLVED_STATES = Object.freeze(new Set([
   "DEFERRED-UNSAFE-TO-PROBE",
   "DEFERRED-UNAVAILABLE",
   "DEFERRED-TOOLCHAIN-OR-RESOURCE",
+  "NUMERICAL_IDENTITY_PENDING",
 ]));
 
 export function isHw2rUnresolvedEvaluation(item, protocol) {
