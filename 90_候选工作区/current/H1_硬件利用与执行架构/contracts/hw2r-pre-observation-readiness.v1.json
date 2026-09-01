@@ -13,6 +13,7 @@
     "H3"
   ],
   "acceptedImplementationEvidence": {
+    "baselineImplementationCommit": "fa73bda16c42a17a3c63f429c8b8c7e2709c7e66",
     "h1Tests": "45/45",
     "h2Tests": "14/14",
     "h3Tests": "8/8",
@@ -22,6 +23,16 @@
     "sustainedGpuTelemetrySmoke": true,
     "h3DryRunSmoke": true,
     "claimCeiling": "implementation-and-no-result-smoke-only"
+  },
+  "reviewHardening": {
+    "preObservationMachineGate": true,
+    "crossWorkloadBaselineRejected": true,
+    "unresolvedNumericalIdentityBlocksSelection": true,
+    "h2xScheduleMetadataBound": true,
+    "fullH2nEvidenceEnvelopeValidated": true,
+    "cgroupPeakHeadroomChecked": true,
+    "expandedLightweightCi": true,
+    "claimCeiling": "implementation-review-only"
   },
   "blockingFindings": [
     {
@@ -64,7 +75,7 @@
       "id": "P0-DEFERRED-AND-UNRESOLVED-SELECTION",
       "status": "OPEN",
       "requiredClosure": [
-        "measurement-invalid, deferred-unsafe, and accessible-unavailable candidates with possible gain above 10 percent block selection",
+        "measurement-invalid, deferred-unsafe, accessible-unavailable, and numerical-identity-pending candidates with possible gain above 10 percent block selection",
         "all candidate classes have an auditable terminal disposition",
         "95 percent best-throughput selection uses only comparable, qualified candidates"
       ]
@@ -90,7 +101,7 @@
     },
     {
       "id": "P0-H2N-FULL-EVIDENCE-VALIDATION",
-      "status": "OPEN",
+      "status": "CLOSED",
       "requiredClosure": [
         "the finalizer cannot accept an unvalidated optional full H2-N summary",
         "full H2-N evidence has a frozen envelope and fail-closed validator",
@@ -99,7 +110,7 @@
     },
     {
       "id": "P1-CI-COVERAGE",
-      "status": "OPEN",
+      "status": "CLOSED",
       "requiredClosure": [
         "simulation-check covers H1, H2, H3, and _shared lightweight tests",
         "no heavy performance or scientific run is executed in shared CI"
