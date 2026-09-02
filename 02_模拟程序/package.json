@@ -14,6 +14,7 @@
     "desktop:uninstall": "node scripts/uninstall-desktop-launcher.mjs",
     "simulate:forward": "vite-node scripts/run-forward.ts",
     "simulate:high-fidelity": "vite-node scripts/run-high-fidelity.ts",
+    "prepare:forward-configs": "vite-node scripts/build-forward-configs.ts",
     "audit:forward-convergence": "vite-node scripts/audit-forward-convergence.ts",
     "audit:high-fidelity": "vite-node scripts/audit-high-fidelity.ts",
     "analyze:high-fidelity-grid": "vite-node scripts/analyze-high-fidelity-grid.ts",

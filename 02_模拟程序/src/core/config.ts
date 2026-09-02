@@ -11,6 +11,7 @@ import type {
   SimulationConfig,
   ValidationIssue,
 } from "./types";
+import { stableCanonicalJson } from "./canonical";
 
 export const DEFAULT_CONFIG: SimulationConfig = {
   schemaVersion: "3.0.0",
@@ -680,20 +681,8 @@ export function applicabilityFor(config: SimulationConfig): ApplicabilityReport 
   };
 }
 
-function canonicalize(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(canonicalize);
-  if (typeof value === "object" && value !== null) {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .sort(([left], [right]) => left.localeCompare(right))
-        .map(([key, child]) => [key, canonicalize(child)]),
-    );
-  }
-  return value;
-}
-
 export function stableConfigString(config: SimulationConfig): string {
-  return JSON.stringify(canonicalize(config));
+  return stableCanonicalJson(config);
 }
 
 /** Browser-safe deterministic FNV-1a provenance hash (not a security digest). */

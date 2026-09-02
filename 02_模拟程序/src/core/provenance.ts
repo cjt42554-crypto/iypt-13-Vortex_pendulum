@@ -1,29 +1,11 @@
 import type { BackendId, SimulationConfig } from "./types";
+import { sha256Canonical, stableCanonicalJson } from "./canonical";
 
 export const A1_FORCE_CONTRACT_ID = "VP-CFD2D-RAW-BRINKMAN-A1-v1";
 export const A1_ANALYSIS_CONTRACT_ID = "VP-ANALYSIS-APPLIED-DIAGNOSTIC-A1-v1";
+export const A2_FORCE_DIAGNOSTIC_CONTRACT_ID = "VP-CFD2D-CV-VIRTUAL-FLUID-A2-v1";
 
-function canonicalize(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(canonicalize);
-  if (value !== null && typeof value === "object") {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .sort(([left], [right]) => left.localeCompare(right))
-        .map(([key, child]) => [key, canonicalize(child)]),
-    );
-  }
-  return value;
-}
-
-export function stableCanonicalJson(value: unknown): string {
-  return JSON.stringify(canonicalize(value));
-}
-
-export async function sha256Canonical(value: unknown): Promise<string> {
-  const bytes = new TextEncoder().encode(stableCanonicalJson(value));
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
-}
+export { sha256Canonical, stableCanonicalJson } from "./canonical";
 
 export function sharedPhysicalInput(config: SimulationConfig): unknown {
   return {
@@ -64,7 +46,12 @@ export function backendDynamicsContract(config: SimulationConfig, backend: Backe
     displayName: "cfd2d-sectional-reference",
     loadDefinition: "raw-brinkman-reaction-impulse-a1-not-physical-hydrodynamic-force",
     forceContractId: A1_FORCE_CONTRACT_ID,
-    virtualFluidCorrection: "none-frozen-until-a2",
+    optionalForceDiagnostic: {
+      contractId: A2_FORCE_DIAGNOSTIC_CONTRACT_ID,
+      consumedByDynamics: false,
+      qualification: "implementation-tested-physical-amplitude-unqualified",
+    },
+    virtualFluidCorrection: "none-in-dynamics-a2-diagnostic-only",
     inertiaAllocation: "dry-structure-only-dynamic-fluid-inertia-implicit",
     fsiScheme: config.cfd2d.couplingMode === "weak-fsi"
       ? "legacy-explicit-symplectic-weak-fsi"

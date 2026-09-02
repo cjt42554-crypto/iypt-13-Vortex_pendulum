@@ -294,6 +294,12 @@ export function structuralSpectrumPoint(
   flowSpeed: number,
 ): StructuralSpectrumPoint {
   const linear = linearizeForwardAtSymmetricState(config, flowSpeed);
+  if (!(linear.residualNorm <= 1e-10)) {
+    throw new Error(
+      `symmetric-state residual ${linear.residualNorm} exceeds 1e-10; `
+        + "the requested point is not an equilibrium and cannot be linearized as one",
+    );
+  }
   const coefficients = characteristicCoefficients(linear.jacobian);
   const eigenvalues = polynomialRoots(coefficients);
   const maximumPolynomialResidual = Math.max(
@@ -370,10 +376,10 @@ export function locateScalarRoot(
   let [left, right] = bracket;
   let leftValue = fn(left);
   let rightValue = fn(right);
-  if (left === right) return left;
   if (!Number.isFinite(leftValue) || !Number.isFinite(rightValue) || leftValue * rightValue > 0) {
     throw new RangeError("root bracket must contain a finite sign change");
   }
+  if (left === right) return left;
   for (let iteration = 0; iteration < 100 && right - left > tolerance; iteration += 1) {
     const midpoint = 0.5 * (left + right);
     const midpointValue = fn(midpoint);
@@ -405,6 +411,12 @@ export function locateStructuralBoundary(
     structuralSpectrumPoint(config, upper).spectralAbscissa
     - structuralSpectrumPoint(config, lower).spectralAbscissa
   ) / (upper - lower);
+  if (!(Math.abs(crossingSlope) >= 1e-6)) {
+    throw new Error(
+      `spectral boundary crossing slope ${crossingSlope} is too small; `
+        + "near-multiple or tangential roots require a separate analysis",
+    );
+  }
   return {
     flowSpeed,
     point,

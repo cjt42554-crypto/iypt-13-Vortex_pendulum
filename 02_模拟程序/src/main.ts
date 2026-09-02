@@ -231,6 +231,7 @@ function renderSummary(result: SimulationResult): void {
     `载荷·${result.provenance.loadDefinition}`,
     `耦合·${result.provenance.couplingAlgorithm}`,
     `跨度·${result.provenance.spanClosure}`,
+    `资格·${result.provenance.epistemicClassification}`,
     `证据·${result.provenance.evidenceLevel}/${result.provenance.evidenceClaims.apparatusPrediction}`,
   ].map((label) => `<span class="badge" data-state="warning">${escapeHtml(label)}</span>`).join("");
   const entries: Array<[string, string]> = [
@@ -256,6 +257,8 @@ function renderSummary(result: SimulationResult): void {
     ["内部步长范围", `${formatNumber(n.minimumAcceptedStep)}–${formatNumber(n.maximumAcceptedStep)} s`],
     ["配置哈希", result.provenance.configHash],
     ["系数包", result.provenance.coefficientSetId],
+    ["证据分类", result.provenance.epistemicClassification],
+    ["留出绑定", result.provenance.holdoutStatus],
     ["适用性", result.applicability.status],
   ];
   if (result.backend === "highFidelity") {

@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 
 ROOT = Path(__file__).resolve().parent.parent
-ARTIFACTS = ROOT.parent / "90_候选工作区/current/验证与复现/artifacts"
+ARTIFACTS = ROOT / "验证与复现/artifacts"
 REPORT = json.loads((ARTIFACTS / "phase4-structural-baseline.json").read_text())
 LONG = json.loads((ARTIFACTS / "phase4-prior-long-run.json").read_text())
 GRID = json.loads((ARTIFACTS / "phase3-fixed-cylinder-grid-study.json").read_text())

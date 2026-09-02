@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   formal-program:
-    name: Formal program tests, build, and forward smoke
+    name: Complete formal program validation
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -24,65 +24,5 @@ jobs:
           cache-dependency-path: 02_模拟程序/package-lock.json
       - name: Install formal program dependencies
         run: npm ci
-      - name: Run formal program unit tests
-        run: npm test
-      - name: Build formal program
-        run: npm run build
-      - name: Run one forward-solver smoke
-        run: npm run simulate:forward
-
-  scientific-candidate-package:
-    name: ${{ matrix.name }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: E1 experiment preparation and identification
-            directory: 90_候选工作区/current/E1_实验准备与辨识协议
-            qualification: npm run qualify:synthetic
-          - name: F1 forward numerical qualification
-            directory: 90_候选工作区/current/F1_前向数值资格与闭合包接口
-            qualification: npm run qualify:synthetic
-          - name: S1 structural pre-experiment tools
-            directory: 90_候选工作区/current/S1_结构分析实验前最小工具
-            qualification: npm run qualify:synthetic
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-      - name: Run contract and implementation tests
-        working-directory: ${{ matrix.directory }}
-        run: npm test
-      - name: Run bounded synthetic qualification
-        working-directory: ${{ matrix.directory }}
-        run: ${{ matrix.qualification }}
-
-  cfd-component:
-    name: CFD candidate component tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    defaults:
-      run:
-        working-directory: 90_候选工作区/current/A8_二维特征开放边界实验后端
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: npm
-          cache-dependency-path: 90_候选工作区/current/A8_二维特征开放边界实验后端/package-lock.json
-      - name: Install CFD candidate dependencies
-        run: npm ci
-      - name: Run focused CFD component tests
-        run: >-
-          node --experimental-strip-types --test
-          tests/formal-incoming-characteristic-boundary.test.ts
-          tests/formal-causal-reference-support.test.ts
-          tests/formal-discrete-reference-support.test.ts
-          tests/brinkman-scaling-support.test.ts
-          tests/brinkman-multiresolution-support-v2-1.test.ts
-      - name: Type-check CFD candidate components
-        run: npm run typecheck
+      - name: Run the complete formal validation gate
+        run: npm run validate

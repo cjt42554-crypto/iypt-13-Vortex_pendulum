@@ -30,7 +30,7 @@ function parseArguments(values: readonly string[]): SweepArguments {
   const replicates = Number(options.get("replicates") ?? 1);
   const output = resolve(
     options.get("output")
-      ?? "../90_候选工作区/current/验证与复现/artifacts/forward-sweep.json",
+      ?? "验证与复现/artifacts/forward-sweep.json",
   );
   if (![start, stop, count, replicates].every(Number.isFinite)
     || !Number.isInteger(count) || count < 1

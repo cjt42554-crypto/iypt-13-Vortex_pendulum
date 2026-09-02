@@ -6,6 +6,7 @@ import {
   isolatedLandauThresholdTime,
   linearizeForwardAtSymmetricState,
   locateStructuralBoundary,
+  locateScalarRoot,
   polynomialRoots,
   structuralSpectrumPoint,
 } from "../src/analysis/structure";
@@ -84,5 +85,20 @@ describe("phase-4 structural analysis utilities", () => {
       .toBeCloseTo(0.05, 11);
     expect(isolatedLandauThresholdTime(0.001, 1, 0.03, 0.2)).toBeNull();
     expect(isolatedLandauThresholdTime(0.001, 0.01, 0, 0)).toBeNull();
+  });
+
+  it("rejects a biased zero state instead of calling it a symmetric equilibrium", () => {
+    const biased = structuredClone(DEFAULT_CONFIG);
+    biased.support.referenceAngle = 0.05;
+    biased.support.linearStiffness = 0.02;
+    expect(() => structuralSpectrumPoint(biased, biased.fluid.flowSpeed))
+      .toThrow(/not an equilibrium/u);
+  });
+
+  it("rejects an unbracketed tangential root", () => {
+    expect(() => locateScalarRoot((value) => value ** 2, [-1, 1]))
+      .toThrow(/finite sign change/u);
+    expect(() => locateScalarRoot(() => Number.NaN, [0, 0]))
+      .toThrow(/finite sign change/u);
   });
 });

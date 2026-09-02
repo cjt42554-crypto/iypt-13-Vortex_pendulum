@@ -75,7 +75,7 @@ interface StructuralBlock {
 const root = fileURLToPath(new URL("../", import.meta.url));
 const artifactRoot = resolve(
   root,
-  "../90_候选工作区/current/验证与复现/artifacts",
+  "验证与复现/artifacts",
 );
 const artifactDirectory = resolve(artifactRoot, "cross-layer");
 const configPath = resolve(root, "public/examples/vortex-pendulum-default.json");

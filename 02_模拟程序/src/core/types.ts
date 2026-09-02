@@ -480,6 +480,16 @@ export interface SimulationResult {
       | "unvalidated-preview"
       | "verified-component"
       | "validated-2d-reference";
+    epistemicClassification:
+      | "synthetic-only"
+      | "illustrative-literature-prior"
+      | "rom-calibrated-input-unheldout"
+      | "unvalidated-coefficient-source"
+      | "cfd2d-qualitative-only";
+    holdoutStatus:
+      | "not-applicable-synthetic"
+      | "not-bound-in-standalone-run"
+      | "not-applicable-cfd2d";
     evidenceClaims: {
       lbmKernelComponents: string;
       dynamicLoadExtraction: string;

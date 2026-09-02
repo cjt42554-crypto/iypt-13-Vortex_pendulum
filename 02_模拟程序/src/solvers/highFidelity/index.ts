@@ -373,14 +373,16 @@ export async function runHighFidelity(
       dimensionality: "two-dimensional-unit-span",
       nativeLoadType: "line-force-per-unit-span",
       evidenceLevel: "unvalidated-preview",
+      epistemicClassification: "cfd2d-qualitative-only",
+      holdoutStatus: "not-applicable-cfd2d",
       evidenceClaims: {
         lbmKernelComponents: "component-verified",
-        dynamicLoadExtraction: "invalidated-pending-revalidation",
+        dynamicLoadExtraction: "a1-raw-only-a2-diagnostic-implemented-unqualified",
         interfacePowerExchange: "a1-raw-algebra-verified-physical-interface-unverified",
         fsiCoupling: config.cfd2d.couplingMode === "weak-fsi"
           ? "legacy-exploratory"
           : "not-free-fsi",
-        gridMachDomainConvergence: "unresolved",
+        gridMachDomainConvergence: "a8s-bounded-screen-passed-fine-grid-literature-failed-qualitative-only",
         spanClosure: config.cfd2d.stripClosure === "fully-coherent-upper-bound"
           ? "scenario-only"
           : "unit-span-only",
@@ -391,6 +393,7 @@ export async function runHighFidelity(
         : "legacy-component-withdrawn-pending-revalidation",
       knownDefects: [
         "raw-Brinkman-reaction-not-yet-corrected-for-virtual-internal-fluid",
+        "a2-control-volume-diagnostic-is-not-consumed-by-dynamics-or-physically-qualified",
         "legacy-incomplete-stress-contour-diagnostic",
         "grid-Mach-mask-penalty-domain-convergence-not-closed",
         ...(config.cfd2d.couplingMode === "weak-fsi"

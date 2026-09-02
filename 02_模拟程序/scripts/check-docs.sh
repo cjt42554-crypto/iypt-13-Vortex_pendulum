@@ -4,8 +4,9 @@ set -euo pipefail
 model_doc="../01_最终理论/01-前向预测理论.md"
 numeric_doc="../01_最终理论/02-前向预测理论的数值计算理论.md"
 structure_doc="../01_最终理论/03-结构性理论.md"
+experiment_doc="../01_最终理论/04-实验辨识、标定与留出预测协议.md"
 high_fidelity_doc="文档/二维截面流体参考程序.md"
-theory_docs=("$model_doc" "$numeric_doc" "$structure_doc")
+theory_docs=("$model_doc" "$numeric_doc" "$structure_doc" "$experiment_doc")
 
 fail() {
   echo "DOCS FAIL: $*" >&2
@@ -70,6 +71,14 @@ require_literal "$structure_doc" 'Floquet'
 require_literal "$structure_doc" '## 13. 可证伪的结构预测'
 require_literal "$structure_doc" '\tag{ST6.3}'
 
+# The experiment manuscript owns apparatus identity, calibration uncertainty,
+# freeze order, and holdout falsification without presenting measurements.
+require_literal "$experiment_doc" 'VP-EXP-P0-SL1-HOLDOUT-v1'
+require_literal "$experiment_doc" '## 7. 留出预测冻结顺序'
+require_literal "$experiment_doc" '## 8. 预注册验收量'
+require_literal "$experiment_doc" '科学结论为 NONE'
+require_literal "$experiment_doc" '\tag{E8.1}'
+
 # The separate high-fidelity reference remains deliberately bounded.
 require_literal "$high_fidelity_doc" 'VP-HF-CFD2D-v1'
 require_literal "$high_fidelity_doc" 'cfd2d-sectional-reference'
@@ -105,6 +114,9 @@ if grep -Eq '\\tag\{(F|N|ST)' "$high_fidelity_doc"; then
 fi
 if grep -Eq '\\tag\{(F|N|HF)' "$structure_doc"; then
   fail "physical, numerical or CFD equation namespace leaked into structural theory"
+fi
+if grep -Eq '\\tag\{(F|N|ST|HF)' "$experiment_doc"; then
+  fail "physical, numerical, structural, or CFD equation namespace leaked into experiment protocol"
 fi
 
 if grep -Eqi 'Dormand|DOPRI|Butcher|Gauss[–-]Legendre|rtol|atol|步长控制|事件根定位' "$model_doc"; then

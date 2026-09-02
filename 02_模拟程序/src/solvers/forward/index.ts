@@ -398,6 +398,17 @@ export async function runForward(
       dimensionality: "P0-reduced-order",
       nativeLoadType: "three-dimensional-generalized-torque",
       evidenceLevel: "forward-numerically-verified",
+      epistemicClassification: /synthetic/iu.test(config.rom.coefficientSetId)
+        ? "synthetic-only"
+        : config.rom.coefficientSource === "literature-prior"
+          ? "illustrative-literature-prior"
+          : config.rom.coefficientSource === "measured"
+              || config.rom.coefficientSource === "prescribed-motion"
+            ? "rom-calibrated-input-unheldout"
+            : "unvalidated-coefficient-source",
+      holdoutStatus: /synthetic/iu.test(config.rom.coefficientSetId)
+        ? "not-applicable-synthetic"
+        : "not-bound-in-standalone-run",
       evidenceClaims: {
         lbmKernelComponents: "not-applicable",
         dynamicLoadExtraction: "not-applicable-rom-closure",

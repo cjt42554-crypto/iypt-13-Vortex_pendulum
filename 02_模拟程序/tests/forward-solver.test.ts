@@ -33,6 +33,9 @@ describe("VP-FWD-P0-SL1-v1 executable model", () => {
     });
     expect(result.numerical.acceptedSteps).toBeGreaterThan(0);
     expect(result.numerical.maximumAcceptedErrorNorm).toBeLessThanOrEqual(1);
+    expect(result.provenance.epistemicClassification)
+      .toBe("illustrative-literature-prior");
+    expect(result.provenance.holdoutStatus).toBe("not-bound-in-standalone-run");
   });
 
   it("locates the angle-domain event instead of integrating through it", async () => {
@@ -83,5 +86,30 @@ describe("VP-FWD-P0-SL1-v1 executable model", () => {
     expect(Math.abs(fine.numerical.finalEnergyBalanceResidual))
       .toBeLessThanOrEqual(Math.abs(coarse.numerical.finalEnergyBalanceResidual) * 1.2 + 1e-12);
     expect(deriveParameters(make(0.003)).effectiveMomentOfInertia).toBeGreaterThan(0);
+  });
+
+  it("keeps the final physical state invariant to the requested output grid", async () => {
+    const make = (outputInterval: number) => {
+      const config = cloneConfig();
+      config.fluid.flowRampTime = 0;
+      config.solver.duration = 0.21;
+      config.solver.outputInterval = outputInterval;
+      config.solver.maximumStep = 0.004;
+      config.solver.relativeTolerance = 1e-8;
+      config.solver.absoluteToleranceTheta = 1e-11;
+      config.solver.absoluteToleranceOmega = 1e-10;
+      config.solver.absoluteToleranceWake = 1e-10;
+      return config;
+    };
+    const first = await runForward(make(0.01), undefined, "output-grid-a");
+    const second = await runForward(make(0.007), undefined, "output-grid-b");
+    const a = first.samples.at(-1);
+    const b = second.samples.at(-1);
+    expect(a?.time).toBeCloseTo(0.21, 14);
+    expect(b?.time).toBeCloseTo(0.21, 14);
+    expect(a?.theta).toBeCloseTo(b?.theta ?? Number.NaN, 8);
+    expect(a?.omega).toBeCloseTo(b?.omega ?? Number.NaN, 8);
+    expect(a?.wakeReal).toBeCloseTo(b?.wakeReal ?? Number.NaN, 8);
+    expect(a?.wakeImaginary).toBeCloseTo(b?.wakeImaginary ?? Number.NaN, 8);
   });
 });

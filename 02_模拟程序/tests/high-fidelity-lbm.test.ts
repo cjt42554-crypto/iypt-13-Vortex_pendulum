@@ -217,9 +217,13 @@ describe("VP-HF-CFD2D-v1 unified backend", () => {
     expect(result.provenance.nativeLoadType).toBe("line-force-per-unit-span");
     expect(result.provenance.backendDisplayName).toBe("cfd2d-sectional-reference");
     expect(result.provenance.evidenceLevel).toBe("unvalidated-preview");
+    expect(result.provenance.epistemicClassification).toBe("cfd2d-qualitative-only");
+    expect(result.provenance.holdoutStatus).toBe("not-applicable-cfd2d");
     expect(result.provenance.evidenceClaims.lbmKernelComponents).toBe("component-verified");
     expect(result.provenance.evidenceClaims.dynamicLoadExtraction)
-      .toBe("invalidated-pending-revalidation");
+      .toBe("a1-raw-only-a2-diagnostic-implemented-unqualified");
+    expect(result.provenance.evidenceClaims.gridMachDomainConvergence)
+      .toBe("a8s-bounded-screen-passed-fine-grid-literature-failed-qualitative-only");
     expect(result.provenance.evidenceClaims.apparatusPrediction).toBe("no-go");
     expect(result.provenance.knownDefects)
       .toContain("raw-Brinkman-reaction-not-yet-corrected-for-virtual-internal-fluid");

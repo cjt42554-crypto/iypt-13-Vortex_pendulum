@@ -2,92 +2,64 @@
 
 ## 当前状态
 
-GitHub 当前活动状态为：
+- 活动状态：`WAITING-FOR-MEASUREMENTS`
+- 工具状态：`PASS-EXPERIMENT-PREPARATION-TOOLING-READY-WAITING-FOR-MEASUREMENTS`
+- A8S 上限：`FREEZE-A8S-2D-CFD-QUALITATIVE-ONLY`
+- 科学结论：`NONE`
 
-`EXPERIMENT_PREPARATION_PAUSE_READY_AFTER_BRIDGE_CORRECTION`
+正式理论和正式程序已经吸收审查后允许晋升的通用能力。关闭的候选工作包、冻结结果和审查证据完整归档于：
 
-A8S 终局继续为：
+`90_候选工作区/archive/2026-09-02_baseline-9123b5c6/`
 
-`FREEZE-A8S-2D-CFD-QUALITATIVE-ONLY`
+归档的机器可读索引为：
 
-二维 CFD 只作定性流场辅助，不得用于装置载荷、振幅、平均功率或留出工况的定量预测。
+`90_候选工作区/archive/2026-09-02_baseline-9123b5c6/ARCHIVE_MANIFEST.json`
 
-项目科学结论仍为：
+当前候选区只保留 `current/ACTIVE.md`。归档不是新的活动入口，也不改变其历史证据等级。
 
-`NONE`
+## 正式入口
 
-这表示装置尚未测量、ROM 尚未标定、留出预测尚未执行；不表示桥接工具仍有待完成的软件任务。
+实验输入、辨识、冻结和留出协议见：
 
-## 本轮暂停复核
+`01_最终理论/04-实验辨识、标定与留出预测协议.md`
 
-独立执行审查发现 `main@9ae80d2...` 的 E1 桥接仍可接受空计划身份、跨装置拼接、标定域外工况、不安全 condition ID、production synthetic 输入，以及只改变水深却保留旧转轴水面高度的几何组合。上述问题会生成错误正式配置，因此原暂停状态在修复前被撤回。
+待填写模板和发布说明见：
 
-最新复核与修正记录：
+`02_模拟程序/experiments/README.md`
 
-`90_候选工作区/current/G0_全项目完成度与实验前暂停治理/12_实验前桥接审计修正与暂停复核.md`
-
-最小实验执行说明：
-
-`90_候选工作区/current/E1_实验准备与辨识协议/02_实验前最小采集与留出预测执行说明.md`
-
-修正后，正式配置生成要求：
-
-- plan、apparatus、coefficient package 绑定同一装置、版本和计划；
-- plan 已冻结且 `frozenAt` 有效；
-- production classification 分别为 `experiment-frozen`、`apparatus-calibrated`、`rom-calibrated`；
-- `synthetic-only` 只能用于显式合成资格；
-- 每个 condition block 同时冻结 `waterDepthM` 和 `pivotHeightM`；
-- 工况位于系数包的流速、水深、转轴水面高度和 Reynolds 标定域内；
-- condition ID 不能逃逸输出目录。
-
-工具层结论仍为：
-
-`PASS-EXPERIMENT-PREPARATION-TOOLING-READY-WAITING-FOR-MEASUREMENTS`
-
-它只证明实验前输入工具准备完成，不是数值、物理或实验 PASS。
-
-## 使用入口
-
-在：
-
-`90_候选工作区/current/E1_实验准备与辨识协议/`
-
-执行：
+在 `02_模拟程序/` 内，真实输入完成后运行：
 
 ```bash
-npm test
-npm run qualify:synthetic
-npm run check:prediction-ready
-```
-
-真实输入完成后执行：
-
-```bash
-npm run build:forward-configs -- \
+npm run prepare:forward-configs -- \
   --plan /path/prediction-plan.json \
   --apparatus /path/apparatus-calibrated.json \
   --coefficients /path/rom-coefficient-package.json \
-  --base-config ../../../02_模拟程序/public/examples/vortex-pendulum-default.json \
-  --output-dir /path/frozen-forward-configs
+  --base-config public/examples/vortex-pendulum-default.json \
+  --output-dir /path/to/new-frozen-config-set \
+  --provenance-root /path/to/input-root
 ```
 
-## 恢复条件
+发布器要求计划、装置、系数包和工况身份一致，工况位于冻结标定域内，并对原始输入及整组输出绑定 SHA-256。任一校验失败时不得形成已提交结果目录。`--allow-synthetic` 只允许用于自动化测试。
 
-后续首次恢复工作前至少需要：
+## 恢复条件与下一批次
+
+首次恢复前至少需要：
 
 1. 装置几何、质量、质心、转动惯量及标准不确定度；
 2. 无流或静水自由衰减数据；
 3. 水温、流体物性、水位和上游来流时间序列；
-4. pilot 和冻结的 calibration/holdout condition blocks；
+4. pilot 与相互隔离的 calibration/holdout 工况块；
 5. 角度或位移时间序列；
 6. 若要声称相位或平均功率，校准力矩时间序列。
 
-当前没有可执行的非实验批次。真实输入到位后的下一批次为：
+数据到位后的下一批次仅为：
 
 `BATCH-ROM-CALIBRATION-UNCERTAINTY-AND-HOLDOUT-PREDICTION`
 
-该批次只做机械参数估计、最小可辨识 ROM 拟合、不确定度传播、三档数值检查和结果前 holdout 预测冻结。在 holdout 预测提交前不得读取 holdout 结果。
+该批次只做机械参数估计、最小可辨识 ROM 拟合、不确定度传播、数值检查和结果前留出预测冻结。在提交冻结预测前不得读取留出结果。
 
-## 当前不应继续
+## 当前禁止升级的结论
 
-真实数据到位前，不再执行 HW2R、H2-X/H2-N、H3、长时 A8R、二维 CFD 参数追赶、三维 CFD、完整分岔工具、通用平台重构或无实际瓶颈的性能优化。
+现有测试仅证明实现、合同、数值记账和历史冻结证据可重演。没有新实验，没有装置标定，也没有留出预测；二维 CFD 不具备定量装置载荷、振幅、平均功率或起振阈值资格。
+
+真实数据到位前，不继续长时 A8、硬件性能优化、三维 CFD、完整分岔平台或新的无实验写作。
