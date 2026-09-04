@@ -36,7 +36,18 @@ npm run validate
 
 保留原有完整 validate 命令；模拟 CI 按正式程序、理论、相关检查器和工作流变化触发，纯主页/交接编辑不再反复启动完整浏览器验证。文档 CI 设只读权限、超时及手动入口，仍检查理论与 current，不删除有效检查。
 
-本轮实际文档检查、环境和范围验证见 [管理验证](current/2026-09-05_长期维护整理/validation.txt)。本轮未重跑完整程序、数值收敛、CFD 或实验验证。查询修改历史：
+管理应用脚本的实际文档、环境和范围验证见 [管理验证](current/2026-09-05_长期维护整理/validation.txt)。该脚本本身未运行完整程序；另一路已有 Scientific core checks 在 `3a6abaf1bc9244e08585830e9377876a81781cfc` 上运行完整 validate，运行号 `33929616496`，结果成功。不要将脚本日志中的 NOT RUN 扩大为整轮所有工作流均未执行。数值收敛、CFD 和实验验证未重跑。
+
+管理提交 `34b018396891d46698c531c7fd49bebb7ff2b8b7` 的检查已通过；Actions 令牌因缺少 workflow 写权限未能 push，随后通过 GitHub 连接器非强制推进 main 完成发布。临时写工作流已移除，保留的 CI 均为只读。
+
+收尾新增 [入口检查器](../tools/check_repository_docs.py)、9 项自测及 `repository-docs.yml`，在每次提交检查四个活动入口的本地链接和代码围栏。该检查不覆盖外部网址、标题锚点、完整 Pandoc 语义或科学正确性。在仓库根目录复现：
+
+```bash
+python -m unittest discover -s tools -p 'test_repository_docs.py' -v
+python tools/check_repository_docs.py
+```
+
+查询修改历史：
 
 ```bash
 git log -3 --oneline
