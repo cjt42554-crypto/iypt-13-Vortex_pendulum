@@ -1,0 +1,267 @@
+name: Apply forward theory revision 20260905
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/theory-revision-20260905.yml]
+permissions:
+  contents: write
+jobs:
+  revise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply reviewed theory corrections
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          p = Path('01_最终理论/01-前向预测理论.md')
+          e = Path('01_最终理论/04-实验辨识、标定与留出预测协议.md')
+          for path, sha in [(p, 'fdb1ccef8ce83d5428bc2bb8eb2531511e7cd169'), (e, 'c4d6034294e2d335e10f62799fcdb1fb2b9c4632')]:
+              assert subprocess.check_output(['git', 'hash-object', str(path)], text=True).strip() == sha, str(path)
+          s = p.read_text()
+          def replace(old, new):
+              global s
+              assert s.count(old) == 1, old[:120]
+              s = s.replace(old, new)
+          replace('> 模型：`VP-FWD-P0-SL1-v1`', '> 模型：`VP-FWD-P0-SL1-v1`  \n> 理论修订：2026-09-05；明确湿区预测终点与干机械对照，不新增尾流闭合')
+          replace('零来流和全干时使用第 5.4 节给出的连续退化分支。', '零来流的湿态与全干状态按第 5.4 节分别处理。正式四状态预测只在湿投影面积严格为正且联合标定覆盖的湿区内成立；全干不由零来流公式自动续接。')
+          a = s.index('### 5.4 零来流与全干分支')
+          b = s.index('## 6. 闭合的物理来源与可辨识量', a)
+          s = s[:a] + r'''### 5.4 零来流、湿区终点与独立干机械对照
+
+**零来流但仍浸水。** 当 $A_{\perp x,w}>0$ 且全部湿站位 $U_e=0$ 时，相对运动阻力 $Q_D$ 仍按式 (F5.4) 存在，平均流驱动的尾流输出关闭：
+
+$$
+Q_L=Q_M=0,\qquad
+\mu(0)<0,\qquad
+\omega_s(0)=\gamma_j(0)=0.
+\tag{F5.12}
+$$
+
+这里的零流系数仍须在同一湿态联合标定域内有定义，并满足 $\beta_r(0)>0$。于是
+
+$$
+\frac{\mathrm d|A|^2}{\mathrm dt}
+=2\mu(0)|A|^2-2\beta_r(0)|A|^4\le0.
+$$
+
+这只是平均流驱动尾流模态的被动基线，不排除摆体自身在静水中的运动产生非定常流体载荷；相关误差须按第 11.1 节检查。
+
+**湿区预测终点。** 式 (F5.9) 只在分母为正时定义。特别地，均匀非零来流 $U_e=U_0$ 给出 $U_*=|U_0|$，无论正湿投影面积多小；到面积为零时是未定义比值，而不是由该极限得到 $U_*=0$。令
+
+$$
+\mathcal D_{\rm wet}
+=\{(t,X):A_{\perp x,w}(\theta)>0,\ (t,X)\in\mathcal D_{\rm cal},
+\ \text{全部闭合有定义且满足第 8.2 节}\},
+$$
+
+$$
+\tau_{\rm wet}
+=\inf\{t\ge0:(t,X(t))\notin\mathcal D_{\rm wet}\}.
+\tag{F5.14}
+$$
+
+约定空集下确界为 $+\infty$。式 (F0.5)–(F0.8) 只输出 $t<\min(T,\tau_{\rm wet})$ 的定量湿态轨迹；若 $T<\tau_{\rm wet}$，也包括终点 $T$。联合域的最小湿跨应取真实标定覆盖的下界，不能凭几何连续性扩展至任意小湿跨。初态不在此域时，不启动正式四状态预测。
+
+到达该终点，报告湿区退出及最后有效状态；不计算全干处的 $\boldsymbol\Pi$，不把 $A$ 清零、冻结或按零流公式外推，也不以此生成再入水载荷。一个已经存在的有限状态极限可以作为事件记录，但不等于已定义后继演化。湿润标签变为全干并不提供尾流记忆、气液附加质量转移或再入水连接规则。
+
+**独立干机械对照。** 从初始时刻起即完全在水面外、且整个研究区间保持干燥时，可以另选两状态机械模型。它不含尾流坐标，也不与湿态轨迹自动拼接。在干区内部定义
+
+$$
+V_d=A_{\perp x,w}=\Pi_h=J_a=Q_D=Q_L=Q_M=0,
+\qquad J_a'=\Pi_h'=0,
+\tag{F5.13}
+$$
+
+$$
+\dot\theta=\omega,\qquad
+I_O\dot\omega=Q_{\rm ctrl}
+-\partial_\theta(\Pi_g+\Pi_s)-R_s.
+\tag{F5.15}
+$$
+
+首次接触水面即终止这一干机械对照。式 (F5.13) 是该独立分支的定义，不是任意湿态加入惯量在干出边界的已证极限。声称湿干机械右端连续，至少还须验证 $J_a\to0$、$J_a'\omega^2\to0$、静水恢复项与水动力矩的相容极限；完整四状态右端连续还需独立的尾流连接模型。未给出这些条件时，不宣称连续退化或干出—再入水预测。
+
+''' + s[b:]
+          replace('这三个标签共享同一集合几何定义。当水线跨越圆柱截面边缘时，连续状态不重置，也不施加人工冲量。', '这三个标签共享同一集合几何定义，但标签本身不定义跨分支的尾流演化。部分浸没与全浸没之间，只在闭合函数有相容定义、局部解条件成立且联合标定覆盖时继续，状态不重置；达到全干或先离开湿区标定范围时，按第 5.4 节终止正式湿态预测。')
+          replace('9. 初始尾流状态明示给定，不使用隐藏随机噪声启动。', '9. 初始尾流状态明示给定，不使用隐藏随机噪声启动；\n10. 湿投影面积严格为正，实际湿跨及其变化被联合标定覆盖；静态毛细恢复和未建模流体记忆的误差满足第 11.1 节的预定预算。')
+          replace('- 任一必需输入或闭合函数未定义。', '- 湿投影面积到零，或先离开被联合标定覆盖的湿区；\n- 任一必需输入或闭合函数未定义。')
+          replace('1. **全干/真空极限**：式 (F5.13) 成立，只剩干机械系统。', '1. **独立全干对照**：从初始时刻选择式 (F5.13)–(F5.15)，只含干机械状态；它不是湿态四状态系统的自动续接。')
+          marker = '## 参考文献'
+          assert s.count(marker) == 1
+          s = s.replace(marker, r'''### 11.1 毛细恢复与被动流体记忆的误差预算
+
+式 (F6.1) 含 $Q_\gamma$，而基线势 $V=\Pi_g+\Pi_s+\Pi_h$ 不含独立毛细势。平坦名义水面和无显著接触角滞后，不等于静态毛细恢复为零。应在无流的独立准静态角度实验中估计已知重力、弹性、静水恢复之外的剩余力矩，并将摩擦与毛细贡献分开。令 $Q_{\rm ref}>0$ 是预先选定的恢复力矩尺度，而不是平衡点处为零的净力矩，要求
+
+$$
+\sup_{\theta\in\mathcal D_{\rm cal}}
+|Q_{\gamma,\rm omitted}(\theta)|
+\le\epsilon_\gamma Q_{\rm ref}.
+\tag{F11.1}
+$$
+
+还应检验该残差对恢复斜率和目标频率的影响。超过预定预算时，只能取消该域的基线定量资格，或以新模型身份加入独立标定、且不与 $\Pi_h$ 重复的毛细势；不得把静态恢复吸收入流速相关的尾流系数。
+
+零平均来流下，应以多个频率的规定运动或自由衰减数据检验加入惯量、准稳态阻力与载荷相位能否共同成立。若出现可重复的频率相关阻抗残差，新增流体记忆必须具有可核验的储能与非负耗散；不能通过把零流尾流增长率改为正来拟合衰减。先验证力矩—角速度相位及周期平均功率，再决定是否需要额外模态。以上是适用性检验和扩展触发条件，不是给现有方程增加未标定状态。
+
+''' + marker)
+          p.write_text(s)
+          s = e.read_text()
+          old = r'''系数包必须给出点估计与不确定度表示。若用协方差矩阵 $\mathbf\Sigma_c$，预测量 $g$ 的一阶传播为'''
+          assert s.count(old) == 1
+          s = s.replace(old, r'''系数包必须给出点估计与保留相关性的不确定度表示。令 $\boldsymbol z=(\boldsymbol c,\boldsymbol p)$，联合协方差为
+
+$$
+\mathbf\Sigma_z=
+\begin{bmatrix}
+\mathbf\Sigma_c&\mathbf\Sigma_{cp}\\
+\mathbf\Sigma_{cp}^{\mathsf T}&\mathbf\Sigma_p
+\end{bmatrix}\succeq0.
+$$
+
+预测量 $g$ 的一阶传播为''')
+          old = r'''\nabla_{\boldsymbol p}g^{\mathsf T}\mathbf\Sigma_p
+\nabla_{\boldsymbol p}g
++u_{\rm num}^2+u_{\rm form}^2.'''
+          assert s.count(old) == 1
+          s = s.replace(old, r'''\nabla_{\boldsymbol p}g^{\mathsf T}\mathbf\Sigma_p
+\nabla_{\boldsymbol p}g
++2\nabla_{\boldsymbol c}g^{\mathsf T}\mathbf\Sigma_{cp}
+\nabla_{\boldsymbol p}g
++u_{\rm num}^2+u_{\rm form}^2.''')
+          old = '$u_{\rm num}$ 是数值误差估计，$u_{\rm form}$ 是预先声明的模型形式不确定度。'
+          assert s.count(old) == 1
+          s = s.replace(old, r'''原始装置测量与标定数据分开采集，并不保证拟合后的 $\boldsymbol c$ 与 $\boldsymbol p$ 不相关，因为式 (E5.1) 同时依赖二者。只有明确论证 $\mathbf\Sigma_{cp}=0$ 后，才可省略交叉项。
+
+必须注明 $\mathbf\Sigma_c$ 是固定装置量值后的条件协方差，还是已经对装置不确定性边际化的协方差。推荐联合拟合或联合重采样 $(\boldsymbol c,\boldsymbol p)$，直接保存全部分块。采用嵌套传播时，使用
+
+$$
+\operatorname{Var}(g)
+=\mathbb E_{\boldsymbol p}[\operatorname{Var}(g\mid\boldsymbol p)]
++\operatorname{Var}_{\boldsymbol p}[\mathbb E(g\mid\boldsymbol p)],
+\tag{E5.3}
+$$
+
+并在每个装置样本下重新得到相容的系数分布，不能把已边际化的系数当成独立输入再加一份同源装置误差。
+
+$u_{\rm num}$ 是数值误差估计，$u_{\rm form}$ 是预先声明的模型形式不确定度。式 (E5.2) 将二者按方差相加，还要求它们可作为有限方差的零均值误差，且与参数误差及彼此不相关；若不成立，扩展联合误差协方差或单独报告偏差/确定性误差界，不把误差上界直接当成标准差。''')
+          old = r'''k_g\sqrt{u_{\rm obs}^2+u_{\rm pred}^2}'''
+          assert s.count(old) == 1
+          s = s.replace(old, r'''k_g u_{\rm diff}''')
+          marker = '其中相对误差上限 $\epsilon_g$ 和不确定度倍数 $k_g$ 必须在留出观测揭盲前固定。'
+          assert s.count(marker) == 1
+          s = s.replace(marker, r'''其中
+
+$$
+u_{\rm diff}^2=u_{\rm obs}^2+u_{\rm pred}^2
+-2\operatorname{Cov}(g_{\rm obs},g_{\rm pred}).
+\tag{E8.2}
+$$
+
+留出观测与预测若共享装置标定、比例因子或时间基准，其误差仍可能相关；只有不相关时才恢复独立平方和。相关性估计也必须在揭盲前固定。''' + marker)
+          e.write_text(s)
+          d = Path('90_候选工作区/current/2026-09-05_前向理论修订')
+          d.mkdir(parents=True, exist_ok=True)
+          (d/'check_theory.py').write_text(r'''"""Algebraic regression for the theory contract; not a solver/device validation."""
+          import math
+          import unittest
+          from pathlib import Path
+          class TheoryChecks(unittest.TestCase):
+              def test_shrinking_wet_area_keeps_uniform_speed(self):
+                  for area in (1., 1e-6, 1e-30):
+                      self.assertAlmostEqual(math.sqrt(area*.4**2/area), .4)
+              def test_zero_area_has_no_weighted_speed(self):
+                  with self.assertRaises(ZeroDivisionError):
+                      _ = 0./0.
+              def test_zero_flow_tail_is_passive(self):
+                  for a2 in (0., .1, 1., 100.):
+                      self.assertLessEqual(2*(-.2)*a2-2*.3*a2*a2, 0.)
+              def test_correlated_covariance(self):
+                  for cov, expected in ((1., 4.), (0., 2.), (-1., 0.)):
+                      self.assertEqual(1.+1.+2*cov, expected)
+              def test_conditional_total_variance(self):
+                  for a in (-2., -1., 0., 3.):
+                      vp, ve = 2., .4
+                      vc, cp = a*a*vp+ve, a*vp
+                      self.assertAlmostEqual(vc+vp+2*cp, ve+(a+1)**2*vp)
+              def test_shared_observation_calibration(self):
+                  self.assertEqual(1.+1.-2*1., 0.)
+                  self.assertAlmostEqual(1.+1.-2*.9, .2)
+              def test_dry_mechanical_energy(self):
+                  J, w, vp, rs, qc = 3., .7, .4, .2, -.1
+                  alpha = (qc-vp-rs)/J
+                  self.assertAlmostEqual(J*w*alpha+vp*w, (qc-rs)*w)
+              def test_manuscript_contract(self):
+                  s=Path('01_最终理论/01-前向预测理论.md').read_text()
+                  e=Path('01_最终理论/04-实验辨识、标定与留出预测协议.md').read_text()
+                  self.assertIn('不把 $A$ 清零', s)
+                  self.assertIn('不启动正式四状态预测', s)
+                  self.assertNotIn('零来流和全干时使用第 5.4 节给出的连续退化分支', s)
+                  self.assertIn(r'2\nabla_{\boldsymbol c}g^{\mathsf T}\mathbf\Sigma_{cp}', e)
+                  self.assertIn(r'\operatorname{Cov}(g_{\rm obs},g_{\rm pred})', e)
+          if __name__=='__main__': unittest.main(verbosity=2)
+          '''.replace('\n          ', '\n'))
+          current = '''# 当前交接：2026-09-05 前向理论修订
+
+          ## 当前状态
+
+          基于 `1d7637ea3060eea76a7d2ca516bac5e2487ecd83`，直接在 main 修改最终前向理论及实验协议。模型主体仍为 `VP-FWD-P0-SL1-v1`；本次是适用合同修订，不新增尾流系数或自由度。真实装置测量和 ROM 标定仍缺失；A8S 的二维定性资格不变。
+
+          ## 本轮完成
+
+          1. `01_最终理论/01-前向预测理论.md`：明确零流湿态与全干不同；正式四状态预测在湿区联合标定范围内运行，首次全干或先离开覆盖范围时终止。不把全干处的 0/0 设为零，不清零或外推尾流再用于入水。干机械对照另用两个状态，从初始时刻独立选择。同步修正总入口、湿润标签、适用域和内部极限的说法。
+          2. 补充静态毛细恢复及被动流体记忆的误差预算；没有凭空添加毛细势、正零流增长率或第二尾流模态。
+          3. `01_最终理论/04-实验辨识、标定与留出预测协议.md`：补全系数—装置交叉协方差，区分条件与边际协方差并给出全方差公式；数值/模型误差平方和的独立性条件明示；留出差值也计入观测—预测的共享标定协方差。
+
+          ## 验证范围
+
+          可复现代数检查见 `current/2026-09-05_前向理论修订/check_theory.py`；实际日志见同目录 `validation.txt`。另运行现有 `02_模拟程序/scripts/check-docs.sh`，不修改检查器。测试覆盖湿面积趋零、零流被动性、正负相关协方差、嵌套传播、共享标定和干机械能量恒等式。它们不是实际水动力学验证。
+
+          ## 与程序的关系及接续
+
+          本次没有修改生产求解器、配置 schema 或既有数值结果，也没有重跑完整模拟测试。现有求解器可保留干湿延拓用于诊断，但不能因此声称满足新的正式湿区合同；下一步应把上述湿区终止及系数包的最小湿跨覆盖接到正式运行/发布入口，并测试初始全干及步内干出。不得继续以旧程序的干态轨迹生成装置定量结论。联合协方差也须在真实拟合/传播入口保存，本文公式修订不代表该功能已经实现。
+
+          上轮数值修复保留：联合标定支持检查、真实时间细化、密集输出及步内守卫、求解器 2.1.0。86 项测试和完整 validate 的既有记录仍在 `current/2026-09-05_数值审查修复/validation.log`，不把旧结果称作本轮重跑。任意守卫完备性、再入水记忆和装置验证仍未完成。
+
+          `交接说明_history.md` 保持零字节；Git 历史、旧冻结结果和 archive 不改写。下一步先落实湿区合同的执行与测量标定，再依据力矩相位/平均功率残差决定模型升级。
+          '''
+          Path('90_候选工作区/交接说明_current.md').write_text(current.replace('\n          ', '\n'))
+          Path('90_候选工作区/交接说明_history.md').write_bytes(b'')
+          PY
+      - name: Validate algebra and existing documentation rules
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence='90_候选工作区/current/2026-09-05_前向理论修订'
+          {
+            python3 --version
+            python3 "$evidence/check_theory.py"
+            (cd '02_模拟程序' && bash scripts/check-docs.sh)
+            git diff --check
+          } 2>&1 | tee "$evidence/validation.txt"
+      - name: Commit and push verified theory revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          p=Path('90_候选工作区/交接说明_current.md')
+          p.write_text(p.read_text()+'\n## 本轮实际提交前验证\n\n代数回归 8 项通过；原有文档检查通过；git diff --check 通过。工作流运行编号：`'+os.environ['GITHUB_RUN_ID']+'`。验证对象为本工作流检出的 main 加本轮修改后的工作树。完整日志已随本提交保存。\n')
+          Path('.github/workflows/theory-revision-20260905.yml').unlink()
+          assert Path('90_候选工作区/交接说明_history.md').stat().st_size == 0
+          PY
+          git diff --check
+          git diff --stat
+          git fetch origin main
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '01_最终理论/01-前向预测理论.md' '01_最终理论/04-实验辨识、标定与留出预测协议.md' '90_候选工作区/交接说明_current.md' '90_候选工作区/交接说明_history.md' '90_候选工作区/current/2026-09-05_前向理论修订'
+          git add -u .github/workflows/theory-revision-20260905.yml
+          git commit -m 'fix(theory): define wet-domain termination and propagate joint uncertainty'
+          git push origin HEAD:main
+          git rev-parse HEAD
