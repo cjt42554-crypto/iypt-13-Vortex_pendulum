@@ -25,6 +25,8 @@ jobs:
           ast.parse(script)
           Path('/tmp/apply-theory.py').write_text(script)
           subprocess.run(['python3','/tmp/apply-theory.py'],check=True)
+          p=Path('01_最终理论/01-前向预测理论.md')
+          p.write_text('\n'.join(line.rstrip() if line.startswith('> 理论修订：') else line for line in p.read_text().splitlines())+'\n')
           PY
       - name: Validate theory and documentation
         shell: bash
