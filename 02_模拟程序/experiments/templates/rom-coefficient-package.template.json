@@ -41,6 +41,7 @@
   "holdoutConditionBlocks": [],
   "holdoutReadDuringFit": false,
   "calibrationDomain": {
+    "jointSupport": {"kind": "covered-cells", "evidence": null, "cells": []},
     "flowSpeedMps": {"minimum": null, "maximum": null},
     "waterDepthM": {"minimum": null, "maximum": null},
     "pivotHeightM": {"minimum": null, "maximum": null},

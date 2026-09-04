@@ -53,6 +53,28 @@ function rangeContains(domain: unknown, value: unknown): boolean {
   return value >= domain.minimum - tolerance && value <= domain.maximum + tolerance;
 }
 
+function validDomainCell(cell: unknown): cell is JsonRecord {
+  return isObject(cell) && DOMAIN_FIELDS.every(([name, nonnegative]) => {
+    const range = cell[name];
+    return isObject(range) && finite(range.minimum) && finite(range.maximum)
+      && range.minimum <= range.maximum && (!nonnegative || range.minimum >= 0);
+  });
+}
+
+/** Validate declared joint support; never infer it from marginal ranges. */
+function jointDomainCells(record: JsonRecord): readonly JsonRecord[] | null {
+  const domain = record?.calibrationDomain;
+  const support = domain?.jointSupport;
+  if (!isObject(support) || !nonEmptyText(support.evidence)) return null;
+  if (support.kind === "validated-box") return validDomainCell(domain) ? [domain] : null;
+  if (support.kind !== "covered-cells" || !Array.isArray(support.cells)
+    || support.cells.length === 0 || !support.cells.every(validDomainCell)) return null;
+  if (!validDomainCell(domain) || !support.cells.every((cell: JsonRecord) =>
+    DOMAIN_FIELDS.every(([name]) => rangeContains(domain[name], cell[name].minimum)
+      && rangeContains(domain[name], cell[name].maximum)))) return null;
+  return support.cells as JsonRecord[];
+}
+
 export function validateConditionAgainstCalibrationDomain(
   record: JsonRecord,
   apparatus: JsonRecord,
@@ -72,6 +94,14 @@ export function validateConditionAgainstCalibrationDomain(
         `${name}=${value} 位于 ROM 系数包标定域之外。`,
       );
     }
+  }
+  const cells = jointDomainCells(record);
+  if (cells === null) {
+    pushIssue(issues, "JOINT-CALIBRATION-DOMAIN-MISSING", "calibrationDomain.jointSupport",
+      "必须声明有依据的 validated-box 或非空 covered-cells 联合域；边际范围不能代替联合域。");
+  } else if (!cells.some((cell) => DOMAIN_FIELDS.every(([name]) => rangeContains(cell[name], values[name])))) {
+    pushIssue(issues, "CONDITION-OUTSIDE-JOINT-CALIBRATION-DOMAIN", path,
+      "工况组合不属于任何有依据的联合标定单元；不跨越训练空洞或自动构造凸包。");
   }
   const minReynolds = valueOf(record, "rom.calibrationMinReynolds");
   const maxReynolds = valueOf(record, "rom.calibrationMaxReynolds");
@@ -328,6 +358,15 @@ export function validateCoefficientPackage(
           `${name} 的非空最小/最大值无效。`,
         );
       }
+    }
+  }
+  if (jointDomainCells(record) === null) {
+    const support = record?.calibrationDomain?.jointSupport;
+    const waiting = isObject(support) && support.kind === "covered-cells"
+      && support.evidence === null && Array.isArray(support.cells) && support.cells.length === 0;
+    if (requireReady || !waiting) {
+      pushIssue(issues, "JOINT-CALIBRATION-DOMAIN-MISSING", "calibrationDomain.jointSupport",
+        "联合域需要类型、独立依据和完整覆盖单元；旧的一维范围不能自动升级。", waiting);
     }
   }
   if (requireReady && Array.isArray(planRecord.calibrationBlocks)) {

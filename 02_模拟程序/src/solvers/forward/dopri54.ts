@@ -6,7 +6,23 @@ export interface Dopri54Step {
   fourthOrder: number[];
   error: number[];
   rhsEvaluations: 7;
+  /** Ascending powers of normalized step fraction, one polynomial per state. */
+  denseCoefficients: number[][];
+  denseState: (fraction: number) => number[];
 }
+
+// Quartic continuous extension of the Dormand-Prince pair (Shampine, 1986).
+// The rational P coefficients agree with scipy.integrate.RK45; no extra RHS
+// calls are required. Event accuracy still depends on integration refinement.
+const DENSE_P = [
+  [1, -8048581381 / 2820520608, 8663915743 / 2820520608, -12715105075 / 11282082432],
+  [0, 0, 0, 0],
+  [0, 131558114200 / 32700410799, -68118460800 / 10900136933, 87487479700 / 32700410799],
+  [0, -1754552775 / 470086768, 14199869525 / 1410260304, -10690763975 / 1880347072],
+  [0, 127303824393 / 49829197408, -318862633887 / 49829197408, 701980252875 / 199316789632],
+  [0, -282668133 / 205662961, 2019193451 / 616988883, -1453857185 / 822651844],
+  [0, 40617522 / 29380423, -110615467 / 29380423, 69997945 / 29380423],
+] as const;
 
 function linearCombination(
   base: readonly number[],
@@ -66,7 +82,26 @@ export function dormandPrince54Step(
     [5179 / 57600, k1], [7571 / 16695, k3], [393 / 640, k4],
     [-92097 / 339200, k5], [187 / 2100, k6], [1 / 40, k7],
   ]);
+  const stages = [k1, k2, k3, k4, k5, k6, k7];
+  const denseCoefficients = state.map((initial, component) => [initial,
+    ...[0, 1, 2, 3].map((power) => step * stages.reduce((sum, derivative, stage) =>
+      sum + (derivative[component] ?? Number.NaN) * (DENSE_P[stage]?.[power] ?? Number.NaN), 0)),
+  ]);
+  const denseState = (fraction: number): number[] => {
+    if (!Number.isFinite(fraction) || fraction < 0 || fraction > 1) {
+      throw new RangeError("dense output is restricted to this accepted step");
+    }
+    if (fraction === 0) return [...state];
+    if (fraction === 1) return [...fifthOrder];
+    return denseCoefficients.map((coefficients) => {
+      let value = 0;
+      for (let i = coefficients.length - 1; i >= 0; i -= 1) value = value * fraction + (coefficients[i] ?? 0);
+      return value;
+    });
+  };
   return {
+    denseCoefficients,
+    denseState,
     fifthOrder,
     fourthOrder,
     error: fifthOrder.map((value, index) => value - (fourthOrder[index] ?? Number.NaN)),

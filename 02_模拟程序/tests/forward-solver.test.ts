@@ -79,14 +79,19 @@ describe("VP-FWD-P0-SL1-v1 executable model", () => {
       config.solver.outputInterval = 0.002;
       return config;
     };
-    const coarse = await runForward(make(0.01), undefined, "energy-coarse");
-    const fine = await runForward(make(0.003), undefined, "energy-fine");
+    const coarse = await runForward(make(0.001), undefined, "energy-coarse");
+    const fine = await runForward(make(0.0005), undefined, "energy-fine");
+    expect(coarse.terminationCode).toBe("COMPLETED");
+    expect(fine.terminationCode).toBe("COMPLETED");
+    expect(fine.numerical.acceptedSteps).toBeGreaterThan(coarse.numerical.acceptedSteps * 1.5);
+    expect(fine.numerical.maximumAcceptedStep)
+      .toBeLessThanOrEqual(coarse.numerical.maximumAcceptedStep * 0.51);
     const energyScale = Math.abs(fine.samples[0]?.mechanicalEnergy ?? 1);
     expect(Math.abs(fine.numerical.finalEnergyBalanceResidual) / energyScale).toBeLessThan(2e-5);
     expect(Math.abs(fine.numerical.finalEnergyBalanceResidual))
       .toBeLessThanOrEqual(Math.abs(coarse.numerical.finalEnergyBalanceResidual) * 1.2 + 1e-12);
-    expect(deriveParameters(make(0.003)).effectiveMomentOfInertia).toBeGreaterThan(0);
-  });
+    expect(deriveParameters(make(0.0005)).effectiveMomentOfInertia).toBeGreaterThan(0);
+  }, 30_000); // Actual step halving plus within-step guards exceeds the default 5 s on CI.
 
   it("keeps the final physical state invariant to the requested output grid", async () => {
     const make = (outputInterval: number) => {
@@ -111,5 +116,52 @@ describe("VP-FWD-P0-SL1-v1 executable model", () => {
     expect(a?.omega).toBeCloseTo(b?.omega ?? Number.NaN, 8);
     expect(a?.wakeReal).toBeCloseTo(b?.wakeReal ?? Number.NaN, 8);
     expect(a?.wakeImaginary).toBeCloseTo(b?.wakeImaginary ?? Number.NaN, 8);
+  });
+});
+
+describe("closed calibration boundary event localization", () => {
+  it("does not place a later angle exit at t=0 merely because Re is at its inclusive lower bound", async () => {
+    const config = cloneConfig();
+    config.fluid.flowSpeed = 0;
+    config.fluid.flowRampTime = 0;
+    config.initial.theta = .019;
+    config.initial.omega = .5;
+    config.geometry.maximumAngle = .5;
+    config.rom.calibrationMinReynolds = 0;
+    config.rom.calibrationMaxAbsAngle = .02;
+    config.rom.calibrationMaxVelocityRatio = 1000;
+    config.solver.duration = .1;
+    config.solver.maximumStep = .01;
+    config.solver.outputInterval = .02;
+    const result = await runForward(config, undefined, "inclusive-calibration-edge");
+    expect(result.terminationCode).toBe("COEFFICIENT-OOD");
+    expect(result.samples.at(-1)?.time).toBeGreaterThan(.001);
+    expect(result.samples.at(-1)?.time).toBeLessThan(.01);
+    expect(result.samples.at(-1)?.theta).toBeCloseTo(.02, 6);
+  });
+});
+
+describe("wetting transition timestamps", () => {
+  it("locates a full-to-partial transition independently of output and maximum step", async () => {
+    const make = (maximumStep: number) => {
+      const config = cloneConfig();
+      Object.assign(config.fluid, { flowSpeed: 0, flowRampTime: 0 });
+      Object.assign(config.geometry, { pivotHeight: .038, waterDepth: .25 });
+      Object.assign(config.initial, { theta: .24, omega: .7 });
+      config.rom.calibrationMaxVelocityRatio = 1000;
+      Object.assign(config.solver, { duration: .1, initialStep: .001, maximumStep, outputInterval: .05 });
+      return config;
+    };
+    const coarse = await runForward(make(.02), undefined, "wet-coarse");
+    const fine = await runForward(make(.001), undefined, "wet-fine");
+    expect(coarse.complete).toBe(true);
+    expect(fine.complete).toBe(true);
+    const first = coarse.events.find((event) => event.code === "WET-FULL-TO-PARTIAL");
+    const second = fine.events.find((event) => event.code === "WET-FULL-TO-PARTIAL");
+    expect(first).toBeDefined();
+    expect(second).toBeDefined();
+    expect(Math.abs((first?.time ?? 0) - (second?.time ?? 1))).toBeLessThan(2e-7);
+    expect(first?.time).toBeGreaterThan(.019);
+    expect(first?.time).toBeLessThan(.0195);
   });
 });

@@ -22,3 +22,15 @@ npm run prepare:forward-configs -- \
 - 绑定 manifest 的 `COMMITTED.json`。
 
 读取结果时必须运行同一套校验或调用 `verifyJsonArtifactSet`，不能仅以目录存在作为成功证据。`--allow-synthetic` 只用于自动化测试，生产发布不得使用。
+
+
+## 联合标定域（2026-09-05 修订）
+
+`calibrationDomain` 的四个边际范围仍用于快速越界检查，但不再自动形成合法的笛卡尔积。正式系数包还必须填写 `calibrationDomain.jointSupport`：
+
+- `kind: "covered-cells"`：`cells` 是明确覆盖的联合单元列表。每个单元都要给出 `flowSpeedMps`、`waterDepthM`、`pivotHeightM`、`reynolds` 的 `minimum` / `maximum`，且不能超出边际范围。候选工况必须完整落入同一个单元；不自动补凸包，也不跨过覆盖空洞。
+- `kind: "validated-box"`：只有整个边际矩形域确有独立支持时才使用；不是旧系数包的默认迁移方式。
+
+两种类型都必须提供非空 `evidence`，指向实际标定设计、覆盖检验或其记录。软件只验证声明的结构和成员关系，不自动证明该证据真实、充分或具有物理效力。几何及工况中的 Re 仍由装置半径、黏度与流速重算。
+
+待填写模板使用 `{"kind":"covered-cells","evidence":null,"cells":[]}`，因此不能用于正式发布。历史仅含边际范围的系数包会被拒绝，需根据真实覆盖情况迁移；自动化 fixture 中的矩形域明确只是合成测试，不是装置标定。

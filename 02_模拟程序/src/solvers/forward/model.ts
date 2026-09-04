@@ -85,7 +85,8 @@ function multiplyComplex(
 }
 
 /**
- * Continuous physical right-hand side.  No integration tolerances, time-step
+ * Piecewise-smooth physical right-hand side (the dry/wet wake switch is not
+ * a calibrated re-entry law). No integration tolerances, time-step
  * logic, interpolation, or event root finding is permitted in this function.
  */
 export function evaluateForward(

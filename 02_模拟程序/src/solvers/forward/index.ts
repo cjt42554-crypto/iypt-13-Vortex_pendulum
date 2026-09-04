@@ -31,7 +31,9 @@ import {
   type ForwardState,
 } from "./model";
 
-const SOLVER_VERSION = "2.0.0";
+import { eventInspectionFractions } from "./dense-events";
+
+const SOLVER_VERSION = "2.1.0";
 const TIME_EPSILON_FACTOR = 64;
 
 const NO_CONTROL: SolverControl = {
@@ -79,9 +81,8 @@ function crossingGuards(
 
 function locateGuardRoot(
   config: SimulationConfig,
-  rhs: OdeRhs,
+  stateAt: (time: number) => ForwardState,
   leftTime: number,
-  leftState: ForwardState,
   rightTime: number,
   rightState: ForwardState,
   guard: ForwardGuard,
@@ -90,17 +91,16 @@ function locateGuardRoot(
   let highTime = rightTime;
   let highState = rightState;
   let evaluations = 0;
-  const leftVector = stateToVector(leftState);
   while (highTime - lowTime > config.solver.eventTimeTolerance) {
     const midpoint = 0.5 * (lowTime + highTime);
-    const trial = dormandPrince54Step(rhs, leftTime, leftVector, midpoint - leftTime);
-    evaluations += trial.rhsEvaluations;
-    const midpointState = vectorToState(trial.fifthOrder);
+    if (midpoint === lowTime || midpoint === highTime) break;
+    const midpointState = stateAt(midpoint);
     const midpointGuard = guardAt(
       evaluateForwardGuards(config, midpoint, midpointState),
       guard.code,
     );
-    if (midpointGuard !== undefined && midpointGuard.margin > 0) {
+    if (midpointGuard !== undefined && (guard.code === "COEFFICIENT-OOD"
+      ? midpointGuard.margin >= 0 : midpointGuard.margin > 0)) {
       lowTime = midpoint;
     } else {
       highTime = midpoint;
@@ -231,7 +231,7 @@ export async function runForward(
       nextOutputIndex += 1;
       continue;
     }
-    const attemptedStep = Math.min(step, remaining);
+    const attemptedStep = Math.min(step, config.solver.maximumStep, remaining);
     let trial: ReturnType<typeof dormandPrince54Step> | undefined;
     let errorNorm = Number.POSITIVE_INFINITY;
     try {
@@ -273,28 +273,72 @@ export async function runForward(
       candidateState,
       candidateEvaluation,
     );
-    const crossed = crossingGuards(currentGuards, candidateGuards);
-    if (crossed.length > 0) {
-      const locatedEvents = crossed.map((guard) => locateGuardRoot(
-        config,
-        rhs,
-        time,
-        state,
-        candidateTime,
-        candidateState,
-        guard,
-      ));
-      rhsEvaluations += locatedEvents.reduce((sum, item) => sum + item.rhsEvaluations, 0);
-      const located = locatedEvents.sort((left, right) => left.time - right.time)[0];
-      if (located !== undefined) {
-        time = located.time;
-        state = located.state;
-        terminationCode = located.guard.code;
-        events.push(terminalEvent(located.guard.code, time, located.guard.message));
-        appendDistinctSample(samples, forwardSample(config, time, state, derived));
-        break;
+    const stepStart = time;
+    const acceptedTrial = trial;
+    const stateAt = (query: number) => vectorToState(acceptedTrial.denseState(
+      Math.min(1, Math.max(0, (query - stepStart) / attemptedStep)),
+    ));
+    // Mechanical extrema catch exit-and-reentry even when the endpoints are
+    // legal. The additional angles are extrema of finite-cylinder support.
+    const criticalAngles = [0];
+    for (const length of [config.geometry.topDistance, config.geometry.bottomDistance]) {
+      for (const angle of [Math.atan2(config.geometry.radius, length), Math.atan2(length, config.geometry.radius)]) {
+        criticalAngles.push(angle, -angle);
       }
     }
+    const fractions = eventInspectionFractions(acceptedTrial, criticalAngles);
+    let inspectedTime = time;
+    let inspectedGuards = currentGuards;
+    let inspectedWet = wetBranch;
+    let terminal: LocatedEvent | undefined;
+    for (const fraction of fractions) {
+      if (fraction <= 0) continue;
+      const probeTime = fraction === 1 ? candidateTime : stepStart + attemptedStep * fraction;
+      const probeState = fraction === 1 ? candidateState : stateAt(probeTime);
+      const probeEvaluation = fraction === 1 ? candidateEvaluation : evaluateForward(config, probeTime, probeState, derived);
+      const probeGuards = fraction === 1 ? candidateGuards : evaluateForwardGuards(config, probeTime, probeState, probeEvaluation);
+      const crossed = crossingGuards(inspectedGuards, probeGuards);
+      if (crossed.length) {
+        terminal = crossed.map((guard) => locateGuardRoot(config, stateAt, inspectedTime,
+          probeTime, probeState, guard)).sort((a, b) => a.time - b.time)[0];
+      }
+      const endTime = terminal?.time ?? probeTime;
+      const endWet = terminal === undefined ? probeEvaluation.mechanics.wet.branch
+        : evaluateForward(config, endTime, terminal.state, derived).mechanics.wet.branch;
+      // Locate label transitions separately from output/accepted step times.
+      // At most dry -> partial -> full (or the reverse) on each monotone piece.
+      let wetLeft = inspectedTime;
+      for (let transition = 0; transition < 3 && inspectedWet !== endWet; transition += 1) {
+        let low = wetLeft, high = endTime;
+        while (high - low > config.solver.eventTimeTolerance) {
+          const middle = .5 * (low + high);
+          if (middle === low || middle === high) break;
+          const branch = evaluateForward(config, middle, stateAt(middle), derived).mechanics.wet.branch;
+          if (branch === inspectedWet) low = middle;
+          else high = middle;
+        }
+        const nextWet = evaluateForward(config, high, stateAt(high), derived).mechanics.wet.branch;
+        if (nextWet === inspectedWet) break;
+        events.push({ time: high, kind: "wetting",
+          code: `WET-${inspectedWet.toUpperCase()}-TO-${nextWet.toUpperCase()}`,
+          message: `湿润标签由 ${inspectedWet} 切换为 ${nextWet}；密集输出定位，状态不重置，干湿尾流切换未作实验标定。` });
+        inspectedWet = nextWet;
+        wetLeft = high;
+      }
+      if (terminal !== undefined) break;
+      inspectedTime = probeTime;
+      inspectedGuards = probeGuards;
+      inspectedWet = probeEvaluation.mechanics.wet.branch;
+    }
+    if (terminal !== undefined) {
+      time = terminal.time;
+      state = terminal.state;
+      terminationCode = terminal.guard.code;
+      events.push(terminalEvent(terminal.guard.code, time, terminal.guard.message));
+      appendDistinctSample(samples, forwardSample(config, time, state, derived));
+      break;
+    }
+    wetBranch = inspectedWet;
 
     const previousTime = time;
     time = candidateTime;
@@ -309,17 +353,6 @@ export async function runForward(
       config.solver.maximumStep,
       Math.max(config.solver.minimumStep, attemptedStep * nextStepFactor(errorNorm, true)),
     );
-
-    const candidateWetBranch = candidateEvaluation.mechanics.wet.branch;
-    if (candidateWetBranch !== wetBranch) {
-      events.push({
-        time,
-        kind: "wetting",
-        code: `WET-${wetBranch.toUpperCase()}-TO-${candidateWetBranch.toUpperCase()}`,
-        message: `湿润标签由 ${wetBranch} 连续切换为 ${candidateWetBranch}；状态不重置。`,
-      });
-      wetBranch = candidateWetBranch;
-    }
 
     if (time >= target - timeEpsilon) {
       time = target;
@@ -420,6 +453,8 @@ export async function runForward(
       },
       legacyStatus: "not-legacy",
       knownDefects: [
+        "dense-event-checkpoints-and-mechanical-extrema-do-not-prove-arbitrary-guard-completeness",
+        "dry-wet-wake-switch-not-calibrated-as-a-reentry-law",
         "default-literature-prior-is-not-apparatus-calibrated",
         "trend-power-sign-has-no-current-apparatus-qualification",
       ],
