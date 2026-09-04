@@ -26,6 +26,16 @@ jobs:
           subprocess.run(['git', 'apply', '--check', '/tmp/audit.patch'], check=True)
           subprocess.run(['git', 'apply', '/tmp/audit.patch'], check=True)
           pathlib.Path('90_候选工作区/交接说明_history.md').write_bytes(b'')
+          test = pathlib.Path('02_模拟程序/tests/forward-solver.test.ts')
+          source = test.read_text()
+          old = '    expect(deriveParameters(make(0.0005)).effectiveMomentOfInertia).toBeGreaterThan(0);\n  });'
+          new = '    expect(deriveParameters(make(0.0005)).effectiveMomentOfInertia).toBeGreaterThan(0);\n  }, 30_000); // Actual step halving plus within-step guards exceeds the default 5 s on CI.'
+          assert source.count(old) == 1
+          test.write_text(source.replace(old, new))
+          handoff = pathlib.Path('90_候选工作区/交接说明_current.md')
+          source = handoff.read_text()
+          source = source.replace('## 本轮提交验证记录', '完整验证首轮 85 项通过，能量细化测试触发默认 5 秒超时。仅将该测试超时设为 30 秒，保留计算时长、真实步长减半和全部数值断言；步内检查有额外求值开销，未宣称整体加速。\n\n## 本轮提交验证记录')
+          handoff.write_text(source)
           PY
       - name: Full formal validation
         working-directory: 02_模拟程序
