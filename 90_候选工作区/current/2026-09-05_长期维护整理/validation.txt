@@ -1,0 +1,28 @@
+baseline=8082a88db1b7cda7826949fd02eae32bac98eae1
+workflow=3a6abaf1bc9244e08585830e9377876a81781cfc
+run=33929616459
+Python=3.12.14 (main, Aug 13 2026, 02:47:42) [GCC 13.3.0]
+README physics body preserved except three explicit corrections to match the already-revised wet-domain theory and avoid automatic over-expansion.
+PASS: four entry-document local link targets and fences; not a full Markdown parser.
+$ python tools/check_markdown_math.py
+MARKDOWN MATH PASS: 6 gated files, 418 inline formulas, 203 display formulas
+
+exit=0
+$ bash scripts/check-docs.sh cwd=02_模拟程序
+MARKDOWN MATH PASS: 6 gated files, 418 inline formulas, 203 display formulas
+DOCS PASS: final theory boundaries, forward input/system ordering, equation namespaces, tags and math delimiters are valid.
+
+exit=0
+$ git diff --exit-code -- 01_最终理论 02_模拟程序 tools 90_候选工作区/交接说明_history.md 90_候选工作区/archive
+
+exit=0
+NOT RUN: complete npm validate, CFD, numerical convergence, apparatus experiments, Pandoc parse or visual rendering.
+$ git diff --check
+
+exit=0
+$ git fetch origin main
+From https://github.com/cjt42554-crypto/iypt-13-Vortex_pendulum
+ * branch            main       -> FETCH_HEAD
+
+exit=0
+PASS: bounded management-only scope, original theory/program/checkers/evidence unchanged, empty history, main unchanged before commit.

@@ -2,10 +2,17 @@ name: Scientific core checks
 
 on:
   push:
+    paths: ['02_模拟程序/**', '01_最终理论/**', 'tools/check_markdown_math.py', '.github/workflows/simulation-check.yml']
   pull_request:
+    paths: ['02_模拟程序/**', '01_最终理论/**', 'tools/check_markdown_math.py', '.github/workflows/simulation-check.yml']
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: scientific-core-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   formal-program:
@@ -17,6 +24,8 @@ jobs:
         working-directory: 02_模拟程序
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
