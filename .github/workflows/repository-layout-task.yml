@@ -5,6 +5,7 @@ on:
     paths: [.github/workflows/repository-layout-task.yml]
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: repository-layout-task
   cancel-in-progress: false
@@ -23,10 +24,15 @@ jobs:
         with:
           python-version: '3.12'
       - uses: actions/setup-node@v7
-        if: endsWith(github.repository, 'iypt-13-Vortex_pendulum')
         with:
           node-version: '24'
-      - name: Apply reviewed migration to exact source contents
+      - uses: actions/download-artifact@v4
+        with:
+          name: layout-migration-validation
+          run-id: 33931692454
+          github-token: ${{ github.token }}
+          path: /tmp/previous-layout-validation
+      - name: Apply reviewed migration and retain first validation failure
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -41,11 +47,20 @@ jobs:
           assert hashlib.sha256(code).hexdigest() == '94f162d27d769d2e54e43b89acc89045f5907471a02dada5b40c44d191e086db'
           pathlib.Path('/tmp/migrate.py').write_bytes(code)
           PY
-          problem="$(basename "$GITHUB_REPOSITORY" | cut -d- -f2)"
-          python /tmp/migrate.py "$problem" | tee /tmp/layout-apply.txt
+          python /tmp/migrate.py 13 | tee /tmp/layout-apply.txt
+          python - <<'PY'
+          import pathlib
+          root = pathlib.Path('03_研究记录/维护/2026-09-05_目录重组')
+          first = pathlib.Path('/tmp/previous-layout-validation/validation.txt').read_bytes()
+          assert b'Timeout 20000ms exceeded' in first
+          (root / 'validation-first-attempt.txt').write_bytes(first)
+          p = pathlib.Path('00_项目管理/交接说明_current.md')
+          p.write_text(p.read_text() + '\n## 本轮浏览器验证首次失败\n\n首次运行的 86 项单元测试、构建和桌面入口通过，但浏览器等待 COMPLETED 达到原有 20 秒上限。失败原文保存在 [首次验证日志](../03_研究记录/维护/2026-09-05_目录重组/validation-first-attempt.txt)。没有改动生产源码、浏览器测试或超时阈值，按相同完整命令复核；最终结果见本轮验证日志。超时机制尚未定位，即使复跑通过，也不把它当作稳定性问题已解决。\n', encoding='utf-8')
+          PY
           git add -A
           git add -f --pathspec-from-file=/tmp/iypt-relocated-paths --pathspec-file-nul
-      - name: Validate relocated entry points and formal software
+          test -z "$(git diff --cached --name-only -- '02_模拟程序/src' '02_模拟程序/scripts' '02_模拟程序/package.json' '02_模拟程序/package-lock.json')"
+      - name: Repeat unchanged formal validation
         run: |
           set -euo pipefail
           task='03_研究记录/维护/2026-09-05_目录重组'
@@ -54,38 +69,21 @@ jobs:
             echo "Repository: $GITHUB_REPOSITORY"
             echo "Source commit: $GITHUB_SHA"
             echo "Actions run: $GITHUB_RUN_ID"
-            echo 'Scope: directory migration, active references and software regression; no new scientific qualification.'
+            echo 'Earlier browser timeout retained in validation-first-attempt.txt; test timeout and production source unchanged.'
             cat /tmp/layout-apply.txt
             python --version
             uname -a
             python -m unittest discover -s tools -p 'test_repository_docs.py' -v
             python tools/check_repository_docs.py
             python tools/resolve_legacy_path.py '90_候选工作区/交接说明_current.md'
-            problem="$(basename "$GITHUB_REPOSITORY" | cut -d- -f2)"
-            if [ "$problem" = 5 ]; then
-              python -m py_compile '02_模拟程序/03_结构性理论分析程序/torus_structure_analysis.py'
-              cd '02_模拟程序/01_前向预测数值求解器/y_pendulum_forward_solver'
-              echo '$ python -m pip install -e . && python -m unittest discover -s tests -v'
-              python -m pip install -e .
-              python -m unittest discover -s tests -v
-              cd "$GITHUB_WORKSPACE"
-            elif [ "$problem" = 10 ]; then
-              cd '02_模拟程序'
-              echo '$ python -m pip install -e . && python -m unittest discover -s tests -v'
-              python -m pip install -e .
-              python -m unittest discover -s tests -v
-              cd "$GITHUB_WORKSPACE"
-            else
-              python tools/check_markdown_math.py
-              cd '02_模拟程序'
-              node --version
-              npm --version
-              echo '$ npm ci && npm run validate'
-              npm ci
-              npm run validate
-              cd "$GITHUB_WORKSPACE"
-            fi
-            python -m pip freeze
+            python tools/check_markdown_math.py
+            cd '02_模拟程序'
+            node --version
+            npm --version
+            echo '$ npm ci && npm run validate'
+            npm ci
+            npm run validate
+            cd "$GITHUB_WORKSPACE"
             echo 'NOT RUN: historical large convergence cases, GPU hardware qualification, apparatus experiments, hydrated LFS object verification.'
             echo 'PASS: all invoked validation commands completed successfully.'
           } 2>&1 | tee "$task/validation.txt"
@@ -108,7 +106,7 @@ jobs:
           test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'refactor: separate project handoff, research records, data and exploration workspaces'
+          git commit -m 'refactor: separate long-term workspaces and preserve browser validation evidence'
           git push origin HEAD:main
           git rev-parse HEAD
       - uses: actions/upload-artifact@v4
