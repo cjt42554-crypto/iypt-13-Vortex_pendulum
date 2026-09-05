@@ -26,6 +26,8 @@
 - 首次程序 CI `33985582617` 绑定提交 `0ce3ff7`，159 项通过、11 项墙钟超时；原始完整日志为 `ci-first-failure.log`。总测试耗时 321 s，对比本地 102 s；能量细化单例 73.5 s、步内干区参考 30.2 s，120 组规范计算超过 60 s。后续仅调整验证资源与时间预算：CI 单 worker、默认看门狗 30 s，数值参考 60/120 s，工作流仍限 15 min；物理容差、时间细化、参考数量和浏览器 20 s 均不变。独立补丁 `ci-validation.patch` 以 `0ce3ff7` 为基线，新增资源记录便于区分机器速度与科学失败。
 - `CI=true npm test` 本地复验采用相同单 worker 配置：27 文件、170 项全部通过，墙钟 78.06 s；完整日志为 `ci-serial-local.log`。
 - 本地提交 `368234c` 的首次 push 被 OAuth 凭据缺少 `workflow` scope 拒绝，未发布。撤掉仅用于打印 runner 信息的两行工作流修改后，重建这一个未发布提交；工作流保持远端原样。`ci-validation.patch` 保存试验时原差异，最终实际补丁为 `ci-runner-budget.patch`（同样以 `0ce3ff7` 为基线），两者的数值与测试配置相同。
+- 第二次 CI `33985958896` 绑定 `3d2bbf5`：170 项测试、TypeScript/Vite、桌面检查通过，串行测试 123.15 s（本地 78.06 s）。`ci-second-failure.log` 保留浏览器 20 s 到期的诊断：`runState=running`，Worker 存在，控制台无错误。以该实测资源差异为独立依据，将 CI 的前向页面完成等待预算设为 60 s，本地保留 20 s；只接受 `COMPLETED`，保持所有物理配置和导出断言。补丁 `ci-browser-wait.patch` 以 `3d2bbf5` 为基线。此修正不证明一般间歇超时机制已经解决。
+- `CI=true npm run test:e2e` 本地复验通过，默认运行 15.90 s、整套 19.50 s、控制台无错误、SS-DW 物理差异约 1.2e-16；见 `ci-browser-local.log`。本次仅修改脚本等待预算，因此未重复本地整套数值测试。
 - `integration-first-tests.log`、`13-00/exit-first.log` 保留早期夹具/几何问题；对应后续通过日志不覆盖它们。
 - `13-05/four-branch-first.log` 的新多算例测试累计超出默认 5 s；缩短已停稳后的无关尾段后通过，事件和能量断言保留。`integration-full-tests.log` 的 5 个失败含并发超时和旧全湿时间预期。独立支撑/机械参考纠正后，以有限 4 worker 和新数值参考测试的有界预算通过完整验证；原物理误差界及浏览器 20 s 保持。
 - 本轮两次浏览器通过不消除旧间歇超时记录。实际默认算例约 18.4/14.4 s，控制台无错误；SS-DW 的 CLI/页面最大相对差约 1.2e-16。没有把异常当完成或减少物理积分来换取通过。

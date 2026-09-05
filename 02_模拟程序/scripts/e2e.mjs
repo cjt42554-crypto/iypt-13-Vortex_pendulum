@@ -33,6 +33,9 @@ let browser, page;
 const consoleErrors = [];
 const workers = [];
 const suiteStarted = performance.now();
+// The shared runner stayed healthy/running at 20 s; its serial reference suite
+// takes 1.6x this host's time. Keep the local 20 s watchdog and bound CI at 60 s.
+const forwardRunTimeout = process.env.CI ? 60_000 : 20_000;
 let baselineStarted;
 try {
   await waitForServer();
@@ -85,7 +88,7 @@ try {
   }
   baselineStarted = performance.now();
   await page.getByRole("button", { name: "运行", exact: true }).click();
-  await page.locator("#termination-badge").filter({ hasText: "COMPLETED" }).waitFor({ timeout: 20_000 });
+  await page.locator("#termination-badge").filter({ hasText: "COMPLETED" }).waitFor({ timeout: forwardRunTimeout });
   console.log("E2E_BASELINE", JSON.stringify({ elapsedMs: performance.now()-baselineStarted, runState: await page.locator("#run-state").innerText(), termination: await page.locator("#termination-badge").innerText(), consoleErrors, workers }));
   const summary = await page.locator("#summary-grid").innerText();
   if (!summary.includes("能量闭合 RMS") || !summary.includes("配置哈希")) {
@@ -267,7 +270,7 @@ try {
   await page.locator("#config-file").setInputFiles(alignmentPath);
   await page.locator("#config-state").filter({ hasText: "可运行" }).waitFor();
   await page.getByRole("button", { name: "运行", exact: true }).click();
-  await page.locator("#termination-badge").filter({ hasText: "COMPLETED" }).waitFor({ timeout: 20_000 });
+  await page.locator("#termination-badge").filter({ hasText: "COMPLETED" }).waitFor({ timeout: forwardRunTimeout });
   await page.locator("#model-identity").filter({ hasText: "VP-FWD-P0-SL1-SS-DW-v1" }).waitFor();
   const downloadText = async (button) => {
     const waiting = page.waitForEvent("download");
