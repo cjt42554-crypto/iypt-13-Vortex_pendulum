@@ -1,0 +1,166 @@
+name: Temporary theory13 verification and publication
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/temporary-theory13-publish.yml]
+permissions:
+  contents: write
+jobs:
+  verify-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          lfs: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Apply reviewed payload with source and destination hashes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import base64, hashlib, json, lzma, os, pathlib, subprocess, urllib.request
+          repo = 'cjt42554-crypto/iypt-13-Vortex_pendulum'
+          shas = ['15ddc5dd6368e061acaedadc30759d30082f40ad','49577c63a27406f8966c933337c33a9009bc8faf','f444b6ffdf4eb688dbc24b8a6efa988355bdad5a','360f47ec59e11d0e469634e9e161ce3e746b012c','4286ae184d6f802fa98a9c0ad9da138345448b8c']
+          chunks = []
+          for sha in shas:
+              request = urllib.request.Request(f'https://api.github.com/repos/{repo}/git/blobs/{sha}',headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(request,timeout=30) as response:
+                  obj = json.load(response)
+              chunks.append(base64.b64decode(obj['content']))
+          raw = b''.join(chunks)
+          assert hashlib.sha256(raw).hexdigest() == 'bb7779fdce0e65282df8b4f2651a3c71f24f36f07321a6bda5e1030e7c4d6219'
+          payload = json.loads(lzma.decompress(raw))
+          assert subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip() == payload['base']
+          assert subprocess.check_output(['git','rev-parse','HEAD:02_模拟程序'],text=True).strip() == payload['production_tree'] == '46efa1569b8e0ef0ab9a73ea2ce6e68d481deed8'
+          allowed = {'README.md','00_项目管理/交接说明_current.md','01_最终理论/README.md','01_最终理论/01-前向预测理论.md','01_最终理论/02-前向预测理论的数值计算理论.md','01_最终理论/03-结构性理论.md','01_最终理论/04-实验辨识、标定与留出预测协议.md'}
+          prefix = '03_研究记录/维护/2026-09-05_辨识摩擦与湿截面理论修订/'
+          assert set(payload['old_sha256']) == allowed
+          for name in payload['expected']:
+              p = pathlib.PurePosixPath(name)
+              assert not p.is_absolute() and '..' not in p.parts
+              assert name in allowed or name.startswith(prefix)
+          for name, expected in payload['old_sha256'].items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == expected,name
+          patch = payload['patch'].encode()
+          subprocess.run(['git','apply','--check','-'],input=patch,check=True)
+          subprocess.run(['git','apply','-'],input=patch,check=True)
+          changed = set(subprocess.check_output(['git','-c','core.quotepath=false','diff','--name-only'],text=True).splitlines())
+          assert changed == allowed,changed
+          for entry in payload['new']:
+              p = pathlib.Path(entry['path'])
+              assert str(p).startswith(prefix) and not p.exists()
+              p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_text(entry['content'],encoding='utf-8')
+          for name,expected in payload['expected'].items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == expected,name
+          assert pathlib.Path('00_项目管理/交接说明_history.md').stat().st_size == 0
+          subprocess.run(['git','diff','--exit-code','--','02_模拟程序'],check=True)
+          subprocess.run(['git','diff','--check'],check=True)
+          pathlib.Path('/tmp/theory13-payload-paths.json').write_text(json.dumps(list(payload['expected']),ensure_ascii=False))
+          print('All 18 reviewed destination hashes verified; original solver and empty history unchanged.')
+          PY
+      - name: Install independent verification dependencies
+        run: |
+          python -m pip install numpy==2.3.5 scipy==1.17.0 sympy==1.14.0
+      - name: Run independent physics, complete entry checks and original formal validation
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, platform, re, subprocess, sys, time
+          root = pathlib.Path.cwd()
+          rec = root/'03_研究记录/维护/2026-09-05_辨识摩擦与湿截面理论修订'
+          local_results = (rec/'results.json').read_bytes()
+          commands = [
+            ('theory-remote.txt',[sys.executable,str(rec/'verify_wake_friction_geometry.py')],root,120),
+            ('docs-unit-remote.txt',[sys.executable,'-m','unittest','discover','-s','tools','-p','test_repository_docs.py','-v'],root,60),
+            ('docs-entry-remote.txt',[sys.executable,'tools/check_repository_docs.py'],root,60),
+            ('math-remote.txt',[sys.executable,'tools/check_markdown_math.py'],root,60),
+            ('npm-install-remote.txt',['npm','ci'],root/'02_模拟程序',240),
+            ('formal-validation-remote.txt',['npm','run','validate'],root/'02_模拟程序',480),
+          ]
+          results = []
+          environment = {'python':platform.python_version(),'platform':platform.platform(),'node':subprocess.check_output(['node','--version'],text=True).strip(),'npm':subprocess.check_output(['npm','--version'],text=True).strip(),'run_id':os.environ['GITHUB_RUN_ID'],'parent':os.environ['GITHUB_SHA']}
+          for name,cmd,cwd,timeout in commands:
+              print('Running',name,flush=True)
+              started = time.monotonic()
+              entry = {'log':name,'command':cmd,'cwd':str(cwd.relative_to(root)) or '.','timeout_seconds':timeout}
+              try:
+                  with (rec/name).open('w') as log:
+                      proc = subprocess.run(cmd,cwd=cwd,stdout=log,stderr=subprocess.STDOUT,timeout=timeout)
+                  entry['returncode'] = proc.returncode
+              except subprocess.TimeoutExpired:
+                  entry['returncode'] = None
+                  entry['status'] = 'timeout'
+              finally:
+                  if name == 'theory-remote.txt':
+                      (rec/'results-remote.json').write_bytes((rec/'results.json').read_bytes())
+                      (rec/'results.json').write_bytes(local_results)
+                  entry['elapsed_seconds'] = time.monotonic()-started
+                  results.append(entry)
+                  (rec/'remote-summary.json').write_text(json.dumps({'environment':environment,'commands':results},ensure_ascii=False,indent=2)+'\n')
+              text = (rec/name).read_text()
+              print(text[-4000:],flush=True)
+              if entry['returncode'] != 0:
+                  raise RuntimeError('Validation did not pass: '+name)
+          theory = json.loads((rec/'results-remote.json').read_text())
+          assert theory['tests'] == {'run':35,'failures':0,'errors':0,'skipped':0}
+          assert re.search(r'Ran 16 tests', (rec/'docs-unit-remote.txt').read_text())
+          formal = re.sub(r'\x1b\[[0-9;]*m','',(rec/'formal-validation-remote.txt').read_text())
+          assert re.search(r'Tests\s+86 passed',formal), 'Unexpected original test count; inspect actual log.'
+          assert 'docs:check' in formal and 'test:e2e' in formal and 'desktop:check' in formal
+          record = '\n## 本轮远端完整复跑\n\n完整仓库独立复跑 35 项理论/文档核查、16 项入口检查器自测、全仓库活动入口与数学检查均通过。原有 `npm run validate` 完整命令通过，包含 86 项单元测试、TypeScript/Vite 构建、桌面入口、原浏览器端到端与理论文档边界检查。没有改原成功条件或超时值；本次通过不关闭既有浏览器波动问题。实际环境、命令、退出码和耗时见 `remote-summary.json`，原始日志见 `theory-remote.txt`、`docs-unit-remote.txt`、`docs-entry-remote.txt`、`math-remote.txt`、`npm-install-remote.txt`、`formal-validation-remote.txt`。`results.json` 保留本地结果，远端计算另存 `results-remote.json`。这不表示 SS/DW 已进入正式程序，亦不是大型 CFD、GPU 或装置验证。\n'
+          with (rec/'README.md').open('a') as f: f.write(record)
+          current = root/'00_项目管理/交接说明_current.md'
+          old = '完整远端复跑将独立写入同目录 `remote-summary.json` 和原始日志；读取交接时以这些实际证据的存在与退出码为准，不能由本段推断远端运行成功。本轮未做大型 CFD、GPU 或装置实验。'
+          new = '完整远端复跑：35 项理论/文档核查、16 项检查器自测、全仓库活动入口与数学检查通过；原有 npm run validate 全部通过，包含 86 项单元测试、构建、桌面入口、浏览器端到端和理论边界检查。见[远端摘要](../03_研究记录/维护/2026-09-05_辨识摩擦与湿截面理论修订/remote-summary.json)及同目录原始日志。生产代码与原测试未改，本次成功不关闭既有浏览器波动。未做大型 CFD、GPU 或装置实验。'
+          text = current.read_text()
+          assert text.count(old) == 1
+          current.write_text(text.replace(old,new))
+          import hashlib
+          metadata = {'scientific_base':'0ceb7b73c808e1261333a099587d965ee0d31e6c','source_snapshot':'576dcd807347051106c68dcff37fe07c80fec413','publishing_parent':os.environ['GITHUB_SHA'],'run_id':os.environ['GITHUB_RUN_ID'],'forward_theory_sha256':hashlib.sha256((root/'01_最终理论/01-前向预测理论.md').read_bytes()).hexdigest(),'verification_script_sha256':hashlib.sha256((rec/'verify_wake_friction_geometry.py').read_bytes()).hexdigest(),'production_tree_sha':'46efa1569b8e0ef0ab9a73ea2ce6e68d481deed8'}
+          assert metadata['forward_theory_sha256'] == '8f83a2c122ab91152fb8ac5fb4e99885f19a35f47f70b0eba4f723ceae79a600'
+          assert metadata['verification_script_sha256'] == 'c41909dea2e81c6e946dda848e5a2d44891f2a4c4a60840e8768d0b594cbb4e5'
+          (rec/'publication.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n')
+          subprocess.run([sys.executable,'tools/check_repository_docs.py'],check=True)
+          subprocess.run(['git','diff','--check'],check=True)
+          PY
+      - name: Commit and non-force push verified scientific files
+        run: |
+          git fetch origin main
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code -- '02_模拟程序'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python - <<'PY'
+          import json, pathlib, subprocess
+          names = set(json.loads(pathlib.Path('/tmp/theory13-payload-paths.json').read_text()))
+          rec = pathlib.Path('03_研究记录/维护/2026-09-05_辨识摩擦与湿截面理论修订')
+          names.update(p.as_posix() for p in rec.iterdir() if p.is_file())
+          assert pathlib.Path('00_项目管理/交接说明_history.md').stat().st_size == 0
+          subprocess.run(['git','add','-f','--',*sorted(names)],check=True)
+          PY
+          git diff --cached --check
+          git commit -m 'theory: correct wake identifiability and add stick-slip and directional-wet drag branches'
+          git push origin HEAD:main
+          git rev-parse HEAD
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theory13-verification-evidence
+          path: |
+            03_研究记录/维护/2026-09-05_辨识摩擦与湿截面理论修订/
+            01_最终理论/
+            00_项目管理/交接说明_current.md
+            README.md
+          retention-days: 7
