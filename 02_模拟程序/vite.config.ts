@@ -18,8 +18,10 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    // Bound CPU contention when independent geometry/RK benchmarks run together.
-    maxWorkers: 4,
+    // CI's shared runner took 3x local wall time. Serialize CPU-bound references
+    // there; only the wall-clock watchdog changes, never physical tolerances.
+    maxWorkers: process.env.CI ? 1 : 4,
+    testTimeout: process.env.CI ? 30_000 : 5_000,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

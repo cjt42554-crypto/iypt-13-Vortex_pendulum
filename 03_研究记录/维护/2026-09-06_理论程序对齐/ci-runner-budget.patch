@@ -1,0 +1,74 @@
+diff --git "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-solver.test.ts" "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-solver.test.ts"
+index 8350036..744cfcf 100644
+--- "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-solver.test.ts"
++++ "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-solver.test.ts"
+@@ -91,7 +91,7 @@ describe("VP-FWD-P0-SL1-v1 executable model", () => {
+     expect(Math.abs(fine.numerical.finalEnergyBalanceResidual))
+       .toBeLessThanOrEqual(Math.abs(coarse.numerical.finalEnergyBalanceResidual) * 1.2 + 1e-12);
+     expect(deriveParameters(make(0.0005)).effectiveMomentOfInertia).toBeGreaterThan(0);
+-  }, 30_000); // Actual step halving plus within-step guards exceeds the default 5 s on CI.
++  }, 120_000); // 1200 physical steps + guards took 73.5 s on the shared CI runner.
+ 
+   it("keeps the final physical state invariant to the requested output grid", async () => {
+     const make = (outputInterval: number) => {
+diff --git "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-wet-domain.test.ts" "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-wet-domain.test.ts"
+index 31cd25e..5e932b0 100644
+--- "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-wet-domain.test.ts"
++++ "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/forward-wet-domain.test.ts"
+@@ -294,7 +294,7 @@ describe("13-A wet exits through the production integrator", () => {
+       }
+     }
+     console.log("WET_EXIT_REFINEMENT", JSON.stringify({ referenceAlgorithm: "RK4 + analytic cylinder support", reference, exits }));
+-  }, 20000); // Bounded multi-run numerical/reference check under concurrent suite load.
++  }, 60000); // Independent RK4 + production refinements; shared CI wall-clock budget.
+ 
+   it("detects a dry interval inside a step even when the historical endpoints are wet", async () => {
+     const config = inertialWetConfig();
+@@ -312,7 +312,7 @@ describe("13-A wet exits through the production integrator", () => {
+     const reference = wetExitReference(config, 0.000005);
+     expect(Math.abs(result.events.find((e) => e.code === "WET-DOMAIN-EXIT")!.time - reference)).toBeLessThan(1e-7);
+     expect(result.samples.at(-1)!.theta).toBeLessThan(0);
+-  }, 20000); // Bounded multi-run numerical/reference check under concurrent suite load.
++  }, 60000); // Independent within-step dry reference took 30.2 s on the shared runner.
+ 
+   it("rejects a coarse out-of-domain RK stage without inventing a physical event", async () => {
+     const config = inertialWetConfig();
+@@ -325,7 +325,7 @@ describe("13-A wet exits through the production integrator", () => {
+     expect(result.terminationCode).toBe("COMPLETED");
+     expect(result.numerical.rejectedSteps).toBeGreaterThan(0);
+     expect(result.events.some((event) => event.code === "WET-DOMAIN-EXIT")).toBe(false);
+-  }, 20000); // Bounded multi-run numerical/reference check under concurrent suite load.
++  }, 60000); // Bounded repeated stage rejection; physical tolerances remain fixed.
+ });
+ 
+ describe("13-A run classification", () => {
+diff --git "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/wake-gauge.test.ts" "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/wake-gauge.test.ts"
+index 4a99527..d524b0c 100644
+--- "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/wake-gauge.test.ts"
++++ "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/tests/wake-gauge.test.ts"
+@@ -265,7 +265,7 @@ describe("constant complex wake gauge", () => {
+       }
+     }
+     console.info(`WAKE_GAUGE_120_SUMMARY ${JSON.stringify(summary)}`);
+-  }, 60_000);
++  }, 120_000); // 120 production trajectory pairs; shared CI exceeded 60 s with four workers.
+ 
+   it("performs the factor-two special case in the declared direction and round-trips it", () => {
+     const legacy = gauge("legacy-real-output-v1", "C_L=Re(A_old)", "legacy phase");
+diff --git "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/vite.config.ts" "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/vite.config.ts"
+index 0061f77..dd46fff 100644
+--- "a/02_\346\250\241\346\213\237\347\250\213\345\272\217/vite.config.ts"
++++ "b/02_\346\250\241\346\213\237\347\250\213\345\272\217/vite.config.ts"
+@@ -18,8 +18,10 @@ export default defineConfig({
+   },
+   test: {
+     environment: "node",
+-    // Bound CPU contention when independent geometry/RK benchmarks run together.
+-    maxWorkers: 4,
++    // CI's shared runner took 3x local wall time. Serialize CPU-bound references
++    // there; only the wall-clock watchdog changes, never physical tolerances.
++    maxWorkers: process.env.CI ? 1 : 4,
++    testTimeout: process.env.CI ? 30_000 : 5_000,
+     coverage: {
+       provider: "v8",
+       reporter: ["text", "json", "html"],

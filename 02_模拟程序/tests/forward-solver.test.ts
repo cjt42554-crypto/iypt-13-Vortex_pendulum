@@ -91,7 +91,7 @@ describe("VP-FWD-P0-SL1-v1 executable model", () => {
     expect(Math.abs(fine.numerical.finalEnergyBalanceResidual))
       .toBeLessThanOrEqual(Math.abs(coarse.numerical.finalEnergyBalanceResidual) * 1.2 + 1e-12);
     expect(deriveParameters(make(0.0005)).effectiveMomentOfInertia).toBeGreaterThan(0);
-  }, 30_000); // Actual step halving plus within-step guards exceeds the default 5 s on CI.
+  }, 120_000); // 1200 physical steps + guards took 73.5 s on the shared CI runner.
 
   it("keeps the final physical state invariant to the requested output grid", async () => {
     const make = (outputInterval: number) => {

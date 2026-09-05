@@ -294,7 +294,7 @@ describe("13-A wet exits through the production integrator", () => {
       }
     }
     console.log("WET_EXIT_REFINEMENT", JSON.stringify({ referenceAlgorithm: "RK4 + analytic cylinder support", reference, exits }));
-  }, 20000); // Bounded multi-run numerical/reference check under concurrent suite load.
+  }, 60000); // Independent RK4 + production refinements; shared CI wall-clock budget.
 
   it("detects a dry interval inside a step even when the historical endpoints are wet", async () => {
     const config = inertialWetConfig();
@@ -312,7 +312,7 @@ describe("13-A wet exits through the production integrator", () => {
     const reference = wetExitReference(config, 0.000005);
     expect(Math.abs(result.events.find((e) => e.code === "WET-DOMAIN-EXIT")!.time - reference)).toBeLessThan(1e-7);
     expect(result.samples.at(-1)!.theta).toBeLessThan(0);
-  }, 20000); // Bounded multi-run numerical/reference check under concurrent suite load.
+  }, 60000); // Independent within-step dry reference took 30.2 s on the shared runner.
 
   it("rejects a coarse out-of-domain RK stage without inventing a physical event", async () => {
     const config = inertialWetConfig();
@@ -325,7 +325,7 @@ describe("13-A wet exits through the production integrator", () => {
     expect(result.terminationCode).toBe("COMPLETED");
     expect(result.numerical.rejectedSteps).toBeGreaterThan(0);
     expect(result.events.some((event) => event.code === "WET-DOMAIN-EXIT")).toBe(false);
-  }, 20000); // Bounded multi-run numerical/reference check under concurrent suite load.
+  }, 60000); // Bounded repeated stage rejection; physical tolerances remain fixed.
 });
 
 describe("13-A run classification", () => {

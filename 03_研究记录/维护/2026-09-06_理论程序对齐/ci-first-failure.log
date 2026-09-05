@@ -1,0 +1,762 @@
+Complete formal program validation	Set up job	﻿2026-09-05T18:56:23.1005833Z Current runner version: '2.337.0'
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1043132Z ##[group]Runner Image Provisioner
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1044422Z Hosted Compute Agent
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1045502Z Version: 20260828.587
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1046569Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1047924Z Build Date: 2026-08-28T16:44:25Z
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1049136Z Worker ID: {cb415984-036b-4365-a577-06d20e29a301}
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1050252Z Azure Region: centralus
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1051187Z ##[endgroup]
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1053498Z ##[group]Operating System
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1054508Z Ubuntu
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1055419Z 24.04.4
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1056201Z LTS
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1057413Z ##[endgroup]
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1058396Z ##[group]Runner Image
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1059316Z Image: ubuntu-24.04
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1060241Z Version: 20260831.293.1
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1062088Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260831.293/images/ubuntu/Ubuntu2404-Readme.md
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1065095Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260831.293
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1066651Z ##[endgroup]
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1068719Z ##[group]GITHUB_TOKEN Permissions
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1071753Z Contents: read
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1072742Z Metadata: read
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1073610Z ##[endgroup]
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1076810Z Secret source: Actions
+Complete formal program validation	Set up job	2026-09-05T18:56:23.1079748Z Prepare workflow directory
+Complete formal program validation	Set up job	2026-09-05T18:56:23.2115974Z Prepare all required actions
+Complete formal program validation	Set up job	2026-09-05T18:56:23.2268776Z Getting action download info
+Complete formal program validation	Set up job	2026-09-05T18:56:23.4729601Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Complete formal program validation	Set up job	2026-09-05T18:56:23.6180507Z Download action repository 'actions/setup-node@v7' (SHA:820762786026740c76f36085b0efc47a31fe5020)
+Complete formal program validation	Set up job	2026-09-05T18:56:23.8312124Z Complete job name: Complete formal program validation
+Complete formal program validation	Run actions/checkout@v7	﻿2026-09-05T18:56:23.9052797Z ##[group]Run actions/checkout@v7
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9053660Z with:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9054143Z   persist-credentials: false
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9054764Z   repository: cjt42554-crypto/iypt-13-Vortex_pendulum
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9058865Z   token: ***
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9059312Z   ssh-strict: true
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9059761Z   ssh-user: git
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9060187Z   clean: true
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9060638Z   sparse-checkout-cone-mode: true
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9061186Z   fetch-depth: 1
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9061621Z   fetch-tags: false
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9062076Z   show-progress: true
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9062530Z   lfs: false
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9062940Z   submodules: false
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9063391Z   set-safe-directory: true
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9063900Z   allow-unsafe-pr-checkout: false
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:23.9064589Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0254398Z Syncing repository: cjt42554-crypto/iypt-13-Vortex_pendulum
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0258480Z ##[group]Getting Git version info
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0260981Z Working directory is '/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum'
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0264725Z [command]/usr/bin/git version
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0469504Z git version 2.55.0
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0472367Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0478956Z Temporarily overriding HOME='/home/runner/work/_temp/591e7ed6-be99-47c8-a40d-71962b5a6b53' before making global git config changes
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0481119Z Adding repository directory to the temporary git global config as a safe directory
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0483127Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0717753Z Deleting the contents of '/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum'
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0720120Z ##[group]Determining repository object format
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0721682Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0723005Z ##[group]Initializing the repository
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0724581Z [command]/usr/bin/git init /home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0739400Z hint: Using 'master' as the name for the initial branch. This default branch name
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0755987Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0758888Z hint: to use in all of your new repositories, which will suppress this warning,
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0765240Z hint: call:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0766349Z hint:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0788103Z hint: 	git config --global init.defaultBranch <name>
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0797733Z hint:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0798735Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0800195Z hint: 'development'. The just-created branch can be renamed via this command:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0801585Z hint:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0802428Z hint: 	git branch -m <name>
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0803361Z hint:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0804508Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0806690Z Initialized empty Git repository in /home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git/
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0810373Z [command]/usr/bin/git remote add origin https://github.com/cjt42554-crypto/iypt-13-Vortex_pendulum
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0834165Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0835476Z ##[group]Disabling automatic garbage collection
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0857823Z [command]/usr/bin/git config --local gc.auto 0
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0916357Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0937127Z ##[group]Setting up auth
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0957884Z Removing SSH command configuration
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.0960656Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.1029743Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2125166Z Removing HTTP extra header
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2127826Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2132468Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2305653Z Removing includeIf entries pointing to credentials config files
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2310414Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2364952Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2654965Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2703944Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git.path /home/runner/work/_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2744952Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2803323Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2837424Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2872909Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2874628Z ##[group]Fetching the repository
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:24.2880964Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0ce3ff72fb6065a389b1b7e657dac1f558f0dbbb:refs/remotes/origin/main
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0051225Z From https://github.com/cjt42554-crypto/iypt-13-Vortex_pendulum
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0052793Z  * [new ref]         0ce3ff72fb6065a389b1b7e657dac1f558f0dbbb -> origin/main
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0069032Z [command]/usr/bin/git branch --list --remote origin/main
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0094031Z   origin/main
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0109752Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0140006Z 0ce3ff72fb6065a389b1b7e657dac1f558f0dbbb
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0151611Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0153648Z ##[group]Determining the checkout info
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0155978Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0157857Z [command]/usr/bin/git sparse-checkout disable
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0214000Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0262013Z ##[group]Checking out the ref
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.0264908Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3460752Z Switched to a new branch 'main'
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3468730Z branch 'main' set up to track 'origin/main'.
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3828145Z ##[endgroup]
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3888853Z [command]/usr/bin/git log -1 --format=%H
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3920588Z 0ce3ff72fb6065a389b1b7e657dac1f558f0dbbb
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3931390Z ##[group]Removing auth
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3932336Z Removing SSH command configuration
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3936461Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.3985253Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4250308Z Removing HTTP extra header
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4253256Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4297815Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4559157Z Removing includeIf entries pointing to credentials config files
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4560805Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4597877Z includeif.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4600822Z includeif.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git/worktrees/*.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4602372Z includeif.gitdir:/github/workspace/.git.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4603347Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4610879Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4644953Z /home/runner/work/_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4657414Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-32cf582c\-4001\-4fe5\-8f91\-edb70a27a24d\.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4701800Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git/worktrees/*.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4744578Z /home/runner/work/_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4791600Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-32cf582c\-4001\-4fe5\-8f91\-edb70a27a24d\.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4807227Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4854982Z /github/runner_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4869308Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-32cf582c\-4001\-4fe5\-8f91\-edb70a27a24d\.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4908254Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4941268Z /github/runner_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4949194Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-32cf582c\-4001\-4fe5\-8f91\-edb70a27a24d\.config
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.4993734Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.5262427Z Removing credentials config '/home/runner/work/_temp/git-credentials-32cf582c-4001-4fe5-8f91-edb70a27a24d.config'
+Complete formal program validation	Run actions/checkout@v7	2026-09-05T18:56:26.5274068Z ##[endgroup]
+Complete formal program validation	Run actions/setup-node@v7	﻿2026-09-05T18:56:26.5543256Z ##[group]Run actions/setup-node@v7
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5543656Z with:
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5543914Z   node-version: 24
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5544176Z   cache: npm
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5544493Z   cache-dependency-path: 02_模拟程序/package-lock.json
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5544872Z   check-latest: false
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5547447Z   token: ***
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5547735Z   package-manager-cache: true
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.5548058Z ##[endgroup]
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.6965233Z Found in cache @ /opt/hostedtoolcache/node/24.20.0/x64
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:26.6967142Z ##[group]Environment details
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.2158933Z node: v24.20.0
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.2159864Z npm: 11.19.0
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.2160311Z yarn: 1.22.22
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.2161618Z ##[endgroup]
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.2177714Z [command]/opt/hostedtoolcache/node/24.20.0/x64/bin/npm config get cache
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.3393108Z /home/runner/.npm
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:27.5000011Z Cache hit for: node-cache-Linux-x64-npm-8882a1d57c7f734f782703b0496b0cbf517775299ca069f727f19b013ced6161
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:28.2817847Z Received 19580792 of 19580792 (100.0%), 29.2 MBs/sec
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:28.2821277Z Cache Size: ~19 MB (19580792 B)
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:28.2917678Z [command]/usr/bin/tar -xf /home/runner/work/_temp/8a30d3d9-ba0c-4022-bb55-7559aa3dcbb7/cache.tzst -P -C /home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum --use-compress-program unzstd
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:28.3588477Z Cache restored successfully
+Complete formal program validation	Run actions/setup-node@v7	2026-09-05T18:56:28.3618648Z Cache restored from key: node-cache-Linux-x64-npm-8882a1d57c7f734f782703b0496b0cbf517775299ca069f727f19b013ced6161
+Complete formal program validation	Install formal program dependencies	﻿2026-09-05T18:56:28.3760700Z ##[group]Run npm ci
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:28.3761077Z ^[[36;1mnpm ci^[[0m
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:28.3812200Z shell: /usr/bin/bash -e {0}
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:28.3812720Z ##[endgroup]
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:29.9207184Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1671015Z 
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1672158Z added 125 packages, and audited 126 packages in 2s
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1672947Z 
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1673430Z 31 packages are looking for funding
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1674253Z   run `npm fund` for details
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1687435Z 
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1688043Z found 0 vulnerabilities
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1706059Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1707816Z npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1708932Z npm warn install-scripts
+Complete formal program validation	Install formal program dependencies	2026-09-05T18:56:30.1710184Z npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+Complete formal program validation	Run the complete formal validation gate	﻿2026-09-05T18:56:30.2230070Z ##[group]Run npm run validate
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.2230415Z ^[[36;1mnpm run validate^[[0m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.2272532Z shell: /usr/bin/bash -e {0}
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.2272819Z ##[endgroup]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.3368237Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.3369349Z > iypt-vortex-pendulum-lab@1.0.0 validate
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.3370786Z > npm run test && npm run build && npm run desktop:check && npm run test:e2e && npm run docs:check
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.3371577Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.4517778Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.4538342Z > iypt-vortex-pendulum-lab@1.0.0 test
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.4544187Z > vitest run
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.4544845Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.8527314Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.8540202Z ^[[1m^[[46m RUN ^[[49m^[[22m ^[[36mv3.2.7 ^[[39m^[[90m/home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum/02_模拟程序^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:30.8557406Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9150015Z ^[[90mstdout^[[2m | tests/stick-slip.test.ts^[[2m > ^[[22m^[[2mVP-FWD-P0-SL1-SS-v1 stick-slip component^[[2m > ^[[22m^[[2mrefines C1/C2 through the production mode locator and RK work quadrature
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9190099Z ^[[22m^[[39mSS_C1_REFINEMENT [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9248355Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9266890Z     h: ^[[33m0.3^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9286392Z     eventTime: ^[[33m0.5000000000000908^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9308530Z     theta: ^[[33m0.12500000000000006^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9344165Z     omega: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9345021Z     netWork: ^[[33m-0.0025000000000000014^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9366120Z     ledger: ^[[33m1.3010426069826053e-18^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9408668Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9446565Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9501447Z     h: ^[[33m0.15^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9502820Z     eventTime: ^[[33m0.5000000000000908^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9526282Z     theta: ^[[33m0.12500000000000003^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9543561Z     omega: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9567668Z     netWork: ^[[33m-0.002500000000000001^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9648440Z     ledger: ^[[33m8.673617379884035e-19^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9672003Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9720624Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9739738Z     h: ^[[33m0.075^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9760129Z     eventTime: ^[[33m0.500000000000091^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9774818Z     theta: ^[[33m0.12500000000000006^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9786766Z     omega: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9800167Z     netWork: ^[[33m-0.002500000000000001^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9801084Z     ledger: ^[[33m8.673617379884035e-19^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9801761Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9802273Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9802882Z     h: ^[[33m0.0375^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9803869Z     eventTime: ^[[33m0.5000000000000908^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9804753Z     theta: ^[[33m0.12500000000000006^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9850977Z     omega: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9868273Z     netWork: ^[[33m-0.0025000000000000022^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9869255Z     ledger: ^[[33m2.168404344971009e-18^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9892841Z   }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9922418Z ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9923118Z SS_C2_REFINEMENT [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9942377Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9971923Z     h: ^[[33m0.3^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:31.9988427Z     eventTime: ^[[33m0.7500000000002729^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0003492Z     theta: ^[[33m0.02083333333329923^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0028140Z     omega: ^[[33m0.18749999999986353^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0047675Z     netWork: ^[[33m0.00035156249999948846^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0048816Z     ledger: ^[[33m-2.168404344971009e-19^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0067871Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0108203Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0109108Z     h: ^[[33m0.15^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0118761Z     eventTime: ^[[33m0.7500000000002729^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0119639Z     theta: ^[[33m0.02083333333329922^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0120439Z     omega: ^[[33m0.18749999999986353^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0121217Z     netWork: ^[[33m0.00035156249999948835^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0122023Z     ledger: ^[[33m-1.0842021724855044e-19^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0122671Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0123149Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0123691Z     h: ^[[33m0.075^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0125104Z     eventTime: ^[[33m0.7500000000002727^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0126102Z     theta: ^[[33m0.02083333333329926^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0126843Z     omega: ^[[33m0.18749999999986372^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0147886Z     netWork: ^[[33m0.00035156249999948895^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0167625Z     ledger: ^[[33m0^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0187652Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0188275Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0245925Z     h: ^[[33m0.0375^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0291510Z     eventTime: ^[[33m0.7500000000002727^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0292357Z     theta: ^[[33m0.020833333333299273^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0309666Z     omega: ^[[33m0.18749999999986378^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0327768Z     netWork: ^[[33m0.0003515624999994892^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0347851Z     ledger: ^[[33m-5.421010862427522e-20^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0365562Z   }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0387520Z ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0387895Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:32.0408714Z  ^[[32m✓^[[39m tests/stick-slip.test.ts ^[[2m(^[[22m^[[2m8 tests^[[22m^[[2m)^[[22m^[[32m 60^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:33.4476873Z  ^[[32m✓^[[39m tests/directional-drag.test.ts ^[[2m(^[[22m^[[2m10 tests^[[22m^[[2m)^[[22m^[[33m 1570^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:33.4496461Z    ^[[33m^[[2m✓^[[22m^[[39m direction-dependent drag load^[[2m > ^[[22mmatches 150 independent Cartesian force/cross-product references and is passive ^[[33m 1311^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:37.6677229Z  ^[[32m✓^[[39m tests/high-fidelity-lbm.test.ts ^[[2m(^[[22m^[[2m12 tests^[[22m^[[2m)^[[22m^[[33m 4740^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:37.6719078Z    ^[[33m^[[2m✓^[[22m^[[39m D2Q9 MRT-Brinkman kernel^[[2m > ^[[22mpreserves an initialized uniform flow through the open boundaries ^[[33m 422^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:37.6799142Z    ^[[33m^[[2m✓^[[22m^[[39m D2Q9 MRT-Brinkman kernel^[[2m > ^[[22mkeeps a penalized stationary body finite in a periodic moving fluid ^[[33m 1402^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:37.6899065Z    ^[[33m^[[2m✓^[[22m^[[39m VP-HF-CFD2D-v1 unified backend^[[2m > ^[[22mreplays the full same-config prescribed-motion state exactly ^[[33m 1668^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:37.6999948Z    ^[[33m^[[2m✓^[[22m^[[39m VP-HF-CFD2D-v1 unified backend^[[2m > ^[[22mis deterministic for two complete runs with the same config ^[[33m 436^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0482754Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mruns production branch VP-FWD-P0-SL1-v1 with identity and passive drag
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0528192Z ^[[22m^[[39mFOUR_BRANCH VP-FWD-P0-SL1-v1 {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0580909Z   method: ^[[32m'Dormand-Prince-5(4)'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0585870Z   acceptedSteps: ^[[33m42^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0587767Z   rejectedSteps: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0618242Z   rhsEvaluations: ^[[33m294^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0654230Z   minimumAcceptedStep: ^[[33m0.001^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0698104Z   maximumAcceptedStep: ^[[33m0.010000000000000009^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0738134Z   maximumAcceptedErrorNorm: ^[[33m0.4609500792448451^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0757941Z   finalEnergyBalanceResidual: ^[[33m-1.031947757057321e-15^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0777897Z   terminationCode: ^[[32m'COMPLETED'^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0817658Z } []
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.0854315Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:38.4578945Z  ^[[32m✓^[[39m tests/control-volume-force.test.ts ^[[2m(^[[22m^[[2m11 tests^[[22m^[[2m)^[[22m^[[32m 30^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.8926559Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mruns production branch VP-FWD-P0-SL1-SS-v1 with identity and passive drag
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.8948424Z ^[[22m^[[39mFOUR_BRANCH VP-FWD-P0-SL1-SS-v1 {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.8966332Z   method: ^[[32m'Dormand-Prince-5(4)'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.8998194Z   acceptedSteps: ^[[33m43^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9034812Z   rejectedSteps: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9078112Z   rhsEvaluations: ^[[33m301^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9097993Z   minimumAcceptedStep: ^[[33m0.001^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9117972Z   maximumAcceptedStep: ^[[33m0.010000000000000009^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9158191Z   maximumAcceptedErrorNorm: ^[[33m0.5243704880640824^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9198040Z   finalEnergyBalanceResidual: ^[[33m-7.37450600802117e-16^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9217879Z   terminationCode: ^[[32m'COMPLETED'^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9257567Z } [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9277569Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9318086Z     time: ^[[33m0.20360743524329705^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9337840Z     kind: ^[[32m'mode'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9373547Z     code: ^[[32m'SS-slip+-TO-stick'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9397897Z     message: ^[[32m'首次模式边界定位；无冲量，尾流不重置。'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9417786Z     bracket: {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9453804Z       validTime: ^[[33m0.20360743520930696^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9497890Z       invalidTime: ^[[33m0.20360743527728714^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9517635Z     },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9537874Z     modeBefore: ^[[32m'slip+'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9577755Z     modeAfter: ^[[32m'stick'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9617774Z     validBefore: ^[[33mtrue^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9637834Z     validAfter: ^[[33mtrue^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9676428Z   }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9697590Z ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:41.9717418Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0189187Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mruns production branch VP-FWD-P0-SL1-DW-v1 with identity and passive drag
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0206824Z ^[[22m^[[39mFOUR_BRANCH VP-FWD-P0-SL1-DW-v1 {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0228109Z   method: ^[[32m'Dormand-Prince-5(4)'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0268063Z   acceptedSteps: ^[[33m42^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0297920Z   rejectedSteps: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0317880Z   rhsEvaluations: ^[[33m294^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0358044Z   minimumAcceptedStep: ^[[33m0.001^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0377969Z   maximumAcceptedStep: ^[[33m0.010000000000000009^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0407132Z   maximumAcceptedErrorNorm: ^[[33m0.4609124525589703^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0438078Z   finalEnergyBalanceResidual: ^[[33m-1.0340771978867183e-15^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0477902Z   terminationCode: ^[[32m'COMPLETED'^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0497627Z } []
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:45.0537454Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4429395Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mruns production branch VP-FWD-P0-SL1-SS-DW-v1 with identity and passive drag
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4468019Z ^[[22m^[[39mFOUR_BRANCH VP-FWD-P0-SL1-SS-DW-v1 {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4488058Z   method: ^[[32m'Dormand-Prince-5(4)'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4562845Z   acceptedSteps: ^[[33m43^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4591685Z   rejectedSteps: ^[[33m0^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4607822Z   rhsEvaluations: ^[[33m301^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4637951Z   minimumAcceptedStep: ^[[33m0.001^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4678063Z   maximumAcceptedStep: ^[[33m0.010000000000000009^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4707895Z   maximumAcceptedErrorNorm: ^[[33m0.5238386442062621^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4727840Z   finalEnergyBalanceResidual: ^[[33m-7.364985357694032e-16^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4757761Z   terminationCode: ^[[32m'COMPLETED'^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4779283Z } [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4817573Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4837873Z     time: ^[[33m0.20360737277494995^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4877677Z     kind: ^[[32m'mode'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4878220Z     code: ^[[32m'SS-slip+-TO-stick'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4878920Z     message: ^[[32m'首次模式边界定位；无冲量，尾流不重置。'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4879887Z     bracket: { validTime: ^[[33m0.20360737274094495^[[39m, invalidTime: ^[[33m0.2036073728089549^[[39m },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4880741Z     modeBefore: ^[[32m'slip+'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4881269Z     modeAfter: ^[[32m'stick'^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4881791Z     validBefore: ^[[33mtrue^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4882288Z     validAfter: ^[[33mtrue^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4882664Z   }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4882951Z ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:48.4883121Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:49.7429743Z ^[[90mstdout^[[2m | tests/forward-wet-domain.test.ts^[[2m > ^[[22m^[[2m13-A wet exits through the production integrator^[[2m > ^[[22m^[[2mfinds the first dry exit with output cadence x4 and four actual step refinements
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:49.7439191Z ^[[22m^[[39mWET_EXIT_REFINEMENT {"referenceAlgorithm":"RK4 + analytic cylinder support","reference":0.020547175651721317,"exits":[0.020547175649900537,0.020547175659088635,0.020547175661188778,0.02054717563540081,0.020547175661887723,0.02054717566658571,0.020547175651678882,0.0205471756825601]}
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:56:49.7517289Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9219756Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mreduces zero Coulomb and full immersion to the smooth full-width branch
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9258118Z ^[[22m^[[39mSS_STOP_REFINEMENT [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9298020Z   ^[[33m0.24201418230462907^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9357907Z   ^[[33m0.2420141822633616^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9417961Z   ^[[33m0.24201418172395417^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9477971Z   ^[[33m0.24201418223371168^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9517667Z ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:04.9552451Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8393530Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mhas an exactly passive linear zero-flow wake corner without artificial cubic damping
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8428003Z ^[[22m^[[39mSS_WAKE_REFINEMENT {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8447896Z   reference: ^[[33m0.026419423927526654^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8467684Z   errors: [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8507930Z     ^[[33m8.6723996040039e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8527916Z     ^[[33m2.820309957796141e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8558072Z     ^[[33m2.820309957796141e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8587800Z     ^[[33m2.820309957796141e-12^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8627554Z   ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8647591Z }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:18.8677572Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.2838089Z ^[[90mstdout^[[2m | tests/forward-alignment.test.ts^[[2m > ^[[22m^[[2mrefines the production DW trajectory against independent fixed RK4
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.2877977Z ^[[22m^[[39mDW_TIME_REFINEMENT [
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.2890535Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.2935407Z     h: ^[[33m0.02^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.2957876Z     error: ^[[33m8.50074754098468e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.2987779Z     accepted: ^[[33m4^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3017993Z     maxStep: ^[[33m0.020000000000000004^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3057585Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3097649Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3137846Z     h: ^[[33m0.01^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3177897Z     error: ^[[33m5.214439500827526e-13^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3197649Z     accepted: ^[[33m8^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3198244Z     maxStep: ^[[33m0.010000000000000002^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3198692Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3198989Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3199335Z     h: ^[[33m0.005^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3199824Z     error: ^[[33m8.805738091873775e-14^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3200335Z     accepted: ^[[33m16^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3200868Z     maxStep: ^[[33m0.0050000000000000044^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3201280Z   },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3201566Z   {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3201923Z     h: ^[[33m0.0025^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3202416Z     error: ^[[33m8.523544256142523e-15^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3202913Z     accepted: ^[[33m32^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3203429Z     maxStep: ^[[33m0.0025000000000000022^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3203848Z   }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3204125Z ]
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:28.3204299Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2779485Z  ^[[31m❯^[[39m tests/wake-gauge.test.ts ^[[2m(^[[22m^[[2m11 tests^[[22m^[[2m | ^[[22m^[[31m1 failed^[[39m^[[2m)^[[22m^[[33m 60363^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2799012Z ^[[31m   ^[[31m×^[[31m constant complex wake gauge^[[2m > ^[[22mkeeps 120 seeded production RHS evaluations and short trajectories physically equivalent^[[39m^[[33m 60333^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2828209Z ^[[31m     → Test timed out in 60000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2873126Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2898808Z    ^[[32m✓^[[39m constant complex wake gauge^[[2m > ^[[22mperforms the factor-two special case in the declared direction and round-trips it^[[32m 13^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2938897Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrejects a time-varying gauge because dot(c)/c is not implemented^[[32m 1^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2968814Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrejects missing legacy metadata and lists the absent definitions^[[32m 4^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.2988925Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrejects conversion when the executable config has no matching source declaration^[[32m 4^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.3028915Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrejects a zero physical output channel instead of claiming wake recovery^[[32m 3^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.3052791Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrequires a changed covariance basis identity for a nontrivial gauge^[[32m 1^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.3098326Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrequires the legacy builder caller to declare the original span closure^[[32m 0^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.3139023Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mdoes not convert a finite-span function into a scalar or change a scalar closure^[[32m 1^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.3178830Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrejects dimensional total-torque output and changed reference geometry^[[32m 0^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:33.3198638Z    ^[[32m✓^[[39m wake gauge migration rejects incomplete or non-gauge changes^[[2m > ^[[22mrejects singular and non-finite complex scales^[[32m 0^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3379550Z  ^[[31m❯^[[39m tests/forward-wet-domain.test.ts ^[[2m(^[[22m^[[2m10 tests^[[22m^[[2m | ^[[22m^[[31m1 failed^[[39m^[[2m)^[[22m^[[33m 63013^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3419487Z    ^[[32m✓^[[39m 13-A strict wet-domain entry^[[2m > ^[[22mreturns an empty, explicitly invalid result when the cylinder starts fully dry^[[32m 59^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3458825Z    ^[[32m✓^[[39m 13-A strict wet-domain entry^[[2m > ^[[22mdistinguishes wet zero-flow operation from a dry cylinder^[[32m 197^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3478830Z    ^[[32m✓^[[39m 13-A strict wet-domain entry^[[2m > ^[[22mterminates at t=0 when a positive wet span lies below independent coverage^[[32m 26^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3518786Z    ^[[32m✓^[[39m 13-A strict wet-domain entry^[[2m > ^[[22mrejects a strict package whose minimum wet-span evidence is absent^[[32m 15^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3547217Z    ^[[32m✓^[[39m 13-A strict wet-domain entry^[[2m > ^[[22maccepts equality at the closed minimum-span and joint-cell boundaries^[[32m 162^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3580137Z    ^[[32m✓^[[39m 13-A strict wet-domain entry^[[2m > ^[[22muses complete eight-coordinate cells instead of a Cartesian union of marginals^[[32m 11^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3619930Z    ^[[33m^[[2m✓^[[22m^[[39m 13-A wet exits through the production integrator^[[2m > ^[[22mfinds the first dry exit with output cadence x4 and four actual step refinements ^[[33m 16947^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3649034Z ^[[31m   ^[[31m×^[[31m 13-A wet exits through the production integrator^[[2m > ^[[22mdetects a dry interval inside a step even when the historical endpoints are wet^[[39m^[[33m 30223^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3677772Z ^[[31m     → Test timed out in 20000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3708543Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3748776Z    ^[[33m^[[2m✓^[[22m^[[39m 13-A wet exits through the production integrator^[[2m > ^[[22mrejects a coarse out-of-domain RK stage without inventing a physical event ^[[33m 14850^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:35.3764824Z    ^[[33m^[[2m✓^[[22m^[[39m 13-A run classification^[[2m > ^[[22mmarks legacy, synthetic and calibrated input identities without filename heuristics ^[[33m 509^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2149156Z  ^[[31m❯^[[39m tests/forward-alignment.test.ts ^[[2m(^[[22m^[[2m18 tests^[[22m^[[2m | ^[[22m^[[31m6 failed^[[39m^[[2m)^[[22m^[[33m 61954^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2294827Z    ^[[33m^[[2m✓^[[22m^[[39m runs production branch VP-FWD-P0-SL1-v1 with identity and passive drag ^[[33m 3794^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2329587Z    ^[[33m^[[2m✓^[[22m^[[39m runs production branch VP-FWD-P0-SL1-SS-v1 with identity and passive drag ^[[33m 3841^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2365029Z    ^[[33m^[[2m✓^[[22m^[[39m runs production branch VP-FWD-P0-SL1-DW-v1 with identity and passive drag ^[[33m 3128^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2383992Z    ^[[33m^[[2m✓^[[22m^[[39m runs production branch VP-FWD-P0-SL1-SS-DW-v1 with identity and passive drag ^[[33m 3424^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2419295Z    ^[[33m^[[2m✓^[[22m^[[39m preserves exact rest while the production wake evolves with gamma0 theta ^[[33m 3574^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2430496Z ^[[31m   ^[[31m×^[[31m resolves physical stopping and keeps rest under four internal refinements^[[39m^[[33m 6763^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2447913Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2449329Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2451035Z ^[[31m   ^[[31m×^[[31m reduces zero Coulomb and full immersion to the smooth full-width branch^[[39m^[[33m 6598^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2452054Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2453306Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2454838Z    ^[[32m✓^[[39m changes only drag in a partially wet moving state and rejects mismatched widths^[[32m 13^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2456611Z ^[[31m   ^[[31m×^[[31m locates wake-driven breakaway, preserves wake and gamma0, under four internal refinements^[[39m^[[33m 5171^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2458056Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2459298Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2460948Z ^[[31m   ^[[31m×^[[31m reverses both sliding signs through zero without resetting the wake^[[39m^[[33m 5503^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2461948Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2463184Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2464951Z ^[[31m   ^[[31m×^[[31m has an exactly passive linear zero-flow wake corner without artificial cubic damping^[[39m^[[33m 5954^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2466027Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2520133Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2521935Z ^[[31m   ^[[31m×^[[31m refines the production DW trajectory against independent fixed RK4^[[39m^[[33m 6265^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2522941Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2524180Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2526234Z    ^[[33m^[[2m✓^[[22m^[[39m matches the unforced production wake to its analytic growth/decay/saturated identity: {"mu":1,"beta":1,"ws":2,"bi":0.2,"a0":0.5} ^[[33m 703^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2528622Z    ^[[33m^[[2m✓^[[22m^[[39m matches the unforced production wake to its analytic growth/decay/saturated identity: {"mu":-1,"beta":1,"ws":2,"bi":0.2,"a0":1} ^[[33m 784^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2530757Z    ^[[33m^[[2m✓^[[22m^[[39m matches the unforced production wake to its analytic growth/decay/saturated identity: {"mu":0,"beta":1,"ws":2,"bi":0.2,"a0":1} ^[[33m 799^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2532764Z    ^[[33m^[[2m✓^[[22m^[[39m matches the unforced production wake to its analytic growth/decay/saturated identity: {"mu":1,"beta":1,"ws":2,"bi":0.2,"a0":1} ^[[33m 737^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2534870Z    ^[[33m^[[2m✓^[[22m^[[39m matches the unforced production wake to its analytic growth/decay/saturated identity: {"mu":2,"beta":2,"ws":2.5,"bi":0.7,"a0":1} ^[[33m 763^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.2607785Z    ^[[33m^[[2m✓^[[22m^[[39m gives a simultaneous wet-coverage exit priority over wake-driven breakaway ^[[33m 4130^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.4880095Z  ^[[32m✓^[[39m tests/plugin-contract.test.ts ^[[2m(^[[22m^[[2m6 tests^[[22m^[[2m)^[[22m^[[32m 57^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:36.5088855Z  ^[[32m✓^[[39m tests/uncertainty.test.ts ^[[2m(^[[22m^[[2m15 tests^[[22m^[[2m)^[[22m^[[32m 284^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:37.3073980Z  ^[[32m✓^[[39m tests/identifiability.test.ts ^[[2m(^[[22m^[[2m8 tests^[[22m^[[2m)^[[22m^[[32m 68^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:38.4180927Z  ^[[32m✓^[[39m tests/experiment-bridge.test.ts ^[[2m(^[[22m^[[2m4 tests^[[22m^[[2m)^[[22m^[[32m 233^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:41.1113573Z  ^[[32m✓^[[39m tests/structure-analysis.test.ts ^[[2m(^[[22m^[[2m8 tests^[[22m^[[2m)^[[22m^[[33m 1964^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:41.1138885Z    ^[[33m^[[2m✓^[[22m^[[39m phase-4 structural analysis utilities^[[2m > ^[[22mlocates a transverse oscillatory spectral boundary for the bundled prior ^[[33m 1686^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:41.7750471Z  ^[[32m✓^[[39m tests/geometry.test.ts ^[[2m(^[[22m^[[2m6 tests^[[22m^[[2m)^[[22m^[[32m 45^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:42.5669496Z  ^[[32m✓^[[39m tests/joint-calibration-domain.test.ts ^[[2m(^[[22m^[[2m4 tests^[[22m^[[2m)^[[22m^[[32m 41^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:43.4089248Z  ^[[32m✓^[[39m tests/artifacts.test.ts ^[[2m(^[[22m^[[2m2 tests^[[22m^[[2m)^[[22m^[[32m 100^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:44.1328912Z  ^[[32m✓^[[39m tests/fixed-cylinder-disposition.test.ts ^[[2m(^[[22m^[[2m3 tests^[[22m^[[2m)^[[22m^[[32m 19^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:44.9308821Z  ^[[32m✓^[[39m tests/cfd2d-benchmark.test.ts ^[[2m(^[[22m^[[2m4 tests^[[22m^[[2m)^[[22m^[[32m 176^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:45.7010888Z  ^[[32m✓^[[39m tests/dense-events.test.ts ^[[2m(^[[22m^[[2m4 tests^[[22m^[[2m)^[[22m^[[32m 36^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:46.4986568Z  ^[[32m✓^[[39m tests/a8s-archived-evidence.test.ts ^[[2m(^[[22m^[[2m1 test^[[22m^[[2m)^[[22m^[[32m 82^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:47.1784240Z  ^[[32m✓^[[39m tests/harmonic-analysis.test.ts ^[[2m(^[[22m^[[2m4 tests^[[22m^[[2m)^[[22m^[[32m 38^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:47.8958897Z  ^[[32m✓^[[39m tests/source-bindings.test.ts ^[[2m(^[[22m^[[2m2 tests^[[22m^[[2m)^[[22m^[[32m 40^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2755540Z  ^[[31m❯^[[39m tests/alignment-io.test.ts ^[[2m(^[[22m^[[2m2 tests^[[22m^[[2m | ^[[22m^[[31m2 failed^[[39m^[[2m)^[[22m^[[33m 12597^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2809093Z ^[[31m   ^[[31m×^[[31m migrates declared legacy files, rereads them and preserves nonzero formal physical trajectories^[[39m^[[33m 6286^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2841072Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2848986Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2868688Z ^[[31m   ^[[31m×^[[31m uses the same formal solver in Worker and serializes SS-DW events and empty wet exits^[[39m^[[33m 6305^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2887782Z ^[[31m     → Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.2908477Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:57:50.9036067Z  ^[[32m✓^[[39m tests/canonical.test.ts ^[[2m(^[[22m^[[2m2 tests^[[22m^[[2m)^[[22m^[[32m 41^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5403244Z ^[[90mstdout^[[2m | tests/forward-solver.test.ts^[[2m > ^[[22m^[[2mwetting transition timestamps^[[2m > ^[[22m^[[2mlocates a full-to-partial transition independently of output and maximum step
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5436318Z ^[[22m^[[39mFULL_TO_PARTIAL_ANALYTIC_GEOMETRY {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5445035Z   rootAngle: ^[[33m0.2511139206000496^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5470585Z   reference: ^[[33m0.016360206752624427^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5483733Z   event: ^[[33m0.016360212326049804^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5517596Z }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5547343Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5568478Z  ^[[31m❯^[[39m tests/forward-solver.test.ts ^[[2m(^[[22m^[[2m7 tests^[[22m^[[2m | ^[[22m^[[31m1 failed^[[39m^[[2m)^[[22m^[[33m 83143^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5598676Z    ^[[32m✓^[[39m VP-FWD-P0-SL1-v1 executable model^[[2m > ^[[22mkeeps quasi-steady drag dissipative, including in still water^[[32m 31^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5638498Z    ^[[33m^[[2m✓^[[22m^[[39m VP-FWD-P0-SL1-v1 executable model^[[2m > ^[[22mruns the default model on an exact uniform output grid ^[[33m 1894^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5658863Z    ^[[32m✓^[[39m VP-FWD-P0-SL1-v1 executable model^[[2m > ^[[22mlocates the angle-domain event instead of integrating through it^[[32m 201^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5678647Z ^[[31m   ^[[31m×^[[31m VP-FWD-P0-SL1-v1 executable model^[[2m > ^[[22mcloses the conservative mechanical energy ledger under refinement^[[39m^[[33m 73543^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5718739Z ^[[31m     → Test timed out in 30000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5720286Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5738471Z    ^[[33m^[[2m✓^[[22m^[[39m VP-FWD-P0-SL1-v1 executable model^[[2m > ^[[22mkeeps the final physical state invariant to the requested output grid ^[[33m 4176^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5758679Z    ^[[32m✓^[[39m closed calibration boundary event localization^[[2m > ^[[22mdoes not place a later angle exit at t=0 merely because Re is at its inclusive lower bound^[[32m 205^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.5761194Z    ^[[33m^[[2m✓^[[22m^[[39m wetting transition timestamps^[[2m > ^[[22mlocates a full-to-partial transition independently of output and maximum step ^[[33m 3087^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.6884519Z ^[[90mstdout^[[2m | tests/forward-uncertainty.test.ts^[[2m > ^[[22m^[[2mpropagates a complete coefficient package through the builder, solver and statistical report
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.6928587Z ^[[22m^[[39mFORMAL_UQ_SMALL_NOISE {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.6943344Z   counts: { ^[[32m'COMPLETED/smooth/no-breakaway'^[[39m: ^[[33m128^[[39m },
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.6990054Z   variance: ^[[33m1.002002558792492e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.7008106Z   sampleVariance: ^[[33m1.0460769995377739e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.7048163Z   relativeSamplingBound: ^[[33m0.5019646441105269^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.7068087Z   convertedVariance: ^[[33m1.002002558788815e-12^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.7106402Z   covarianceHandling: ^[[32m'transformed-joint-covariance'^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.7127577Z }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:02.7167542Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:03.2198777Z  ^[[32m✓^[[39m tests/dopri54.test.ts ^[[2m(^[[22m^[[2m3 tests^[[22m^[[2m)^[[22m^[[32m 23^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6708115Z ^[[90mstdout^[[2m | tests/forward-uncertainty.test.ts^[[2m > ^[[22m^[[2mkeeps cross-breakaway, no-breakaway and invalid-input realizations without a Gaussian claim
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6712947Z ^[[22m^[[39mFORMAL_UQ_BREAKAWAY {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6715205Z   ^[[32m'COMPLETED/slip+/breakaway'^[[39m: ^[[33m15^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6716138Z   ^[[32m'evaluation-error'^[[39m: ^[[33m6^[[39m,
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6717190Z   ^[[32m'COMPLETED/stick/no-breakaway'^[[39m: ^[[33m3^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6717917Z }
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6720718Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6721744Z  ^[[32m✓^[[39m tests/forward-uncertainty.test.ts ^[[2m(^[[22m^[[2m2 tests^[[22m^[[2m)^[[22m^[[33m 30253^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6724762Z    ^[[33m^[[2m✓^[[22m^[[39m propagates a complete coefficient package through the builder, solver and statistical report ^[[33m 25265^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.6726027Z    ^[[33m^[[2m✓^[[22m^[[39m keeps cross-breakaway, no-breakaway and invalid-input realizations without a Gaussian claim ^[[33m 4983^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9261741Z  ^[[32m✓^[[39m tests/parameter-form.test.ts ^[[2m(^[[22m^[[2m3 tests^[[22m^[[2m)^[[22m^[[32m 4^[[2mms^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9397775Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9431096Z ^[[31m⎯⎯⎯⎯⎯⎯^[[39m^[[1m^[[41m Failed Tests 11 ^[[49m^[[22m^[[31m⎯⎯⎯⎯⎯⎯⎯^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9448680Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9450588Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/alignment-io.test.ts^[[2m > ^[[22mmigrates declared legacy files, rereads them and preserves nonzero formal physical trajectories
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9452919Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9454677Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9456098Z ^[[36m ^[[2m❯^[[22m tests/alignment-io.test.ts:^[[2m25:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9540048Z     ^[[90m 23| ^[[39m}
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9557846Z     ^[[90m 24| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9578033Z     ^[[90m 25| ^[[39mit("migrates declared legacy files, rereads them and preserves nonzero…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9579025Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9598084Z     ^[[90m 26| ^[[39m  const [legacy, oldPlan, declaration, request, expected, plan, appara…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9619052Z     ^[[90m 27| ^[[39m    ["legacy-coefficients", "legacy-plan", "legacy-alignment-declarati…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9637385Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9638052Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9677479Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9711393Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/alignment-io.test.ts^[[2m > ^[[22muses the same formal solver in Worker and serializes SS-DW events and empty wet exits
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9740984Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9742881Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9768295Z ^[[36m ^[[2m❯^[[22m tests/alignment-io.test.ts:^[[2m61:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9787725Z     ^[[90m 59| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9788797Z     ^[[90m 60| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9847429Z     ^[[90m 61| ^[[39mit("uses the same formal solver in Worker and serializes SS-DW events …
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9867803Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9888460Z     ^[[90m 62| ^[[39m  ^[[35mconst^[[39m config ^[[33m=^[[39m ^[[34malignedConfig^[[39m(^[[32m"VP-FWD-P0-SL1-SS-DW-v1"^[[39m)^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9908674Z     ^[[90m 63| ^[[39m  config^[[33m.^[[39minitial^[[33m.^[[39mtheta ^[[33m=^[[39m ^[[34m.03^[[39m^[[33m;^[[39m config^[[33m.^[[39minitial^[[33m.^[[39momega ^[[33m=^[[39m ^[[34m.15^[[39m^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9909825Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9927884Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9947327Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9962644Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-alignment.test.ts^[[2m > ^[[22mresolves physical stopping and keeps rest under four internal refinements
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9987835Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:07.9989364Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0008055Z ^[[36m ^[[2m❯^[[22m tests/forward-alignment.test.ts:^[[2m34:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0048125Z     ^[[90m 32| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0087789Z     ^[[90m 33| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0108145Z     ^[[90m 34| ^[[39mit("resolves physical stopping and keeps rest under four internal refi…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0113201Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0159303Z     ^[[90m 35| ^[[39m  ^[[35mconst^[[39m stops^[[33m:^[[39m number[] ^[[33m=^[[39m []^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0188618Z     ^[[90m 36| ^[[39m  ^[[35mfor^[[39m (^[[35mconst^[[39m maxStep ^[[35mof^[[39m [^[[34m.04^[[39m^[[33m,^[[39m ^[[34m.02^[[39m^[[33m,^[[39m ^[[34m.01^[[39m^[[33m,^[[39m ^[[34m.005^[[39m]) {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0189709Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0207984Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0227339Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0241837Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-alignment.test.ts^[[2m > ^[[22mreduces zero Coulomb and full immersion to the smooth full-width branch
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0267997Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0268375Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0269465Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0288208Z ^[[36m ^[[2m❯^[[22m tests/forward-alignment.test.ts:^[[2m57:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0289372Z ^[[2m Test Files ^[[22m ^[[1m^[[31m5 failed^[[39m^[[22m^[[2m | ^[[22m^[[1m^[[32m22 passed^[[39m^[[22m^[[90m (27)^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0307708Z     ^[[90m 55| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0327707Z     ^[[90m 56| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0328757Z ^[[2m      Tests ^[[22m ^[[1m^[[31m11 failed^[[39m^[[22m^[[2m | ^[[22m^[[1m^[[32m159 passed^[[39m^[[22m^[[90m (170)^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0348358Z     ^[[90m 57| ^[[39mit("reduces zero Coulomb and full immersion to the smooth full-width b…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0349425Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0367271Z     ^[[90m 58| ^[[39m  ^[[35mconst^[[39m results ^[[33m=^[[39m []^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0368074Z ^[[2m   Start at ^[[22m 18:56:30
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0389125Z     ^[[90m 59| ^[[39m  ^[[35mfor^[[39m (^[[35mconst^[[39m model ^[[35mof^[[39m ^[[33mFORWARD_MODEL_IDS^[[39m) {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0390706Z ^[[2m   Duration ^[[22m 97.09s^[[2m (transform 2.11s, setup 0ms, collect 5.52s, tests 320.98s, environment 25ms, prepare 5.25s)^[[22m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0407326Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0427915Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0428362Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0428569Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0437804Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-alignment.test.ts^[[2m > ^[[22mlocates wake-driven breakaway, preserves wake and gamma0, under four internal refinements
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0439297Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0440665Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0442049Z ^[[36m ^[[2m❯^[[22m tests/forward-alignment.test.ts:^[[2m87:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0442819Z     ^[[90m 85| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0443371Z     ^[[90m 86| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0444251Z     ^[[90m 87| ^[[39mit("locates wake-driven breakaway, preserves wake and gamma0, under fo…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0445110Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0446231Z     ^[[90m 88| ^[[39m  ^[[35mconst^[[39m config ^[[33m=^[[39m ^[[34malignedConfig^[[39m(^[[32m"VP-FWD-P0-SL1-SS-v1"^[[39m)^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0447845Z     ^[[90m 89| ^[[39m  config^[[33m.^[[39minitial^[[33m.^[[39mtheta ^[[33m=^[[39m ^[[34m.01^[[39m^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0448484Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0448981Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0449414Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0450555Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-alignment.test.ts^[[2m > ^[[22mreverses both sliding signs through zero without resetting the wake
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0451773Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0453100Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0454396Z ^[[36m ^[[2m❯^[[22m tests/forward-alignment.test.ts:^[[2m139:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0455153Z     ^[[90m137| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0455690Z     ^[[90m138| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0456570Z     ^[[90m139| ^[[39mit("reverses both sliding signs through zero without resetting the wak…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0478493Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0479004Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0487678Z     ^[[90m140| ^[[39m  ^[[35mfor^[[39m(^[[35mconst^[[39m sign ^[[35mof^[[39m [^[[33m-^[[39m^[[34m1^[[39m^[[33m,^[[39m^[[34m1^[[39m]) {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0489769Z     ^[[90m141| ^[[39m    ^[[35mconst^[[39m config^[[33m=^[[39m^[[34malignedConfig^[[39m(^[[32m"VP-FWD-P0-SL1-SS-v1"^[[39m)^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0490739Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0491439Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0492048Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0493628Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-alignment.test.ts^[[2m > ^[[22mhas an exactly passive linear zero-flow wake corner without artificial cubic damping
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0495299Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0497283Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0518240Z ^[[36m ^[[2m❯^[[22m tests/forward-alignment.test.ts:^[[2m153:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0581779Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/alignment-io.test.ts:25:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0624029Z     ^[[90m151| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0627075Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0630636Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/alignment-io.test.ts:61:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0632577Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0635139Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-alignment.test.ts:34:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0636774Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0642394Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-alignment.test.ts:57:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0644199Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0647535Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-alignment.test.ts:87:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0649302Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0652205Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-alignment.test.ts:139:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0653951Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0655839Z     ^[[90m152| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0658567Z     ^[[90m153| ^[[39mit("has an exactly passive linear zero-flow wake corner without artifi…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0659439Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0660252Z     ^[[90m154| ^[[39m  ^[[35mconst^[[39m config^[[33m=^[[39m^[[34malignedConfig^[[39m()^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0661883Z     ^[[90m155| ^[[39m  config^[[33m.^[[39mgeometry^[[33m.^[[39mpivotHeight^[[33m=^[[39m^[[34m.02^[[39m^[[33m;^[[39mconfig^[[33m.^[[39mgeometry^[[33m.^[[39mwaterDepth^[[33m=^[[39m^[[34m.25^[[39m^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0662843Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0663217Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0663518Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0664614Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-alignment.test.ts^[[2m > ^[[22mrefines the production DW trajectory against independent fixed RK4
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0665853Z ^[[31m^[[1mError^[[22m: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0667342Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0668560Z ^[[36m ^[[2m❯^[[22m tests/forward-alignment.test.ts:^[[2m170:1^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0669197Z     ^[[90m168| ^[[39m})^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0669620Z     ^[[90m169| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0670366Z     ^[[90m170| ^[[39mit("refines the production DW trajectory against independent fixed RK4…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0671131Z     ^[[90m   | ^[[39m^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0672113Z     ^[[90m171| ^[[39m  ^[[35mconst^[[39m config^[[33m=^[[39m^[[34malignedConfig^[[39m(^[[32m"VP-FWD-P0-SL1-DW-v1"^[[39m)^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0673786Z     ^[[90m172| ^[[39m  config^[[33m.^[[39minitial^[[33m.^[[39mtheta^[[33m=^[[39m^[[34m.15^[[39m^[[33m;^[[39mconfig^[[33m.^[[39minitial^[[33m.^[[39momega^[[33m=^[[39m^[[34m.1^[[39m^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0674625Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0674999Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0675243Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0676051Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-solver.test.ts^[[2m > ^[[22mVP-FWD-P0-SL1-v1 executable model^[[2m > ^[[22mcloses the conservative mechanical energy ledger under refinement
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0676885Z ^[[31m^[[1mError^[[22m: Test timed out in 30000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0706486Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0708181Z ^[[36m ^[[2m❯^[[22m tests/forward-solver.test.ts:^[[2m59:3^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0709255Z     ^[[90m 57| ^[[39m  })^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0709907Z     ^[[90m 58| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0710736Z     ^[[90m 59| ^[[39m  it("closes the conservative mechanical energy ledger under refinemen…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0711467Z     ^[[90m   | ^[[39m  ^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0712308Z     ^[[90m 60| ^[[39m    ^[[35mconst^[[39m make ^[[33m=^[[39m (maximumStep^[[33m:^[[39m number) ^[[33m=>^[[39m {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0713482Z     ^[[90m 61| ^[[39m      ^[[35mconst^[[39m config ^[[33m=^[[39m ^[[34mcloneConfig^[[39m()^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0713922Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0714271Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0714579Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0716044Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/forward-wet-domain.test.ts^[[2m > ^[[22m13-A wet exits through the production integrator^[[2m > ^[[22mdetects a dry interval inside a step even when the historical endpoints are wet
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0717721Z ^[[31m^[[1mError^[[22m: Test timed out in 20000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0718987Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0720237Z ^[[36m ^[[2m❯^[[22m tests/forward-wet-domain.test.ts:^[[2m299:3^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0721214Z     ^[[90m297| ^[[39m  }, 20000); // Bounded multi-run numerical/reference check under conc…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0721872Z     ^[[90m298| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0722561Z     ^[[90m299| ^[[39m  it("detects a dry interval inside a step even when the historical en…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0726115Z     ^[[90m   | ^[[39m  ^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0727366Z     ^[[90m300| ^[[39m    ^[[35mconst^[[39m config ^[[33m=^[[39m ^[[34minertialWetConfig^[[39m()^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0728643Z     ^[[90m301| ^[[39m    config.geometry.pivotHeight = config.geometry.bottomDistance + 1e-…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0729211Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0729590Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0730004Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0731628Z ^[[41m^[[1m FAIL ^[[22m^[[49m tests/wake-gauge.test.ts^[[2m > ^[[22mconstant complex wake gauge^[[2m > ^[[22mkeeps 120 seeded production RHS evaluations and short trajectories physically equivalent
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0732981Z ^[[31m^[[1mError^[[22m: Test timed out in 60000ms.
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0734243Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0735424Z ^[[36m ^[[2m❯^[[22m tests/wake-gauge.test.ts:^[[2m159:3^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0736008Z     ^[[90m157| ^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0736849Z     ^[[90m158| ^[[39m^[[34mdescribe^[[39m(^[[32m"constant complex wake gauge"^[[39m^[[33m,^[[39m () ^[[33m=>^[[39m {
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0738678Z     ^[[90m159| ^[[39m  it("keeps 120 seeded production RHS evaluations and short trajectori…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0739504Z     ^[[90m   | ^[[39m  ^[[31m^^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0740486Z     ^[[90m160| ^[[39m    ^[[35mconst^[[39m random ^[[33m=^[[39m ^[[34mrandomGenerator^[[39m(^[[34m20260905^[[39m)^[[33m;^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0741609Z     ^[[90m161| ^[[39m    const source = gauge("seed-source-v1", "C_L=Re(L*A_source)", "sour…
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0742140Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0742513Z ^[[31m^[[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯^[[22m^[[39m
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0742814Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0749457Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-alignment.test.ts:153:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0752213Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0765290Z ##[error]Error: Test timed out in 5000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-alignment.test.ts:170:1
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0777610Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0781002Z ##[error]Error: Test timed out in 30000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-solver.test.ts:59:3
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0793144Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0796485Z ##[error]Error: Test timed out in 20000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/forward-wet-domain.test.ts:299:3
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0800179Z 
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.0803020Z ##[error]Error: Test timed out in 60000ms.
+Complete formal program validation	Run the complete formal validation gate	If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+Complete formal program validation	Run the complete formal validation gate	 ❯ tests/wake-gauge.test.ts:159:3
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	
+Complete formal program validation	Run the complete formal validation gate	2026-09-05T18:58:08.1640329Z ##[error]Process completed with exit code 1.
+Complete formal program validation	Post Run actions/checkout@v7	﻿2026-09-05T18:58:08.1783269Z Post job cleanup.
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2754615Z [command]/usr/bin/git version
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2813407Z git version 2.55.0
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2895896Z Temporarily overriding HOME='/home/runner/work/_temp/ed4134a8-8024-4b56-8618-c3d522de348f' before making global git config changes
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2898032Z Adding repository directory to the temporary git global config as a safe directory
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2900258Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/iypt-13-Vortex_pendulum/iypt-13-Vortex_pendulum
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2959598Z Removing SSH command configuration
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.2960771Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.3099051Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.3409308Z Removing HTTP extra header
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.3416207Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.3496629Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.3876830Z Removing includeIf entries pointing to credentials config files
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.3915795Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Complete formal program validation	Post Run actions/checkout@v7	2026-09-05T18:58:08.4021395Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Complete formal program validation	Complete job	﻿2026-09-05T18:58:08.4886324Z Cleaning up orphan processes

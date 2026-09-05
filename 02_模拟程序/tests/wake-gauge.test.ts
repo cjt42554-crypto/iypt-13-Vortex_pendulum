@@ -265,7 +265,7 @@ describe("constant complex wake gauge", () => {
       }
     }
     console.info(`WAKE_GAUGE_120_SUMMARY ${JSON.stringify(summary)}`);
-  }, 60_000);
+  }, 120_000); // 120 production trajectory pairs; shared CI exceeded 60 s with four workers.
 
   it("performs the factor-two special case in the declared direction and round-trips it", () => {
     const legacy = gauge("legacy-real-output-v1", "C_L=Re(A_old)", "legacy phase");
