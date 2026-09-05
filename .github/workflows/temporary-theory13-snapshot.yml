@@ -1,0 +1,26 @@
+name: Temporary theory13 source snapshot
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/temporary-theory13-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Package tracked inputs without large research data
+        run: |
+          git rev-parse HEAD > /tmp/source-commit.txt
+          git archive --format=zip -o /tmp/theory13-source.zip HEAD -- README.md AGENTS.md 00_项目管理 01_最终理论 02_模拟程序 tools .github .gitignore .gitattributes
+      - uses: actions/upload-artifact@v4
+        with:
+          name: theory13-source
+          path: |
+            /tmp/source-commit.txt
+            /tmp/theory13-source.zip
+          retention-days: 1
