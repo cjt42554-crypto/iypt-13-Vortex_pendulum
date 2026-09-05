@@ -8,7 +8,7 @@ import {
 } from "../src/validation/cfd2d/fixed-cylinder-disposition";
 
 const ARCHIVE = resolve(
-  "../90_候选工作区/archive/2026-09-02_baseline-9123b5c6",
+  "../03_研究记录/归档/2026-09-02_baseline-9123b5c6",
   "A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder",
 );
 

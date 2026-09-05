@@ -8,7 +8,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 THEORY_ROOT = ROOT / "01_最终理论"
-CURRENT_HANDOFF = ROOT / "90_候选工作区" / "交接说明_current.md"
+CURRENT_HANDOFF = ROOT / "00_项目管理" / "交接说明_current.md"
 SKIP_DIRS = {".git", "node_modules", "dist", "coverage"}
 FENCE_RE = re.compile(r"^\s{0,3}(`{3,}|~{3,})")
 DISPLAY_RE = re.compile(r"^\s*\$\$\s*$")

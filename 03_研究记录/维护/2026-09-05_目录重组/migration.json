@@ -1,0 +1,2625 @@
+{
+  "schema": "iypt-layout-migration-v1",
+  "date": "2026-09-05",
+  "repository_problem": "13",
+  "reviewed_snapshot_commit": "6ec60b084ab95cfb6ff6fba174a87ab5c4e7e98e",
+  "reviewed_content_sha256": "96173086a85b557aef463fc720670ca900129abdb13bd62cf7205b787f6d2646",
+  "executed_from_commit": "1e984d149e54bf8b147a6b4de1189dd9c588c900",
+  "prefixes": [
+    {
+      "old": "90_候选工作区/交接说明_current.md",
+      "new": "00_项目管理/交接说明_current.md"
+    },
+    {
+      "old": "90_候选工作区/交接说明_history.md",
+      "new": "00_项目管理/交接说明_history.md"
+    },
+    {
+      "old": "90_候选工作区/README.md",
+      "new": "03_研究记录/维护/2026-09-05_目录重组/旧候选区说明.md"
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_前向理论修订",
+      "new": "03_研究记录/维护/2026-09-05_前向理论修订"
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_数值审查修复",
+      "new": "03_研究记录/维护/2026-09-05_数值审查修复"
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_长期维护整理",
+      "new": "03_研究记录/维护/2026-09-05_长期维护整理"
+    },
+    {
+      "old": "90_候选工作区/current",
+      "new": "03_研究记录/专题"
+    },
+    {
+      "old": "90_候选工作区/archive",
+      "new": "03_研究记录/归档"
+    }
+  ],
+  "preserved_files": [
+    {
+      "old": "90_候选工作区/README.md",
+      "new": "03_研究记录/维护/2026-09-05_目录重组/旧候选区说明.md",
+      "sha256": "1b17e0e229da576f2b15d37d66159a167e21b86f206562c86a31aba533dcbc31",
+      "size": 1425
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/00_分析裁决与执行报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/00_分析裁决与执行报告.md",
+      "sha256": "cc4fab1d84889f2b4f186f805f5aba36fb5d7fefd155ff7924ffc6711fda74f8",
+      "size": 9932
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/README.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/README.md",
+      "sha256": "6c76305cb5f0d1fe32a464aef5974d0e787a2ae8f99c875d6f97249040aa27b9",
+      "size": 4348
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/package.json",
+      "sha256": "19ac67625375c18a5c83ddf2eefc3ba5bf330099b585acdbd0231268ec7399b7",
+      "size": 218
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/scripts/audit-case.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/scripts/audit-case.ts",
+      "sha256": "f050210dc5ff059af441f2477985e30d82c6946c80253639e0079874368bae0f",
+      "size": 14382
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/scripts/audit-prescribed-power.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/scripts/audit-prescribed-power.ts",
+      "sha256": "97bb1fdc54de4e97a03672d42f15f53223f8d49934c8e8a0a449d746eefe8be0",
+      "size": 7634
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/scripts/audit-support.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/scripts/audit-support.ts",
+      "sha256": "d4cd491c0ff1cfcb8366cbcaaaa8cebcef337f10b1109ce76af204a46afb6c70",
+      "size": 9050
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/src/control-volume-force.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/src/control-volume-force.ts",
+      "sha256": "58b8df9c8400904e775ebe3e179fe067c5c568d0f62a69068f02409e0905aaa6",
+      "size": 13548
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/tests/control-volume-force.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/tests/control-volume-force.test.ts",
+      "sha256": "e4c87e57ecbb9dd0266d3a6a1de0ee0dd5fffe0da9abfbad3bc11d0321c2a6c6",
+      "size": 9796
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research-v1-pointwise-gate-stop.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research-v1-pointwise-gate-stop.json",
+      "sha256": "8ac0e03bb61c202751016eba6aaf84274e58dc6ae1c56510f331e160d3358c58",
+      "size": 140690
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research-v1-pointwise-gate-stop.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research-v1-pointwise-gate-stop.md",
+      "sha256": "0b66e590302b56ff8e86e01558812ed1a4d7f5cce73cdd8fa9c6f8925aa4e660",
+      "size": 1701
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research.json",
+      "sha256": "628bb1c6dbfdee6e183f6320953a4ae02c6ed2757db26d05db1238041ff1c81b",
+      "size": 163049
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-research.md",
+      "sha256": "0ade759e144214d84089e4a5c5d7128a76da3ed20ac0f55e691a1f8d9845603c",
+      "size": 2017
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-smoke.json",
+      "sha256": "0d113cbad9f03ecd48fdbd86690ccc181ef042170363547613789bc86026baac",
+      "size": 19972
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-smoke.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/artifacts/a2-prescribed-power-smoke.md",
+      "sha256": "d1ee0c449401168493ea4eb6228c5292416b8a230ce8aa06bb0c0adc3d12686f",
+      "size": 1067
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/验证记录.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A2_控制体取力与规定运动功率审计/验证与复现/验证记录.md",
+      "sha256": "d74227629b19c6b780de5ba2b57c0d8036f449cda89cac8e500a6b1e6968fcb7",
+      "size": 3627
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/.gitattributes",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/.gitattributes",
+      "sha256": "1528993da77e797470b25074641bdf7819bf7f6ffe3681f665bb8e5044d1a533",
+      "size": 483
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/02_正式高保真开放边界重构规划与Codex实施合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/02_正式高保真开放边界重构规划与Codex实施合同.md",
+      "sha256": "b077a4e2efa038fbb20e53dd698acf50ccd03af25f90ec73d4df69be85739d1c",
+      "size": 20115
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/07_A8M_网页版Pro独立审查与路线裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/07_A8M_网页版Pro独立审查与路线裁决.md",
+      "sha256": "e127c804f8f246488cbac04c4d1574c0671a2f9ca3f4882b3476cd5f11723ee8",
+      "size": 10554
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/08_A8N_入射特征相容入口预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/08_A8N_入射特征相容入口预注册合同.md",
+      "sha256": "479aa47d9ad41d49d8afdd9770ddf47ef1cee753e68936fdb2204408083eb423",
+      "size": 10823
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/09_A8N_入射特征相容入口资格报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/09_A8N_入射特征相容入口资格报告.md",
+      "sha256": "f5c065fa4a1637e0ac96b65d295b6e4426edc530d3e6b8aec90e54f76cc0fc70",
+      "size": 15213
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/10_A8N_网页版Pro独立审查与参考基准裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/10_A8N_网页版Pro独立审查与参考基准裁决.md",
+      "sha256": "9e6373a50d47ce6fb6c0195fed28a297226fd1ef1b574bdeffbcf73a631097a4",
+      "size": 13600
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/11_A8O_因果参考与二维边界资格预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/11_A8O_因果参考与二维边界资格预注册合同.md",
+      "sha256": "d01bdbef5f5bb09df7c4b2d1d13a2243be625380984f37b1a04f5d84cd25889c",
+      "size": 17062
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/12_A8O_因果参考与二维边界资格报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/12_A8O_因果参考与二维边界资格报告.md",
+      "sha256": "1697d2bdc7fca339a7c231eb3856e15e3615987154459b46193a217d570f4973",
+      "size": 15498
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/13_A8O_网页版Pro独立审查与下一路线裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/13_A8O_网页版Pro独立审查与下一路线裁决.md",
+      "sha256": "93bc92b6ae1f2f866dca15a98da8b297a57d7d652ea4795ec7060eaa26e364a6",
+      "size": 16125
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/14_A8P_离散因果参考与反对称成熟性预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/14_A8P_离散因果参考与反对称成熟性预注册合同.md",
+      "sha256": "f36c11ba0f3f0792f9e01c5e6d05aa7a86a12752829d17b842d13af7657a39f9",
+      "size": 18885
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/15_A8P_离散因果参考与成熟性资格报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/15_A8P_离散因果参考与成熟性资格报告.md",
+      "sha256": "8b1a797f1a21987058b203b5243de9c2b6acb253d365f274dde3705f16372c9e",
+      "size": 14322
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/16_A8P_网页版Pro独立审查与A8Q路线裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/16_A8P_网页版Pro独立审查与A8Q路线裁决.md",
+      "sha256": "bdeb2fb36d62904d094b0b30f8d8abbb4f43b50d213fd663858b38b8e4e69114",
+      "size": 15512
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/17_A8Q_Brinkman锐界面缩放路径预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/17_A8Q_Brinkman锐界面缩放路径预注册合同.md",
+      "sha256": "c2d3337145d556e1c477b8a162f1254e5e51911744b69286448804166a7fc757",
+      "size": 8558
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/18_A8Q_Brinkman锐界面缩放路径资格报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/18_A8Q_Brinkman锐界面缩放路径资格报告.md",
+      "sha256": "d3d694e795315228a52f6c4764dfd064057534c1a65c999fad48a39b2669dced",
+      "size": 13481
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/19_A8Q_网页版Pro独立审查与A8R路线裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/19_A8Q_网页版Pro独立审查与A8R路线裁决.md",
+      "sha256": "44c5db2aef66fb77d88c58d328c86b4007628e0090319422157b275f756af0e4",
+      "size": 11448
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/20_A8R_固定惩罚时间多分辨率稳健性与力身份预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/20_A8R_固定惩罚时间多分辨率稳健性与力身份预注册合同.md",
+      "sha256": "92bacf8992a622ab09d8b574c4085be2ea4b7a2120ec898c457f87c663429e37",
+      "size": 19909
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/21_A8R_网页版Pro独立审查与v2合同修订裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/21_A8R_网页版Pro独立审查与v2合同修订裁决.md",
+      "sha256": "4a8700510b12208b4d5cf48331ef0cc3e86764d759ebf4b34d0505e7925fd8ef",
+      "size": 11973
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/22_A8R_v2_周期分辨多分辨率mask相位与力身份预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/22_A8R_v2_周期分辨多分辨率mask相位与力身份预注册合同.md",
+      "sha256": "c23015bc5e16b33483d3191d89a6c67b6116aba9870efc00d701cee11b3fb771",
+      "size": 27274
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/23_A8R_v2_网页版Pro独立审查与v2_1修订裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/23_A8R_v2_网页版Pro独立审查与v2_1修订裁决.md",
+      "sha256": "2d69395be061b0f58b5afb26a928c4c4ddf88980c882e84302b1f63fe99d0abc",
+      "size": 11798
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/24_A8R_v2_1_周期有效性与主指标相位屏蔽预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/24_A8R_v2_1_周期有效性与主指标相位屏蔽预注册合同.md",
+      "sha256": "85bf3d6e6d6738353569dcf69d9f859639a4c8b116403df74185adc9e964e8bf",
+      "size": 31453
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/25_A8R_v2_1_网页版Pro独立审查与合同测试解锁裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/25_A8R_v2_1_网页版Pro独立审查与合同测试解锁裁决.md",
+      "sha256": "221c44a09b975058f3c4b5cf8057ccf8bbcfcc4b42b3c8d53195b5bf70f1e291",
+      "size": 13029
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/26_A8R_v2_1_网页版Pro合同测试审查与无结果实现解锁裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/26_A8R_v2_1_网页版Pro合同测试审查与无结果实现解锁裁决.md",
+      "sha256": "e2a400b0fcdc4c4ec86f32c56b03a7ac9fde72a80c21a0cc1c2c844e0141408d",
+      "size": 10512
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/27_A8R_v2_1_网页版Pro无结果实现审查与P1修订裁决.md",
+      "sha256": "1a253d391fe9fde49740e2eb13a580b80e1e290cb44e2ebee0f62d5128c25e54",
+      "size": 11336
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/28_A8R_v2_1_P1_网页版Pro独立审查与双40步正式烟雾解锁裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/28_A8R_v2_1_P1_网页版Pro独立审查与双40步正式烟雾解锁裁决.md",
+      "sha256": "d16cc0c3dd0517c7795f102da74108b61d02088ca97a44e8a594ba83cffc9c9d",
+      "size": 10524
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/29_A8R_v2_1_正式双40步烟雾测试报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/29_A8R_v2_1_正式双40步烟雾测试报告.md",
+      "sha256": "d849cb8dbdc59e6aae6414e9fec46de28d2da20915cebb9c123b1b762b6645d8",
+      "size": 8182
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/30_A8R_v2_1_双40步烟雾独立审查与研究矩阵解锁裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/30_A8R_v2_1_双40步烟雾独立审查与研究矩阵解锁裁决.md",
+      "sha256": "c46634b2975996903d7c3cb3eb5d2999bb7412630d95496d832bb480d284553c",
+      "size": 15096
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/31_A8R_v2_1_长时主运行安全暂停与结果盲轨迹并行裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/31_A8R_v2_1_长时主运行安全暂停与结果盲轨迹并行裁决.md",
+      "sha256": "6b8e97f031025cd012203b3bdf4146f4aba37c9e46756f271f6c2aec19a63765",
+      "size": 18371
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/32_A8R_v2_1_低内存探针准入与并行性能门短路裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/32_A8R_v2_1_低内存探针准入与并行性能门短路裁决.md",
+      "sha256": "5156df2f914c355b412a647446f15055eebf736cefeb09c80f18518bc6fd6c52",
+      "size": 16493
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/33_A8R_v2_1_先行W1探针时间序列证据真实性与恢复原运行裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/33_A8R_v2_1_先行W1探针时间序列证据真实性与恢复原运行裁决.md",
+      "sha256": "2a1f90ff6809e60dbff50182723b9362f18fe769ecbe46a7704560514d966995",
+      "size": 16907
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/34_A8R_v2_1_先行W1硬内存门失败候选处置与串行恢复证据报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/34_A8R_v2_1_先行W1硬内存门失败候选处置与串行恢复证据报告.md",
+      "sha256": "16ca802d6cc412449750929bea3fb477da2c62f3aa8626a2057ce7495905cc21",
+      "size": 8857
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/35_A8R_硬件充分利用结果身份迁移与全仓模拟技术债裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/35_A8R_硬件充分利用结果身份迁移与全仓模拟技术债裁决.md",
+      "sha256": "1b97eccb504cceaf3658bf35282849e3bcf2810a6898a2397faeb1433fbf4b8e",
+      "size": 30077
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/36_A8S_固定圆柱有限科学去留循环.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/36_A8S_固定圆柱有限科学去留循环.md",
+      "sha256": "dd14c5d2f11e3e3fbd4a428750eb09c29b84cf7ffd34a3f1960503efd332fc27",
+      "size": 7877
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/README.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/README.md",
+      "sha256": "e50b6300139010d5d9a3018464e5391651544a44be8e42705f3c948daf9bbad9",
+      "size": 4844
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/package-lock.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/package-lock.json",
+      "sha256": "2c5eb7eaff09f41741a432b9ea2cbc40bf0585c3235f68ecacab6be8e303ba8e",
+      "size": 1775
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/package.json",
+      "sha256": "234fde1c82aee5e816221b0e0c93b11c6fc4ff1b23a0fd64d0f9a4b82b222f09",
+      "size": 2144
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-multiresolution-repeat-v2-1.mjs",
+      "sha256": "03f2645c485ce90156203da75b409e6c6467d6fcce7a0f724643c46c0184897f",
+      "size": 1109
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-multiresolution-smoke-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-multiresolution-smoke-v2-1.mjs",
+      "sha256": "2625c94c2e334768698fb6c2775fe347c513e4c7b19b8d4a5e16bc029c79c05e",
+      "size": 9524
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-multiresolution-v2-1-artifact.mjs",
+      "sha256": "bd2e0915395efd892bc6c1e1d6131c4a9533b5144711f7e590b4f429e8552add",
+      "size": 14683
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-scaling-artifact.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-brinkman-scaling-artifact.mjs",
+      "sha256": "9ab231ca2406e4551fba0485d8153f2b62eb1690ab629176a2db51bffab319b8",
+      "size": 9648
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-formal-causal-reference-artifact.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-formal-causal-reference-artifact.mjs",
+      "sha256": "e37d6f8cef842e2204f71168ec73255e5cc38c77f360905d4b9eae33168b3ffb",
+      "size": 16425
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-formal-discrete-reference-artifact.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-formal-discrete-reference-artifact.mjs",
+      "sha256": "f62e21bbd47c1234530b9a1f0dbfb663b62082ee497f903ceb45d74828e3d5f8",
+      "size": 17407
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-formal-incoming-characteristic-artifact.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/assert-formal-incoming-characteristic-artifact.mjs",
+      "sha256": "37f0885f9c0dad5c6879cf056d67995773a7756d2901249332cd2ad28991fd3b",
+      "size": 15802
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-artifact-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-artifact-v2-1.mjs",
+      "sha256": "93e2f33f681d60c2d60ac28084436732d9ccd7198b25ea1a5d62df687eb06e11",
+      "size": 10392
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-preflight-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-preflight-v2-1.mjs",
+      "sha256": "714f7a2a88b110ea0dcddfac34ec707e49510537bf318f7172e23ac1608686e2",
+      "size": 21185
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-smoke-artifact-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/brinkman-multiresolution-smoke-artifact-v2-1.mjs",
+      "sha256": "8e98c35f387020f52158b8875054861b1f9916796a5c0a512e07873e8399b69d",
+      "size": 484
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/formal-causal-reference-artifact-stream.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/formal-causal-reference-artifact-stream.mjs",
+      "sha256": "8550f744810adf57ca01583c8189a38817dff51c0d9a34a79ca0d6c437d3301b",
+      "size": 4982
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-smoke-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-smoke-v2-1.mjs",
+      "sha256": "d8ced627436f082b127c2531dc7953ac730128052ea05bb4cc35aea82e605add",
+      "size": 5934
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-v2-1.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-brinkman-multiresolution-v2-1.mjs",
+      "sha256": "f8d7f1c694a162850086defc021d61d6bb5435f1fbd30e7811e68058de90bcec",
+      "size": 4369
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-brinkman-scaling.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-brinkman-scaling.mjs",
+      "sha256": "b365d3db04e9dc91a92d89886f05b514c560dc8b9b68129c3979f7f220e0acc3",
+      "size": 9681
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-fixed-cylinder-disposition.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-fixed-cylinder-disposition.mjs",
+      "sha256": "c2144aa533372aa459b51a928294396c5b980544ae22beb6c5ccae0481ae5fbf",
+      "size": 4172
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-formal-causal-reference.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-formal-causal-reference.mjs",
+      "sha256": "395319b1d763454a3660666e6f54f742f45273d1d828f1a541808cfe002b09ff",
+      "size": 8286
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-formal-discrete-reference.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-formal-discrete-reference.mjs",
+      "sha256": "939c95e14300b9067062267cc74d8c411eb45670934026aa72c71cf2bc4a6a3e",
+      "size": 8161
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-formal-incoming-characteristic.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/scripts/run-formal-incoming-characteristic.mjs",
+      "sha256": "efe7e7c6be56fba1639af0e106978f7c7adb9f8460bee7cf4e3fec700e3c3738",
+      "size": 8833
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract-v2-1.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract-v2-1.ts",
+      "sha256": "c629337a7199f6c51a23735ca75432eaa5019b633afcf8fb4f908a6f723c335b",
+      "size": 38160
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract-v2.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract-v2.ts",
+      "sha256": "b57cce7dc1c0532bb6d1967ce763c4758eac8aa22273089ab73183fdb4c24d18",
+      "size": 32278
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-contract.ts",
+      "sha256": "44b2eeb3be274d3cd11c80b1d806655bcf39809bd4b255c8fb5b5b77fa7559c6",
+      "size": 22037
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-p1-v2-1.ts",
+      "sha256": "de65f3ab1c5ec4b17150cbd340faa111aa97811b55ddf613eb587413a0cc455c",
+      "size": 4470
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-runs-v2-1.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-runs-v2-1.ts",
+      "sha256": "4f9202cf473f702ec54524c894ebf41caa8cbe2ef2a28900586d6ceec2550262",
+      "size": 24834
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-smoke-v2-1.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-smoke-v2-1.ts",
+      "sha256": "f544ff3047bd02f5488cd07f049d3c1ca6f2484efced258584e38a3e9373e0a5",
+      "size": 24284
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-support-v2-1.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-support-v2-1.ts",
+      "sha256": "ff03aeaab0d8ab7b94277e803f007db6d9b36e4da7ca1ac6f046e311b158ba36",
+      "size": 52388
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-v2-1.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-multiresolution-v2-1.ts",
+      "sha256": "09de8d0b2681375e50e38f074ea7a78b7e22861147363b6b016f212e73ea6c84",
+      "size": 25063
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling-contract.ts",
+      "sha256": "791717a265a4a2a67647016ff251c38402ee37a2fcdd4d858bdcbe4aa702b686",
+      "size": 12934
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling-runs.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling-runs.ts",
+      "sha256": "7f2c9b96e79a89ced8ae47750c4a976829f9d1c0eb5fc6825e0eab0db8736090",
+      "size": 19561
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling-support.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling-support.ts",
+      "sha256": "437786f204c392876fa6237b98517404ef4767456e7f447a22a84df2320cdd15",
+      "size": 14625
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/brinkman-scaling.ts",
+      "sha256": "cbff52c1f90ddf13849cf774d711080ea945ec5e094d6046b600e4e9693b165e",
+      "size": 13204
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/d2q9.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/d2q9.ts",
+      "sha256": "319d085cbe469446eefe38ff8e3a4658971edaf6e8ac98224d1a952cc27fba10",
+      "size": 2824
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/fixed-cylinder-disposition.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/fixed-cylinder-disposition.ts",
+      "sha256": "7d0286d5920a1334f7eccc521ca6f1fdbc0cd0a623a756bdb986138065340e12",
+      "size": 19764
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-boundary-factorization-boundaries.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-boundary-factorization-boundaries.ts",
+      "sha256": "77a34baef3c9a644339590de7841a697233bc906e157af134d3815bf3b5576a4",
+      "size": 5377
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-boundary-factorization-types.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-boundary-factorization-types.ts",
+      "sha256": "da771ddff2569ce23a40ba66a0931f18951f4eb3a293c8685a28fe601691f6ac",
+      "size": 352
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-analysis.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-analysis.ts",
+      "sha256": "56c17268671221def82f68b1fd3e69388019d7a2ac5413a7b382baa8fa1cdd4a",
+      "size": 28386
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-contract.ts",
+      "sha256": "4ad7c70eefb4fcc6d7364e6f84badacfb4efa185bf48927011d10cfd48122f60",
+      "size": 24901
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-perturbations.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-perturbations.ts",
+      "sha256": "435b8c1f211277c034c426eadb2bae4c5f0db05fd2e940b80472ab3b08fc38ca",
+      "size": 37963
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-runs.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-runs.ts",
+      "sha256": "ec408c318e5a93afde1ae4fa1621b8d99b95924b9dc1fa66a53481294917f5ce",
+      "size": 29925
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-support.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference-support.ts",
+      "sha256": "074b7600af5968460c5183119cc69c2389c74ec389d8d75d9f86e6dc326306f4",
+      "size": 29342
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-causal-reference.ts",
+      "sha256": "a9c14f9cf3db961addec6de6b3f29890bdfa04c8c269f9390cb9ccf5b674de26",
+      "size": 13427
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference-contract.ts",
+      "sha256": "730aca5424948079fbd0058cccf70d612c14c5ed827f2306a76a7c1aa4467640",
+      "size": 21359
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference-runs.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference-runs.ts",
+      "sha256": "65c96c7bc0ace680122a568c62d31e7922aa199fd298585fc14a01e86dcfa4ee",
+      "size": 18306
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference-support.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference-support.ts",
+      "sha256": "0cd0045c3702d0772b4239f03cc1dbfc036c25fcd3df3b61319142fc505a7e2e",
+      "size": 32222
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-discrete-reference.ts",
+      "sha256": "c4654a1e39127468b1c23caf9ce8a9d04d312f9f780a446913ebb10c95ca75e9",
+      "size": 38067
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-acoustics.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-acoustics.ts",
+      "sha256": "c6698239066c3df24bef9ad5f92daac618c494f2ed0cb46e40ea058cc6ea0633",
+      "size": 16909
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-boundary.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-boundary.ts",
+      "sha256": "6f71213f0882b50ba51acba395003886a2ad57e2b857c23786dba592d360748c",
+      "size": 6453
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-case.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-case.ts",
+      "sha256": "757fbe2c04b9eee382ef617b3bc5ee4544080b9980917f71416fe48b357db31e",
+      "size": 15020
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-contract.ts",
+      "sha256": "8225b6e9628d301536bff6f9b74a601bdf2b19fdc13d450279696f95cf5f88cf",
+      "size": 13955
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-reconstruction.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-reconstruction.ts",
+      "sha256": "f923c44cee247d3ca1678e698e62af07f5214de24042e6b8fb099e9613e4c28e",
+      "size": 8962
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-types.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic-types.ts",
+      "sha256": "1fd0fa242b28155ac9c167619b76296133048f6d2df3a047b948d3d272b5013c",
+      "size": 8590
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-incoming-characteristic.ts",
+      "sha256": "81b774009699a385e24ab1c6e43dc15606a4f5607b022b99ec18c21f11a252e6",
+      "size": 24205
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-inlet-qualification-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-inlet-qualification-contract.ts",
+      "sha256": "a769af14a10ee51142e032a27e7d7407747e178c4e686357828fcf1ec421934f",
+      "size": 13362
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-inlet-qualification-ledger.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-inlet-qualification-ledger.ts",
+      "sha256": "f4bdf648612330b8666e94f6c3a39b50bfa557cd71473b384f87a8d4578e2b68",
+      "size": 26685
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-inlet-qualification-types.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/src/formal-inlet-qualification-types.ts",
+      "sha256": "ed1094b26c14035ba94391c6e49e65a6352e816e99325f9359503e7ae46d7dd1",
+      "size": 9710
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-artifact-v2-1.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-artifact-v2-1.test.ts",
+      "sha256": "272173c8073816e8a23e37c9a80c00441bba6e3c2acb06719daeb2ed3602baca",
+      "size": 6037
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-contract-v2-1.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-contract-v2-1.test.ts",
+      "sha256": "671afe5954034894f03a030ffb1e3c3642006454042f750b4b2d8888e92b548b",
+      "size": 31252
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-p1-v2-1.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-p1-v2-1.test.ts",
+      "sha256": "455787838e6a50a79aaca9a6c2d9a38cb09bfffb733bbe197cbd3ca770cdcb70",
+      "size": 11348
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-smoke-v2-1.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-smoke-v2-1.test.ts",
+      "sha256": "345ec290a368ae1224b8b28696937cd8c2eec44eef8b3d66ee3551bf6c7a19b3",
+      "size": 6395
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-support-v2-1.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-support-v2-1.test.ts",
+      "sha256": "09d7c10aa0e44e53faf80fc8f7d0f85eb554b0786d82c0b09f0d8c8419b361a1",
+      "size": 18171
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-v2-1.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-multiresolution-v2-1.test.ts",
+      "sha256": "505591eb7424a2ba3b076e4f2ee5a7c31af5a0613adc3b94d7f94ddba3580c15",
+      "size": 10987
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-scaling-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-scaling-contract.test.ts",
+      "sha256": "f4fb4b5772d240fb560e2014051ff8b35c77621e98f3014b3b5bdf1b2832215e",
+      "size": 5784
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-scaling-support.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/brinkman-scaling-support.test.ts",
+      "sha256": "c4b98eb08bb030a5610ebf2d982cc49f71d87d8dc133c08e57400cd5bea2747e",
+      "size": 5900
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/fixed-cylinder-disposition.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/fixed-cylinder-disposition.test.ts",
+      "sha256": "1e4fb24d978a008c4050bcde4b0b7930ea8d52e5270a7cbdb3d11fb83f8b451e",
+      "size": 1945
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-causal-reference-artifact-stream.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-causal-reference-artifact-stream.test.ts",
+      "sha256": "db2e47c9be1ce726f3d5fe8c06712d149110c874a0bf39d55232224554b3d084",
+      "size": 2776
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-causal-reference-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-causal-reference-contract.test.ts",
+      "sha256": "d07fd704a1a84c3d97dcf7e594772b2916e2ac454c68dfbb0ed8b7c66012558d",
+      "size": 5288
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-causal-reference-support.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-causal-reference-support.test.ts",
+      "sha256": "f737c5f9c3058aa172d4f4adf2cb3041a6908af98e25b571e03e972d59661d73",
+      "size": 4022
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-discrete-reference-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-discrete-reference-contract.test.ts",
+      "sha256": "4222e0a8ddd9eba6520592fafab4f26ecd0ef32f368b3419040914d33ff8dea6",
+      "size": 4602
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-discrete-reference-support.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-discrete-reference-support.test.ts",
+      "sha256": "38a068f50bd57233bdcd368710812dac5a865a6d8b9afd026f6825fe8cac60d2",
+      "size": 7092
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-incoming-characteristic-boundary.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-incoming-characteristic-boundary.test.ts",
+      "sha256": "7363d999fe65e784a1e0bc8cb329e8dde179eaeaeb1e26119997a94dcd092ea6",
+      "size": 3679
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-incoming-characteristic-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-incoming-characteristic-contract.test.ts",
+      "sha256": "a965ebed10f04715a77d193611aaf4041d524058f9bef3d42ab023f1ab634e17",
+      "size": 3614
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-incoming-characteristic.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tests/formal-incoming-characteristic.test.ts",
+      "sha256": "ca4202f6ee408898c297fac7968bdd2e40ee71ce7280f1e3edd0b1a19aa20307",
+      "size": 2869
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tsconfig.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/tsconfig.json",
+      "sha256": "b6a162bb3d5ae157f17f0ccac44c7b9c34efdfb1ed74cdcb378e2ab399b60660",
+      "size": 373
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-brinkman-sharp-interface-scaling-screen.json.gz",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-brinkman-sharp-interface-scaling-screen.json.gz",
+      "sha256": "165de3d31b036cfb452559e2a82f25c4afd3ba9f51e6823f0854d1c44d1bdaa6",
+      "size": 133
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-brinkman-sharp-interface-scaling-screen.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-brinkman-sharp-interface-scaling-screen.sha256",
+      "sha256": "d22ad3b8e1c29e00988c78aad801ee683362ca719178707be3d43873ae456e50",
+      "size": 262
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-causal-reference-2d-qualification.json.gz",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-causal-reference-2d-qualification.json.gz",
+      "sha256": "cdffd66e044d94efdc9f2a2b6a7334717fa6f4041cc59a7421e575647537d9b0",
+      "size": 134
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-causal-reference-2d-qualification.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-causal-reference-2d-qualification.sha256",
+      "sha256": "9cea3e0e5bb6109c323f6e331b4ab1b39ae513aecd0535973575cb613a22c767",
+      "size": 264
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-discrete-reference-maturity-qualification.json.gz",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-discrete-reference-maturity-qualification.json.gz",
+      "sha256": "69cea92e108e6fe43e6be94760b7aa1acfbc2931038558e96fe61c1e7382b236",
+      "size": 133
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-discrete-reference-maturity-qualification.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-discrete-reference-maturity-qualification.sha256",
+      "sha256": "75d8f8b14e761d4dd18cedcd4979729414f09f7e42cccfe0424ccc9aeb819d1d",
+      "size": 280
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-incoming-characteristic-qualification.json.gz",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-incoming-characteristic-qualification.json.gz",
+      "sha256": "b3df6c32ef922d7bc464f77da736f42be0fbf21ebec031b3aacb27d56fddbff4",
+      "size": 36893854
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-incoming-characteristic-qualification.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-incoming-characteristic-qualification.sha256",
+      "sha256": "8b46d2d749eec811295268b0aaa23e740369790239deac51b9dab73a069302d5",
+      "size": 280
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-inlet-qualification.json.gz",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-inlet-qualification.json.gz",
+      "sha256": "ac6dc54eb5d9a6ece86fa266007e1fae5ccccb3532223fb9a3e8953827c1d3ba",
+      "size": 24298653
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-inlet-qualification.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/artifacts/a8-formal-mrt-inlet-qualification.sha256",
+      "sha256": "23b18b1eee012d1300295e2b19eb9b6b9433d47eaf368d199cf5026e5b3d2a76",
+      "size": 244
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-domain-d16.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-domain-d16.json",
+      "sha256": "c2c89e95b2d892069fe2c810c396189f98a4066a4f170002aff0c7fc7961ef2f",
+      "size": 487935
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-domain-d16.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-domain-d16.json.sha256",
+      "sha256": "5f25489c3ad980bcb4dcc70a5988bdec91ec470a29ff3f58ce926549f7aedfe5",
+      "size": 86
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-fixed-cylinder-disposition.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-fixed-cylinder-disposition.json",
+      "sha256": "30bab825dba69f34c33aca94955baa89e2d60b7a2789d0063051ac81cf6e324a",
+      "size": 5354117
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-fixed-cylinder-disposition.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-fixed-cylinder-disposition.json.sha256",
+      "sha256": "5a5700aa82c1d533fe90b2c75c2fed46caf8253c710de896105db280777a54f6",
+      "size": 102
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-legacy-mask-d16.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-legacy-mask-d16.json",
+      "sha256": "15db0145343a0225fe9c2816d8d0f72f0e9eba4a81aa4d4b35d8662acbc123ec",
+      "size": 487972
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-legacy-mask-d16.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-legacy-mask-d16.json.sha256",
+      "sha256": "eef136fdce7f34bf22363e711c1237a1fb1ee333c8fc972cf3af11d27e89cfe3",
+      "size": 91
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-mach-d16.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-mach-d16.json",
+      "sha256": "bbbfc1e39d805be8141795c01eac9e0c8e8a65dfa846cfc87d4b6aec521d5746",
+      "size": 802242
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-mach-d16.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-mach-d16.json.sha256",
+      "sha256": "2f80b51910645f6ca7b9680a0ae3f6a5e2f8d0d631ffe158235a5eabc8a20e10",
+      "size": 84
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-phase-d16.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-phase-d16.json",
+      "sha256": "32f73de5b6413f1f075906363161a7e3cb234e0a2108aaca407413df63a7fe4b",
+      "size": 488366
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-phase-d16.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-phase-d16.json.sha256",
+      "sha256": "1772f305fe676deede63343936b02aecd43228b506ea2a753acdb06e6373532f",
+      "size": 85
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d16.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d16.json",
+      "sha256": "7a86b2bda1eb6aefffb9ff77102c1150d3547513c0b9c9810dbd3ba2172bd0a2",
+      "size": 487950
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d16.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d16.json.sha256",
+      "sha256": "cc0735655a637ae96a8f6b6029eeb87c11748f6e6fa676529ea475ac1d97b16d",
+      "size": 87
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d24.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d24.json",
+      "sha256": "4bbdeb78d937f9c27a9c7fcaaa7b1e651f5349075b336ba40e4acddf80e2966f",
+      "size": 747373
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d24.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d24.json.sha256",
+      "sha256": "9f9d3d985034cfc0a0a014a023e2516fc355382f73930ad7ee73598df2ec451a",
+      "size": 87
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d36.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d36.json",
+      "sha256": "0193e08f337b0db3688b3f8bc0105fbd03f7d8253a1d1665da0fa60aabf19923",
+      "size": 1126855
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d36.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/disposition/a8s-fixed-cylinder/a8s-primary-d36.json.sha256",
+      "sha256": "127157dc410b402a563d5199b41f05c71e7234e98da2abfb562542e2a604b3dc",
+      "size": 87
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-failed-parallel-candidate-disposition-manifest.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-failed-parallel-candidate-disposition-manifest.json",
+      "sha256": "58e6a2fa960181d4e88ad445ae1fab997cf5c109fac90783df9de028fee63a1b",
+      "size": 4557
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-failed-parallel-candidate-disposition-manifest.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-failed-parallel-candidate-disposition-manifest.sha256",
+      "sha256": "eecb96c030d3657816cc38a92b46d0d1a432d2504e24f89cdfe60978f4f5db91",
+      "size": 127
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-checkpoint.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-checkpoint.json",
+      "sha256": "9f24e60add6f7d8ab54c29580c6f30e62e35f17e0507baeb7ec5d0f6ab22c57a",
+      "size": 3273
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-checkpoint.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-checkpoint.sha256",
+      "sha256": "2f30649d1a360d72a6764de081430f38c933b1abcf1bacd1437a22600f5190c8",
+      "size": 104
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-final-resume-verification.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-final-resume-verification.json",
+      "sha256": "098446da61407b549d84eb0cc27103b19f090892359bff242512f9f6afca9659",
+      "size": 2796
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-final-resume-verification.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-post-sigcont-final-resume-verification.sha256",
+      "sha256": "983c844fb4e6b208a0a189ff28ae66749a6066ba347f5adc10a143f3dde5ba6b",
+      "size": 119
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-pre-resume-evidence.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-pre-resume-evidence.json",
+      "sha256": "f4f3cc6b858609b0465220675cbecd4feaf9babf19864b4e4ab4104341e69386",
+      "size": 8504
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-pre-resume-evidence.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-pre-resume-evidence.sha256",
+      "sha256": "44185e48df6ae8349084e9d4521c3b975c022f8df9662f44ecad03c3e92915b7",
+      "size": 100
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-static-memory-window.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-static-memory-window.json",
+      "sha256": "15bd6f7f97674caff6ac31f717ad5b63e193b1c28153ebbe3a80c6397474b216",
+      "size": 632279
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-static-memory-window.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-static-memory-window.sha256",
+      "sha256": "115a57551cd98a54597874a1b9f2fa1dc1f9598d0134f5490ed9a8077e8639d5",
+      "size": 101
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-w1-pre-superseding-hard-memory-failure.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-w1-pre-superseding-hard-memory-failure.json",
+      "sha256": "750535af9a8836155d41496114a8371a14533661d9f9a043fc070ab55b007c6f",
+      "size": 3631
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-w1-pre-superseding-hard-memory-failure.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/performance-governance/a8r-v2p1-w1-pre-superseding-hard-memory-failure.sha256",
+      "sha256": "b32542e0a8892cc827e7ee4c513c0d51b48c040c9a3b0a3045bbe4364723c3e4",
+      "size": 119
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/smoke/a8r-v2p1-formal-dual-40-step-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/smoke/a8r-v2p1-formal-dual-40-step-smoke.json",
+      "sha256": "50fc8d7ccb3f5a0570f334aec8e31d7eb51cacfc4b07bce558c7b367db42ba08",
+      "size": 272983
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/smoke/a8r-v2p1-formal-dual-40-step-smoke.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/smoke/a8r-v2p1-formal-dual-40-step-smoke.sha256",
+      "sha256": "bf364cf73d7ba1422befc94d82eb9e5ba20a4bf67a26a1ebc1590f0a829f4b63",
+      "size": 106
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/验证记录.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_二维特征开放边界实验后端/验证与复现/验证记录.md",
+      "sha256": "afa398e454d2c585f382f77ccadc554713e637ae342c2570cedf6da556d8969b",
+      "size": 38002
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/00_基准合同与执行裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/00_基准合同与执行裁决.md",
+      "sha256": "39c4ba1a13de59a26bad1a0ddcbbd286a7eaa303ea1f211975404c41f96fe287",
+      "size": 9823
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/01_固定圆柱离散敏感性合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/01_固定圆柱离散敏感性合同.md",
+      "sha256": "330a2056d924895832305a3f510d5563484ca3bf965fa20c68ed21af142478c4",
+      "size": 3833
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/02_双mask三网格括号合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/02_双mask三网格括号合同.md",
+      "sha256": "87e832afc5dc7d35b64a490a6f4ae24144bed4e5e505548f506cbcaca739db31",
+      "size": 2292
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/03_ND24双mask扩展合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/03_ND24双mask扩展合同.md",
+      "sha256": "6dfea85e8a24827c912268425293d37ec836245f9ade2ce7c7a3073503ddb639",
+      "size": 1504
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/04_域与边界敏感性合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/04_域与边界敏感性合同.md",
+      "sha256": "5ab3c71cceac66f8aeb0e53c0d671eb5edb9c04aa5a9acc80521df494cd76a44",
+      "size": 3535
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/05_入口距离括号合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/05_入口距离括号合同.md",
+      "sha256": "644e2ac0271c271b315ddc08016f37182e7fc1742a579b0d47c62e70b94cce71",
+      "size": 2204
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/README.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/README.md",
+      "sha256": "f97a3b889ee2a5ac24cb891d3c352b9fd9f2ec849d51c4495b52af076e275704",
+      "size": 7726
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/package.json",
+      "sha256": "50af8f0c9ad0ffdb87486486c9dce434af0bbbe8f1eee13830ac16e9d21861fc",
+      "size": 231
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-benchmark.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-benchmark.ts",
+      "sha256": "5f2a435d595a6b42bd886a1c1ce8f60a1e2edb515dab5b6d3a460f92a7e2d4fd",
+      "size": 24631
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-domain-boundary-audit.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-domain-boundary-audit.ts",
+      "sha256": "8242db95112bd0b19d5cd47b97046de15c41d4bad7b5b87b351b6cbb87a191ed",
+      "size": 16563
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-fixed-sensitivity.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-fixed-sensitivity.ts",
+      "sha256": "482c7930c5720d066f6a7df98f6aa28f595c045c8cecadc2c316435a62e03e08",
+      "size": 22472
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-grid-mask-bracket.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-grid-mask-bracket.ts",
+      "sha256": "892e8b3b18228ab0567461cc1275ba2c3d1b19970ccfde64d3a127ba0a7e8534",
+      "size": 17236
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-grid-mask-d24-extension.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-grid-mask-d24-extension.ts",
+      "sha256": "c8766777febf3813fb516eef3e4ebb280aa3a571490dcc3d8aa8f4d55007c09b",
+      "size": 13110
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-inlet-distance-bracket.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/scripts/run-inlet-distance-bracket.ts",
+      "sha256": "3d84371509a4a390de2f0fb4676f93b18e59a471ecda895c5d748bf905889905",
+      "size": 14166
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/benchmark-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/benchmark-contract.ts",
+      "sha256": "b97f982e5599a2e710278d5a8d2565c8944e1bde4f0c4e85083d6732398972aa",
+      "size": 3625
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/benchmark-metrics.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/benchmark-metrics.ts",
+      "sha256": "625e3eb62c389d597ed0f22feb8e49fd2cad70d543ee9b19f2acff9fdd292e12",
+      "size": 3142
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/domain-boundary-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/domain-boundary-contract.ts",
+      "sha256": "c5a3aedafd9d5d3c8987096381ed63711b3eb52bc051c22f96946c92c5f63c94",
+      "size": 4027
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/fixed-cylinder-case-runner.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/fixed-cylinder-case-runner.ts",
+      "sha256": "4953fc58b71ffdbf23a6216ffa203ff2a9ae654ae718562e5217ddc5c66cee14",
+      "size": 10410
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/fixed-cylinder-geometry.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/fixed-cylinder-geometry.ts",
+      "sha256": "230c9f6312d12ba90ed1b14fa296743591f9c99281349df2670bd971e5329f0c",
+      "size": 1725
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/fixed-sensitivity-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/fixed-sensitivity-contract.ts",
+      "sha256": "81557bf912ab4dbeb6e3ae7221715ed273abce3f126ca8f97ab0d5f99fc30b0b",
+      "size": 4540
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/grid-mask-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/grid-mask-contract.ts",
+      "sha256": "ac76d6b04a918c1a67c4b5a007881050f0a25fa38e4de29e52a419f77a8d7fc6",
+      "size": 5065
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/inlet-distance-contract.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/src/inlet-distance-contract.ts",
+      "sha256": "402bc52fb57a940b019c917156d6b46a562c7b256f4edd35b6e009426ca376ee",
+      "size": 2642
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/benchmark.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/benchmark.test.ts",
+      "sha256": "e7fc010011b2c4541b010096ba5f4ac564ec4a3b6c3544e66ccd905615046b2c",
+      "size": 2410
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/domain-boundary-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/domain-boundary-contract.test.ts",
+      "sha256": "d02aaef90b17ed2849d3d17025b0d539ba1c5190c5f27ab1c0f09a88f68f83a3",
+      "size": 3222
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/fixed-sensitivity.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/fixed-sensitivity.test.ts",
+      "sha256": "5761d7506be0880c79d6f19a79e38f4b5c49d7a51366d30a0e0603c210eac708",
+      "size": 2403
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/grid-mask-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/grid-mask-contract.test.ts",
+      "sha256": "4dce7b8d81176098692d01832c71f92195454a7641b63a26505072ebd15ef9b0",
+      "size": 2224
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/inlet-distance-contract.test.ts",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/tests/inlet-distance-contract.test.ts",
+      "sha256": "ca5c998620f98195c2ea62994c32f6805ffb4b62477a0344b031fb495b48b2dc",
+      "size": 1779
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-research.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-research.json",
+      "sha256": "0d8d10c6267b5265fc61b649232e43d2f661a7d81617874dd060aef33a5f1535",
+      "size": 42937
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-research.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-research.md",
+      "sha256": "420c6f4b11f6b0a241ad2907fd737b0d6f58b6450a178404c82c19a3109cecf9",
+      "size": 2597
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-smoke.json",
+      "sha256": "af89c98e0b48ef432d209f78c9620f8ea1ee653392ac80b4c70d38b1d6ed5479",
+      "size": 37499
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-smoke.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-domain-boundary-audit-smoke.md",
+      "sha256": "d7fdf958b18b960f8c3d399720f03fc1d869e3f2346680210491c76885326dc7",
+      "size": 2291
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-research.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-research.json",
+      "sha256": "f75b2bed240957f8025dce7236db3b40426404944a2d9642404e270fe6638725",
+      "size": 28371
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-research.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-research.md",
+      "sha256": "1a473e74edc5d3ea366bf523a444002d1a62085d8e7cb58368c9da362f331842",
+      "size": 2775
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-smoke.json",
+      "sha256": "a02d05a37b7e8173218257984aac3f34dbc9924c65d268774b91ed2d22e444bb",
+      "size": 13717
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-smoke.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-fixed-sensitivity-smoke.md",
+      "sha256": "425bbc8587708ec570b9b9c29d73cfd87477a18da3fafc8073858278b32d131f",
+      "size": 2009
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-research.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-research.json",
+      "sha256": "e59defd0d064166d952f60ea324f484a84b57bb5b6f0feff01225845a65fbcf5",
+      "size": 26014
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-research.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-research.md",
+      "sha256": "896e5f0092fc4212bb61e7a983da6e67da4c65ffb4768d71b366df78d501adb5",
+      "size": 1713
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-smoke.json",
+      "sha256": "60207a8df1d0e67bcca68664ddde3eba59dd504844eb6bd61e47cecbfc891a79",
+      "size": 7937
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-smoke.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-bracket-smoke.md",
+      "sha256": "f8f28746d4f9f46bd5f7ee949d957d1e54f06fb909bbec066e185fc6ac778367",
+      "size": 1147
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-d24-extension-research.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-d24-extension-research.json",
+      "sha256": "690ba4292a2c320d8acec788d98712debd3333f5a9503dee03fb9b38d63627cd",
+      "size": 18401
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-d24-extension-research.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-grid-mask-d24-extension-research.md",
+      "sha256": "d3329c1ff4f8bf171dd48f8045b60783a78e3b76e490ef368489e801293882e9",
+      "size": 1632
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-research.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-research.json",
+      "sha256": "86b334964cee154df5a8cf48b295b24eb536703f45f8fd4023ab4a43226e6b89",
+      "size": 27082
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-research.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-research.md",
+      "sha256": "36d5723e412f0c009c6df69479ad1ea0ff12920619ebab47a12af7910cbf0d0a",
+      "size": 1528
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-smoke.json",
+      "sha256": "0d3a2122859fe4192842598b31189cf12463094070e595b15767ce0fe52f0584",
+      "size": 22626
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-smoke.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-inlet-distance-bracket-smoke.md",
+      "sha256": "5da7eeff8ad729116afbc8926bf7aba4e13addcb629bc0e5e68e51bb965fc142",
+      "size": 1313
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-screening.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-screening.json",
+      "sha256": "a43bfc4a5c56ac367405b9b6237390a444fb73baedd4171a26f362154d99c1ba",
+      "size": 10077
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-screening.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-screening.md",
+      "sha256": "d0376646318358af3dbe733ed025c43a66403a144d1dc57715edabfc08401227",
+      "size": 1261
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-smoke.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-smoke.json",
+      "sha256": "7a3a0b8c39b6d899bd654c96ca3dc2482efbf52a67f218a19df00cb0016844dd",
+      "size": 8407
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-smoke.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/artifacts/a8-public-benchmark-smoke.md",
+      "sha256": "3ba9664b846157f654a0436c6939bdcf16858518106b3e9d8705c031e5515fbf",
+      "size": 1093
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/验证记录.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/A8_公开规定横移圆柱基准/验证与复现/验证记录.md",
+      "sha256": "40e92c1ef394dca2586bafccf242e6ae6dea8a04afcc6e2d50b2c87c3f4ea15b",
+      "size": 10787
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/ARCHIVE_MANIFEST.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/ARCHIVE_MANIFEST.json",
+      "sha256": "3f148caad736a8c68c7e5a68bbcc0d3efd8be7022c5fad8d3a926f9e43422088",
+      "size": 464764
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/01_E1_实验准备与辨识结果前合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/01_E1_实验准备与辨识结果前合同.md",
+      "sha256": "e0b107676c20f878e5b825f94936a5cc4b558fd8f64eec83b850a458bb01583a",
+      "size": 3159
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/02_实验前最小采集与留出预测执行说明.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/02_实验前最小采集与留出预测执行说明.md",
+      "sha256": "677b9f7e4a61c1328252dd8c0411b386b6ac5ef42b4c1b9535074cbd0e7885ed",
+      "size": 9495
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/apparatus.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/apparatus.schema.json",
+      "sha256": "0e7d69cb9587d43bdafdca8b4363920b46c4703a21c56d3e9304e8ed1bbf77ab",
+      "size": 1468
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/calibration.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/calibration.schema.json",
+      "sha256": "9085f98f63bf7fb3f5a28187d9614ca2c5b1e9a6319707b36fbaedef556613a6",
+      "size": 1448
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/e1-contract.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/e1-contract.v1.json",
+      "sha256": "f71cc5a2450de9846eb5dd5b454a0012641a7c9b0543eba898b54cfc44b28dc3",
+      "size": 1229
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/e1-synthetic-matrix.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/e1-synthetic-matrix.v1.json",
+      "sha256": "2187ea0603b85c2a669391c875fa6cbb15e7579e50f78ee94200e7e42b667e80",
+      "size": 850
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/identification.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/identification.schema.json",
+      "sha256": "8279c3900878e4501ab57e1ce947e61d2ea987d9cdd01b26bf7a59f7badff33e",
+      "size": 1772
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/quantity.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/quantity.schema.json",
+      "sha256": "a60ce577e6a30af1edee09fd12456053c79aa108e9839394c1737d0d1e25e886",
+      "size": 867
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/run-record.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/run-record.schema.json",
+      "sha256": "801da7e3b87c0d2994b7525d8e6cc1cb2fb68fd7a90ab39d64a55dc448a93d70",
+      "size": 2662
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/timeseries.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/contracts/timeseries.schema.json",
+      "sha256": "7d71e30dc84bc1ebb8a882ba547a425b579000b76221724d970108665982bd28",
+      "size": 1123
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-base-formal-config.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-base-formal-config.json",
+      "sha256": "f7973f241af7e844b29cb9c0d6a74ad5110574f4e7602edbb30d3c2ae905e637",
+      "size": 2203
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-filled-apparatus.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-filled-apparatus.json",
+      "sha256": "18411e8bea54aa087db308e6343b3361b9fd43193be89e89b7baba03b98fe445",
+      "size": 3340
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-filled-coefficients.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-filled-coefficients.json",
+      "sha256": "ad78a2986bcc49f92607ee9e6ed2b5b4cfe311dbb49f36db9f265a2d86b2ea3b",
+      "size": 4607
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-filled-prediction-plan.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/examples/synthetic-filled-prediction-plan.json",
+      "sha256": "1e43079f9dbc0b589e47c65e13b055ba443359a682d0aa7ad5f9127f49fd117c",
+      "size": 3441
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/package.json",
+      "sha256": "93ad23fdcc04ce047c557e044a41c802bf3f539c9e6fde9e5b47108825633a37",
+      "size": 738
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/scripts/build-forward-configs.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/scripts/build-forward-configs.mjs",
+      "sha256": "24202490bd0e290f11f30f0dd88fcac6fa92aedf0aecd4fd10b1298b1e1abc9e",
+      "size": 3472
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/scripts/check-prediction-readiness.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/scripts/check-prediction-readiness.mjs",
+      "sha256": "b60c17cd74a7e95270a9bcf21e642f174f98a2b11f339ae0a5872ff7505ed2f3",
+      "size": 2609
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/scripts/run-synthetic-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/scripts/run-synthetic-qualification.mjs",
+      "sha256": "bd84dd7baa4ae41334829e9ef1a8ed6726542a0386da430809b5b40483e6839d",
+      "size": 464
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/canonical.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/canonical.mjs",
+      "sha256": "be69de440f7c1504c5f52012464a2ae0ca26a89f01a85b3e0044eaeda8a7ee6f",
+      "size": 1919
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-apparatus.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-apparatus.mjs",
+      "sha256": "5bc2f2ca0d5a68c451b3a90134389d065489d9f41e044995dc952bd8ec266bfe",
+      "size": 1911
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-coefficients.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-coefficients.mjs",
+      "sha256": "b4ec3a4537c41c8db34736d66dc83a58113082ce9959f634f6fb98296736cf22",
+      "size": 10873
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-plan.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-plan.mjs",
+      "sha256": "58277829151fcfa881f8bebce9883d593a0a64d56503e04fddd6f2b028ab0e30",
+      "size": 9795
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-readiness.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-readiness.mjs",
+      "sha256": "7a851ae217e928bb16155f807e55208884b611986e1957e112f85440aa89b1e0",
+      "size": 5533
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-shared.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/prediction-shared.mjs",
+      "sha256": "bfcc7bd3ed9958cc860dc9ffb3e4fb1556c9cdf6e5f08fae9c7c62f0b6becb24",
+      "size": 6721
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/qualification.mjs",
+      "sha256": "d1cbdb62cc7062366ffa8620895bf9dcf3c854bd88214d85f34744c6ac62a893",
+      "size": 8672
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/synthetic.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/synthetic.mjs",
+      "sha256": "3b4d26c8b21e9aa816e92f8cf2a5a62f44d4e8f633b04c5423bd80b0c6804dba",
+      "size": 7761
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/validation.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/src/validation.mjs",
+      "sha256": "412b0dca54be7b3c7d84f72c07f2ecfbe48469390211f19003ab1f2a0f29a116",
+      "size": 21732
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/apparatus-calibrated.template.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/apparatus-calibrated.template.json",
+      "sha256": "fba31756500a259bcc1752445869e49b455b63af46dd9c38a3fa7a7461787634",
+      "size": 3406
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/prediction-plan.template.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/prediction-plan.template.json",
+      "sha256": "c1850f7ac66ace3dbfbfd5d3a3326c94e428575f80da3fa4259dda3d9ba0ab3d",
+      "size": 3665
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/rom-coefficient-package.template.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/rom-coefficient-package.template.json",
+      "sha256": "b43fe8b26a2f787d52ec94daf9fcb5aa0641a62b82a47b5c2ac605f7a31cbb2e",
+      "size": 4288
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/trajectory.template.csv",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/templates/trajectory.template.csv",
+      "sha256": "42cc7c902f057e698a247b7f45f77a0ced1ec07a8362f92ebb6b879c003fabe3",
+      "size": 45
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/contract.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/contract.test.mjs",
+      "sha256": "ac88cec2457118d11fa01c1683d068de049e7885327c98a95e38481c2249fb19",
+      "size": 3737
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/implementation.test.mjs",
+      "sha256": "efd133aaac8b4393ddc1cf50cfa1019acc0d7ee8df32a6afda26d579588c5497",
+      "size": 4646
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/prediction-publish-failclosed.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/prediction-publish-failclosed.test.mjs",
+      "sha256": "ef9b910273da6f968b7a0733f71f2b3c6a78b9bfa002d79a66a99f71bb40eaf0",
+      "size": 3416
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/prediction-readiness.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/E1_实验准备与辨识协议/tests/prediction-readiness.test.mjs",
+      "sha256": "96fd98a78144d0c55a9ce9aa31a36ba24d65bae7c73c3e652bc69d26fdad608a",
+      "size": 13130
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/01_F1_前向数值资格结果前合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/01_F1_前向数值资格结果前合同.md",
+      "sha256": "5a625e5a6dcee67bd2701a77f48766a2ff90f5b4166dabce7d07afdccc7b6124",
+      "size": 2085
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/contracts/f1-case-matrix.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/contracts/f1-case-matrix.v1.json",
+      "sha256": "bc99ffd50143582a16cc3225699cc29c0aa9dd111386fa16a3c233505f44ea90",
+      "size": 1398
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/contracts/f1-contract.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/contracts/f1-contract.v1.json",
+      "sha256": "ed8fefaeda74621d00aef2e7d24d6258a90358b2babf55ecfdfcadf46aaaabce",
+      "size": 1267
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/contracts/qualification-record.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/contracts/qualification-record.schema.json",
+      "sha256": "b589e651a0201b4dbc8392f5d1c212b200e9268cc72b92051fd394d2360f10d7",
+      "size": 1613
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/package.json",
+      "sha256": "363c5665b7f20fd97306db1e15ac586c66db3963399042566c4f1105d08a5a37",
+      "size": 396
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/scripts/run-synthetic-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/scripts/run-synthetic-qualification.mjs",
+      "sha256": "1be97d407eba52d9a85f6c6b6c4810382741c535aca3e10dfaae0ae2cc794a66",
+      "size": 517
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/src/canonical.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/src/canonical.mjs",
+      "sha256": "0b478128909eaf10931619bade14318c496b01d8b678365da82279c15fd9f842",
+      "size": 1809
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/src/numerics.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/src/numerics.mjs",
+      "sha256": "d96b9c0c95ebb9130d2e71a64f64cb840bb22d04dfae748f774fe790393fa559",
+      "size": 10198
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/src/qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/src/qualification.mjs",
+      "sha256": "0a414c8f5c8fac696fae98063494da025c6d28ba21046d19320e03497c76b84b",
+      "size": 12184
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/tests/contract.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/tests/contract.test.mjs",
+      "sha256": "0820a0b0d5ccfa2404a037bdf9a4ae5c689f9a6f99bb91b621a2eb421f3f0757",
+      "size": 2763
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/tests/implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/F1_前向数值资格与闭合包接口/tests/implementation.test.mjs",
+      "sha256": "79a59fa36897ea57500ecda060768ac16237d8c502f383a36fd4bd6dc5cde0ab",
+      "size": 6083
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/01_全项目完成度审查与实验前可暂停主规划裁决.md",
+      "sha256": "5d2fd4ffbc57bbdd9e056462e085f5f673efe5daed269e024cf82f01ad9f50e7",
+      "size": 50580
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/02_G1_结果前机器合同冻结记录.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/02_G1_结果前机器合同冻结记录.md",
+      "sha256": "10b49a65db43beb4cc0dee3a841f5c0e6c44856736f0bd82095efe99e2ea973e",
+      "size": 2046
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/03_R0_主运行因主机关机中断现场冻结报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/03_R0_主运行因主机关机中断现场冻结报告.md",
+      "sha256": "7f5acf8338f0621ecbe7ea262f4dce8444b9cd955ef79a843f08f0c3e0ad169f",
+      "size": 3915
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/04_PR1_串行参考关机中断与硬件路线接续裁决.md",
+      "sha256": "65f964ea9973c688b1d16b517808fb45efaab75fb74f16e734977cd5c2203aee",
+      "size": 24817
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/05_全仓完成度与活动工作包索引.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/05_全仓完成度与活动工作包索引.md",
+      "sha256": "875ed148e17a06ae4b262bf9d5f2afc64ac0237c7cb7b80cf09ef6ccf9df7d9b",
+      "size": 2010
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/06_G1_结果前基础统一验证报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/06_G1_结果前基础统一验证报告.md",
+      "sha256": "cc1c59665fcf1b90302d5be2c3405f2a93e4bdd678f5e034e62237684e92d099",
+      "size": 5748
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/07_PR2_HW2测量语义执行架构与全项目后续裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/07_PR2_HW2测量语义执行架构与全项目后续裁决.md",
+      "sha256": "2631cda368e04d0d100150170b7eff5551d81e8305953915881a3a615931d4a1",
+      "size": 39015
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/08_PR2A_fa73bda观测前实现复核与全项目终点规划裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/08_PR2A_fa73bda观测前实现复核与全项目终点规划裁决.md",
+      "sha256": "acff1a5ccb41b909ad7c6c34e2c21600b774bbaf4ca3df1b6ec2d31e32cabaaf",
+      "size": 27679
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/09_PR2A_b864页面回复与仓库机器门差异统一裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/09_PR2A_b864页面回复与仓库机器门差异统一裁决.md",
+      "sha256": "161bc38d5c8fa57ae5b6d07a2c14bf37218aa56228b05f84fd593fbaf0eb3ba0",
+      "size": 14559
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/10_实验预测最小活动计划.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/10_实验预测最小活动计划.md",
+      "sha256": "15119ceb75fabb79355dcbaa5d896954d4e183affe7af6fdaf3d68885eeb99e9",
+      "size": 6813
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/11_A8S后实验前可暂停终局裁决.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/11_A8S后实验前可暂停终局裁决.md",
+      "sha256": "8374af8f5ecbd6eecf5e48b3cfd1bb33b7431d78769cfefedade0985799be583",
+      "size": 8429
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/12_实验前桥接审计修正与暂停复核.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/12_实验前桥接审计修正与暂停复核.md",
+      "sha256": "6218a8d72e7e7e8034e0152d8d57976a047de93852ea0d79009d39fa21b201e0",
+      "size": 4777
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/contracts/project-state.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/contracts/project-state.schema.json",
+      "sha256": "417a1f7c0bf06ebeacfd09eccddc813bed35a04fa1d2eab8b8a30ae008b4aa8f",
+      "size": 2966
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/contracts/r1i-interrupted-attempt-seal.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/contracts/r1i-interrupted-attempt-seal.schema.json",
+      "sha256": "9535b46196cbc0a37f1f8b6419e50ca2fb4285fc82d1d76ef15a8fc6cff2f312",
+      "size": 8068
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/contracts/supersession.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/contracts/supersession.schema.json",
+      "sha256": "1a936dd54588cd29146475e65780fed47e2fbe4c1af11ed957793505413afbd5",
+      "size": 1359
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.json",
+      "sha256": "7195a5255e6508876b68fe081b83b351b99254779db1b50111b8a2b736c4b276",
+      "size": 5981
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/g1-result-before-foundation-20260901.sha256",
+      "sha256": "46e1831e8b059ecf7e4d9855c2b51c3fc94614bbd8c489277494ca9229fd5eec",
+      "size": 108
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.json",
+      "sha256": "889eafc3a340f60d5d5743b64df086ab6b603ed9173465a54b62ef42542fb85c",
+      "size": 3812
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r0-host-shutdown-20260901.sha256",
+      "sha256": "0c322b87f2cd1e5148fe489598252095b9fa6dffdac73ba397d0ebcdf20a7539",
+      "size": 179
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r1i-interrupted-serial-attempt-seal-20260901.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r1i-interrupted-serial-attempt-seal-20260901.json",
+      "sha256": "d459f1fa42e1f1bfdec93ad4ee37fdf25d230c6d8fdc383ed83ac47e9490f79e",
+      "size": 4246
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r1i-interrupted-serial-attempt-seal-20260901.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/evidence/r1i-interrupted-serial-attempt-seal-20260901.sha256",
+      "sha256": "9a59a8d06a740bfb81dc3446fa8aeef05e6faaf070adfa028cfe1a3252986978",
+      "size": 116
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/package.json",
+      "sha256": "c6e89c8ddab077b0477bed52f2fa42791d2c6aaaf6ef8e2ba5d853b02d47a17f",
+      "size": 424
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/project-state-ledger.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/project-state-ledger.json",
+      "sha256": "79d4f42cc7e544567fc17ac2f30789aa3ac3acdcc6a4c8f570c0f32bc2419e2d",
+      "size": 11563
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/scripts/validate-ledger.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/scripts/validate-ledger.mjs",
+      "sha256": "b394878b6cd884bfb8b00f944a81e349d951a156d5f39c5a3bf77b4b525c0a18",
+      "size": 751
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/scripts/validate-r1i.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/scripts/validate-r1i.mjs",
+      "sha256": "cf1941d14a018eb2c4e5ad332268196e0c591e98b0a8fbd488fd02aedd2181f2",
+      "size": 5630
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/src/ledger.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/src/ledger.mjs",
+      "sha256": "8a3c57a5b1c869091e4b72bbfb1a276fdd28ff515a4e2380cebfda30a49d4e52",
+      "size": 8525
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/src/r1i-seal.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/src/r1i-seal.mjs",
+      "sha256": "db5e52db2b5dd485c6fb0677f465eb8ad413533bd834012fe5b56eee66793431",
+      "size": 8389
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/supersession-ledger.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/supersession-ledger.json",
+      "sha256": "f2d758044242ad4f005f1eceb123f1ed8facea8a4be236b0500e270cd2eec7aa",
+      "size": 4476
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/tests/contract.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/tests/contract.test.mjs",
+      "sha256": "d479c1605f5e6c875df30a3c286b7c72bef29ba766b9008948b6acfbd711ea1e",
+      "size": 2215
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/tests/ledger.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/tests/ledger.test.mjs",
+      "sha256": "91fae08287af049544c9f3c4034491367bc8954e551c581f3bbdf3c70ff8304d",
+      "size": 4684
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/tests/r1i.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/G0_全项目完成度与实验前暂停治理/tests/r1i.test.mjs",
+      "sha256": "ccc6c3f744622c9aefb7eb72f6aebecdbdad3249465a25feb90a329e72ee399c",
+      "size": 3399
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/01_A8R_HW1_结果盲硬件资格预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/01_A8R_HW1_结果盲硬件资格预注册合同.md",
+      "sha256": "91d3c8aa916321144f0ef5f50dc44394df6c7cba22a420063a4f96a724db4b25",
+      "size": 15946
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/02_H1_机器合同冻结说明.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/02_H1_机器合同冻结说明.md",
+      "sha256": "c8348962b1dbb102f5a3b194dafd79e67a67146c64c6ad0c7782116138dcea67",
+      "size": 1458
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/03_H1_v2机器合同冻结说明.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/03_H1_v2机器合同冻结说明.md",
+      "sha256": "6935b200210ca326038b05a9ca7158c18748db195cda4aa86740199debff825d",
+      "size": 2243
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/04_HW2_结果盲硬件候选资格与PR2输入报告.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/04_HW2_结果盲硬件候选资格与PR2输入报告.md",
+      "sha256": "279711c093bd40fc9af51d46c224b90e197ee28881262102c1e8fdad6b130bf1",
+      "size": 9428
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/05_HW2R_v2代表性硬件测量预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/05_HW2R_v2代表性硬件测量预注册合同.md",
+      "sha256": "7fb07a5d066f7cb817949206f620bd7b53302ee97de9ede076dcb8599844808a",
+      "size": 6026
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.schema.json",
+      "sha256": "9d574edf8e7fd4811b15ea152c12bc141a439efd1aba97b6822c4cc5c6b876bc",
+      "size": 1549
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.v1.json",
+      "sha256": "b8f55bd4b796bd3a22b48ab1e1ce41c43847b74cef1b24fd90d599fa00226538",
+      "size": 4491
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.json",
+      "sha256": "387c644be55f6f9c479ccc84ae8ed68668b4ecafab73e2e3608a1a5a3805e311",
+      "size": 7540
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-machine-contract.v2.schema.json",
+      "sha256": "54de931895c3238ad18fd5ea4b466066aad54bbb2c8130d146118323ce250529",
+      "size": 6060
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-pr1-override-mapping.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-pr1-override-mapping.v1.json",
+      "sha256": "99b085078dceccc833883e5a9a98aa3184c6105b417508e79017603adf4775b6",
+      "size": 1765
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-synthetic-smoke-matrix.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/h1-synthetic-smoke-matrix.v1.json",
+      "sha256": "de16a8715b7f668c255a16ecb3a58a2bf525fb5fa2b12e53f5f41c1f2493ca52",
+      "size": 615
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2-qualification-protocol.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2-qualification-protocol.v1.json",
+      "sha256": "aa83b4b0767e4ac81dc0eaefc880a1ed3eafec8337602145f4488ffbe48b819e",
+      "size": 1804
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2-representative-qualification-protocol.v2.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2-representative-qualification-protocol.v2.json",
+      "sha256": "6fa0d71d020d776efe0f3b637a21a3ab800c84d9c3d11e24b90eda76848d7dfe",
+      "size": 9770
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2-representative-qualification-protocol.v2.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2-representative-qualification-protocol.v2.schema.json",
+      "sha256": "aa80b571a9b45c163ed9c5414b6b9a2e27a1191799644239763d6f65c7eca24a",
+      "size": 15941
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2r-pre-observation-readiness.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2r-pre-observation-readiness.v1.json",
+      "sha256": "73dc85806aafcc748d016e85ec90b65738ec66fc707741cf5505231566416699",
+      "size": 11179
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2r-pre-observation-readiness.v2.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/contracts/hw2r-pre-observation-readiness.v2.json",
+      "sha256": "ce787bdcff97b884dcb81289688a778f854dacb9b908aeab6eee6b41c4bd57a4",
+      "size": 7666
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901-attempt-02.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901-attempt-02.json",
+      "sha256": "bfcdcabb91ac7f12d10afb7efaa46460ddcc8d59f15b95049ff340a85be835e6",
+      "size": 58507
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901-attempt-02.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901-attempt-02.json.sha256",
+      "sha256": "43c77c7a672c66d853494e414e3c913de75bc43681c5d50e99a556cfeccc1b4d",
+      "size": 109
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901.json",
+      "sha256": "dcc17a5c438b1ddb271d1aef3f027014280d601004120fa9babf39d5a378046d",
+      "size": 436
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901.json.sha256",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/evidence/hw2-qualification-20260901.json.sha256",
+      "sha256": "09d974bb200df488804d67f8b3af708bd4d8211ba2a6dbbce25805c4f265c6cc",
+      "size": 98
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/native/hw2_synthetic_probe.c",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/native/hw2_synthetic_probe.c",
+      "sha256": "f251780c8e1d47d9236aee9aa1a541a6e3058feaea4df5e410c2455a6171e382",
+      "size": 19508
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/package.json",
+      "sha256": "468e4202311a62e523fac151f6bb361a0169a076a550af329eefb8809b3e2bc0",
+      "size": 938
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/audit-hw2r-pre-observation.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/audit-hw2r-pre-observation.mjs",
+      "sha256": "0154ec8c2400ed8d6b4ff10e1248ec5004911c42c859c1dc87d825de7513fe83",
+      "size": 481
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/build-hw2-native.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/build-hw2-native.mjs",
+      "sha256": "5d282ef1d0a1ad31e93ab65f56ba5b551d0ed47bef1f321912b169aa68b6f512",
+      "size": 1903
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/finalize-hw2-selection.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/finalize-hw2-selection.mjs",
+      "sha256": "f9c8318aee1202d4ea301d62669f5f6f698d4f7bf7d84d42f25c97cafa2da29b",
+      "size": 7345
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/hw2-worker.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/hw2-worker.mjs",
+      "sha256": "6ae2c8d9a76ade7b850479cfa0412c6228c2309031802e09a7bac51c878404c6",
+      "size": 1037
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/hw2r-js-case-worker.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/hw2r-js-case-worker.mjs",
+      "sha256": "e85e085ce03fc9d852502914d6428e58dd30b339e3e523d8edf53eb1c3ac0607",
+      "size": 4403
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/run-hw2-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/run-hw2-qualification.mjs",
+      "sha256": "bd9026c376d892e45ab6226300893d19a6f3f5f38b6a67381474054d39250d91",
+      "size": 1934
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/run-hw2r-qualification-v2.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/run-hw2r-qualification-v2.mjs",
+      "sha256": "46cdbfc5e4fd8cd21cc951163551afdda9ecd9896c72f53ddf4844e42d7cfd93",
+      "size": 14210
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/run-no-result-smoke.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/scripts/run-no-result-smoke.mjs",
+      "sha256": "4ce9498426921bfce5e2b106c68ae8fea764660b16e87b6ff39ca2eb6a6dcdb4",
+      "size": 118
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/aggregator.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/aggregator.mjs",
+      "sha256": "97bf52fbd7bfbd2d815246b3c0ecfaa8ba421805fd959e08db2891b1b36d7280",
+      "size": 3508
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/backend.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/backend.mjs",
+      "sha256": "740c3c8ece7456fa1c0cc95971e8ccd02b38259622b0e917b323a07f2e107c06",
+      "size": 4052
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/canonical.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/canonical.mjs",
+      "sha256": "df1bd9f15bcda365e2b7b7dff0d41b6c21c06493ba380f28ec664a067a74dbff",
+      "size": 2111
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/contract.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/contract.mjs",
+      "sha256": "df488ccbfef5c0d01f68683f386f22f494401e8749384244103c90678c29f257",
+      "size": 4919
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-candidates.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-candidates.mjs",
+      "sha256": "3d725a52dd0a303a878bfe37f394f405e90115b607bf5b54af621d5e74a40769",
+      "size": 4143
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-js-execution.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-js-execution.mjs",
+      "sha256": "3effbb80b9b6a38406577327d2ab23c0bcfb1fa94a8cc6e88bb605e9904e4cfd",
+      "size": 4053
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-measurement.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-measurement.mjs",
+      "sha256": "1069b2965b7bbab2e5bd1e97179bc5c776831899a763a21892695df82f77696b",
+      "size": 2965
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-native-execution.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-native-execution.mjs",
+      "sha256": "d197e88e80569a770d4ec3c08d9f6409d50ff794a12f1d43413a98f22a7a0d57",
+      "size": 2750
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-preflight.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-preflight.mjs",
+      "sha256": "5b097c2a3cedf8db36fca59ae773a4643e914889ea8c97b401314a630ecad0ea",
+      "size": 4499
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-protocol.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-protocol.mjs",
+      "sha256": "8b5d184dd5ce3f292db7c1684fd5ea94c0276e66149d72a2ee4d12338b6b65c4",
+      "size": 2631
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-qualification.mjs",
+      "sha256": "38b4ac4427cf9cf7615ad3fa606689337104952b8013ce6fbb8900f725c676a3",
+      "size": 18540
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-telemetry.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-telemetry.mjs",
+      "sha256": "abfd3a8e526552e788d5d4accd5fa1ced5980a1d1b87640074ca2f005baf7e3f",
+      "size": 11635
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-workload.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2-workload.mjs",
+      "sha256": "ed7e60bf6170c38bdf99ea7f10bb8be7cc79cb43a3cd5cfee40ccd3b723fd826",
+      "size": 3331
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-affinity.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-affinity.mjs",
+      "sha256": "58e961ffe54bb3c2b54dd0446a9ad9ff51c4d9a0163bce807414ca9d9b703aed",
+      "size": 4211
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-calibration.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-calibration.mjs",
+      "sha256": "5e04c8b76d6151ceaf60696839161fe5058a9bcb697b1fc82fad23a8530c6b15",
+      "size": 2362
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-candidates.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-candidates.mjs",
+      "sha256": "7050cab63eb2676726e82acb2b11e1d19284125b4e059474ba80c64d39d5204a",
+      "size": 4166
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-contract.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-contract.mjs",
+      "sha256": "7040804e08a587f93289f3b6478f791c3edf91d7fc464fbb6eeab04bf646f521",
+      "size": 1577
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-evaluator.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-evaluator.mjs",
+      "sha256": "09dc58696d6c1acfc193cae91232150c2f7a655895edf5d47f970f993cd9a4a8",
+      "size": 7206
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-executors.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-executors.mjs",
+      "sha256": "b5fcac4ad05fa794934335f0043c3a7ff7ede25da4c085e4bb8574a755ab790c",
+      "size": 19701
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-finalization.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-finalization.mjs",
+      "sha256": "cf64e94ad78861708ef83ac2f5d76f4acb3f40871ee3ca9d0a7a1260cdc7eabe",
+      "size": 9473
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-measurement.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-measurement.mjs",
+      "sha256": "6e7cd7927ed4f46d614d18f169804546f0dc24742432d2999a3b4d93af4bc1e7",
+      "size": 3994
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-pre-observation.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-pre-observation.mjs",
+      "sha256": "48a88cdcc38404bf94881219e1baba97dc53610e702250b810ed901b2c2eeef1",
+      "size": 6048
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-telemetry.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-telemetry.mjs",
+      "sha256": "d08b57be7ed6bcd8b6a1cb8746b703190786ed8d421d746babb461cc5dc86467",
+      "size": 5978
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-utilization.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/hw2r-utilization.mjs",
+      "sha256": "e9213d3ce0eb9c0b54c1c3a2543ca6a5bafec143109ce3eeb7ed7e433beca2e8",
+      "size": 3679
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/inventory.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/inventory.mjs",
+      "sha256": "80bacbecebc23fcb8975fb8b9de46ed2428cd6defad9f886478c206c85f035eb",
+      "size": 4999
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/linux-host.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/linux-host.mjs",
+      "sha256": "9450222101af5c51d42c771b9585ea74c10ff95925901dde32494ab1f0fe1eee",
+      "size": 14498
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/planner.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/planner.mjs",
+      "sha256": "63e61833c263c8f3bba735dc97adb08c3c80338d8febf5ee4c987bda84172109",
+      "size": 4494
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/probe-protocol.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/probe-protocol.mjs",
+      "sha256": "04275315a0833b36912f1c80919734c82c217ee0cdb581b87e2682e85bc213a7",
+      "size": 17894
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/provenance.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/provenance.mjs",
+      "sha256": "569d14dd7790e8f9a462e989293ef8992b5a11ec23b02d120b0813f6ea9b3a25",
+      "size": 4183
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/shard.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/shard.mjs",
+      "sha256": "267b942c881733ac50a1f13cb5d448a524db6f70a10e64eb687f1ade812084ab",
+      "size": 8706
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/smoke.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/src/smoke.mjs",
+      "sha256": "288f32cff7ca333bda46d70a9493161af768af7de539ead304af14e0483860be",
+      "size": 5232
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/contract.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/contract.test.mjs",
+      "sha256": "46cb02a331f39ff4fe1b5a550810ba5f0fc3ea2834c0433f6b2174453c063b13",
+      "size": 3922
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/contract.v2.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/contract.v2.test.mjs",
+      "sha256": "e8c80f95d8ccb0deb49b9c68ceb484214b1414ea7551ac3d9acac57fb31b6a72",
+      "size": 7838
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2-runtime.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2-runtime.test.mjs",
+      "sha256": "9887b6c388adb18e462bae07cb4b1a62ccd2f86abdc4530f1615c6c8a7516f55",
+      "size": 1750
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2-static.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2-static.test.mjs",
+      "sha256": "45e09a12d336e8d822918cc6c555e2fdc646b22fc32f35e79de51a2c3a2eb0eb",
+      "size": 5776
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2r-contract.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2r-contract.test.mjs",
+      "sha256": "5cdbca424e216e2521f351c89ed5d71bfd18140a005e1eca1d0440441e8ea0b9",
+      "size": 6062
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2r-implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/hw2r-implementation.test.mjs",
+      "sha256": "a333d8893bac69e98d707b7fd7dcf9f0abdb69ce37e3fa5770b54c2e5fd0e563",
+      "size": 13344
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/implementation.test.mjs",
+      "sha256": "1175d19a18bd57923fd505fe64a8640e586333540080f259360bbeb9a8e76093",
+      "size": 19846
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/pr2a-hardening.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/pr2a-hardening.test.mjs",
+      "sha256": "c42085b48b16a75027a09a98d82870375012e7f44c8ae12dc0ef066c37ea7e01",
+      "size": 3454
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/pre-observation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H1_硬件利用与执行架构/tests/pre-observation.test.mjs",
+      "sha256": "8532476ed2a4dd2c591572fcab370a76de4e2b0feccf15554468d2ceb50083ab",
+      "size": 4550
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/01_H2X_精确执行等价预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/01_H2X_精确执行等价预注册合同.md",
+      "sha256": "d132f9f767e1f3c70e22cb6dbd20d42f02179a45d82765b13236602e715bb081",
+      "size": 3808
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/02_H2N_非逐字节后端分阶段数值资格预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/02_H2N_非逐字节后端分阶段数值资格预注册合同.md",
+      "sha256": "ea41ccc600793c1e0515d75f93213c74b61c7508dc6d610e6b2e76a9f07bc638",
+      "size": 3800
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2n-numerical-backend-qualification.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2n-numerical-backend-qualification.v1.json",
+      "sha256": "fcbdb7547795c762c313e85731ff96a5993f0f73a1db1526b119061f14795745",
+      "size": 8976
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2n-numerical-backend-qualification.v1.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2n-numerical-backend-qualification.v1.schema.json",
+      "sha256": "c32243dcaf62b06b046ca6a672119ffe533ad646c6724699041e5bcc48f7c3d1",
+      "size": 5985
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2x-exact-execution-equivalence.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2x-exact-execution-equivalence.v1.json",
+      "sha256": "d6727674029656e687a15b712eaee334f0eaffc5571445af379aecedc9b0ec0a",
+      "size": 10713
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2x-exact-execution-equivalence.v1.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/contracts/h2x-exact-execution-equivalence.v1.schema.json",
+      "sha256": "177b79b50d9ed6638a365be794ed9703fbfc48e790632378b2b9dfdddcd62fc8",
+      "size": 5270
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/native/h2n_stage0.c",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/native/h2n_stage0.c",
+      "sha256": "379e072c1f38e15fd96fe3fccafdd3ba75e86c096736ad59928ea7137c2395f4",
+      "size": 38589
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/native/h2n_stage0.cl",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/native/h2n_stage0.cl",
+      "sha256": "5ae2b01393d01a2f99aafcd14082e5e2f06456eee8750441f05db64997ac6acf",
+      "size": 8382
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/package.json",
+      "sha256": "3f6289decf1bb280eb9a17b0591499743cdbb20495afdc1263d56b05309bc2f8",
+      "size": 714
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/build-h2n-stage0.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/build-h2n-stage0.mjs",
+      "sha256": "8a2c53af60a409ec72bf947ae8575043fefeee22dc7f139d3c502ae61b6e566c",
+      "size": 3989
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/h2x-case-worker.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/h2x-case-worker.mjs",
+      "sha256": "c831dcb8e36aa26379263f398de6dde0f9e438a5240a19813d6c715c92fb388a",
+      "size": 492
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2-no-result-smoke.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2-no-result-smoke.mjs",
+      "sha256": "e59a39c005b18a14678c51366719647bf11c19c14017f0ae977ce960b1ea58d0",
+      "size": 3168
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2n-no-result-smoke.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2n-no-result-smoke.mjs",
+      "sha256": "b66d10f358e61716327df48e7da34d7d8bda4f4d8a5ea305ba10e669c5a9c6fd",
+      "size": 2809
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2n-stage0-numerical.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2n-stage0-numerical.mjs",
+      "sha256": "da654eb34b28f57a6ead166ce8e3cf1459dffeb17f68cdd8a81a4c9f736c2d7b",
+      "size": 9576
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2x-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2x-qualification.mjs",
+      "sha256": "2d3091563832fb6786a752ebd7bc4b77bd1be1b0761ae08f149308858c4eae64",
+      "size": 8912
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2x-three-environment-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/scripts/run-h2x-three-environment-qualification.mjs",
+      "sha256": "d98e2d4f100f81ec8db662aab53b643b6b8fc02e8ca23d1c0632cd559c0228c8",
+      "size": 13602
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/aggregator.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/aggregator.mjs",
+      "sha256": "5da423e6f1f760c71c3cc07b219c08f76828dea74732793655db0543539a6714",
+      "size": 4679
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/contract.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/contract.mjs",
+      "sha256": "79c19ce84a63fbb6519d7b02e977236b8f184e885102bba7e5987caf78a4e499",
+      "size": 2047
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/definitions.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/definitions.mjs",
+      "sha256": "8db8a08427f5a525c750ddee6ca4e3550380fab581ae4013c1e74a4edd654ed7",
+      "size": 1986
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-full-evidence.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-full-evidence.mjs",
+      "sha256": "96dc5ba4930b5a0ebb3697ee3db7237cac4fc0fe91c893acb1485fbef845f26b",
+      "size": 2427
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-metrics.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-metrics.mjs",
+      "sha256": "f829901468a49fa29f109526ac1bd5ea1239707553e509977e9d4cc7afb1bbba",
+      "size": 10883
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-native.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-native.mjs",
+      "sha256": "46e0710e0c4224ed91c09fbf6e3c83e2d03720b133fce6a9ac58d1c25dfbf606",
+      "size": 11885
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-reference.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-reference.mjs",
+      "sha256": "e6bfa5b6bd1450727581c751fa7cf1f849c3f1d374f3dfb99b8dd4ea7a2bfd54",
+      "size": 6374
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-runner.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2n-stage0-runner.mjs",
+      "sha256": "39f7b397aee5c412fa4c995e4501db4151684e2ff0ea8947bb0bc3147c9c09c5",
+      "size": 4824
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2x-oracle.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/h2x-oracle.mjs",
+      "sha256": "6d030706ddb2f761acb7e443673dc72758d84e3178f41dd28cfdb5d91764f4ea",
+      "size": 4562
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/process-executor.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/process-executor.mjs",
+      "sha256": "df671272380eecfa9235aa5143c7ec15403f552e7e83848ec995bc74f8f5b7d6",
+      "size": 1613
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/repository-preflight.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/repository-preflight.mjs",
+      "sha256": "370ffc7b2f1e2b264e38dd6e89e9a5ec89c2912a808d5228b0afa9f209f5ea68",
+      "size": 11798
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/scheduler.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/scheduler.mjs",
+      "sha256": "700e592a6d361fd3b750f1925aca70e20d958ba150491a3619c4e4895c4e197d",
+      "size": 4067
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/shard.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/src/shard.mjs",
+      "sha256": "49d72ba25c334d70c4ab4b3bd30790a730911cab94965ac46e901fb25c1b24a4",
+      "size": 4960
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/contracts.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/contracts.test.mjs",
+      "sha256": "d50936f016a4299cca76322bfd38ae0704c71116ddb794a4825d941097cf0021",
+      "size": 7971
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/h2n-full-evidence.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/h2n-full-evidence.test.mjs",
+      "sha256": "63deb47909af10b9501ed15c4c4e047008c6b463fd366ea5d9b1b984590123b9",
+      "size": 2274
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/h2x-schedule-identity.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/h2x-schedule-identity.test.mjs",
+      "sha256": "919d039aff06c913883825ab48634bed1b2b603ca4f47c9bd1d3feac2f0409f6",
+      "size": 3108
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/implementation.test.mjs",
+      "sha256": "5a7552b1fb0c1c0d081b251257cf160b6db6c8bdb88c56b2036e31c0039db9b0",
+      "size": 10129
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/pre-observation-gate.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H2_代表性执行与数值资格/tests/pre-observation-gate.test.mjs",
+      "sha256": "daf2c4ba20437829693fa58c40e7fa55f0dec223060f190cc37c354f086f55f5",
+      "size": 1301
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/01_H3_双全量运行产物分片恢复与独立环境预注册合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/01_H3_双全量运行产物分片恢复与独立环境预注册合同.md",
+      "sha256": "f67e68b7acff78e87abfb52a1d7fbd526d0a192d5286a7746f3e7f6130871c3e",
+      "size": 4227
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/contracts/h3-artifact-shard-recovery.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/contracts/h3-artifact-shard-recovery.v1.json",
+      "sha256": "f541b00af81b76645d28500af9dfe61382e26c4a387276b8343dfeadd7fe43c9",
+      "size": 8852
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/contracts/h3-artifact-shard-recovery.v1.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/contracts/h3-artifact-shard-recovery.v1.schema.json",
+      "sha256": "d7f8a17ab6b7dbf8480cb3dfa1725b5a7ff4a52147c7014b8ad7a946c97d3d8d",
+      "size": 8314
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/package.json",
+      "sha256": "e0887b6d4694eb7aa2e4c4a368a663a1a2f7efd93f827e702a3d0eafebf241b0",
+      "size": 336
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/scripts/run-h3p-dry-run.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/scripts/run-h3p-dry-run.mjs",
+      "sha256": "d654157134203bec3decf41efd8d058d139f4e38a90d083f29517236cd9877d8",
+      "size": 3347
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/aggregator.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/aggregator.mjs",
+      "sha256": "3a4be3633335397baa3d60ab0bc3178b9a392c82765d2ae00dd9b4286e93e860",
+      "size": 1607
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/contract.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/contract.mjs",
+      "sha256": "5a3f4955f6a7b9fef6b0804e15deb2ed8b72d07185be5742038804c9771ef7f2",
+      "size": 1538
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/recovery.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/recovery.mjs",
+      "sha256": "a367cf821f004dbc8fb64912abb583ee757285d4b37c621989c9b699f0cbe054",
+      "size": 922
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/shard.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/src/shard.mjs",
+      "sha256": "3c689507861a11a405c5a37a68c5f9990dfb67288ec803f29660c7df65489a84",
+      "size": 4153
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/tests/contracts.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/tests/contracts.test.mjs",
+      "sha256": "5cecfb3a19e0005e07c5c10c8a7f2b3a8d79dc43fefb64b8b172b27f48d77da2",
+      "size": 6176
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/tests/implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/H3_双全量运行产物与恢复合同/tests/implementation.test.mjs",
+      "sha256": "5077806b281400039988b2e490186b7a6460f1dc11cb0d09bc4a18ea2713f2c7",
+      "size": 3564
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/01_S1_结构工具合成资格结果前合同.md",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/01_S1_结构工具合成资格结果前合同.md",
+      "sha256": "ad2f95f7fc8d2a6b208afd7dfe1ffdaae34fd6f7025754af234cbafb8e4ecb13",
+      "size": 1920
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/contracts/qualification-record.schema.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/contracts/qualification-record.schema.json",
+      "sha256": "c67b3f1ea8499fb53205343bef59cbc3e362c0d6bebad05a87507e6c5230bc77",
+      "size": 1084
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/contracts/s1-case-matrix.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/contracts/s1-case-matrix.v1.json",
+      "sha256": "cc2f7a84617b5f34eb69a038e9c408cf93a1f5f44e3520e8479a6db7dfde9768",
+      "size": 960
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/contracts/s1-contract.v1.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/contracts/s1-contract.v1.json",
+      "sha256": "e2b22e590d01751bf097316317b46689f152ac26a35475345c5c936cc0d4d88a",
+      "size": 1050
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/package.json",
+      "sha256": "46902016753fea80d7585f02517e916544eb8080008518091b1078f0831e5ca3",
+      "size": 395
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/scripts/run-synthetic-qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/scripts/run-synthetic-qualification.mjs",
+      "sha256": "11cfd54563d843099430a8f91f62a4b78d09a99b12be2a9fc4d2552650f99bdd",
+      "size": 453
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/src/canonical.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/src/canonical.mjs",
+      "sha256": "64bae40e18dae00a834a8e7fa2bb931e87afc996070fb3b3d88c5b4442c9d455",
+      "size": 1809
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/src/qualification.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/src/qualification.mjs",
+      "sha256": "1d0d43d49a99f7e1420c8f0b5b326aad5a8e6ed9c1c99e6fb8dce14fb283f2b0",
+      "size": 11370
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/src/structural.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/src/structural.mjs",
+      "sha256": "5f4a21a7dd019bd8379a72f0ead121f177029a3d20bba67ef4c42b2122d16305",
+      "size": 10475
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/tests/contract.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/tests/contract.test.mjs",
+      "sha256": "01bddc06662949b37f6cab8f25695a04aea76da23b2d77d578b1c6eece227584",
+      "size": 2718
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/tests/implementation.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/S1_结构分析实验前最小工具/tests/implementation.test.mjs",
+      "sha256": "716fbb9718b30a02d53978bbf11906f468941b5c088136314001bf809a39642f",
+      "size": 5588
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/_shared/package.json",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/_shared/package.json",
+      "sha256": "82cced725ffd6974a3a722649dba34158289d9d1285518e4c7fb4bbaf6c4fb83",
+      "size": 188
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/_shared/src/atomic.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/_shared/src/atomic.mjs",
+      "sha256": "d8f7de4896428584bd23a3a3535f7aa22ac9d240bbfb4408535ca471d5a0a4ef",
+      "size": 5873
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/_shared/src/canonical.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/_shared/src/canonical.mjs",
+      "sha256": "0e3e22b3954998c52c6d6853497a37e02f3b5b6513d4b2fa334fddab60d01836",
+      "size": 1531
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/_shared/src/identity.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/_shared/src/identity.mjs",
+      "sha256": "4e4ea9fd916630703f2d795f7c0ad798c6b94d6ce1e4276378d0cafb123b238d",
+      "size": 1353
+    },
+    {
+      "old": "90_候选工作区/archive/2026-09-02_baseline-9123b5c6/_shared/tests/shared.test.mjs",
+      "new": "03_研究记录/归档/2026-09-02_baseline-9123b5c6/_shared/tests/shared.test.mjs",
+      "sha256": "94aadaf7999431387b16bbb3777bf6db71fb34a05a68bcdb437faa108d62af9c",
+      "size": 3105
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_前向理论修订/check_theory.py",
+      "new": "03_研究记录/维护/2026-09-05_前向理论修订/check_theory.py",
+      "sha256": "582709d81f6e56d337951ed484f49c67bf5b93dc4dbdb6332160121136d1c8ed",
+      "size": 1911
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_前向理论修订/final-validation.txt",
+      "new": "03_研究记录/维护/2026-09-05_前向理论修订/final-validation.txt",
+      "sha256": "273e75bef04ff23a11c072553d0fa5cecdf7ec5153073762adbe01de5e9ade75",
+      "size": 1065
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_前向理论修订/validation.txt",
+      "new": "03_研究记录/维护/2026-09-05_前向理论修订/validation.txt",
+      "sha256": "aa3ac523ef389492f4b960043f99dc98d7b652f2415e4d723df6b5d44bd1972e",
+      "size": 1079
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_数值审查修复/validation.log",
+      "new": "03_研究记录/维护/2026-09-05_数值审查修复/validation.log",
+      "sha256": "04a80fc06f755e36bce2430b0c5ecc2132af350f3d4566e458b941dc66d732a5",
+      "size": 4343
+    },
+    {
+      "old": "90_候选工作区/current/2026-09-05_长期维护整理/validation.txt",
+      "new": "03_研究记录/维护/2026-09-05_长期维护整理/validation.txt",
+      "sha256": "89813f9a68fc380d12f2baf119bd02b54c9b41d880db57d86839d03cf56a34a4",
+      "size": 1350
+    },
+    {
+      "old": "90_候选工作区/current/ACTIVE.md",
+      "new": "03_研究记录/专题/ACTIVE.md",
+      "sha256": "78af1b5c4b116e3eb9f482204f43b92036f9d1cff8d30eca78e9fcf470518665",
+      "size": 415
+    },
+    {
+      "old": "90_候选工作区/交接说明_history.md",
+      "new": "00_项目管理/交接说明_history.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  ],
+  "note": "Hashes describe original tracked bytes, including LFS pointers, not hydrated LFS object validation. Current handoff was relocated and updated. Physics equations and numerical kernels were not modified."
+}

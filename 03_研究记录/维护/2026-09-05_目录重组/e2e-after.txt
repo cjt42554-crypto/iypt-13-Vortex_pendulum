@@ -1,0 +1,5 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 test:e2e
+> node scripts/e2e.mjs
+
+E2E PASS: bidirectional visual parameters, five evidence-contract badges, incompatible-overlay gate, applied/diagnostic CFD summary, stable field rendering, light monochrome UI/plots, and blue-orange scene palette verified.

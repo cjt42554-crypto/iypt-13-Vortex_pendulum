@@ -7,3 +7,6 @@ __pycache__/
 *.py[cod]
 .DS_Store
 **/验证与复现/artifacts/*-unit-tests.txt
+
+# Disposable exploration output; important evidence must be retained explicitly.
+/90_探索工作区/_scratch/
