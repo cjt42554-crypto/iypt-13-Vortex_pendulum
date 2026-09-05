@@ -16,7 +16,7 @@ jobs:
       - name: Package tracked inputs without large research data
         run: |
           git rev-parse HEAD > /tmp/source-commit.txt
-          git archive --format=zip -o /tmp/theory13-source.zip HEAD -- README.md AGENTS.md 00_项目管理 01_最终理论 02_模拟程序 tools .github .gitignore .gitattributes
+          git archive --format=zip -o /tmp/theory13-source.zip HEAD -- README.md AGENTS.md 00_项目管理 01_最终理论 02_模拟程序 tools .github .gitignore
       - uses: actions/upload-artifact@v4
         with:
           name: theory13-source
