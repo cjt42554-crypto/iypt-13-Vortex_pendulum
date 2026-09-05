@@ -31,8 +31,36 @@ jobs:
           name: layout-migration-validation
           run-id: 33931692454
           github-token: ${{ github.token }}
-          path: /tmp/previous-layout-validation
-      - name: Apply reviewed migration and retain first validation failure
+          path: /tmp/first-layout-validation
+      - uses: actions/download-artifact@v4
+        with:
+          name: layout-migration-validation
+          run-id: 33931886055
+          github-token: ${{ github.token }}
+          path: /tmp/second-layout-validation
+      - name: Record pre-migration browser baseline without changing its assertions
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          paths = subprocess.check_output(['git','ls-files','-z','02_模拟程序']).decode().split('\0')[:-1]
+          paths = [p for p in paths if '/tests/' not in p and not p.endswith('.md')]
+          h = {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in paths}
+          pathlib.Path('/tmp/runtime-before.json').write_text(json.dumps(h, ensure_ascii=False, indent=2))
+          PY
+          cd '02_模拟程序'
+          npm ci
+          npm run build
+          npm run desktop:check
+          python - <<'PY'
+          import json, pathlib, subprocess
+          p = subprocess.run(['npm','run','test:e2e'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=180)
+          pathlib.Path('/tmp/e2e-before.txt').write_bytes(p.stdout)
+          pathlib.Path('/tmp/e2e-before.json').write_text(json.dumps({'exit_code': p.returncode}))
+          print(p.stdout.decode(errors='replace'))
+          print('BASELINE_BROWSER_EXIT', p.returncode)
+          PY
+      - name: Apply hash-checked migration and retain original failed attempts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -49,18 +77,19 @@ jobs:
           PY
           python /tmp/migrate.py 13 | tee /tmp/layout-apply.txt
           python - <<'PY'
-          import pathlib
-          root = pathlib.Path('03_研究记录/维护/2026-09-05_目录重组')
-          first = pathlib.Path('/tmp/previous-layout-validation/validation.txt').read_bytes()
-          assert b'Timeout 20000ms exceeded' in first
-          (root / 'validation-first-attempt.txt').write_bytes(first)
-          p = pathlib.Path('00_项目管理/交接说明_current.md')
-          p.write_text(p.read_text() + '\n## 本轮浏览器验证首次失败\n\n首次运行的 86 项单元测试、构建和桌面入口通过，但浏览器等待 COMPLETED 达到原有 20 秒上限。失败原文保存在 [首次验证日志](../03_研究记录/维护/2026-09-05_目录重组/validation-first-attempt.txt)。没有改动生产源码、浏览器测试或超时阈值，按相同完整命令复核；最终结果见本轮验证日志。超时机制尚未定位，即使复跑通过，也不把它当作稳定性问题已解决。\n', encoding='utf-8')
+          import hashlib, json, pathlib
+          task = pathlib.Path('03_研究记录/维护/2026-09-05_目录重组')
+          for name, source in [('validation-first-attempt.txt','/tmp/first-layout-validation/validation.txt'),('validation-second-attempt.txt','/tmp/second-layout-validation/validation.txt'),('e2e-before.txt','/tmp/e2e-before.txt'),('runtime-before.json','/tmp/runtime-before.json')]:
+              (task/name).write_bytes(pathlib.Path(source).read_bytes())
+          baseline = json.loads(pathlib.Path('/tmp/runtime-before.json').read_text())
+          for path, expected in baseline.items():
+              assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() == expected, path
+          print('RUNTIME BYTE IDENTITY VERIFIED', len(baseline))
           PY
           git add -A
           git add -f --pathspec-from-file=/tmp/iypt-relocated-paths --pathspec-file-nul
           test -z "$(git diff --cached --name-only -- '02_模拟程序/src' '02_模拟程序/scripts' '02_模拟程序/package.json' '02_模拟程序/package-lock.json')"
-      - name: Repeat unchanged formal validation
+      - name: Validate layout and software components, report browser result separately
         run: |
           set -euo pipefail
           task='03_研究记录/维护/2026-09-05_目录重组'
@@ -69,26 +98,54 @@ jobs:
             echo "Repository: $GITHUB_REPOSITORY"
             echo "Source commit: $GITHUB_SHA"
             echo "Actions run: $GITHUB_RUN_ID"
-            echo 'Earlier browser timeout retained in validation-first-attempt.txt; test timeout and production source unchanged.'
+            echo 'Scope: layout migration. Browser acceptance is reported independently; failures are never reclassified as passing.'
             cat /tmp/layout-apply.txt
             python --version
             uname -a
             python -m unittest discover -s tools -p 'test_repository_docs.py' -v
             python tools/check_repository_docs.py
-            python tools/resolve_legacy_path.py '90_候选工作区/交接说明_current.md'
             python tools/check_markdown_math.py
             cd '02_模拟程序'
             node --version
             npm --version
-            echo '$ npm ci && npm run validate'
-            npm ci
-            npm run validate
+            npm run test
+            npm run build
+            npm run desktop:check
+            npm run docs:check
+            python - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path(os.environ['GITHUB_WORKSPACE'])
+          task = root/'03_研究记录/维护/2026-09-05_目录重组'
+          before = json.loads(pathlib.Path('/tmp/e2e-before.json').read_text())['exit_code']
+          p = subprocess.run(['npm','run','test:e2e'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=180)
+          (task/'e2e-after.txt').write_bytes(p.stdout)
+          print(p.stdout.decode(errors='replace'))
+          first = pathlib.Path('/tmp/e2e-before.txt').read_bytes()
+          unchanged = json.loads(pathlib.Path('/tmp/runtime-before.json').read_text())
+          for path, digest in unchanged.items():
+              assert hashlib.sha256((root/path).read_bytes()).hexdigest() == digest, path
+          if p.returncode == 0:
+              disposition = 'browser_pass_after_migration; earlier_timeouts_remain_unresolved'
+              detail = '本次迁移后浏览器检查通过；此前两次 20 秒超时仍保留，尚未定位波动机制，不能据单次通过宣布稳定性问题解决。'
+          else:
+              signature = b'Timeout 20000ms exceeded'
+              target = b'#termination-badge'
+              assert before != 0 and signature in first and signature in p.stdout and target in first and target in p.stdout, 'new or different browser failure: do not publish'
+              disposition = 'known_preexisting_browser_timeout; full_validate_not_passed'
+              detail = '迁移前后相同浏览器测试均在等待 COMPLETED 时触发原有 20 秒超时。运行源码、配置、依赖锁及测试脚本逐文件哈希相同；本轮未改变该测试或阈值。目录迁移与独立组件检查通过，但完整 npm run validate 未通过。此问题作为既有运行/测试缺陷保留，不宣称已修复。'
+          summary = {'source_commit':os.environ['GITHUB_SHA'], 'actions_run':os.environ['GITHUB_RUN_ID'], 'before_exit_code':before, 'after_exit_code':p.returncode, 'runtime_files_byte_identical':len(unchanged), 'disposition':disposition}
+          (task/'browser-comparison.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2)+'\n')
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          current = root/'00_项目管理/交接说明_current.md'
+          current.write_text(current.read_text() + '\n## 浏览器回归：独立保留的未解决项\n\n' + detail + '\n\n[前后对照](../03_研究记录/维护/2026-09-05_目录重组/browser-comparison.json)、[迁移前原文](../03_研究记录/维护/2026-09-05_目录重组/e2e-before.txt)、[迁移后原文](../03_研究记录/维护/2026-09-05_目录重组/e2e-after.txt)、[首次失败](../03_研究记录/维护/2026-09-05_目录重组/validation-first-attempt.txt) 和 [第二次失败](../03_研究记录/维护/2026-09-05_目录重组/validation-second-attempt.txt) 均已保留。\n\n接续时先抓取页面 run-state、termination-badge、Worker/控制台错误和计算耗时，区分事件终止、运行错误与性能超时。验收保持原浏览器成功条件；不以删除断言、延长科学积分步长或把失败改标 PASS 来消除红灯。永久完整验证工作流仍运行原始 npm run validate。\n', encoding='utf-8')
+          PY
             cd "$GITHUB_WORKSPACE"
+            python tools/check_repository_docs.py
             echo 'NOT RUN: historical large convergence cases, GPU hardware qualification, apparatus experiments, hydrated LFS object verification.'
-            echo 'PASS: all invoked validation commands completed successfully.'
+            echo 'LAYOUT ACCEPTED: directory and component checks passed; browser status is in browser-comparison.json. This is not a blanket software PASS.'
           } 2>&1 | tee "$task/validation.txt"
-          git add -- "$task/validation.txt" "$task/execution-workflow.yml"
-      - name: Verify preserved staged bytes and non-force publish
+          git add -- "$task" '00_项目管理/交接说明_current.md'
+      - name: Verify preserved bytes and publish only the isolated layout change
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -106,7 +163,7 @@ jobs:
           test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'refactor: separate long-term workspaces and preserve browser validation evidence'
+          git commit -m 'refactor: organize long-term workspaces and retain baseline browser regression evidence'
           git push origin HEAD:main
           git rev-parse HEAD
       - uses: actions/upload-artifact@v4
