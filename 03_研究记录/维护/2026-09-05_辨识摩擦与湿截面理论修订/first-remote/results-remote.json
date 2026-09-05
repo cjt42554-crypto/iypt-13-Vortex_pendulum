@@ -1,0 +1,87 @@
+{
+  "scientific_base": "0ceb7b73c808e1261333a099587d965ee0d31e6c",
+  "source_snapshot": "576dcd807347051106c68dcff37fe07c80fec413",
+  "scope": "Independent synthetic physical subproblems and document contracts; no apparatus validation; no production implementation",
+  "random_seed": 1309052026,
+  "environment": {
+    "python": "3.13.15",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sympy": "1.14.0",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39"
+  },
+  "tests": {
+    "run": 35,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "elapsed_seconds": 0.36402887499999537,
+  "metrics": {
+    "free_stop": {
+      "t": 2.4000000000000026,
+      "angle": 0.8399999999999996,
+      "dissipated": 0.29399999999999993
+    },
+    "wake_triggered_breakaway": {
+      "exact_t": 2.009877852615514,
+      "computed_t": 2.009877852623571,
+      "energy_balance_error": 1.1574075031717257e-14,
+      "final_omega": 0.2574883333497544
+    },
+    "constant_gauge_max_error": 7.944109290391274e-15,
+    "unforced_exact_errors": [
+      1.0501462802277823e-11,
+      6.0473958143114705e-12,
+      4.2537057357686135e-11
+    ],
+    "transient_gram_determinant": 0.7882697019607952,
+    "multifrequency_normalized_singular_values": [
+      1.6098899029975802,
+      1.1289451368920274,
+      0.912841995458334,
+      0.4725574338387891,
+      0.2777523018187785
+    ],
+    "smooth_wake_RK4_refinement": {
+      "steps": [
+        60,
+        120,
+        240,
+        480
+      ],
+      "dt": [
+        0.05,
+        0.025,
+        0.0125,
+        0.00625
+      ],
+      "errors": [
+        7.74205838160175e-07,
+        4.747707534144532e-08,
+        2.959109831569256e-09,
+        1.8502474349225436e-10
+      ],
+      "orders": [
+        4.027414216133292,
+        4.0039959152375255,
+        3.999373123800423
+      ]
+    },
+    "saturated_indistinguishable_max_error": 1.1397537819286234e-10,
+    "drag_random_cases": 150,
+    "drag_torque_max_error": 8.526512829121202e-14,
+    "support_random_cases": 180,
+    "support_max_error": 6.661338147750939e-16,
+    "synthetic_drag_difference": {
+      "baseline_torque": -1.3138618554571437,
+      "directional_torque": -1.807897516356673,
+      "absolute_bound": 0.4940356608995295,
+      "not_apparatus_values": true
+    }
+  },
+  "files": {
+    "theory_sha256": "8f83a2c122ab91152fb8ac5fb4e99885f19a35f47f70b0eba4f723ceae79a600",
+    "verification_sha256": "c41909dea2e81c6e946dda848e5a2d44891f2a4c4a60840e8768d0b594cbb4e5"
+  }
+}

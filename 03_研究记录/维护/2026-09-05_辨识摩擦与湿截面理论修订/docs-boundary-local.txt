@@ -1,0 +1,2 @@
+MARKDOWN MATH PASS: 6 gated files, 587 inline formulas, 237 display formulas
+DOCS PASS: final theory boundaries, forward input/system ordering, equation namespaces, tags and math delimiters are valid.

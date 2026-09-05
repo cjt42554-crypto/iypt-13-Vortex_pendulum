@@ -1,0 +1,40 @@
+test_equations_inputs_and_replaced_claims (__main__.DocumentContracts.test_equations_inputs_and_replaced_claims) ... ok
+test_protocol_and_scope_are_consistent (__main__.DocumentContracts.test_protocol_and_scope_are_consistent) ... ok
+test_acceleration_feedback_change_of_variable (__main__.StickSlipPhysics.test_acceleration_feedback_change_of_variable) ... ok
+test_equal_threshold_monotonic_graph (__main__.StickSlipPhysics.test_equal_threshold_monotonic_graph) ... ok
+test_free_stop_and_dissipation (__main__.StickSlipPhysics.test_free_stop_and_dissipation) ... ok
+test_periodic_friction_work (__main__.StickSlipPhysics.test_periodic_friction_work) ... ok
+test_ramp_breakaway_and_post_release_solution (__main__.StickSlipPhysics.test_ramp_breakaway_and_post_release_solution) ... ok
+test_smooth_creep_is_not_static_friction (__main__.StickSlipPhysics.test_smooth_creep_is_not_static_friction) ... ok
+test_stuck_cycle_condition_and_grazing (__main__.StickSlipPhysics.test_stuck_cycle_condition_and_grazing) ... ok
+test_stuck_wake_grows_and_breaks_away (__main__.StickSlipPhysics.test_stuck_wake_grows_and_breaks_away) ... ok
+test_tanh_low_speed_slope (__main__.StickSlipPhysics.test_tanh_low_speed_slope) ... ok
+test_unequal_graph_requires_stick_priority (__main__.StickSlipPhysics.test_unequal_graph_requires_stick_priority) ... ok
+test_variable_inertia_sliding_energy_identity (__main__.StickSlipPhysics.test_variable_inertia_sliding_energy_identity) ... ok
+test_constant_gauge_dynamics_and_load (__main__.WakeAndIdentification.test_constant_gauge_dynamics_and_load) ... ok
+test_exact_solution_growth_decay_and_zero_growth (__main__.WakeAndIdentification.test_exact_solution_growth_decay_and_zero_growth) ... ok
+test_gram_determinant_and_coefficient_recovery (__main__.WakeAndIdentification.test_gram_determinant_and_coefficient_recovery) ... ok
+test_multifrequency_full_complex_regression (__main__.WakeAndIdentification.test_multifrequency_full_complex_regression) ... ok
+test_polar_forced_equations (__main__.WakeAndIdentification.test_polar_forced_equations) ... ok
+test_reference_factor_two_mapping (__main__.WakeAndIdentification.test_reference_factor_two_mapping) ... ok
+test_rk4_true_refinement_against_exact (__main__.WakeAndIdentification.test_rk4_true_refinement_against_exact) ... ok
+test_scalar_gauge_cannot_erase_span_shape (__main__.WakeAndIdentification.test_scalar_gauge_cannot_erase_span_shape) ... ok
+test_single_frequency_coupling_confounding (__main__.WakeAndIdentification.test_single_frequency_coupling_confounding) ... ok
+test_time_dependent_gauge_needs_connection (__main__.WakeAndIdentification.test_time_dependent_gauge_needs_connection) ... ok
+test_transients_distinguish_same_saturated_pair (__main__.WakeAndIdentification.test_transients_distinguish_same_saturated_pair) ... ok
+test_two_distinct_saturated_models_same_record (__main__.WakeAndIdentification.test_two_distinct_saturated_models_same_record) ... ok
+test_zero_initial_state_and_saturation_frequency (__main__.WakeAndIdentification.test_zero_initial_state_and_saturation_frequency) ... ok
+test_actual_point_velocity_and_omitted_axial_speed (__main__.WetGeometryAndLoads.test_actual_point_velocity_and_omitted_axial_speed) ... ok
+test_aggregate_wake_torque_has_no_extra_factor_two (__main__.WetGeometryAndLoads.test_aggregate_wake_torque_has_no_extra_factor_two) ... ok
+test_force_torque_projection_and_passivity (__main__.WetGeometryAndLoads.test_force_torque_projection_and_passivity) ... ok
+test_full_dry_tangent_and_zero_flow_limits (__main__.WetGeometryAndLoads.test_full_dry_tangent_and_zero_flow_limits) ... ok
+test_partial_width_cusp_and_zero_speed_force (__main__.WetGeometryAndLoads.test_partial_width_cusp_and_zero_speed_force) ... ok
+test_streamwise_and_half_wet_formulas (__main__.WetGeometryAndLoads.test_streamwise_and_half_wet_formulas) ... ok
+test_support_against_independent_boundary_optimization (__main__.WetGeometryAndLoads.test_support_against_independent_boundary_optimization) ... ok
+test_torque_difference_bound_and_coefficient_identity (__main__.WetGeometryAndLoads.test_torque_difference_bound_and_coefficient_identity) ... ok
+test_width_symmetries_and_radius_scaling (__main__.WetGeometryAndLoads.test_width_symmetries_and_radius_scaling) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.243s
+
+OK

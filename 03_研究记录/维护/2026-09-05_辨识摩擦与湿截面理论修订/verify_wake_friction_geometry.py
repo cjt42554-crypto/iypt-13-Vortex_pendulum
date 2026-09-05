@@ -1,0 +1,499 @@
+#!/usr/bin/env python3
+"""Independent synthetic checks for the 2026-09-05 IYPT13 theory revision.
+
+Not an apparatus calibration or a production solver. All synthetic constants below
+are deliberately dimensionless or in explicitly compatible SI units. No fixtures
+from production are imported. Run from any directory; results are saved beside
+this script. numpy, scipy, sympy are required.
+"""
+from __future__ import annotations
+import hashlib
+import json
+import math
+import platform
+from pathlib import Path
+import re
+import sys
+import time
+import unittest
+
+import numpy as np
+import scipy
+from scipy.integrate import solve_ivp, simpson, quad
+from scipy.optimize import minimize_scalar
+import sympy as sy
+
+SEED = 1309052026
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+METRICS: dict[str, object] = {}
+
+
+def wake_rhs(A: complex | np.ndarray, mu: float, ws: float,
+             beta: complex, G: complex | np.ndarray = 0j):
+    return (mu + 1j*ws)*A - beta*np.abs(A)**2*A + G
+
+
+def wake_exact(t, A0: complex, mu: float, ws: float, beta: complex):
+    """Frozen, unforced Stuart-Landau solution, including mu=0 and A0=0."""
+    t = np.asarray(t, dtype=float)
+    if beta.real <= 0 or np.any(t < 0):
+        raise ValueError('Requires beta.real>0 and nonnegative times')
+    q0 = abs(A0)**2
+    if q0 == 0:
+        return np.zeros_like(t, dtype=complex)
+    if mu == 0:
+        den = 1 + 2*beta.real*q0*t
+        q = q0/den
+    else:
+        den = 1 + beta.real*q0*np.expm1(2*mu*t)/mu
+        q = q0*np.exp(2*mu*t)/den
+    integral_q = np.log(den)/(2*beta.real)
+    return A0*np.sqrt(q/q0)*np.exp(1j*(ws*t-beta.imag*integral_q))
+
+
+def support(R: float, xi: float, n: np.ndarray) -> float:
+    if not R > 0 or abs(np.linalg.norm(n)-1) > 1e-10 or not -1 < xi < 1:
+        raise ValueError('support requires R>0, unit n and -1<xi<1')
+    return R if n[1] <= xi else R*(abs(n[0])*math.sqrt(1-xi*xi)+n[1]*xi)
+
+
+def wet_width(R: float, xi: float, direction: np.ndarray) -> float:
+    if R <= 0 or abs(np.linalg.norm(direction)-1) > 1e-10:
+        raise ValueError('Requires positive R and a unit direction')
+    if xi <= -1:
+        return 0.
+    if xi >= 1:
+        return 2*R
+    n = np.array([-direction[1], direction[0]])
+    return support(R, xi, n)+support(R, xi, -n)
+
+
+def independent_support(R: float, xi: float, n: np.ndarray) -> float:
+    """Maximize over the wet circular arc and chord, not the support formula."""
+    a, b = math.pi-math.asin(xi), 2*math.pi+math.asin(xi)
+    ph = np.linspace(a, b, 257)
+    value = lambda phi: R*(n[0]*math.cos(phi)+n[1]*math.sin(phi))
+    vals = np.array([value(p) for p in ph])
+    i = int(np.argmax(vals))
+    best = max(value(a), value(b))  # chord extrema are at its endpoints
+    # Refine an edge cell too: the continuous maximum may sit just inside it.
+    if len(ph) > 1:
+        opt = minimize_scalar(lambda p: -value(p), method='bounded',
+                              bounds=(ph[max(0,i-1)], ph[min(len(ph)-1,i+1)]),
+                              options={'xatol': 2e-14, 'maxiter': 200})
+        if not opt.success:
+            raise RuntimeError(opt.message)
+        best = max(best, -float(opt.fun))
+    return best
+
+
+def rhs_slip(t, x, *, Jfun, Vprime, cb, tk, side, load, gamma=(0j,0j,0j),
+             mu=-.2, ws=1.3, beta=.6+.2j):
+    """Smooth sliding branch only; zero crossings must be located externally."""
+    theta, w, ar, ai, _work = x
+    A = complex(ar, ai)
+    J, Jp = Jfun(theta)
+    qd, qw, qc = load(t, theta, w, A)
+    alpha = (qd+qw+qc-Vprime(theta)-.5*Jp*w*w-cb*w-side*tk)/J
+    da = wake_rhs(A, mu, ws, beta,
+                  gamma[0]*theta+gamma[1]*w+gamma[2]*alpha)
+    power = (qd+qw+qc)*w-cb*w*w-tk*abs(w)
+    return np.array([w, alpha, da.real, da.imag, power])
+
+
+def integrate_checked(fun, interval, y0, **kwargs):
+    sol = solve_ivp(fun, interval, y0, method='DOP853', rtol=2e-11,
+                    atol=2e-13, **kwargs)
+    if not sol.success:
+        raise RuntimeError(sol.message)
+    return sol
+
+
+class WakeAndIdentification(unittest.TestCase):
+    def test_constant_gauge_dynamics_and_load(self):
+        rng = np.random.default_rng(SEED)
+        errors=[]
+        for _ in range(120):
+            A = complex(*rng.normal(size=2)); L=complex(*rng.normal(size=2))
+            beta=.8+.3j; gam=rng.normal(size=3)+1j*rng.normal(size=3)
+            x=rng.normal(size=3); c=math.exp(rng.uniform(-1,1))*np.exp(1j*rng.uniform(-3,3))
+            old=wake_rhs(A,.4,1.8,beta,gam@x)
+            new=wake_rhs(c*A,.4,1.8,beta/abs(c)**2,(c*gam)@x)
+            errors.append(abs(new-c*old))
+            self.assertAlmostEqual((L*A).real, ((L/c)*(c*A)).real, places=12)
+        self.assertLess(max(errors), 2e-12)
+        METRICS['constant_gauge_max_error']=max(errors)
+
+    def test_time_dependent_gauge_needs_connection(self):
+        t=.37; A=.4+.3j; da=wake_rhs(A,.5,2.,.7+.2j)
+        c=np.exp((.2+.4j)*t); dc=(.2+.4j)*c
+        naive=wake_rhs(c*A,.5,2.,(.7+.2j)/abs(c)**2)
+        exact=dc*A+c*da
+        self.assertLess(abs(exact-naive-(dc/c)*(c*A)),1e-14)
+        self.assertGreater(abs(exact-naive),.1)
+
+    def test_polar_forced_equations(self):
+        rng=np.random.default_rng(SEED+1)
+        for _ in range(100):
+            a=rng.uniform(.05,2); psi=rng.uniform(-np.pi,np.pi); G=complex(*rng.normal(size=2))
+            A=a*np.exp(1j*psi); z=wake_rhs(A,.7,1.2,.8+.3j,G)*np.exp(-1j*psi)
+            self.assertAlmostEqual(z.real, .7*a-.8*a**3+(G*np.exp(-1j*psi)).real,places=12)
+            self.assertAlmostEqual(z.imag/a,1.2-.3*a*a+(G*np.exp(-1j*psi)).imag/a,places=12)
+
+    def test_exact_solution_growth_decay_and_zero_growth(self):
+        t=np.linspace(0,3,401); errors=[]
+        for mu in [-.7,0.,.8]:
+            A0=.13+.21j
+            sol=integrate_checked(lambda t,y:wake_rhs(y,mu,1.7,.9+.4j), (0,3), [A0],t_eval=t)
+            err=np.max(abs(sol.y[0]-wake_exact(t,A0,mu,1.7,.9+.4j)))
+            errors.append(float(err)); self.assertLess(err,1e-9)
+        METRICS['unforced_exact_errors']=errors
+
+    def test_zero_initial_state_and_saturation_frequency(self):
+        self.assertEqual(wake_rhs(0j,1.,2.,1.+.2j),0j)
+        self.assertTrue(np.all(wake_exact([0,1,2],0j,1.,2.,1.+.2j)==0))
+        A=math.sqrt(2/.5)*np.exp(.3j)
+        self.assertAlmostEqual((wake_rhs(A,2.,3.,.5+.4j)/A).imag,1.4,places=13)
+        self.assertAlmostEqual((wake_rhs(A,2.,3.,.5+.4j)/A).real,0.,places=13)
+
+    def test_two_distinct_saturated_models_same_record(self):
+        t=np.linspace(0,6,601)
+        a=integrate_checked(lambda t,y:wake_rhs(y,1.,2.,1.+.2j),(0,6),[1.+0j],t_eval=t).y[0]
+        b=integrate_checked(lambda t,y:wake_rhs(y,2.,2.5,2.+.7j),(0,6),[1.+0j],t_eval=t).y[0]
+        err=float(np.max(abs(a-b)))
+        self.assertLess(err,1e-9)
+        self.assertLess(np.max(abs(a-np.exp(1.8j*t))),1e-9)
+        METRICS['saturated_indistinguishable_max_error']=err
+
+    def test_transients_distinguish_same_saturated_pair(self):
+        t=np.linspace(0,3,301)
+        a=wake_exact(t,.2,1,2,1+.2j); b=wake_exact(t,.2,2,2.5,2+.7j)
+        self.assertGreater(np.max(abs(a-b)),.2)
+
+    def test_gram_determinant_and_coefficient_recovery(self):
+        t=np.linspace(0,4,1001); A=wake_exact(t,.2+.1j,.7,1.2,.9+.3j)
+        x=abs(A)**2; w=1+.3*np.cos(t)
+        G=np.array([[simpson(w,x=t),-simpson(w*x,x=t)],[-simpson(w*x,x=t),simpson(w*x*x,x=t)]])
+        mean=simpson(w*x,x=t)/simpson(w,x=t)
+        identity=simpson(w,x=t)*simpson(w*(x-mean)**2,x=t)
+        self.assertAlmostEqual(np.linalg.det(G),identity,places=12)
+        Z=wake_rhs(A,.7,1.2,.9+.3j)/A
+        coeff=np.linalg.lstsq(np.column_stack([np.ones_like(x),-x]),Z,rcond=None)[0]
+        np.testing.assert_allclose(coeff,[.7+1.2j,.9+.3j],atol=1e-13)
+        sat=np.column_stack([np.ones_like(x),-np.ones_like(x)*(.7/.9)])
+        self.assertEqual(np.linalg.matrix_rank(sat),1)
+        METRICS['transient_gram_determinant']=float(np.linalg.det(G))
+
+    def test_single_frequency_coupling_confounding(self):
+        t=np.linspace(0,7,1001); Om=1.3; theta=np.cos(Om*t); omega=-Om*np.sin(Om*t); alpha=-Om**2*theta
+        g=np.array([.3+.2j,.1-.1j,.4+.05j]); delta=.2+.3j
+        gp=g+np.array([Om**2*delta,0j,delta])
+        x=np.column_stack([theta,omega,alpha])
+        np.testing.assert_allclose(x@g,x@gp,atol=1e-14)
+        self.assertEqual(np.linalg.matrix_rank(x),2)
+
+    def test_multifrequency_full_complex_regression(self):
+        g=np.array([.2+.3j,.1-.04j,.05+.02j])
+        def motion(t):
+            return np.array([.15*np.cos(.7*t)+.09*np.sin(1.3*t)+.04*np.cos(2.1*t),
+                -.105*np.sin(.7*t)+.117*np.cos(1.3*t)-.084*np.sin(2.1*t),
+                -.0735*np.cos(.7*t)-.1521*np.sin(1.3*t)-.1764*np.cos(2.1*t)])
+        t=np.linspace(0,15,3001)
+        sol=integrate_checked(lambda t,y:wake_rhs(y,-.2,1.7,.3+.1j,g@motion(t)),(0,15),[.1+.2j],t_eval=t)
+        A=sol.y[0]; mot=motion(t).T
+        z=np.column_stack([A,-abs(A)**2*A,mot]); scale=np.linalg.norm(z,axis=0)
+        sing=np.linalg.svd(z/scale,compute_uv=False)
+        self.assertGreater(sing[-1],.02)
+        dy=wake_rhs(A,-.2,1.7,.3+.1j,mot@g)
+        c=np.linalg.lstsq(z,dy,rcond=None)[0]
+        np.testing.assert_allclose(c,np.r_[[-.2+1.7j,.3+.1j],g],atol=2e-12)
+        METRICS['multifrequency_normalized_singular_values']=sing.tolist()
+
+    def test_reference_factor_two_mapping(self):
+        A=.3+.4j; G=.12-.1j; beta=.7+.2j
+        self.assertAlmostEqual(2*A.real,(2*A).real)
+        self.assertLess(abs(wake_rhs(2*A,.6,1.1,beta/4,2*G)-2*wake_rhs(A,.6,1.1,beta,G)),1e-14)
+
+    def test_scalar_gauge_cannot_erase_span_shape(self):
+        chi=np.array([1.,1j]); weights1=np.array([1.,1.]); weights2=np.array([1.,2.])
+        equivalent=weights1@chi/weights1.sum()
+        self.assertEqual(weights1@chi,equivalent*weights1.sum())
+        self.assertGreater(abs(weights2@chi-equivalent*weights2.sum()),.7)
+        c=2*np.exp(.8j)
+        self.assertAlmostEqual(abs((chi/c)[1]/(chi/c)[0]-chi[1]/chi[0]),0.)
+
+    def test_rk4_true_refinement_against_exact(self):
+        T=3.; A0=.2+.1j; rhs=lambda A:wake_rhs(A,.7,1.9,.8+.3j)
+        counts=[60,120,240,480]; errors=[]
+        for N in counts:
+            h=T/N; A=A0
+            for _ in range(N):
+                k1=rhs(A); k2=rhs(A+h*k1/2); k3=rhs(A+h*k2/2); k4=rhs(A+h*k3)
+                A+=h*(k1+2*k2+2*k3+k4)/6
+            errors.append(float(abs(A-wake_exact(T,A0,.7,1.9,.8+.3j))))
+        orders=np.log2(np.array(errors[:-1])/errors[1:])
+        self.assertTrue(np.all(np.diff(errors)<0)); self.assertTrue(np.all(orders>3.8)); self.assertTrue(np.all(orders<4.3))
+        METRICS['smooth_wake_RK4_refinement']={'steps':counts,'dt':[T/n for n in counts],'errors':errors,'orders':orders.tolist()}
+
+
+class StickSlipPhysics(unittest.TestCase):
+    def test_tanh_low_speed_slope(self):
+        w,cb,tc,eps=sy.symbols('w cb tc eps',positive=True)
+        result=sy.diff(cb*w+tc*sy.tanh(w/eps),w).subs(w,0)
+        self.assertEqual(sy.simplify(result-cb-tc/eps),0)
+        self.assertEqual(sy.limit((cb*w+tc*sy.tanh(w/eps))/w,w,0),cb+tc/eps)
+
+    def test_smooth_creep_is_not_static_friction(self):
+        eps=.03; tc=.7; T=.3
+        w=eps*np.arctanh(T/tc)
+        self.assertGreater(w,0)
+        self.assertAlmostEqual(tc*np.tanh(w/eps),T,places=14)
+        self.assertLess(T,tc)  # ideal equal-threshold friction can balance at w=0
+
+    def test_equal_threshold_monotonic_graph(self):
+        rng=np.random.default_rng(SEED+2)
+        pairs=[(0.,rng.uniform(-1,1)) for _ in range(30)]
+        pairs += [(float(w),float(np.sign(w))) for w in rng.normal(size=50)]
+        for v,a in pairs:
+            for w,b in pairs:
+                self.assertGreaterEqual((v-w)*(a-b),-1e-14)
+
+    def test_unequal_graph_requires_stick_priority(self):
+        ts,tk,T,J=1.,.4,.7,2.
+        self.assertLess(T,ts)
+        accel=(T-tk)/J
+        self.assertGreater(accel,0.)
+        # Two distinct absolutely continuous solutions of the unselected graph:
+        # rest with friction T; slide with w=accel*t, friction tk for t>0.
+        t=np.linspace(.01,1,50)
+        np.testing.assert_allclose(J*np.full_like(t,accel)+tk,T,atol=1e-15)
+        self.assertLessEqual(abs(T),ts)
+
+    def test_free_stop_and_dissipation(self):
+        J,tk,w0=1.2,.35,.7
+        stop=lambda t,x:x[1]
+        stop.terminal=True; stop.direction=-1
+        fun=lambda t,x:[x[1],-tk/J,tk*x[1]]
+        sol=integrate_checked(fun,(0,5),[0.,w0,0.],events=stop)
+        ts=float(sol.t_events[0][0]); end=sol.y_events[0][0]
+        self.assertAlmostEqual(ts,J*w0/tk,places=11)
+        self.assertAlmostEqual(end[0],J*w0*w0/(2*tk),places=11)
+        self.assertAlmostEqual(end[2],J*w0*w0/2,places=11)
+        METRICS['free_stop']={'t':ts,'angle':float(end[0]),'dissipated':float(end[2])}
+
+    def test_ramp_breakaway_and_post_release_solution(self):
+        for ts,tk in [(1.,.6),(.6,.6),(0.,0.)]:
+            J,a=1.3,.8; tb=ts/a; u=.7
+            sol=integrate_checked(lambda t,x:[x[1],(a*t-tk)/J],(tb,tb+u),[0.,0.])
+            expected=[(ts-tk)*u*u/(2*J)+a*u**3/(6*J),(ts-tk)*u/J+a*u*u/(2*J)]
+            np.testing.assert_allclose(sol.y[:,-1],expected,atol=1e-12)
+            self.assertGreaterEqual(sol.y[1].min(),-1e-14)
+
+    def test_acceleration_feedback_change_of_variable(self):
+        rng=np.random.default_rng(SEED+3); g2=.3+.2j
+        for _ in range(30):
+            A=complex(*rng.normal(size=2)); w=float(rng.normal()); alpha=float(rng.normal())
+            f=wake_rhs(A,.2,1.1,.4+.2j,.1*w)
+            da=f+g2*alpha
+            self.assertLess(abs((da-g2*alpha)-f),1e-14)
+            B=A-g2*w
+            self.assertLess(abs(B+g2*w-A),1e-14)
+
+    def test_stuck_wake_grows_and_breaks_away(self):
+        q0=.1**2; threshold=.6
+        expected=.5*np.log((threshold**2/(1-threshold**2))/(q0/(1-q0)))
+        event=lambda t,y:y[0]-threshold
+        event.terminal=True; event.direction=1
+        stick=integrate_checked(lambda t,y:[y[0]-y[0]**3],(0,5),[.1],events=event,dense_output=True)
+        tb=float(stick.t_events[0][0]); self.assertAlmostEqual(tb,expected,places=8)
+        self.assertGreater(stick.y[0,-1],5*stick.y[0,0])
+        # Post-switch: A is continuous; its derivative includes actual alpha.
+        load=lambda t,th,w,A:(-.1*w*np.sqrt(1+w*w), A.real, 0.)
+        Jfun=lambda th:(1+.1*np.sin(th)**2,.2*np.sin(th)*np.cos(th))
+        vp=lambda th:.2*th
+        fun=lambda t,x:rhs_slip(t,x,Jfun=Jfun,Vprime=vp,cb=.1,tk=.4,side=1,
+                  load=load,gamma=(.01j,.05,.1+.02j),mu=1,ws=0,beta=1.+0j)
+        x0=[0.,0.,threshold,0.,0.]
+        sliding=integrate_checked(fun,(tb,tb+.8),x0,dense_output=True)
+        self.assertTrue(np.all(sliding.y[1]>=-1e-14))
+        th,w=sliding.y[:2]; E=.5*(1+.1*np.sin(th)**2)*w*w+.1*th*th
+        err=float(np.max(abs(E-sliding.y[4])))
+        self.assertLess(err,2e-10)
+        before=threshold-threshold**3
+        after=complex(*fun(tb,np.array(x0))[2:4])
+        self.assertLess(abs(after-before-(.1+.02j)*.2),1e-13)
+        METRICS['wake_triggered_breakaway']={'exact_t':float(expected),'computed_t':tb,'energy_balance_error':err,'final_omega':float(w[-1])}
+
+    def test_stuck_cycle_condition_and_grazing(self):
+        rng=np.random.default_rng(SEED+4)
+        for _ in range(20):
+            Tb=float(rng.uniform(-1,1)); L=complex(*rng.normal(size=2)); a=.7
+            phase=0. if Tb>=0 else math.pi
+            A=a*np.exp(1j*(phase-np.angle(L)))
+            self.assertAlmostEqual(abs(Tb+(L*A).real),abs(Tb)+abs(L)*a,places=12)
+        ts=1.; times=np.linspace(-.2,.2,101)
+        grazing=1-times**2
+        self.assertTrue(np.all(abs(grazing)<=ts))
+        crossing=1+times
+        self.assertTrue(np.any(abs(crossing[times>0])>ts))
+
+    def test_variable_inertia_sliding_energy_identity(self):
+        th,w,al=sy.symbols('th w al',real=True)
+        qd,qw,qc,cb,tk=sy.symbols('qd qw qc cb tk',real=True)
+        J=1+sy.sin(th)**2/10; V=th**2/5
+        alpha=(qd+qw+qc-sy.diff(V,th)-sy.diff(J,th)*w**2/2-cb*w-tk)/J
+        Edot=sy.diff(J,th)*w**3/2+J*w*alpha+sy.diff(V,th)*w
+        self.assertEqual(sy.simplify(Edot-((qd+qw+qc)*w-cb*w*w-tk*w)),0)
+
+    def test_periodic_friction_work(self):
+        theta_amp,Om,cb,tk=.3,1.7,.2,.08
+        # Sliding almost everywhere, prescribed sine; zero-speed instants do no work.
+        f=lambda t:cb*(theta_amp*Om*np.cos(Om*t))**2+tk*abs(theta_amp*Om*np.cos(Om*t))
+        T=2*np.pi/Om
+        loss=sum(quad(f,i*T/4,(i+1)*T/4,epsabs=1e-12,epsrel=1e-12)[0] for i in range(4))
+        exact=np.pi*cb*theta_amp**2*Om+4*tk*theta_amp
+        self.assertAlmostEqual(loss,exact,places=12)
+
+
+class WetGeometryAndLoads(unittest.TestCase):
+    def test_support_against_independent_boundary_optimization(self):
+        rng=np.random.default_rng(SEED+5); errors=[]
+        for _ in range(180):
+            R=float(rng.uniform(.003,1.)); xi=float(rng.uniform(-.999,.999)); phi=float(rng.uniform(-np.pi,np.pi)); n=np.array([np.cos(phi),np.sin(phi)])
+            a=support(R,xi,n); b=independent_support(R,xi,n)
+            errors.append(abs(a-b)); self.assertLess(abs(a-b),3e-11)
+        METRICS['support_random_cases']=len(errors); METRICS['support_max_error']=max(errors)
+
+    def test_full_dry_tangent_and_zero_flow_limits(self):
+        for direction in [np.array([1.,0.]),np.array([0.,1.]),np.array([.6,.8])]:
+            self.assertEqual(wet_width(.7,-1,direction),0.)
+            self.assertEqual(wet_width(.7,-2,direction),0.)
+            self.assertEqual(wet_width(.7,1,direction),1.4)
+            self.assertEqual(wet_width(.7,2,direction),1.4)
+            self.assertLess(wet_width(.7,-1+1e-12,direction),3e-6)
+            self.assertLess(abs(wet_width(.7,1-1e-12,direction)-1.4),3e-6)
+        # If C_D behaves as 1/v, v^2 C_D still tends to zero.
+        speeds=np.array([1e-3,1e-5,1e-7]); force=speeds**2*(1+1/speeds)
+        self.assertTrue(np.all(np.diff(force)<0)); self.assertLess(force[-1],2e-7)
+
+    def test_streamwise_and_half_wet_formulas(self):
+        for xi in np.linspace(-1,1,51):
+            self.assertAlmostEqual(wet_width(.4,float(xi),np.array([1.,0.])),.4*(1+xi),places=13)
+        for beta in np.linspace(-np.pi,np.pi,101):
+            d=np.array([np.cos(beta),np.sin(beta)])
+            self.assertAlmostEqual(wet_width(.4,0.,d),.4*(1+abs(np.sin(beta))),places=13)
+
+    def test_width_symmetries_and_radius_scaling(self):
+        rng=np.random.default_rng(SEED+6)
+        for _ in range(100):
+            xi=float(rng.uniform(-.99,.99)); phi=float(rng.uniform(-3,3));d=np.array([np.cos(phi),np.sin(phi)])
+            b=wet_width(.3,xi,d)
+            self.assertAlmostEqual(wet_width(.3,xi,-d),b,places=13)
+            self.assertAlmostEqual(wet_width(.9,xi,d),3*b,places=13)
+            self.assertAlmostEqual(wet_width(.3,xi,np.array([-d[0],d[1]])),b,places=13)
+            self.assertGreaterEqual(b,0.);self.assertLessEqual(b,.6+1e-14)
+
+    def test_force_torque_projection_and_passivity(self):
+        rng=np.random.default_rng(SEED+7)
+        ex=np.array([1.,0.,0.]); maxerr=0.
+        for _ in range(150):
+            th=float(rng.uniform(-.8,.8)); r=float(rng.uniform(.1,1)); R=.02
+            w=float(rng.uniform(-3,3));U=float(rng.uniform(-2,2));xi=float(rng.uniform(-.99,.99))
+            d=np.array([0.,np.sin(th),-np.cos(th)]);t=np.array([0.,np.cos(th),np.sin(th)])
+            rel=U*ex-r*w*t;v=np.linalg.norm(rel);cd=float(rng.uniform(.1,3));rho=1000.
+            dr=np.array([U,-np.sign(np.sin(th))*r*w])/v
+            b=wet_width(R,xi,dr); F=.5*rho*v*b*cd*rel
+            Q=float(np.dot(ex,np.cross(r*d,F)))
+            expected=-.5*rho*v*b*cd*r*r*w
+            maxerr=max(maxerr,abs(Q-expected));self.assertAlmostEqual(Q,expected,places=10)
+            self.assertLessEqual(Q*w,1e-12)
+        METRICS['drag_random_cases']=150;METRICS['drag_torque_max_error']=maxerr
+
+    def test_torque_difference_bound_and_coefficient_identity(self):
+        r=np.linspace(.1,.8,501);omega=.6;R=.03;U=.3+.2*r;v=np.hypot(U,r*omega);xi=np.linspace(-.9,.9,len(r));bw=R*(1+xi)
+        bd=np.array([wet_width(R,float(x),np.array([u,-rr*omega])/vv) for x,u,rr,vv in zip(xi,U,r,v)])
+        old=1+.1*r;new=.9+.4*r;rho=1000.
+        qo=-.5*rho*omega*simpson(v*r*r*bw*old,x=r)
+        qn=-.5*rho*omega*simpson(v*r*r*bd*new,x=r)
+        diff=-.5*rho*omega*simpson(v*r*r*(bd*new-bw*old),x=r)
+        bound=.5*rho*abs(omega)*simpson(v*r*r*abs(bd*new-bw*old),x=r)
+        self.assertAlmostEqual(qn-qo,diff,places=12);self.assertLessEqual(abs(diff),bound+1e-12)
+        compensated=bw*old/bd
+        np.testing.assert_allclose(bd*compensated,bw*old,atol=1e-14)
+        METRICS['synthetic_drag_difference']={'baseline_torque':float(qo),'directional_torque':float(qn),'absolute_bound':float(bound),'not_apparatus_values':True}
+
+    def test_actual_point_velocity_and_omitted_axial_speed(self):
+        th=.45;r=.37;u=.01;vc=-.015;omega=.8
+        def pos(q):
+            return np.array([u,r*np.sin(q)+vc*np.cos(q),-r*np.cos(q)+vc*np.sin(q)])
+        d=np.array([0,np.sin(th),-np.cos(th)]);t=np.array([0,np.cos(th),np.sin(th)])
+        exact=omega*(r*t-vc*d);fd=(pos(th+1e-6*omega)-pos(th-1e-6*omega))/(2e-6)
+        np.testing.assert_allclose(fd,exact,atol=5e-11)
+        self.assertAlmostEqual(np.linalg.norm(exact-r*omega*t),abs(vc*omega),places=14)
+
+    def test_partial_width_cusp_and_zero_speed_force(self):
+        R=.04;h=1e-7
+        plus=wet_width(R,0.,np.array([np.cos(h),np.sin(h)]));zero=R
+        minus=wet_width(R,0.,np.array([np.cos(-h),np.sin(-h)]))
+        self.assertAlmostEqual((plus-zero)/h,R,places=7)
+        self.assertAlmostEqual((zero-minus)/h,-R,places=7)
+        # Width has a cusp; velocity-squared force still vanishes at zero velocity.
+        self.assertLess(plus*h*h,1e-14)
+
+    def test_aggregate_wake_torque_has_no_extra_factor_two(self):
+        r=np.linspace(.1,.8,801);U=.5;bw=.02*(1+np.sin(r));w=.3;D=.04;rho=1000.
+        v=np.hypot(U,r*w);tdot=U/v;chiL=np.exp(.4j*r);chiM=.1*np.exp(-.2j*r);A=.3+.2j
+        CL=2*np.real(chiL*A);CM=2*np.real(chiM*A)
+        direct=.5*rho*U*U*simpson(bw*(r*tdot*CL+D*CM),x=r)
+        L=rho*U*U*(simpson(bw*(r*tdot*chiL.real+D*chiM.real),x=r)+1j*simpson(bw*(r*tdot*chiL.imag+D*chiM.imag),x=r))
+        self.assertAlmostEqual(direct,(L*A).real,places=12)
+
+
+class DocumentContracts(unittest.TestCase):
+    def test_equations_inputs_and_replaced_claims(self):
+        s=(ROOT/'01_最终理论/01-前向预测理论.md').read_text()
+        for tag in ['F6.2a','F6.10','F12.7','F12.9','F13.2','F13.9']:
+            self.assertIn('\\tag{'+tag+'}',s)
+        for name in ['SS-v1','DW-v1','SS-DW-v1']:
+            self.assertIn(name,s)
+        self.assertLess(s.index('#### G.'),s.index('### 0.3'))
+        self.assertNotIn('因此只观测摆角时，可辨识对象是',s)
+        self.assertNotIn('\\omega_s-\\omega,',s)
+        self.assertIn('不清零或冻结 $A$',s)
+        for char in s:
+            self.assertTrue(ord(char)>=32 or char in '\n\r\t')
+
+    def test_protocol_and_scope_are_consistent(self):
+        p=ROOT/'01_最终理论'
+        protocol=(p/'04-实验辨识、标定与留出预测协议.md').read_text()
+        self.assertIn('单个复尺度不能把一般的空间相干函数',protocol)
+        self.assertIn('\\beta_p=\\beta/4',protocol)
+        self.assertIn('\\mathbf\\Sigma_{cp}',protocol)
+        self.assertIn('没有发生事件',protocol)
+        for f in ['02-前向预测理论的数值计算理论.md','03-结构性理论.md']:
+            s=(p/f).read_text();self.assertIn('SS',s);self.assertIn('DW',s)
+        self.assertEqual((ROOT/'00_项目管理/交接说明_history.md').stat().st_size,0)
+
+
+def main() -> int:
+    start=time.perf_counter()
+    suite=unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__])
+    result=unittest.TextTestRunner(verbosity=2).run(suite)
+    payload={
+        'scientific_base':'0ceb7b73c808e1261333a099587d965ee0d31e6c',
+        'source_snapshot':'576dcd807347051106c68dcff37fe07c80fec413',
+        'scope':'Independent synthetic physical subproblems and document contracts; no apparatus validation; no production implementation',
+        'random_seed':SEED,
+        'environment':{'python':platform.python_version(),'numpy':np.__version__,'scipy':scipy.__version__,'sympy':sy.__version__,'platform':platform.platform()},
+        'tests':{'run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'skipped':len(result.skipped)},
+        'elapsed_seconds':time.perf_counter()-start,
+        'metrics':METRICS,
+        'files':{'theory_sha256':hashlib.sha256((ROOT/'01_最终理论/01-前向预测理论.md').read_bytes()).hexdigest(),
+                 'verification_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()},
+    }
+    (HERE/'results.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n')
+    return 0 if result.wasSuccessful() else 1
+
+if __name__=='__main__':
+    raise SystemExit(main())
