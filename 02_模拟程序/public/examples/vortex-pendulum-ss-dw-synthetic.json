@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "3.0.0",
+  "problemId": "iypt-2027-vortex-pendulum",
+  "backend": "forward",
+  "geometry": {
+    "topology": "P0",
+    "radius": 0.003,
+    "topDistance": 0.04,
+    "bottomDistance": 0.18,
+    "pivotHeight": 0.07,
+    "channelWidth": 0.15,
+    "waterDepth": 0.12,
+    "observationDistance": 0.13,
+    "maximumAngle": 0.55
+  },
+  "body": {
+    "movingMass": 0.035,
+    "centerOfMassDistance": 0.1,
+    "dryMomentOfInertia": 0.003
+  },
+  "fluid": {
+    "density": 998.2,
+    "kinematicViscosity": 1.004e-06,
+    "surfaceTension": 0.072,
+    "gravity": 9.80665,
+    "flowSpeed": 0.017,
+    "flowRampTime": 0,
+    "flowModulationAmplitude": 0,
+    "flowModulationFrequency": 0.1
+  },
+  "support": {
+    "referenceAngle": 0,
+    "linearStiffness": 0,
+    "cubicStiffness": 0,
+    "viscousDamping": 3e-05,
+    "coulombFriction": 0,
+    "frictionSmoothingSpeed": 0.01,
+    "staticFrictionTorque": 0.002,
+    "kineticFrictionTorque": 0.001
+  },
+  "rom": {
+    "model": "complex-stuart-landau",
+    "coefficientSetId": "illustrative-literature-prior-v1",
+    "coefficientSource": "literature-prior",
+    "addedMassCoefficient": 1,
+    "sectionalDragCoefficient": 1.2,
+    "strouhalNumber": 0.2,
+    "referenceHopfReynolds": 47,
+    "hopfGrowthSlope": 0.05,
+    "cubicSaturation": 0.1,
+    "nonlinearFrequencyShift": 0.02,
+    "zeroFlowWakeDecayTime": 0.5,
+    "wakeActivationSpeed": 0.001,
+    "calibrationVelocityFloor": 0.01,
+    "couplingThetaReal": 0,
+    "couplingThetaImaginary": 0,
+    "couplingOmegaReal": 0.1,
+    "couplingOmegaImaginary": 0,
+    "couplingAccelerationReal": 0.08,
+    "couplingAccelerationImaginary": 0,
+    "liftOutputReal": 1.2,
+    "liftOutputImaginary": 0,
+    "finiteSpanCoherence": 0.65,
+    "calibrationMinReynolds": 0,
+    "calibrationMaxReynolds": 100000000.0,
+    "calibrationMaxAbsAngle": 1.5,
+    "calibrationMaxVelocityRatio": 100000000.0,
+    "calibrationMaxNormalizedInflowRate": 100000000.0,
+    "modelId": "VP-FWD-P0-SL1-SS-DW-v1",
+    "inputClassification": "synthetic-only",
+    "wetSupportMode": "synthetic-only",
+    "wetSpanDefinition": "streamwise-projected-area-over-diameter",
+    "calibrationMinWetSpan": 0,
+    "dragWidthDefinition": "relative-flow-normal-wet-width",
+    "wakeGauge": {
+      "schemaVersion": "VP-WAKE-GAUGE-METADATA-v1",
+      "id": "two-real-reference-output-v1",
+      "modelId": "VP-FWD-P0-SL1-SS-DW-v1",
+      "sourceReference": "constant factor 1/2 conversion of the declared synthetic legacy gauge",
+      "coordinate": {
+        "kind": "dimensionless-complex-amplitude",
+        "amplitudeConvention": "C_L_ref=2Re(A_new), A_new=A_old/2",
+        "phaseReference": "positive real reference sectional lift at A_new=1/2",
+        "trajectoryDependence": "constant",
+        "stateUnit": "1",
+        "timeBasis": {
+          "unit": "s",
+          "scaleToSeconds": 1
+        },
+        "initialStatePaths": {
+          "real": "initial.wakeReal",
+          "imaginary": "initial.wakeImaginary"
+        }
+      },
+      "output": {
+        "kind": "sectional-lift-coefficient",
+        "unit": "1",
+        "expression": "finiteSpanCoherence*Re(liftOutput*A)",
+        "referenceIdentity": "P0-local-wet-width-dynamic-pressure-v1",
+        "coefficientPaths": {
+          "real": "rom.liftOutputReal",
+          "imaginary": "rom.liftOutputImaginary"
+        }
+      },
+      "finiteSpanCoherence": {
+        "kind": "independent-closure",
+        "representation": "constant-factor",
+        "closureId": "synthetic-uniform-span-coherence-one",
+        "parameterPath": "rom.finiteSpanCoherence"
+      },
+      "parameterUnits": {
+        "rom.cubicSaturation": "1",
+        "rom.nonlinearFrequencyShift": "1",
+        "rom.couplingThetaReal": "1",
+        "rom.couplingThetaImaginary": "1",
+        "rom.couplingOmegaReal": "1",
+        "rom.couplingOmegaImaginary": "1",
+        "rom.couplingAccelerationReal": "1",
+        "rom.couplingAccelerationImaginary": "1",
+        "rom.liftOutputReal": "1",
+        "rom.liftOutputImaginary": "1",
+        "rom.finiteSpanCoherence": "1"
+      },
+      "parameterNormalizationIdentity": "VP-FWD-P0-SL1-production-normalization-v1",
+      "covarianceIdentity": null
+    },
+    "jointCalibrationSupport": {
+      "kind": "covered-cells",
+      "evidence": "Synthetic demonstration only; no apparatus coverage.",
+      "cells": [
+        {
+          "flowSpeedMps": {
+            "minimum": 0,
+            "maximum": 2
+          },
+          "waterDepthM": {
+            "minimum": 0,
+            "maximum": 2
+          },
+          "pivotHeightM": {
+            "minimum": -2,
+            "maximum": 2
+          },
+          "reynolds": {
+            "minimum": 0,
+            "maximum": 100000000.0
+          },
+          "wetSpanM": {
+            "minimum": 0,
+            "maximum": 2
+          },
+          "absThetaRad": {
+            "minimum": 0,
+            "maximum": 1.5
+          },
+          "velocityRatio": {
+            "minimum": 0,
+            "maximum": 100000000.0
+          },
+          "normalizedInflowRate": {
+            "minimum": 0,
+            "maximum": 100000000.0
+          }
+        }
+      ]
+    }
+  },
+  "cfd2d": {
+    "couplingMode": "fixed",
+    "stripAxialCoordinate": 0.13,
+    "stripClosure": "none",
+    "nx": 192,
+    "ny": 96,
+    "cylinderCells": 12,
+    "latticeVelocity": 0.05,
+    "stepsPerChunk": 20,
+    "fieldEvery": 160,
+    "sampleEvery": 10,
+    "penalizationTimeSteps": 1.5,
+    "prescribedAmplitude": 0.05,
+    "prescribedFrequency": 0.5
+  },
+  "initial": {
+    "theta": 0.03,
+    "omega": 0.15,
+    "wakeReal": 0.001,
+    "wakeImaginary": 0,
+    "randomSeed": 2027
+  },
+  "solver": {
+    "duration": 0.4,
+    "initialStep": 0.001,
+    "minimumStep": 1e-07,
+    "maximumStep": 0.02,
+    "relativeTolerance": 1e-09,
+    "absoluteToleranceTheta": 1e-12,
+    "absoluteToleranceOmega": 1e-12,
+    "absoluteToleranceWake": 1e-12,
+    "outputInterval": 0.01,
+    "eventTimeTolerance": 1e-10,
+    "maxAcceptedSteps": 500000,
+    "maxRejectedSteps": 50000,
+    "transientFraction": 0.5,
+    "energyTolerance": 0.03
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "VP-ROM-COEFFICIENT-PACKAGE-v1",
+  "schemaVersion": "VP-ROM-COEFFICIENT-PACKAGE-v2",
   "packageId": "",
   "classification": "waiting-for-calibration",
   "apparatusId": "",
@@ -8,44 +8,304 @@
   "modelId": "VP-FWD-P0-SL1-v1",
   "coefficientSource": "measured",
   "wakeGauge": {
-    "id": "unit-real-output-v1",
-    "interpretation": "Angle-only fitting fixes the arbitrary wake-amplitude scale by setting real lift output and coherence to one."
+    "schemaVersion": "VP-WAKE-GAUGE-METADATA-v1",
+    "id": "two-real-reference-output-v1",
+    "modelId": "VP-FWD-P0-SL1-v1",
+    "sourceReference": "01_最终理论/04-实验辨识、标定与留出预测协议.md",
+    "coordinate": {
+      "kind": "dimensionless-complex-amplitude",
+      "amplitudeConvention": "C_L_ref=2Re(A)",
+      "phaseReference": "positive reference sectional lift at positive real A",
+      "trajectoryDependence": "constant",
+      "stateUnit": "1",
+      "timeBasis": {
+        "unit": "s",
+        "scaleToSeconds": 1
+      },
+      "initialStatePaths": {
+        "real": "initial.wakeReal",
+        "imaginary": "initial.wakeImaginary"
+      }
+    },
+    "output": {
+      "kind": "sectional-lift-coefficient",
+      "unit": "1",
+      "expression": "finiteSpanCoherence*Re(liftOutput*A)",
+      "referenceIdentity": "P0-local-wet-width-dynamic-pressure-v1",
+      "coefficientPaths": {
+        "real": "rom.liftOutputReal",
+        "imaginary": "rom.liftOutputImaginary"
+      }
+    },
+    "finiteSpanCoherence": {
+      "kind": "independent-closure",
+      "representation": "constant-factor",
+      "closureId": "apparatus-specific constant span coherence; independently calibrated",
+      "parameterPath": "rom.finiteSpanCoherence"
+    },
+    "parameterUnits": {
+      "rom.cubicSaturation": "1",
+      "rom.nonlinearFrequencyShift": "1",
+      "rom.couplingThetaReal": "1",
+      "rom.couplingThetaImaginary": "1",
+      "rom.couplingOmegaReal": "1",
+      "rom.couplingOmegaImaginary": "1",
+      "rom.couplingAccelerationReal": "1",
+      "rom.couplingAccelerationImaginary": "1",
+      "rom.liftOutputReal": "1",
+      "rom.liftOutputImaginary": "1",
+      "rom.finiteSpanCoherence": "1"
+    },
+    "parameterNormalizationIdentity": "VP-FWD-P0-SL1-production-normalization-v1",
+    "covarianceIdentity": null
   },
   "parameters": {
-    "rom.addedMassCoefficient": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.sectionalDragCoefficient": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.strouhalNumber": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.referenceHopfReynolds": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.hopfGrowthSlope": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.cubicSaturation": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.nonlinearFrequencyShift": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.zeroFlowWakeDecayTime": {"value": null, "unit": "s", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.wakeActivationSpeed": {"value": null, "unit": "m/s", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.calibrationVelocityFloor": {"value": null, "unit": "m/s", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.couplingThetaReal": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.couplingThetaImaginary": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.couplingOmegaReal": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.couplingOmegaImaginary": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.couplingAccelerationReal": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.couplingAccelerationImaginary": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.liftOutputReal": {"value": 1, "unit": "1", "standardUncertainty": 0, "method": "wake-gauge fixed value", "source": "fixed-gauge", "status": "fixed"},
-    "rom.liftOutputImaginary": {"value": 0, "unit": "1", "standardUncertainty": 0, "method": "wake-gauge fixed value", "source": "fixed-gauge", "status": "fixed"},
-    "rom.finiteSpanCoherence": {"value": 1, "unit": "1", "standardUncertainty": 0, "method": "wake-gauge fixed value", "source": "fixed-gauge", "status": "fixed"},
-    "rom.calibrationMinReynolds": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.calibrationMaxReynolds": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.calibrationMaxAbsAngle": {"value": null, "unit": "rad", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.calibrationMaxVelocityRatio": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"},
-    "rom.calibrationMaxNormalizedInflowRate": {"value": null, "unit": "1", "standardUncertainty": null, "method": "", "source": "", "status": "fitted"}
+    "rom.addedMassCoefficient": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.sectionalDragCoefficient": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.strouhalNumber": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.referenceHopfReynolds": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.hopfGrowthSlope": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.cubicSaturation": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.nonlinearFrequencyShift": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.zeroFlowWakeDecayTime": {
+      "value": null,
+      "unit": "s",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.wakeActivationSpeed": {
+      "value": null,
+      "unit": "m/s",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationVelocityFloor": {
+      "value": null,
+      "unit": "m/s",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.couplingThetaReal": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.couplingThetaImaginary": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.couplingOmegaReal": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.couplingOmegaImaginary": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.couplingAccelerationReal": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.couplingAccelerationImaginary": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.liftOutputReal": {
+      "value": 2,
+      "unit": "1",
+      "standardUncertainty": 0,
+      "method": "fixed reference coordinate convention, not an identification result",
+      "source": "declared-gauge",
+      "status": "fixed"
+    },
+    "rom.liftOutputImaginary": {
+      "value": 0,
+      "unit": "1",
+      "standardUncertainty": 0,
+      "method": "fixed reference coordinate convention, not an identification result",
+      "source": "declared-gauge",
+      "status": "fixed"
+    },
+    "rom.finiteSpanCoherence": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationMinReynolds": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationMaxReynolds": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationMaxAbsAngle": {
+      "value": null,
+      "unit": "rad",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationMaxVelocityRatio": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationMaxNormalizedInflowRate": {
+      "value": null,
+      "unit": "1",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "fitted"
+    },
+    "rom.calibrationMinWetSpan": {
+      "value": null,
+      "unit": "m",
+      "standardUncertainty": null,
+      "method": "",
+      "source": "",
+      "status": "measured"
+    }
   },
   "trainingConditionBlocks": [],
   "holdoutConditionBlocks": [],
   "holdoutReadDuringFit": false,
   "calibrationDomain": {
-    "jointSupport": {"kind": "covered-cells", "evidence": null, "cells": []},
-    "flowSpeedMps": {"minimum": null, "maximum": null},
-    "waterDepthM": {"minimum": null, "maximum": null},
-    "pivotHeightM": {"minimum": null, "maximum": null},
-    "reynolds": {"minimum": null, "maximum": null}
+    "jointSupport": {
+      "kind": "covered-cells",
+      "evidence": null,
+      "cells": []
+    },
+    "flowSpeedMps": {
+      "minimum": null,
+      "maximum": null
+    },
+    "waterDepthM": {
+      "minimum": null,
+      "maximum": null
+    },
+    "pivotHeightM": {
+      "minimum": null,
+      "maximum": null
+    },
+    "reynolds": {
+      "minimum": null,
+      "maximum": null
+    },
+    "wetSpanM": {
+      "minimum": null,
+      "maximum": null
+    },
+    "absThetaRad": {
+      "minimum": null,
+      "maximum": null
+    },
+    "velocityRatio": {
+      "minimum": null,
+      "maximum": null
+    },
+    "normalizedInflowRate": {
+      "minimum": null,
+      "maximum": null
+    }
   },
-  "covariance": null
+  "covariance": null,
+  "wetSpanDefinition": "streamwise-projected-area-over-diameter",
+  "dragWidthDefinition": "streamwise-wet-width",
+  "jointUncertainty": null,
+  "identifiability": null
 }

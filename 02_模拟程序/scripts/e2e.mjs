@@ -1,4 +1,7 @@
-import { spawn } from "node:child_process";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { spawn, execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { chromium } from "@playwright/test";
 
@@ -26,7 +29,11 @@ async function waitForServer() {
   throw new Error(`preview server did not start\n${serverOutput}`);
 }
 
-let browser;
+let browser, page;
+const consoleErrors = [];
+const workers = [];
+const suiteStarted = performance.now();
+let baselineStarted;
 try {
   await waitForServer();
   const systemChrome = [
@@ -39,8 +46,9 @@ try {
     headless: true,
     ...(systemChrome ? { executablePath: systemChrome } : {}),
   });
-  const page = await browser.newPage({ viewport: { width: 1360, height: 900 } });
-  const consoleErrors = [];
+  page = await browser.newPage({ viewport: { width: 1360, height: 900 } });
+  page.on("pageerror", (error) => consoleErrors.push(String(error)));
+  page.on("worker", (worker) => workers.push(worker.url()));
   page.on("console", (message) => {
     if (message.type() === "error") consoleErrors.push(message.text());
   });
@@ -75,8 +83,10 @@ try {
   if (configDownload.suggestedFilename() !== "vortex-pendulum-config.json") {
     throw new Error(`unexpected configuration filename: ${configDownload.suggestedFilename()}`);
   }
+  baselineStarted = performance.now();
   await page.getByRole("button", { name: "运行", exact: true }).click();
   await page.locator("#termination-badge").filter({ hasText: "COMPLETED" }).waitFor({ timeout: 20_000 });
+  console.log("E2E_BASELINE", JSON.stringify({ elapsedMs: performance.now()-baselineStarted, runState: await page.locator("#run-state").innerText(), termination: await page.locator("#termination-badge").innerText(), consoleErrors, workers }));
   const summary = await page.locator("#summary-grid").innerText();
   if (!summary.includes("能量闭合 RMS") || !summary.includes("配置哈希")) {
     throw new Error(`audit summary is incomplete: ${summary}`);
@@ -251,8 +261,58 @@ try {
     return maximum - minimum > 20;
   });
   if (!fieldHasContrast) throw new Error("cfd2d sectional field canvas has no rendered contrast");
+  // One actual SS-DW configuration goes through file import, Worker, downloads
+  // and the official CLI; each route uses the same production integrator.
+  const alignmentPath = "public/examples/vortex-pendulum-ss-dw-synthetic.json";
+  await page.locator("#config-file").setInputFiles(alignmentPath);
+  await page.locator("#config-state").filter({ hasText: "可运行" }).waitFor();
+  await page.getByRole("button", { name: "运行", exact: true }).click();
+  await page.locator("#termination-badge").filter({ hasText: "COMPLETED" }).waitFor({ timeout: 20_000 });
+  await page.locator("#model-identity").filter({ hasText: "VP-FWD-P0-SL1-SS-DW-v1" }).waitFor();
+  const downloadText = async (button) => {
+    const waiting = page.waitForEvent("download");
+    await page.locator(button).click();
+    const download = await waiting;
+    const stream = await download.createReadStream();
+    let text = ""; for await (const chunk of stream) text += chunk.toString();
+    return text;
+  };
+  const gui = JSON.parse(await downloadText("#export-json"));
+  const csv = await downloadText("#export-csv");
+  if (!csv.includes("frictionMode") || !csv.includes("VP-FWD-P0-SL1-SS-DW-v1") || !csv.includes("SS-slip+-TO-stick")) throw new Error("CSV omitted alignment identities/events");
+  const temporary = await mkdtemp(join(tmpdir(), "vortex-e2e-"));
+  let maxError = 0;
+  try {
+    const resultPath = join(temporary, "result.json");
+    execFileSync("npm", ["run", "simulate:forward", "--", "--config", alignmentPath, "--output", resultPath], { timeout: 20000, stdio: "pipe" });
+    const cli = JSON.parse(await readFile(resultPath, "utf8"));
+    if (cli.terminationCode !== gui.terminationCode || cli.samples.length !== gui.samples.length) throw new Error("CLI/GUI result identity mismatch");
+    for (let i=0;i<cli.samples.length;i++) for (const [key,value] of Object.entries(cli.samples[i])) {
+      if (typeof value === "number") maxError = Math.max(maxError, Math.abs(value-gui.samples[i][key])/(1+Math.abs(value)));
+      else if (["frictionMode","wetBranch","valid"].includes(key) && value !== gui.samples[i][key]) throw new Error(`CLI/GUI mode mismatch: ${key}`);
+    }
+    if (!(maxError < 1e-10)) throw new Error(`CLI/GUI physical mismatch: ${maxError}`);
+  } finally { await rm(temporary, { recursive: true, force: true }); }
+  await page.locator("#config-editor").evaluate((element) => {
+    const config=JSON.parse(element.value);config.geometry.pivotHeight=.19;config.initial.theta=0;
+    element.value=JSON.stringify(config);element.dispatchEvent(new Event("input", {bubbles:true}));
+  });
+  await page.getByRole("button", { name: "运行", exact: true }).click();
+  await page.locator("#termination-badge").filter({ hasText: "WET-DOMAIN-EXIT" }).waitFor({ timeout: 20000 });
+  const dry=JSON.parse(await downloadText("#export-json"));
+  if (dry.samples.length || dry.metrics.available !== false || dry.lastValidSampleIndex !== null) throw new Error("GUI empty wet exit is not explicit");
+  console.log("E2E_ALIGNMENT", JSON.stringify({modelId:gui.provenance.modelId, samples:gui.samples.length, events:gui.events.length, maxError, emptyTermination:dry.terminationCode, elapsedMs:performance.now()-suiteStarted}));
   if (consoleErrors.length > 0) throw new Error(`browser console errors: ${consoleErrors.join(" | ")}`);
   process.stdout.write("E2E PASS: bidirectional visual parameters, five evidence-contract badges, incompatible-overlay gate, applied/diagnostic CFD summary, stable field rendering, light monochrome UI/plots, and blue-orange scene palette verified.\n");
+} catch (error) {
+  console.error("E2E_FAILURE_DIAGNOSTIC", JSON.stringify({
+    elapsedMs: performance.now()-suiteStarted,
+    baselineElapsedMs: baselineStarted === undefined ? null : performance.now()-baselineStarted,
+    runState: await page?.locator("#run-state").innerText({timeout:1000}).catch(()=>"unavailable"),
+    termination: await page?.locator("#termination-badge").innerText({timeout:1000}).catch(()=>"unavailable"),
+    consoleErrors, workers, serverOutput,
+  }));
+  throw error;
 } finally {
   await browser?.close();
   if (server.pid !== undefined && process.platform !== "win32") {

@@ -1,0 +1,81 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 test
+> vitest run --run tests/wake-gauge.test.ts
+
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+ ❯ tests/wake-gauge.test.ts (11 tests | 4 failed) 35ms
+   × constant complex wake gauge > keeps 120 seeded production RHS evaluations and short trajectories physically equivalent 29ms
+     → currentEvaluation is not defined
+   ✓ constant complex wake gauge > performs the factor-two special case in the declared direction and round-trips it 2ms
+   ✓ wake gauge migration rejects incomplete or non-gauge changes > rejects a time-varying gauge because dot(c)/c is not implemented 1ms
+   ✓ wake gauge migration rejects incomplete or non-gauge changes > rejects missing legacy metadata and lists the absent definitions 0ms
+   × wake gauge migration rejects incomplete or non-gauge changes > rejects conversion when the executable config has no matching source declaration 0ms
+     → expected function to throw an error, but it didn't
+   × wake gauge migration rejects incomplete or non-gauge changes > rejects a zero physical output channel instead of claiming wake recovery 0ms
+     → expected function to throw an error, but it didn't
+   × wake gauge migration rejects incomplete or non-gauge changes > requires a changed covariance basis identity for a nontrivial gauge 1ms
+     → expected [] to include 'WAKE-COVARIANCE-PRESENCE-CHANGED'
+   ✓ wake gauge migration rejects incomplete or non-gauge changes > requires the legacy builder caller to declare the original span closure 0ms
+   ✓ wake gauge migration rejects incomplete or non-gauge changes > does not convert a finite-span function into a scalar or change a scalar closure 0ms
+   ✓ wake gauge migration rejects incomplete or non-gauge changes > rejects dimensional total-torque output and changed reference geometry 0ms
+   ✓ wake gauge migration rejects incomplete or non-gauge changes > rejects singular and non-finite complex scales 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/wake-gauge.test.ts > constant complex wake gauge > keeps 120 seeded production RHS evaluations and short trajectories physically equivalent
+ReferenceError: currentEvaluation is not defined
+ ❯ runForward src/solvers/forward/index.ts:568:5
+    566|     time = candidateTime;
+    567|     state = candidateState;
+    568|     currentEvaluation = candidateEvaluation;
+       |     ^
+    569|     currentGuards = candidateGuards;
+    570|     acceptedSteps += 1;
+ ❯ tests/wake-gauge.test.ts:202:37
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/wake-gauge.test.ts > wake gauge migration rejects incomplete or non-gauge changes > rejects conversion when the executable config has no matching source declaration
+AssertionError: expected function to throw an error, but it didn't
+ ❯ tests/wake-gauge.test.ts:344:8
+    342|     const missing = cloneConfig();
+    343|     expect(() => convertWakeGaugeConfig(missing, request(source, targe…
+    344|       .toThrowError(expect.objectContaining({
+       |        ^
+    345|         issues: expect.arrayContaining([
+    346|           expect.objectContaining({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/wake-gauge.test.ts > wake gauge migration rejects incomplete or non-gauge changes > rejects a zero physical output channel instead of claiming wake recovery
+AssertionError: expected function to throw an error, but it didn't
+ ❯ tests/wake-gauge.test.ts:371:8
+    369|     });
+    370|     expect(() => convertWakeGaugeConfig(zeroChannel, request(source, t…
+    371|       .toThrowError(expect.objectContaining({
+       |        ^
+    372|         issues: expect.arrayContaining([
+    373|           expect.objectContaining({ code: "WAKE-OUTPUT-CHANNEL-ZERO" }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/wake-gauge.test.ts > wake gauge migration rejects incomplete or non-gauge changes > requires a changed covariance basis identity for a nontrivial gauge
+AssertionError: expected [] to include 'WAKE-COVARIANCE-PRESENCE-CHANGED'
+ ❯ tests/wake-gauge.test.ts:393:8
+    391|     ));
+    392|     expect(validation.issues.map((entry) => entry.code))
+    393|       .toContain("WAKE-COVARIANCE-PRESENCE-CHANGED");
+       |        ^
+    394| 
+    395|     const unchangedBasis = {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 7 passed (11)
+   Start at  01:49:37
+   Duration  353ms (transform 100ms, setup 0ms, collect 117ms, tests 35ms, environment 0ms, prepare 61ms)
+

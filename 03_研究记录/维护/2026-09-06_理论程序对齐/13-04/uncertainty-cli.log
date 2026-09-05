@@ -1,0 +1,17 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 analyze:uncertainty
+> vite-node scripts/analyze-uncertainty.ts --config experiments/examples/synthetic-alignment/uncertainty-config.json --samples 32 --seed 20260905 --output ../03_研究记录/维护/2026-09-06_理论程序对齐/13-04/uncertainty-report.json
+
+{
+  "output": "../03_研究记录/维护/2026-09-06_理论程序对齐/13-04/uncertainty-report.json",
+  "counts": {
+    "COMPLETED/smooth/no-breakaway": 32
+  },
+  "linear": {
+    "outputUnit": "rad",
+    "variance": 9.802163431266269e-11,
+    "standardUncertainty": 0.000009900587574112088,
+    "covarianceBasisId": "synthetic-demo-joint-v1"
+  },
+  "claim": "correlated scenario envelope; not a confidence interval"
+}

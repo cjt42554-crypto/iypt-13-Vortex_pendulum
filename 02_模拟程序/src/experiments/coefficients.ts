@@ -19,6 +19,8 @@ import type {
   ExperimentValidationResult,
   JsonRecord,
 } from "./types";
+import { coefficientParameterUnits, isAlignedPackage, validateAlignmentMetadata } from "./alignment";
+import { integrateWetProjection } from "../problems/vortex-pendulum/geometry";
 
 const DOMAIN_FIELDS: readonly (readonly [string, boolean])[] = Object.freeze([
   ["flowSpeedMps", true],
@@ -26,14 +28,33 @@ const DOMAIN_FIELDS: readonly (readonly [string, boolean])[] = Object.freeze([
   ["pivotHeightM", false],
   ["reynolds", true],
 ]);
+const ALIGNED_DOMAIN_FIELDS: readonly (readonly [string, boolean])[] = [
+  ...DOMAIN_FIELDS, ["wetSpanM", true], ["absThetaRad", true],
+  ["velocityRatio", true], ["normalizedInflowRate", true],
+];
+function domainFields(record: JsonRecord): readonly (readonly [string, boolean])[] {
+  return isAlignedPackage(record) ? ALIGNED_DOMAIN_FIELDS : DOMAIN_FIELDS;
+}
 
 function valueOf(record: JsonRecord, path: string): unknown {
   return record?.parameters?.[path]?.value;
 }
 
-function conditionValues(apparatus: JsonRecord, block: JsonRecord) {
+function conditionValues(apparatus: JsonRecord, block: JsonRecord, record: JsonRecord) {
   const radius = apparatus?.parameters?.["geometry.radius"]?.value;
   const viscosity = apparatus?.parameters?.["fluid.kinematicViscosity"]?.value;
+  let wetSpanM: number | null = null;
+  try {
+    if (finite(radius) && radius > 0 && finite(block?.initialThetaRad)) {
+      wetSpanM = integrateWetProjection(block.initialThetaRad, {
+        radius, topDistance: apparatus.parameters["geometry.topDistance"].value,
+        bottomDistance: apparatus.parameters["geometry.bottomDistance"].value,
+        pivotHeight: block.pivotHeightM,
+      }, () => 1) / (2 * radius);
+    }
+  } catch { /* Incomplete templates retain a missing coordinate. */ }
+  const floor = valueOf(record, "rom.calibrationVelocityFloor");
+  const bottomDistance = apparatus?.parameters?.["geometry.bottomDistance"]?.value;
   return Object.freeze({
     flowSpeedMps: block?.flowSpeedMps,
     waterDepthM: block?.waterDepthM,
@@ -42,6 +63,12 @@ function conditionValues(apparatus: JsonRecord, block: JsonRecord) {
       && finite(block?.flowSpeedMps)
       ? 2 * radius * block.flowSpeedMps / viscosity
       : null,
+    wetSpanM,
+    absThetaRad: finite(block?.initialThetaRad) ? Math.abs(block.initialThetaRad) : null,
+    velocityRatio: finite(bottomDistance) && finite(block?.initialOmegaRadPerS)
+      && finite(block?.flowSpeedMps) && finite(floor) && floor > 0
+      ? bottomDistance * Math.abs(block.initialOmegaRadPerS) / Math.max(block.flowSpeedMps, floor) : null,
+    normalizedInflowRate: 0,
   });
 }
 
@@ -49,12 +76,11 @@ function rangeContains(domain: unknown, value: unknown): boolean {
   if (!isObject(domain) || !finite(domain.minimum) || !finite(domain.maximum) || !finite(value)) {
     return false;
   }
-  const tolerance = 1e-12 * Math.max(1, Math.abs(domain.minimum), Math.abs(domain.maximum));
-  return value >= domain.minimum - tolerance && value <= domain.maximum + tolerance;
+  return value >= domain.minimum && value <= domain.maximum;
 }
 
-function validDomainCell(cell: unknown): cell is JsonRecord {
-  return isObject(cell) && DOMAIN_FIELDS.every(([name, nonnegative]) => {
+function validDomainCell(cell: unknown, record: JsonRecord): cell is JsonRecord {
+  return isObject(cell) && domainFields(record).every(([name, nonnegative]) => {
     const range = cell[name];
     return isObject(range) && finite(range.minimum) && finite(range.maximum)
       && range.minimum <= range.maximum && (!nonnegative || range.minimum >= 0);
@@ -62,15 +88,15 @@ function validDomainCell(cell: unknown): cell is JsonRecord {
 }
 
 /** Validate declared joint support; never infer it from marginal ranges. */
-function jointDomainCells(record: JsonRecord): readonly JsonRecord[] | null {
+export function jointDomainCells(record: JsonRecord): readonly JsonRecord[] | null {
   const domain = record?.calibrationDomain;
   const support = domain?.jointSupport;
   if (!isObject(support) || !nonEmptyText(support.evidence)) return null;
-  if (support.kind === "validated-box") return validDomainCell(domain) ? [domain] : null;
+  if (support.kind === "validated-box") return validDomainCell(domain, record) ? [domain] : null;
   if (support.kind !== "covered-cells" || !Array.isArray(support.cells)
-    || support.cells.length === 0 || !support.cells.every(validDomainCell)) return null;
-  if (!validDomainCell(domain) || !support.cells.every((cell: JsonRecord) =>
-    DOMAIN_FIELDS.every(([name]) => rangeContains(domain[name], cell[name].minimum)
+    || support.cells.length === 0 || !support.cells.every((cell: unknown) => validDomainCell(cell, record))) return null;
+  if (!validDomainCell(domain, record) || !support.cells.every((cell: JsonRecord) =>
+    domainFields(record).every(([name]) => rangeContains(domain[name], cell[name].minimum)
       && rangeContains(domain[name], cell[name].maximum)))) return null;
   return support.cells as JsonRecord[];
 }
@@ -82,8 +108,8 @@ export function validateConditionAgainstCalibrationDomain(
   { path = "conditionBlock" }: { path?: string } = {},
 ): ExperimentValidationResult {
   const issues: ExperimentValidationIssue[] = [];
-  const values: JsonRecord = conditionValues(apparatus, block);
-  for (const [name] of DOMAIN_FIELDS) {
+  const values: JsonRecord = conditionValues(apparatus, block, record);
+  for (const [name] of domainFields(record)) {
     const domain = record?.calibrationDomain?.[name];
     const value = values[name];
     if (!rangeContains(domain, value)) {
@@ -99,7 +125,7 @@ export function validateConditionAgainstCalibrationDomain(
   if (cells === null) {
     pushIssue(issues, "JOINT-CALIBRATION-DOMAIN-MISSING", "calibrationDomain.jointSupport",
       "必须声明有依据的 validated-box 或非空 covered-cells 联合域；边际范围不能代替联合域。");
-  } else if (!cells.some((cell) => DOMAIN_FIELDS.every(([name]) => rangeContains(cell[name], values[name])))) {
+  } else if (!cells.some((cell) => domainFields(record).every(([name]) => rangeContains(cell[name], values[name])))) {
     pushIssue(issues, "CONDITION-OUTSIDE-JOINT-CALIBRATION-DOMAIN", path,
       "工况组合不属于任何有依据的联合标定单元；不跨越训练空洞或自动构造凸包。");
   }
@@ -182,7 +208,7 @@ export function validateCoefficientPackage(
   }
   const planRecord: JsonRecord = isObject(plan) ? plan : {};
   const apparatusRecord: JsonRecord = isObject(apparatus) ? apparatus : {};
-  if (record.schemaVersion !== "VP-ROM-COEFFICIENT-PACKAGE-v1") {
+  if (record.schemaVersion !== "VP-ROM-COEFFICIENT-PACKAGE-v1" && !isAlignedPackage(record)) {
     pushIssue(issues, "SCHEMA-MISMATCH", "schemaVersion", "系数包 schemaVersion 不匹配。");
   }
   validateReadyClassification({
@@ -224,7 +250,8 @@ export function validateCoefficientPackage(
       "预测计划与装置记录绑定到不同 revision。",
     );
   }
-  if (record.modelId !== "VP-FWD-P0-SL1-v1") {
+  issues.push(...validateAlignmentMetadata(record, apparatusRecord, requireReady, allowSynthetic));
+  if (!isAlignedPackage(record) && record.modelId !== "VP-FWD-P0-SL1-v1") {
     pushIssue(issues, "MODEL-ID", "modelId", "系数包只能绑定 VP-FWD-P0-SL1-v1。");
   }
   if (!ALLOWED_COEFFICIENT_SOURCES.has(record.coefficientSource)) {
@@ -235,13 +262,13 @@ export function validateCoefficientPackage(
       "定量系数源只能是 measured 或 prescribed-motion；二维 CFD 不能作定量来源。",
     );
   }
-  if (!isObject(record.wakeGauge) || record.wakeGauge.id !== FIXED_WAKE_GAUGE.id) {
+  if (!isAlignedPackage(record) && (!isObject(record.wakeGauge) || record.wakeGauge.id !== FIXED_WAKE_GAUGE.id)) {
     pushIssue(issues, "WAKE-GAUGE", "wakeGauge", "必须使用 unit-real-output-v1 尾流坐标规范。");
   }
   if (!isObject(record.parameters)) {
     pushIssue(issues, "PARAMETERS-INVALID", "parameters", "parameters 必须是对象。");
   } else {
-    for (const [path, unit] of Object.entries(ROM_PARAMETERS)) {
+    for (const [path, unit] of Object.entries(coefficientParameterUnits(record))) {
       const entry = record.parameters[path];
       validateMeasuredEntry(entry, unit, `parameters.${path}`, requireReady, issues);
       if (isObject(entry)
@@ -267,7 +294,7 @@ export function validateCoefficientPackage(
         );
       }
     }
-    for (const [path, expected] of Object.entries(FIXED_WAKE_GAUGE.values)) {
+    for (const [path, expected] of Object.entries(isAlignedPackage(record) ? {} : FIXED_WAKE_GAUGE.values)) {
       const entry = record.parameters[path];
       if (isObject(entry) && entry.value !== null && entry.value !== expected) {
         pushIssue(
@@ -326,7 +353,7 @@ export function validateCoefficientPackage(
   if (!isObject(record.calibrationDomain)) {
     pushIssue(issues, "CALIBRATION-DOMAIN", "calibrationDomain", "缺少标定适用域。");
   } else {
-    for (const [name, nonnegative] of DOMAIN_FIELDS) {
+    for (const [name, nonnegative] of domainFields(record)) {
       const domain = record.calibrationDomain[name];
       if (!isObject(domain)) {
         pushIssue(

@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "VP-WAKE-GAUGE-CONVERSION-v1",
+  "source": {
+    "schemaVersion": "VP-WAKE-GAUGE-METADATA-v1",
+    "id": "unit-real-output-v1",
+    "modelId": "VP-FWD-P0-SL1-v1",
+    "sourceReference": "experiments/examples/synthetic-alignment/legacy-coefficients.json (synthetic only)",
+    "coordinate": {
+      "kind": "dimensionless-complex-amplitude",
+      "amplitudeConvention": "C_L_ref=Re(A_old)",
+      "phaseReference": "positive real reference sectional lift at A_old=1",
+      "trajectoryDependence": "constant",
+      "stateUnit": "1",
+      "timeBasis": {
+        "unit": "s",
+        "scaleToSeconds": 1
+      },
+      "initialStatePaths": {
+        "real": "initial.wakeReal",
+        "imaginary": "initial.wakeImaginary"
+      }
+    },
+    "output": {
+      "kind": "sectional-lift-coefficient",
+      "unit": "1",
+      "expression": "finiteSpanCoherence*Re(liftOutput*A)",
+      "referenceIdentity": "P0-local-wet-width-dynamic-pressure-v1",
+      "coefficientPaths": {
+        "real": "rom.liftOutputReal",
+        "imaginary": "rom.liftOutputImaginary"
+      }
+    },
+    "finiteSpanCoherence": {
+      "kind": "independent-closure",
+      "representation": "constant-factor",
+      "closureId": "synthetic-uniform-span-coherence-one",
+      "parameterPath": "rom.finiteSpanCoherence"
+    },
+    "parameterUnits": {
+      "rom.cubicSaturation": "1",
+      "rom.nonlinearFrequencyShift": "1",
+      "rom.couplingThetaReal": "1",
+      "rom.couplingThetaImaginary": "1",
+      "rom.couplingOmegaReal": "1",
+      "rom.couplingOmegaImaginary": "1",
+      "rom.couplingAccelerationReal": "1",
+      "rom.couplingAccelerationImaginary": "1",
+      "rom.liftOutputReal": "1",
+      "rom.liftOutputImaginary": "1",
+      "rom.finiteSpanCoherence": "1"
+    },
+    "parameterNormalizationIdentity": "VP-FWD-P0-SL1-production-normalization-v1",
+    "covarianceIdentity": null
+  },
+  "target": {
+    "schemaVersion": "VP-WAKE-GAUGE-METADATA-v1",
+    "id": "two-real-reference-output-v1",
+    "modelId": "VP-FWD-P0-SL1-v1",
+    "sourceReference": "constant factor 1/2 conversion of the declared synthetic legacy gauge",
+    "coordinate": {
+      "kind": "dimensionless-complex-amplitude",
+      "amplitudeConvention": "C_L_ref=2Re(A_new), A_new=A_old/2",
+      "phaseReference": "positive real reference sectional lift at A_new=1/2",
+      "trajectoryDependence": "constant",
+      "stateUnit": "1",
+      "timeBasis": {
+        "unit": "s",
+        "scaleToSeconds": 1
+      },
+      "initialStatePaths": {
+        "real": "initial.wakeReal",
+        "imaginary": "initial.wakeImaginary"
+      }
+    },
+    "output": {
+      "kind": "sectional-lift-coefficient",
+      "unit": "1",
+      "expression": "finiteSpanCoherence*Re(liftOutput*A)",
+      "referenceIdentity": "P0-local-wet-width-dynamic-pressure-v1",
+      "coefficientPaths": {
+        "real": "rom.liftOutputReal",
+        "imaginary": "rom.liftOutputImaginary"
+      }
+    },
+    "finiteSpanCoherence": {
+      "kind": "independent-closure",
+      "representation": "constant-factor",
+      "closureId": "synthetic-uniform-span-coherence-one",
+      "parameterPath": "rom.finiteSpanCoherence"
+    },
+    "parameterUnits": {
+      "rom.cubicSaturation": "1",
+      "rom.nonlinearFrequencyShift": "1",
+      "rom.couplingThetaReal": "1",
+      "rom.couplingThetaImaginary": "1",
+      "rom.couplingOmegaReal": "1",
+      "rom.couplingOmegaImaginary": "1",
+      "rom.couplingAccelerationReal": "1",
+      "rom.couplingAccelerationImaginary": "1",
+      "rom.liftOutputReal": "1",
+      "rom.liftOutputImaginary": "1",
+      "rom.finiteSpanCoherence": "1"
+    },
+    "parameterNormalizationIdentity": "VP-FWD-P0-SL1-production-normalization-v1",
+    "covarianceIdentity": null
+  },
+  "transform": {
+    "kind": "constant-complex",
+    "real": 0.5,
+    "imaginary": 0
+  }
+}

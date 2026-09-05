@@ -30,7 +30,9 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "node scripts/e2e.mjs",
     "docs:check": "bash scripts/check-docs.sh",
-    "validate": "npm run test && npm run build && npm run desktop:check && npm run test:e2e && npm run docs:check"
+    "validate": "npm run test && npm run build && npm run desktop:check && npm run test:e2e && npm run docs:check",
+    "analyze:uncertainty": "vite-node scripts/analyze-uncertainty.ts",
+    "diagnose:identifiability": "vite-node scripts/diagnose-identifiability.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",

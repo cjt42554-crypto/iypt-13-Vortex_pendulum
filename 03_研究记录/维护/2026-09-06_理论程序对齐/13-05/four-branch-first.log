@@ -1,0 +1,120 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 102,
+  rejectedSteps: 0,
+  rhsEvaluations: 714,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.4609500792448451,
+  finalEnergyBalanceResidual: -2.6037314224981994e-15,
+  terminationCode: 'COMPLETED'
+} []
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-SS-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 103,
+  rejectedSteps: 0,
+  rhsEvaluations: 721,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.5243704880640824,
+  finalEnergyBalanceResidual: -7.37450600802117e-16,
+  terminationCode: 'COMPLETED'
+} [
+  {
+    time: 0.20360743524329705,
+    kind: 'mode',
+    code: 'SS-slip+-TO-stick',
+    message: '首次模式边界定位；无冲量，尾流不重置。',
+    bracket: {
+      validTime: 0.20360743520930696,
+      invalidTime: 0.20360743527728714
+    },
+    modeBefore: 'slip+',
+    modeAfter: 'stick',
+    validBefore: true,
+    validAfter: true
+  }
+]
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-DW-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 102,
+  rejectedSteps: 0,
+  rhsEvaluations: 714,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.4609124525589703,
+  finalEnergyBalanceResidual: -2.6040799765559945e-15,
+  terminationCode: 'COMPLETED'
+} []
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-SS-DW-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 103,
+  rejectedSteps: 0,
+  rhsEvaluations: 721,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.5238386442062621,
+  finalEnergyBalanceResidual: -7.364985357694032e-16,
+  terminationCode: 'COMPLETED'
+} [
+  {
+    time: 0.20360737277494995,
+    kind: 'mode',
+    code: 'SS-slip+-TO-stick',
+    message: '首次模式边界定位；无冲量，尾流不重置。',
+    bracket: { validTime: 0.20360737274094495, invalidTime: 0.2036073728089549 },
+    modeBefore: 'slip+',
+    modeAfter: 'stick',
+    validBefore: true,
+    validAfter: true
+  }
+]
+
+stdout | tests/forward-alignment.test.ts > resolves physical stopping and keeps rest under four internal refinements
+SS_STOP_REFINEMENT [
+  0.24201418230462907,
+  0.2420141822633616,
+  0.24201418172395417,
+  0.24201418223371168
+]
+
+ ❯ tests/forward-alignment.test.ts (5 tests | 1 failed) 12369ms
+   ✓ runs all four production branches with explicit identities and passive drag  4895ms
+   ✓ preserves exact rest while the production wake evolves with gamma0 theta  1651ms
+   × resolves physical stopping and keeps rest under four internal refinements 5421ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ reduces zero Coulomb and full immersion to the smooth full-width branch  399ms
+   ✓ changes only drag in a partially wet moving state and rejects mismatched widths 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/forward-alignment.test.ts > resolves physical stopping and keeps rest under four internal refinements
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/forward-alignment.test.ts:33:1
+     31| });
+     32| 
+     33| it("resolves physical stopping and keeps rest under four internal refi…
+       | ^
+     34|   const stops: number[] = [];
+     35|   for (const maxStep of [.04, .02, .01, .005]) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  02:13:55
+   Duration  12.96s (transform 137ms, setup 0ms, collect 144ms, tests 12.37s, environment 0ms, prepare 180ms)
+

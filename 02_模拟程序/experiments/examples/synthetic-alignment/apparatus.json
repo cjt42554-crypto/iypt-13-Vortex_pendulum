@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "VP-APPARATUS-CALIBRATED-v1",
+  "apparatusId": "SYNTHETIC-APPARATUS-NOT-PHYSICAL",
+  "revision": "SYNTH-v1",
+  "classification": "synthetic-only",
+  "parameters": {
+    "geometry.radius": {
+      "value": 0.003,
+      "unit": "m",
+      "standardUncertainty": 3e-09,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.topDistance": {
+      "value": 0.04,
+      "unit": "m",
+      "standardUncertainty": 4e-08,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.bottomDistance": {
+      "value": 0.18,
+      "unit": "m",
+      "standardUncertainty": 1.8e-07,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.pivotHeight": {
+      "value": 0.07,
+      "unit": "m",
+      "standardUncertainty": 7e-08,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.channelWidth": {
+      "value": 0.15,
+      "unit": "m",
+      "standardUncertainty": 1.5e-07,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.waterDepth": {
+      "value": 0.12,
+      "unit": "m",
+      "standardUncertainty": 1.2e-07,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.observationDistance": {
+      "value": 0.13,
+      "unit": "m",
+      "standardUncertainty": 1.3e-07,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "geometry.maximumAngle": {
+      "value": 0.55,
+      "unit": "rad",
+      "standardUncertainty": 5.5e-07,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "body.movingMass": {
+      "value": 0.035,
+      "unit": "kg",
+      "standardUncertainty": 3.5e-08,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "body.centerOfMassDistance": {
+      "value": 0.1,
+      "unit": "m",
+      "standardUncertainty": 1e-07,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "body.dryMomentOfInertia": {
+      "value": 0.003,
+      "unit": "kg*m^2",
+      "standardUncertainty": 3e-09,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "fluid.density": {
+      "value": 998.2,
+      "unit": "kg/m^3",
+      "standardUncertainty": 0.0009982,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "fluid.kinematicViscosity": {
+      "value": 1.004e-06,
+      "unit": "m^2/s",
+      "standardUncertainty": 1.004e-12,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "fluid.surfaceTension": {
+      "value": 0.072,
+      "unit": "N/m",
+      "standardUncertainty": 7.2e-08,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "fluid.gravity": {
+      "value": 9.80665,
+      "unit": "m/s^2",
+      "standardUncertainty": 9.806649999999999e-06,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "support.referenceAngle": {
+      "value": 0,
+      "unit": "rad",
+      "standardUncertainty": 1e-12,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "support.linearStiffness": {
+      "value": 0,
+      "unit": "N*m/rad",
+      "standardUncertainty": 1e-12,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "support.cubicStiffness": {
+      "value": 0,
+      "unit": "N*m/rad^3",
+      "standardUncertainty": 1e-12,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "support.viscousDamping": {
+      "value": 3e-05,
+      "unit": "N*m*s/rad",
+      "standardUncertainty": 3e-11,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "support.coulombFriction": {
+      "value": 0,
+      "unit": "N*m",
+      "standardUncertainty": 1e-12,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    },
+    "support.frictionSmoothingSpeed": {
+      "value": 0.01,
+      "unit": "rad/s",
+      "standardUncertainty": 1e-08,
+      "method": "deterministic synthetic fixture",
+      "source": "synthetic-only"
+    }
+  }
+}

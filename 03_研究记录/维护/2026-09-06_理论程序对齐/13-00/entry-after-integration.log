@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+ ✓ tests/joint-calibration-domain.test.ts (4 tests) 6ms
+ ✓ tests/experiment-bridge.test.ts (4 tests) 65ms
+ ✓ tests/forward-wet-domain.test.ts (7 tests) 120ms
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  01:57:23
+   Duration  421ms (transform 198ms, setup 0ms, collect 356ms, tests 192ms, environment 0ms, prepare 176ms)
+

@@ -37,6 +37,12 @@ export const APPARATUS_PARAMETERS = Object.freeze({
   "support.frictionSmoothingSpeed": "rad/s",
 });
 
+export function apparatusParameterUnits(supportModel: "smooth" | "stick-slip" = "smooth"): Readonly<Record<string, string>> {
+  if (supportModel === "smooth") return APPARATUS_PARAMETERS;
+  const { "support.coulombFriction": _coulomb, "support.frictionSmoothingSpeed": _smoothing, ...common } = APPARATUS_PARAMETERS;
+  return { ...common, "support.staticFrictionTorque": "N*m", "support.kineticFrictionTorque": "N*m" };
+}
+
 export const ROM_PARAMETERS = Object.freeze({
   "rom.addedMassCoefficient": "1",
   "rom.sectionalDragCoefficient": "1",
@@ -137,7 +143,7 @@ export function validateReadyClassification({
   path = "classification",
   label,
   issues,
-}: Required<ExperimentValidationOptions> & {
+}: Required<Pick<ExperimentValidationOptions, "requireReady" | "allowSynthetic">> & {
   value: unknown;
   production: string;
   waiting: string;

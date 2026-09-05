@@ -18,6 +18,8 @@ export default defineConfig({
   },
   test: {
     environment: "node",
+    // Bound CPU contention when independent geometry/RK benchmarks run together.
+    maxWorkers: 4,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

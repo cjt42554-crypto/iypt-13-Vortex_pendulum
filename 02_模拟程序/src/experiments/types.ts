@@ -18,4 +18,5 @@ export interface ExperimentValidationResult {
 export interface ExperimentValidationOptions {
   requireReady?: boolean;
   allowSynthetic?: boolean;
+  supportModel?: "smooth" | "stick-slip";
 }

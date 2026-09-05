@@ -1,0 +1,9 @@
+{
+  "manifest": {
+    "bytes": 5291,
+    "canonicalSha256": "8a404947cd34630f5648e1ad97530dba6d46f4f479747543957dffad541fcd14",
+    "file": "manifest.json",
+    "storedSha256": "390baaa9f6d11857f3a41175767276a524a3316d767bb774db7d39a677ce9dc1"
+  },
+  "schemaVersion": "VP-ATOMIC-JSON-ARTIFACT-SET-v1"
+}

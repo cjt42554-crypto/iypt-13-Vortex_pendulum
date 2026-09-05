@@ -1,5 +1,6 @@
 import {
   APPARATUS_PARAMETERS,
+  apparatusParameterUnits,
   FIXED_WAKE_GAUGE,
   ROM_PARAMETERS,
   isObject,
@@ -10,11 +11,15 @@ import { validateApparatusRecord } from "./apparatus";
 import {
   validateCoefficientPackage,
   validateConditionAgainstCalibrationDomain,
+  jointDomainCells,
 } from "./coefficients";
 import { validatePredictionPlan } from "./plan";
 import { canonicalClone, stableCanonicalJson } from "../core/canonical";
-import { validateConfig } from "../core/config";
-import type { SimulationConfig } from "../core/types";
+import { deriveParameters, validateConfig } from "../core/config";
+import type { RuntimeCalibrationCell, SimulationConfig } from "../core/types";
+import { coefficientParameterUnits, isAlignedPackage, packageHasStickSlip, SS_APPARATUS_PARAMETERS } from "./alignment";
+import { evaluateForwardDomain, firstInvalidForwardWetGuard } from "../solvers/forward/model";
+import { validateJointUncertaintyModel, type JointUncertaintyModel } from "./uncertainty";
 import {
   publishJsonArtifactSetExclusive,
   type JsonArtifactInput,
@@ -99,7 +104,7 @@ export function buildFormalForwardConfig(
   );
   requireReady(
     "apparatus",
-    validateApparatusRecord(apparatus, { allowSynthetic }),
+    validateApparatusRecord(apparatus, { allowSynthetic, supportModel: isObject(coefficients) && packageHasStickSlip(coefficients) ? "stick-slip" : "smooth" }),
   );
   requireReady(
     "coefficient package",
@@ -134,12 +139,44 @@ export function buildFormalForwardConfig(
     ),
   );
   config.backend = "forward";
-  for (const path of Object.keys(APPARATUS_PARAMETERS)) {
+  for (const path of Object.keys(apparatusParameterUnits(packageHasStickSlip(coefficients) ? "stick-slip" : "smooth"))) {
     setPath(config as unknown as JsonRecord, path, apparatus.parameters[path].value);
   }
-  for (const path of Object.keys(ROM_PARAMETERS)) {
+  for (const path of Object.keys(coefficientParameterUnits(coefficients))) {
     setPath(config as unknown as JsonRecord, path, coefficients.parameters[path].value);
   }
+  config.rom.modelId = coefficients.modelId;
+  config.rom.inputClassification = allowSynthetic ? "synthetic-only" : "calibrated-input-unheldout";
+  if (isAlignedPackage(coefficients)) {
+    config.rom.wetSupportMode = allowSynthetic ? "synthetic-only" : "calibrated";
+    config.rom.wetSpanDefinition = coefficients.wetSpanDefinition;
+    config.rom.dragWidthDefinition = coefficients.dragWidthDefinition;
+    config.rom.wakeGauge = canonicalClone(coefficients.wakeGauge);
+    const cells = jointDomainCells(coefficients);
+    if (cells === null) throw new Error("aligned runtime joint support is missing");
+    config.rom.jointCalibrationSupport = {
+      kind: "covered-cells", evidence: coefficients.calibrationDomain.jointSupport.evidence,
+      cells: cells.map((cell) => Object.fromEntries([
+        "flowSpeedMps", "waterDepthM", "pivotHeightM", "reynolds", "wetSpanM",
+        "absThetaRad", "velocityRatio", "normalizedInflowRate",
+      ].map((key) => [key, canonicalClone(cell[key])]))) as unknown as RuntimeCalibrationCell[],
+    };
+    if (packageHasStickSlip(coefficients)) {
+      for (const path of Object.keys(SS_APPARATUS_PARAMETERS)) {
+        setPath(config as unknown as JsonRecord, path, apparatus.parameters[path].value);
+      }
+    }
+  } else {
+    // A base config is an integration-settings source, not a hidden source of
+    // newer physical closure/qualification metadata for a historical package.
+    config.rom.wetSupportMode = "legacy-unqualified";
+    delete config.rom.wetSpanDefinition;
+    delete config.rom.calibrationMinWetSpan;
+    delete config.rom.jointCalibrationSupport;
+    delete config.rom.wakeGauge;
+    delete config.rom.dragWidthDefinition;
+  }
+  delete config.rom.jointUncertainty;
   config.rom.coefficientSetId = coefficients.packageId;
   config.rom.coefficientSource = coefficients.coefficientSource;
   config.fluid.flowSpeed = conditionBlock.flowSpeedMps;
@@ -153,6 +190,33 @@ export function buildFormalForwardConfig(
   config.initial.wakeReal = conditionBlock.initialWakeReal;
   config.initial.wakeImaginary = conditionBlock.initialWakeImaginary;
   config.solver.duration = conditionBlock.durationS;
+  if (isAlignedPackage(coefficients)) {
+    if (conditionBlock.wakeGaugeId !== coefficients.wakeGauge.id) {
+      throw new Error("condition initial wakeGaugeId must match coefficient coordinate identity");
+    }
+    if (coefficients.jointUncertainty != null && coefficients.jointUncertaintyByCondition != null) {
+      throw new Error("choose jointUncertainty or jointUncertaintyByCondition, not both");
+    }
+    const selected: JointUncertaintyModel | undefined = coefficients.jointUncertaintyByCondition != null
+      ? coefficients.jointUncertaintyByCondition[conditionBlock.conditionBlockId]
+      : coefficients.jointUncertainty ?? undefined;
+    if (coefficients.jointUncertaintyByCondition != null && selected === undefined) {
+      throw new Error(`missing condition-specific uncertainty for ${conditionBlock.conditionBlockId}`);
+    }
+    if (selected !== undefined) {
+      validateJointUncertaintyModel(selected, { requireFormalParameterPaths: true });
+      for (let index = 0; index < selected.parameterPaths.length; index += 1) {
+        const path = selected.parameterPaths[index] as string;
+        const value = path.split(".").reduce<unknown>((value, key) =>
+          isObject(value) ? value[key] : undefined, config);
+        const mean = selected.means[index] as number;
+        if (typeof value !== "number" || Math.abs(value - mean) > 1e-12 * Math.max(1, Math.abs(value), Math.abs(mean))) {
+          throw new Error(`uncertainty mean mismatch at ${path}; condition-specific initial values cannot be silently reused`);
+        }
+      }
+      config.rom.jointUncertainty = canonicalClone(selected);
+    }
+  }
   const formalIssues = validateConfig(config);
   if (formalIssues.length > 0) {
     throw new Error(
@@ -160,6 +224,11 @@ export function buildFormalForwardConfig(
         .map((issue) => `${issue.path}: ${issue.message}`)
         .join(" | ")}`,
     );
+  }
+  if (isAlignedPackage(coefficients)) {
+    const domain = evaluateForwardDomain(config, 0, config.initial, deriveParameters(config));
+    const invalid = firstInvalidForwardWetGuard(config, domain);
+    if (invalid !== undefined) throw new Error(`initial forward domain ${invalid.code}: ${invalid.message}`);
   }
   return config;
 }
@@ -183,6 +252,7 @@ export function inspectTemplateBundle({
   const planValidation = validatePredictionPlan(plan, { requireReady: false });
   const apparatusValidation = validateApparatusRecord(apparatus, {
     requireReady: false,
+    supportModel: isObject(coefficients) && packageHasStickSlip(coefficients) ? "stick-slip" : "smooth",
   });
   const coefficientValidation = validateCoefficientPackage(
     coefficients,
@@ -197,12 +267,12 @@ export function inspectTemplateBundle({
     [
       "apparatus",
       templateParameterPaths(apparatus),
-      Object.keys(APPARATUS_PARAMETERS).sort(),
+      Object.keys(apparatusParameterUnits(isObject(coefficients) && packageHasStickSlip(coefficients) ? "stick-slip" : "smooth")).sort(),
     ],
     [
       "coefficients",
       templateParameterPaths(coefficients),
-      Object.keys(ROM_PARAMETERS).sort(),
+      Object.keys(coefficientParameterUnits(isObject(coefficients) ? coefficients : {})).sort(),
     ],
   ];
   for (const [label, actual, expected] of pathSets) {
@@ -217,7 +287,7 @@ export function inspectTemplateBundle({
   }
   const dependencies = [
     ...validatePredictionPlan(plan).dependencies,
-    ...validateApparatusRecord(apparatus).dependencies,
+    ...validateApparatusRecord(apparatus, { supportModel: isObject(coefficients) && packageHasStickSlip(coefficients) ? "stick-slip" : "smooth" }).dependencies,
     ...validateCoefficientPackage(coefficients, plan, apparatus).dependencies,
   ];
   return Object.freeze({
@@ -290,7 +360,7 @@ export function buildFrozenForwardConfigSet(
   { allowSynthetic = false }: ExperimentValidationOptions = {},
 ): FrozenForwardConfigSet {
   requireReady("prediction plan", validatePredictionPlan(plan, { allowSynthetic }));
-  requireReady("apparatus", validateApparatusRecord(apparatus, { allowSynthetic }));
+  requireReady("apparatus", validateApparatusRecord(apparatus, { allowSynthetic, supportModel: isObject(coefficients) && packageHasStickSlip(coefficients) ? "stick-slip" : "smooth" }));
   requireReady(
     "coefficient package",
     validateCoefficientPackage(coefficients, plan, apparatus, { allowSynthetic }),
@@ -334,7 +404,12 @@ export function buildFrozenForwardConfigSet(
       apparatusId: apparatus.apparatusId,
       apparatusRevision: apparatus.revision,
       coefficientPackageId: coefficients.packageId,
-      modelId: "VP-FWD-P0-SL1-v1",
+      modelId: coefficients.modelId,
+      coefficientSchema: coefficients.schemaVersion,
+      wetSpanDefinition: coefficients.wetSpanDefinition ?? "legacy-unqualified",
+      wakeGauge: coefficients.wakeGauge,
+      uncertaintyIdentity: coefficients.jointUncertainty?.basisId ??
+        (coefficients.jointUncertaintyByCondition != null ? "condition-specific" : null),
       quantitativeBackend: "forward",
       cfd2dRole: "qualitative-only",
       formalConfigValidation: "validateConfig-zero-issues",

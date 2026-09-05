@@ -39,7 +39,7 @@ app.innerHTML = `
       <p class="subtitle">前向理论数值后端与二维截面流体参考共用数据外壳；理论层和证据层彼此独立。</p>
     </div>
     <div class="identity">
-      <span>模型</span><strong>VP-FWD-P0-SL1-v1</strong>
+      <span>模型</span><strong id="model-identity">VP-FWD-P0-SL1-v1</strong>
       <span>配置</span><strong>schema 3.0.0</strong>
     </div>
   </header>
@@ -52,7 +52,7 @@ app.innerHTML = `
           <option value="forward">前向理论数值计算</option>
           <option value="highFidelity">二维截面流体参考（A1 原始载荷记账）</option>
         </select>
-        <p class="config-hint">直接在下面展开分组并输入参数。单位、允许范围和后端适用性来自冻结的参数合同。</p>
+        <p class="config-hint">直接在下面展开分组并输入参数。单位、允许范围和后端适用性来自参数合同。SS/DW 通过含完整规范与覆盖信息的 JSON 配置选择。</p>
         <div id="parameter-form" class="parameter-form" aria-label="可视化参数输入"></div>
         <div class="button-row">
           <button id="validate-button" type="button">检查参数</button>
@@ -234,7 +234,12 @@ function renderSummary(result: SimulationResult): void {
     `资格·${result.provenance.epistemicClassification}`,
     `证据·${result.provenance.evidenceLevel}/${result.provenance.evidenceClaims.apparatusPrediction}`,
   ].map((label) => `<span class="badge" data-state="warning">${escapeHtml(label)}</span>`).join("");
+  required<HTMLElement>("model-identity").textContent = result.provenance.modelId;
   const entries: Array<[string, string]> = [
+    ["模型分支", result.provenance.modelId],
+    ["尾流规范", result.config.rom.wakeGauge?.id ?? "legacy 未声明"],
+    ["末态摩擦模式", result.samples.at(-1)?.frictionMode ?? "无有效样本"],
+    ["有效区间", result.samples.length ? `0–${formatNumber(result.samples.at(-1)!.time)} s` : "初始状态无效"],
     ["Re", formatNumber(d.reynolds)],
     [result.backend === "forward" ? "ROM 先验参考约化速度" : "参考约化速度（不含动态流体惯性）",
       formatNumber(result.backend === "forward"
@@ -261,6 +266,9 @@ function renderSummary(result: SimulationResult): void {
     ["留出绑定", result.provenance.holdoutStatus],
     ["适用性", result.applicability.status],
   ];
+  if (m.available === false) {
+    for (const entry of entries) if (["主频", "稳态 A/D", "均值 ROM 流体功率", "能量闭合 RMS"].includes(entry[0])) entry[1] = "无有效样本";
+  }
   if (result.backend === "highFidelity") {
     const last = result.samples.at(-1);
     const applied = last?.interfaceExchange?.applied;

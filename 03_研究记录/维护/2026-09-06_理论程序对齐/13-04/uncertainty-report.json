@@ -1,0 +1,672 @@
+{
+  "schemaVersion": "VP-FORWARD-UNCERTAINTY-REPORT-v1",
+  "configHash": "fnv1a64-ed8fea142870a635",
+  "modelId": "VP-FWD-P0-SL1-v1",
+  "wakeGaugeId": "two-real-reference-output-v1",
+  "inputClassification": "synthetic-only",
+  "jointUncertainty": {
+    "schemaVersion": "VP-JOINT-UNCERTAINTY-v1",
+    "basisId": "synthetic-demo-joint-v1",
+    "parameterPaths": [
+      "initial.theta",
+      "initial.wakeReal",
+      "initial.wakeImaginary",
+      "body.dryMomentOfInertia"
+    ],
+    "parameterUnits": [
+      "rad",
+      "1",
+      "1",
+      "kg*m^2"
+    ],
+    "parameterKinds": [
+      "initial-state",
+      "initial-state",
+      "initial-state",
+      "apparatus"
+    ],
+    "means": [
+      0.01,
+      0.001,
+      0,
+      0.003
+    ],
+    "covariance": [
+      [
+        1.0000000000000002e-10,
+        2.0000000000000003e-10,
+        2.0000000000000003e-10,
+        6.000000000000002e-12
+      ],
+      [
+        2.0000000000000003e-10,
+        1e-8,
+        2e-9,
+        6e-11
+      ],
+      [
+        2.0000000000000003e-10,
+        2e-9,
+        1e-8,
+        6e-11
+      ],
+      [
+        6.000000000000002e-12,
+        6e-11,
+        6e-11,
+        9.000000000000001e-12
+      ]
+    ],
+    "covarianceIdentity": "joint",
+    "apparatusMarginalization": "not-applied",
+    "probabilityBasis": "scenario-envelope"
+  },
+  "nominalTermination": "COMPLETED",
+  "linear": {
+    "outputUnit": "rad",
+    "variance": 9.802163431266269e-11,
+    "standardUncertainty": 0.000009900587574112088,
+    "covarianceBasisId": "synthetic-demo-joint-v1"
+  },
+  "linearReason": "local central-difference propagation of final theta on a smooth, event-free nominal neighborhood",
+  "ensemble": {
+    "seed": 20260905,
+    "sampleCount": 32,
+    "probabilityBasis": "scenario-envelope",
+    "intervalIdentity": "scenario-envelope",
+    "records": [
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009866141683919282,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009866141683919282
+        },
+        "sampleIndex": 0,
+        "parameterValues": [
+          0.009990525519134957,
+          0.0009015362738435641,
+          -0.00007532059667999231,
+          0.003003535974179874
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.00985929799502153,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.00985929799502153
+        },
+        "sampleIndex": 1,
+        "parameterValues": [
+          0.009983874046518649,
+          0.000979341027468498,
+          0.00002468260790824972,
+          0.0029967650225259284
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009864164041495075,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009864164041495075
+        },
+        "sampleIndex": 2,
+        "parameterValues": [
+          0.009988721626560304,
+          0.0008865980680176362,
+          -0.00002682969999404652,
+          0.0029987112139672634
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009866237340122508,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009866237340122508
+        },
+        "sampleIndex": 3,
+        "parameterValues": [
+          0.009990832091898489,
+          0.001014256635977001,
+          -0.0001375713273249906,
+          0.002998432321755789
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009880524539829101,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009880524539829101
+        },
+        "sampleIndex": 4,
+        "parameterValues": [
+          0.010005235838199332,
+          0.0009602864699664141,
+          -0.00014985377515296287,
+          0.0029999844919179034
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009877152566741638,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009877152566741638
+        },
+        "sampleIndex": 5,
+        "parameterValues": [
+          0.010001746807390988,
+          0.0010052346036424867,
+          0.000052824301949717014,
+          0.0030017884632231677
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.00986052409348165,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.00986052409348165
+        },
+        "sampleIndex": 6,
+        "parameterValues": [
+          0.009984890905896613,
+          0.0010848860898453056,
+          0.00010323481577137017,
+          0.0030022109570198843
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009884018288530366,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009884018288530366
+        },
+        "sampleIndex": 7,
+        "parameterValues": [
+          0.01000873526609326,
+          0.0010121428804925091,
+          -0.00008117942608076633,
+          0.0030009110323985376
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009881714444241973,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009881714444241973
+        },
+        "sampleIndex": 8,
+        "parameterValues": [
+          0.010006579919346236,
+          0.0010359612507386696,
+          0.0000633399954872084,
+          0.0029966104855753653
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.00989382338141524,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.00989382338141524
+        },
+        "sampleIndex": 9,
+        "parameterValues": [
+          0.010018626615551567,
+          0.0009309930646280748,
+          0.00003125287718090312,
+          0.0030018267247025393
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009854624648251143,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009854624648251143
+        },
+        "sampleIndex": 10,
+        "parameterValues": [
+          0.009978934290240545,
+          0.0009809106916421632,
+          -0.00008607870910067011,
+          0.0030018002328145135
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009870569081491145,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009870569081491145
+        },
+        "sampleIndex": 11,
+        "parameterValues": [
+          0.009995150641163355,
+          0.0008717497775772261,
+          -0.00013194361194877367,
+          0.0030000918538570973
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009882186413458118,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009882186413458118
+        },
+        "sampleIndex": 12,
+        "parameterValues": [
+          0.01000671237907822,
+          0.0012098946614514106,
+          -0.00006240545753727111,
+          0.003004968785103289
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009875401327873417,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009875401327873417
+        },
+        "sampleIndex": 13,
+        "parameterValues": [
+          0.010000126863140724,
+          0.0010031335055463995,
+          0.000006893348559611479,
+          0.0029980695056811917
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009897414550600567,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009897414550600567
+        },
+        "sampleIndex": 14,
+        "parameterValues": [
+          0.010022245336015098,
+          0.0011708820764385038,
+          -0.00007404004848143202,
+          0.0030022337994537666
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009866499281443075,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009866499281443075
+        },
+        "sampleIndex": 15,
+        "parameterValues": [
+          0.009990996862455267,
+          0.000868973929573252,
+          0.00009893034975203715,
+          0.003000885083331362
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009867700003419622,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009867700003419622
+        },
+        "sampleIndex": 16,
+        "parameterValues": [
+          0.009992475207203711,
+          0.0008753810276419371,
+          -0.00011463290813239613,
+          0.0029945239913571424
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009885943109135181,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009885943109135181
+        },
+        "sampleIndex": 17,
+        "parameterValues": [
+          0.010010846376015778,
+          0.0010852611895352574,
+          -0.000010629014242195801,
+          0.002996983549303659
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.00987830784171708,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.00987830784171708
+        },
+        "sampleIndex": 18,
+        "parameterValues": [
+          0.010002962722496149,
+          0.0008993950997767457,
+          -0.00007535294811855135,
+          0.0030006800602947093
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009879275350789689,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009879275350789689
+        },
+        "sampleIndex": 19,
+        "parameterValues": [
+          0.010003985445074715,
+          0.0009768659714178237,
+          0.00006722174605467112,
+          0.0029996312300984837
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009861735716186757,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009861735716186757
+        },
+        "sampleIndex": 20,
+        "parameterValues": [
+          0.009986235594769678,
+          0.0009919540069281939,
+          -0.0000434888466716159,
+          0.002999357496780724
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.00987312846779814,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.00987312846779814
+        },
+        "sampleIndex": 21,
+        "parameterValues": [
+          0.009998016721133186,
+          0.0009883142496129463,
+          0.00011946723015772758,
+          0.0029934420900235878
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009870426955767888,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009870426955767888
+        },
+        "sampleIndex": 22,
+        "parameterValues": [
+          0.00999498826987509,
+          0.00101188104950506,
+          -0.00011387608364314599,
+          0.0030005266034571136
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009869632627138598,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009869632627138598
+        },
+        "sampleIndex": 23,
+        "parameterValues": [
+          0.00999432614852146,
+          0.0010097753834616575,
+          0.000012349718421248769,
+          0.0029970795889386137
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009866231821514781,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009866231821514781
+        },
+        "sampleIndex": 24,
+        "parameterValues": [
+          0.00999101535389053,
+          0.0009515524698596658,
+          -0.00007023225245103312,
+          0.0029938669765707205
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009887611325033541,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009887611325033541
+        },
+        "sampleIndex": 25,
+        "parameterValues": [
+          0.010012268652049182,
+          0.0010987123251344454,
+          -0.00011569736893802674,
+          0.0030034489073909494
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009880478099876853,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009880478099876853
+        },
+        "sampleIndex": 26,
+        "parameterValues": [
+          0.010005221748087163,
+          0.001044545316101538,
+          0.000043712429968646026,
+          0.0029991797680592957
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.00987268923027912,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.00987268923027912
+        },
+        "sampleIndex": 27,
+        "parameterValues": [
+          0.009997365226978075,
+          0.001000937426061793,
+          0.00007481271174570906,
+          0.0029984403679396807
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009887514555888693,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009887514555888693
+        },
+        "sampleIndex": 28,
+        "parameterValues": [
+          0.010012219509224386,
+          0.0011143556354865224,
+          -0.00002394998525009019,
+          0.0030022628129839487
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009862306501009483,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009862306501009483
+        },
+        "sampleIndex": 29,
+        "parameterValues": [
+          0.009986843750112747,
+          0.0010904364249203827,
+          -0.00016649183745286931,
+          0.00299861576287162
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009872676295035096,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009872676295035096
+        },
+        "sampleIndex": 30,
+        "parameterValues": [
+          0.0099975123241457,
+          0.0010761125294288603,
+          -0.0001282991690085707,
+          0.0029945559696141384
+        ]
+      },
+      {
+        "classification": "COMPLETED/smooth/no-breakaway",
+        "predictionValid": true,
+        "terminated": false,
+        "eventOccurred": false,
+        "outputs": {
+          "lastValidTheta": 0.009896744270061127,
+          "lastValidTime": 0.05,
+          "finalTheta": 0.009896744270061127
+        },
+        "sampleIndex": 31,
+        "parameterValues": [
+          0.010021600818551727,
+          0.0009816355436868698,
+          0.00023189029562333614,
+          0.003001424230047224
+        ]
+      }
+    ],
+    "classificationCounts": {
+      "COMPLETED/smooth/no-breakaway": 32
+    },
+    "classificationProportions": {
+      "COMPLETED/smooth/no-breakaway": 1
+    },
+    "validPredictionCount": 32,
+    "terminatedCount": 0,
+    "noEventCount": 32
+  },
+  "conditionalOnComplete": {
+    "count": 32,
+    "total": 32,
+    "meanFinalTheta": 0.009874771745267736,
+    "sampleVariance": 1.226748218743477e-10
+  },
+  "claim": "correlated scenario envelope; not a confidence interval"
+}

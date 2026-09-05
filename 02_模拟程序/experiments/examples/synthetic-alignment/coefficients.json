@@ -1,0 +1,317 @@
+{
+  "schemaVersion": "VP-ROM-COEFFICIENT-PACKAGE-v2",
+  "packageId": "SYNTHETIC-ALIGNED-TWO-REAL-OUTPUT-v2",
+  "classification": "synthetic-only",
+  "apparatusId": "SYNTHETIC-APPARATUS-NOT-PHYSICAL",
+  "apparatusRevision": "SYNTH-v1",
+  "predictionPlanId": "SYNTHETIC-ALIGNED-PREDICTION-PLAN-v2",
+  "modelId": "VP-FWD-P0-SL1-v1",
+  "coefficientSource": "measured",
+  "wakeGauge": {
+    "schemaVersion": "VP-WAKE-GAUGE-METADATA-v1",
+    "id": "two-real-reference-output-v1",
+    "modelId": "VP-FWD-P0-SL1-v1",
+    "sourceReference": "constant factor 1/2 conversion of the declared synthetic legacy gauge",
+    "coordinate": {
+      "kind": "dimensionless-complex-amplitude",
+      "amplitudeConvention": "C_L_ref=2Re(A_new), A_new=A_old/2",
+      "phaseReference": "positive real reference sectional lift at A_new=1/2",
+      "trajectoryDependence": "constant",
+      "stateUnit": "1",
+      "timeBasis": {
+        "unit": "s",
+        "scaleToSeconds": 1
+      },
+      "initialStatePaths": {
+        "real": "initial.wakeReal",
+        "imaginary": "initial.wakeImaginary"
+      }
+    },
+    "output": {
+      "kind": "sectional-lift-coefficient",
+      "unit": "1",
+      "expression": "finiteSpanCoherence*Re(liftOutput*A)",
+      "referenceIdentity": "P0-local-wet-width-dynamic-pressure-v1",
+      "coefficientPaths": {
+        "real": "rom.liftOutputReal",
+        "imaginary": "rom.liftOutputImaginary"
+      }
+    },
+    "finiteSpanCoherence": {
+      "kind": "independent-closure",
+      "representation": "constant-factor",
+      "closureId": "synthetic-uniform-span-coherence-one",
+      "parameterPath": "rom.finiteSpanCoherence"
+    },
+    "parameterUnits": {
+      "rom.cubicSaturation": "1",
+      "rom.nonlinearFrequencyShift": "1",
+      "rom.couplingThetaReal": "1",
+      "rom.couplingThetaImaginary": "1",
+      "rom.couplingOmegaReal": "1",
+      "rom.couplingOmegaImaginary": "1",
+      "rom.couplingAccelerationReal": "1",
+      "rom.couplingAccelerationImaginary": "1",
+      "rom.liftOutputReal": "1",
+      "rom.liftOutputImaginary": "1",
+      "rom.finiteSpanCoherence": "1"
+    },
+    "parameterNormalizationIdentity": "VP-FWD-P0-SL1-production-normalization-v1",
+    "covarianceIdentity": null
+  },
+  "parameters": {
+    "rom.addedMassCoefficient": {
+      "value": 1,
+      "unit": "1",
+      "standardUncertainty": 0.01,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.sectionalDragCoefficient": {
+      "value": 1.2,
+      "unit": "1",
+      "standardUncertainty": 0.012,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.strouhalNumber": {
+      "value": 0.2,
+      "unit": "1",
+      "standardUncertainty": 0.002,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.referenceHopfReynolds": {
+      "value": 47,
+      "unit": "1",
+      "standardUncertainty": 0.47000000000000003,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.hopfGrowthSlope": {
+      "value": 0.05,
+      "unit": "1",
+      "standardUncertainty": 0.0005,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.cubicSaturation": {
+      "value": 0.4,
+      "unit": "1",
+      "standardUncertainty": 0.004,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.nonlinearFrequencyShift": {
+      "value": 0.08,
+      "unit": "1",
+      "standardUncertainty": 0.0008,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.zeroFlowWakeDecayTime": {
+      "value": 0.5,
+      "unit": "s",
+      "standardUncertainty": 0.005,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.wakeActivationSpeed": {
+      "value": 0.001,
+      "unit": "m/s",
+      "standardUncertainty": 1e-05,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.calibrationVelocityFloor": {
+      "value": 0.01,
+      "unit": "m/s",
+      "standardUncertainty": 0.0001,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.couplingThetaReal": {
+      "value": 0.0,
+      "unit": "1",
+      "standardUncertainty": 5e-09,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.couplingThetaImaginary": {
+      "value": 0.0,
+      "unit": "1",
+      "standardUncertainty": 5e-09,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.couplingOmegaReal": {
+      "value": 0.05,
+      "unit": "1",
+      "standardUncertainty": 0.0005,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.couplingOmegaImaginary": {
+      "value": 0.0,
+      "unit": "1",
+      "standardUncertainty": 5e-09,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.couplingAccelerationReal": {
+      "value": 0.04,
+      "unit": "1",
+      "standardUncertainty": 0.0004,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.couplingAccelerationImaginary": {
+      "value": 0.0,
+      "unit": "1",
+      "standardUncertainty": 5e-09,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.liftOutputReal": {
+      "value": 2,
+      "unit": "1",
+      "standardUncertainty": 0,
+      "method": "fixed wake gauge",
+      "source": "fixed-gauge",
+      "status": "fixed"
+    },
+    "rom.liftOutputImaginary": {
+      "value": 0,
+      "unit": "1",
+      "standardUncertainty": 0,
+      "method": "fixed wake gauge",
+      "source": "fixed-gauge",
+      "status": "fixed"
+    },
+    "rom.finiteSpanCoherence": {
+      "value": 1,
+      "unit": "1",
+      "standardUncertainty": 0,
+      "method": "explicit independent uniform-span closure",
+      "source": "synthetic-only",
+      "status": "fixed"
+    },
+    "rom.calibrationMinReynolds": {
+      "value": 0,
+      "unit": "1",
+      "standardUncertainty": 1e-08,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.calibrationMaxReynolds": {
+      "value": 250,
+      "unit": "1",
+      "standardUncertainty": 2.5,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.calibrationMaxAbsAngle": {
+      "value": 0.35,
+      "unit": "rad",
+      "standardUncertainty": 0.0034999999999999996,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.calibrationMaxVelocityRatio": {
+      "value": 3,
+      "unit": "1",
+      "standardUncertainty": 0.03,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.calibrationMaxNormalizedInflowRate": {
+      "value": 20,
+      "unit": "1",
+      "standardUncertainty": 0.2,
+      "method": "synthetic fixture",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    },
+    "rom.calibrationMinWetSpan": {
+      "value": 0.02,
+      "unit": "m",
+      "standardUncertainty": 0,
+      "method": "declared synthetic coverage for integration tests",
+      "source": "synthetic-only",
+      "status": "synthetic"
+    }
+  },
+  "trainingConditionBlocks": [
+    "SYN-CAL-01",
+    "SYN-CAL-02",
+    "SYN-CAL-03"
+  ],
+  "holdoutConditionBlocks": [
+    "SYN-HOLDOUT-01",
+    "SYN-HOLDOUT-02"
+  ],
+  "holdoutReadDuringFit": false,
+  "calibrationDomain": {
+    "flowSpeedMps": {
+      "minimum": 0.01,
+      "maximum": 0.024
+    },
+    "waterDepthM": {
+      "minimum": 0.12,
+      "maximum": 0.12
+    },
+    "pivotHeightM": {
+      "minimum": 0.07,
+      "maximum": 0.07
+    },
+    "reynolds": {
+      "minimum": 0,
+      "maximum": 250
+    },
+    "jointSupport": {
+      "kind": "validated-box",
+      "evidence": "Explicit synthetic eight-coordinate test box. No apparatus coverage claim."
+    },
+    "wetSpanM": {
+      "minimum": 0.02,
+      "maximum": 0.14
+    },
+    "absThetaRad": {
+      "minimum": 0,
+      "maximum": 0.35
+    },
+    "velocityRatio": {
+      "minimum": 0,
+      "maximum": 3
+    },
+    "normalizedInflowRate": {
+      "minimum": 0,
+      "maximum": 20
+    }
+  },
+  "covariance": null,
+  "wetSpanDefinition": "streamwise-projected-area-over-diameter",
+  "dragWidthDefinition": "streamwise-wet-width",
+  "jointUncertainty": null,
+  "identifiability": null
+}

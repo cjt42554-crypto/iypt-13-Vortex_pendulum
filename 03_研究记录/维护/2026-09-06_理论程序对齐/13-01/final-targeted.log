@@ -1,0 +1,15 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 test
+> vitest run --run tests/wake-gauge.test.ts
+
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+ ✓ tests/wake-gauge.test.ts (11 tests) 12288ms
+   ✓ constant complex wake gauge > keeps 120 seeded production RHS evaluations and short trajectories physically equivalent  12282ms
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  01:50:27
+   Duration  12.65s (transform 123ms, setup 0ms, collect 144ms, tests 12.29s, environment 0ms, prepare 62ms)
+

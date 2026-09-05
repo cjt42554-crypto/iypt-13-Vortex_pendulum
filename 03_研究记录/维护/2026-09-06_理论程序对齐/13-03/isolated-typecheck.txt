@@ -1,0 +1,14 @@
+COMMAND
+cd '02_模拟程序'
+npx tsc --noEmit --strict --noUncheckedIndexedAccess --target ES2022 --module ESNext --moduleResolution Bundler --lib ES2023,DOM --skipLibCheck src/problems/vortex-pendulum/directional-drag.ts
+
+EXIT_CODE
+0
+
+OUTPUT
+(no diagnostics)
+
+ADDITIONAL_CHECK
+git diff --no-index --check /dev/null '02_模拟程序/src/problems/vortex-pendulum/directional-drag.ts'
+git diff --no-index --check /dev/null '02_模拟程序/tests/directional-drag.test.ts'
+EXIT_CODE=1 for each because each file is new; no output means no whitespace-error diagnostic.

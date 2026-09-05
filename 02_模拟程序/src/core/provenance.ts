@@ -1,5 +1,6 @@
 import type { BackendId, SimulationConfig } from "./types";
 import { sha256Canonical, stableCanonicalJson } from "./canonical";
+import { forwardModelId } from "./forward-contract";
 
 export const A1_FORCE_CONTRACT_ID = "VP-CFD2D-RAW-BRINKMAN-A1-v1";
 export const A1_ANALYSIS_CONTRACT_ID = "VP-ANALYSIS-APPLIED-DIAGNOSTIC-A1-v1";
@@ -31,8 +32,14 @@ function normalizedStripClosure(config: SimulationConfig): string {
 export function backendDynamicsContract(config: SimulationConfig, backend: BackendId): unknown {
   if (backend === "forward") {
     return {
-      contractId: "VP-FWD-DYNAMICS-CONTRACT-v1",
-      modelId: "VP-FWD-P0-SL1-v1",
+      contractId: "VP-FWD-DYNAMICS-CONTRACT-v2",
+      modelId: forwardModelId(config),
+      wetSupportMode: config.rom.wetSupportMode ?? "legacy-unqualified",
+      wetSpanDefinition: config.rom.wetSpanDefinition ?? null,
+      calibrationMinWetSpan: config.rom.calibrationMinWetSpan ?? null,
+      jointCalibrationSupport: config.rom.jointCalibrationSupport ?? null,
+      wakeGauge: config.rom.wakeGauge ?? { id: "legacy-unspecified" },
+      dragWidthDefinition: config.rom.dragWidthDefinition ?? "streamwise-wet-width",
       loadDefinition: "quasisteady-drag-plus-single-complex-stuart-landau-wake",
       inertiaAllocation: "dry-plus-explicit-rom-added-inertia",
       integration: "adaptive-dormand-prince-5-4",

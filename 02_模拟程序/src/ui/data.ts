@@ -42,6 +42,7 @@ export function resultToCsv(result: SimulationResult): string {
     "hydrostaticPotential", "elasticPotential", "mechanicalEnergy", "effectiveInertia",
     "addedInertia", "displacedVolume", "projectedWetArea", "axisWetLength",
     "volumeEquivalentWetLength", "flowSpeed", "reynolds", "wetBranch",
+    "frictionMode", "axisFrictionTorque", "staticFrictionMargin", "valid", "cumulativeNetWork",
   ] as const;
   const exchangeColumns = [
     "appliedStartTime", "appliedEndTime",
@@ -56,11 +57,14 @@ export function resultToCsv(result: SimulationResult): string {
     "cumulativeBrinkmanFluidWork", "cumulativeRawSolidReactionWork",
     "cumulativeBrinkmanPenaltyDissipation", "cumulativeBrinkmanAlgebraicResidual",
   ] as const;
-  const lines = [[...columns, ...exchangeColumns].join(",")];
-  for (const sample of result.samples) {
-    const applied = sample.interfaceExchange?.applied;
-    const diagnostic = sample.interfaceExchange?.diagnostic;
-    const cumulative = sample.interfaceExchange?.cumulative;
+  const metadataColumns = ["recordType", "modelId", "wakeGaugeId", "dragWidthDefinition",
+    "terminationCode", "lastValidTime", "eventsJson", "inputClassification"];
+  const lines = [[...columns, ...exchangeColumns, ...metadataColumns].join(",")];
+  const rows = result.samples.length ? result.samples : [undefined];
+  for (const [index, sample] of rows.entries()) {
+    const applied = sample?.interfaceExchange?.applied;
+    const diagnostic = sample?.interfaceExchange?.diagnostic;
+    const cumulative = sample?.interfaceExchange?.cumulative;
     const exchangeValues = [
       applied?.startTime, applied?.endTime,
       applied?.appliedRawLineImpulseX, applied?.appliedRawLineImpulseY,
@@ -81,8 +85,12 @@ export function resultToCsv(result: SimulationResult): string {
       cumulative?.cumulativeBrinkmanAlgebraicResidual,
     ];
     lines.push([
-      ...columns.map((column) => csvCell(sample[column])),
+      ...columns.map((column) => csvCell(sample?.[column])),
       ...exchangeValues.map(csvCell),
+      ...[sample ? "sample" : "empty-run", result.provenance.modelId,
+        result.config.rom.wakeGauge?.id ?? "legacy-unspecified", result.config.rom.dragWidthDefinition ?? "streamwise-wet-width",
+        result.terminationCode, result.samples.at(-1)?.time,
+        index === 0 ? JSON.stringify(result.events) : "", result.provenance.epistemicClassification].map(csvCell),
     ].join(","));
   }
   return `\uFEFF${lines.join("\n")}`;

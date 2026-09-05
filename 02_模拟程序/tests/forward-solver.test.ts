@@ -161,7 +161,25 @@ describe("wetting transition timestamps", () => {
     expect(first).toBeDefined();
     expect(second).toBeDefined();
     expect(Math.abs((first?.time ?? 0) - (second?.time ?? 1))).toBeLessThan(2e-7);
-    expect(first?.time).toBeGreaterThan(.019);
-    expect(first?.time).toBeLessThan(.0195);
+    // Full immersion ends when the highest point of the top disk reaches the
+    // surface. A displaced-volume tolerance delayed this by about 3 ms.
+    const config=make(.001), {radius:R,topDistance:a,bottomDistance:b,pivotHeight:h}=config.geometry;
+    const rootAngle=Math.acos(h/Math.hypot(a,R))-Math.atan2(R,a);
+    const area=Math.PI*R*R, rho=config.fluid.density;
+    const inertia=config.body.dryMomentOfInertia+config.rom.addedMassCoefficient*rho*area*(b**3-a**3)/3;
+    const restoring=config.fluid.gravity*(config.body.movingMass*config.body.centerOfMassDistance-rho*area*(b*b-a*a)/2);
+    const drag=.5*rho*config.rom.sectionalDragCoefficient*(2*R)*(b**4-a**4)/4;
+    const rhs=(x:number[])=>[x[1]!,(-restoring*Math.sin(x[0]!)-drag*x[1]!*Math.abs(x[1]!)-config.support.viscousDamping*x[1]!)/inertia];
+    const advance=(x:number[],dt:number)=>{
+      const k1=rhs(x),k2=rhs(x.map((v,i)=>v+dt*k1[i]!/2)),k3=rhs(x.map((v,i)=>v+dt*k2[i]!/2)),k4=rhs(x.map((v,i)=>v+dt*k3[i]!));
+      return x.map((v,i)=>v+dt*(k1[i]!+2*k2[i]!+2*k3[i]!+k4[i]!)/6);
+    };
+    let time=0,x=[.24,.7];const dt=1e-5;
+    while(advance(x,dt)[0]!<rootAngle){x=advance(x,dt);time+=dt;}
+    let low=0,high=dt;
+    for(let i=0;i<40;i++){const mid=(low+high)/2;if(advance(x,mid)[0]!<rootAngle)low=mid;else high=mid;}
+    const reference=time+(low+high)/2;
+    expect(Math.abs(first!.time-reference)).toBeLessThan(1e-7);
+    console.info("FULL_TO_PARTIAL_ANALYTIC_GEOMETRY",{rootAngle,reference,event:first!.time});
   });
 });

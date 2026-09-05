@@ -1,0 +1,140 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+ ✓ tests/identifiability.test.ts (7 tests) 7ms
+ ❯ tests/uncertainty.test.ts (14 tests | 1 failed) 48ms
+   ✓ joint covariance identity > accepts PSD correlation 1 and propagates variance 3ms
+   ✓ joint covariance identity > accepts PSD correlation +0 and propagates variance 0ms
+   ✓ joint covariance identity > accepts PSD correlation -1 and propagates variance 0ms
+   ✓ joint covariance identity > preserves rank and correlation at scientific covariance scale 1 0ms
+   ✓ joint covariance identity > preserves rank and correlation at scientific covariance scale +0 0ms
+   ✓ joint covariance identity > preserves rank and correlation at scientific covariance scale -1 0ms
+   ✓ joint covariance identity > rejects a small-scale matrix with a real negative eigenvalue 1ms
+   ✓ joint covariance identity > cancels a shared additive observation/prediction error 0ms
+   ✓ joint covariance identity > retains unknown-initial-state cross covariance 0ms
+   × joint covariance identity > rejects wrong formal units and duplicate apparatus marginalization 5ms
+     → expected [Function] to throw error matching /unit mismatch/u but got 'parameter kind mismatch for body.dryM…'
+   ✓ wake gauge covariance transformation > keeps the physical linearized output variance invariant 1ms
+   ✓ wake gauge covariance transformation > requires complete real/imaginary pairs 0ms
+   ✓ joint sampling and event classification > agrees with linear propagation inside a preregistered sampling-error bound 33ms
+   ✓ joint sampling and event classification > retains completed/no-event, future SS mode and terminated samples in one denominator 2ms
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 42,
+  rejectedSteps: 0,
+  rhsEvaluations: 294,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.4609500792448451,
+  finalEnergyBalanceResidual: -1.031947757057321e-15,
+  terminationCode: 'COMPLETED'
+} []
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-SS-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 43,
+  rejectedSteps: 0,
+  rhsEvaluations: 301,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.5243704880640824,
+  finalEnergyBalanceResidual: -7.37450600802117e-16,
+  terminationCode: 'COMPLETED'
+} [
+  {
+    time: 0.20360743524329705,
+    kind: 'mode',
+    code: 'SS-slip+-TO-stick',
+    message: '首次模式边界定位；无冲量，尾流不重置。',
+    bracket: {
+      validTime: 0.20360743520930696,
+      invalidTime: 0.20360743527728714
+    },
+    modeBefore: 'slip+',
+    modeAfter: 'stick',
+    validBefore: true,
+    validAfter: true
+  }
+]
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-DW-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 42,
+  rejectedSteps: 0,
+  rhsEvaluations: 294,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.4609124525589703,
+  finalEnergyBalanceResidual: -1.0340771978867183e-15,
+  terminationCode: 'COMPLETED'
+} []
+
+stdout | tests/forward-alignment.test.ts > runs all four production branches with explicit identities and passive drag
+FOUR_BRANCH VP-FWD-P0-SL1-SS-DW-v1 {
+  method: 'Dormand-Prince-5(4)',
+  acceptedSteps: 43,
+  rejectedSteps: 0,
+  rhsEvaluations: 301,
+  minimumAcceptedStep: 0.001,
+  maximumAcceptedStep: 0.010000000000000009,
+  maximumAcceptedErrorNorm: 0.5238386442062621,
+  finalEnergyBalanceResidual: -7.364985357694032e-16,
+  terminationCode: 'COMPLETED'
+} [
+  {
+    time: 0.20360737277494995,
+    kind: 'mode',
+    code: 'SS-slip+-TO-stick',
+    message: '首次模式边界定位；无冲量，尾流不重置。',
+    bracket: { validTime: 0.20360737274094495, invalidTime: 0.2036073728089549 },
+    modeBefore: 'slip+',
+    modeAfter: 'stick',
+    validBefore: true,
+    validAfter: true
+  }
+]
+
+stdout | tests/forward-alignment.test.ts > resolves physical stopping and keeps rest under four internal refinements
+SS_STOP_REFINEMENT [
+  0.24201418230462907,
+  0.2420141822633616,
+  0.24201418172395417,
+  0.24201418223371168
+]
+
+ ✓ tests/forward-alignment.test.ts (5 tests) 5158ms
+   ✓ runs all four production branches with explicit identities and passive drag  2182ms
+   ✓ preserves exact rest while the production wake evolves with gamma0 theta  586ms
+   ✓ resolves physical stopping and keeps rest under four internal refinements  2066ms
+   ✓ reduces zero Coulomb and full immersion to the smooth full-width branch  319ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/uncertainty.test.ts > joint covariance identity > rejects wrong formal units and duplicate apparatus marginalization
+AssertionError: expected [Function] to throw error matching /unit mismatch/u but got 'parameter kind mismatch for body.dryM…'
+
+- Expected: 
+/unit mismatch/u
+
++ Received: 
+"parameter kind mismatch for body.dryMomentOfInertia"
+
+ ❯ tests/uncertainty.test.ts:103:8
+    101|     });
+    102|     expect(() => validateJointUncertaintyModel(wrongUnit, { requireFor…
+    103|       .toThrow(/unit mismatch/u);
+       |        ^
+    104| 
+    105|     const correctUnit = model([[1, 0], [0, 1]], {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 25 passed (26)
+   Start at  02:15:17
+   Duration  5.81s (transform 240ms, setup 0ms, collect 312ms, tests 5.21s, environment 0ms, prepare 502ms)
+

@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateConfig } from "../src/core/config";
 import type { SimulationConfig, SimulationResult } from "../src/core/types";
+import { resultToCsv } from "../src/ui/data";
 import { runForward } from "../src/solvers/forward";
 
 interface Arguments {
@@ -43,19 +44,6 @@ function argumentsFrom(commandLine: readonly string[]): Arguments {
   };
 }
 
-function csv(result: SimulationResult): string {
-  const keys = [
-    "time", "theta", "omega", "angularAcceleration", "displacement", "velocity",
-    "wakeReal", "wakeImaginary", "wakeAmplitude", "wakePhase", "liftCoefficient",
-    "dragCoefficient", "liftTorque", "dragTorque", "fluidTorque", "buoyancyTorque",
-    "fluidPower", "dampingPower", "mechanicalEnergy", "effectiveInertia", "addedInertia",
-    "displacedVolume", "projectedWetArea", "axisWetLength", "flowSpeed", "reynolds",
-    "wetBranch",
-  ] as const;
-  return `${keys.join(",")}\n${result.samples.map((sample) =>
-    keys.map((key) => sample[key] === null ? "" : String(sample[key])).join(","),
-  ).join("\n")}\n`;
-}
 
 const options = argumentsFrom(process.argv.slice(2));
 const parsed = JSON.parse(await readFile(options.configPath, "utf8")) as SimulationConfig;
@@ -70,7 +58,7 @@ const elapsedMilliseconds = performance.now() - started;
 if (options.outputPath !== undefined) {
   await writeFile(options.outputPath, `${JSON.stringify(result, null, 2)}\n`, "utf8");
 }
-if (options.csvPath !== undefined) await writeFile(options.csvPath, csv(result), "utf8");
+if (options.csvPath !== undefined) await writeFile(options.csvPath, resultToCsv(result), "utf8");
 process.stdout.write(`${JSON.stringify({
   configPath: options.configPath,
   outputPath: options.outputPath ?? null,

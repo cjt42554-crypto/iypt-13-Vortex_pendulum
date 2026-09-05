@@ -3,6 +3,11 @@ import {
   flowSpeedAt,
   flowSpeedDerivativeAt,
 } from "../../core/config";
+import {
+  jointCalibrationMargin,
+  wetContractIssues,
+  type RuntimeDomainPoint,
+} from "../../core/wet-domain";
 import type {
   DerivedParameters,
   SimulationConfig,
@@ -12,12 +17,19 @@ import type {
 import {
   cylinderMidpoint,
   cylinderSupport,
+  evaluateWetGeometry,
   integrateWetProjection,
+  type WetBranch,
 } from "../../problems/vortex-pendulum/geometry";
 import {
   evaluateMechanics,
+  evaluateMechanicsWithoutAxisFriction,
+  applyAxisFriction,
   type MechanicalEvaluation,
 } from "../../problems/vortex-pendulum/mechanics";
+import { isDirectionalDragModel, isStickSlipModel } from "../../core/forward-contract";
+import { evaluateDirectionalDrag } from "../../problems/vortex-pendulum/directional-drag";
+import { evaluateStickSlipMechanics, selectInitialStickSlipMode, type StickSlipMode } from "./stick-slip";
 
 /** State X=(theta,omega,A_R,A_I) of VP-FWD-P0-SL1-v1. */
 export interface ForwardState {
@@ -30,7 +42,10 @@ export interface ForwardState {
 export type ForwardDerivative = ForwardState;
 
 export interface ForwardEvaluation {
+  frictionMode: StickSlipMode | "smooth";
+  staticFrictionMargin: number | null;
   derivative: ForwardDerivative;
+  domain: ForwardDomainEvaluation;
   mechanics: MechanicalEvaluation;
   flowSpeed: number;
   flowSpeedDerivative: number;
@@ -52,17 +67,54 @@ export interface ForwardEvaluation {
 }
 
 export interface ForwardGuard {
+  /** Stable identity; several guards may share one public termination code. */
+  id: string;
   code: Exclude<
     TerminationCode,
     "COMPLETED" | "MINIMUM-STEP" | "MAXIMUM-STEPS" | "USER-STOP"
   >;
   /** Positive inside the supported domain, zero at the event surface. */
   margin: number;
+  /** `closed` accepts equality; `open` stops when the margin reaches zero. */
+  boundary: "open" | "closed";
+  /** Tie-break only after event times agree within the root tolerance. */
+  priority: number;
   message: string;
+}
+
+export interface ForwardDomainEvaluation {
+  strictWetContract: boolean;
+  contractIssues: string[];
+  projectedArea: number;
+  wetSpan: number;
+  wetBranch: WetBranch;
+  flowSpeed: number;
+  flowSpeedDerivative: number;
+  wakeReferenceSpeed: number;
+  reynolds: number;
+  velocityRatio: number;
+  normalizedInflowRate: number;
+  jointCalibrationMargin: number | null;
+  point: RuntimeDomainPoint;
+}
+
+/** A rejected RK stage carries the physical guard that made its RHS undefined. */
+export class ForwardDomainViolation extends RangeError {
+  constructor(
+    readonly time: number,
+    readonly state: ForwardState,
+    readonly guard: ForwardGuard,
+  ) {
+    super(`${guard.code}: ${guard.message}`);
+    this.name = "ForwardDomainViolation";
+  }
 }
 
 const TWO_PI = 2 * Math.PI;
 const INERTIA_RELATIVE_FLOOR = 1e-9;
+const WET_GUARD_PRIORITY = 0;
+const PHYSICAL_GUARD_PRIORITY = 10;
+const CLOSURE_GUARD_PRIORITY = 20;
 
 function geometry(config: SimulationConfig) {
   const { radius, topDistance, bottomDistance, pivotHeight } = config.geometry;
@@ -84,6 +136,123 @@ function multiplyComplex(
   return { real: leftReal * scalar, imaginary: leftImaginary * scalar };
 }
 
+export function guardIsValid(guard: ForwardGuard): boolean {
+  return guard.boundary === "closed" ? guard.margin >= 0 : guard.margin > 0;
+}
+
+export function evaluateForwardDomain(
+  config: SimulationConfig,
+  time: number,
+  state: ForwardState,
+  derived: DerivedParameters = deriveParameters(config),
+): ForwardDomainEvaluation {
+  if (!Number.isFinite(time) || !finiteState(state)) {
+    throw new RangeError("forward domain evaluation requires a finite time and state");
+  }
+  const p0 = geometry(config);
+  const wet = evaluateWetGeometry(state.theta, p0);
+  const projectedArea = wet.streamwiseProjectedArea;
+  const diameter = derived.cylinderDiameter;
+  const wetSpan = projectedArea / diameter;
+  const flowSpeed = flowSpeedAt(config, time);
+  const flowSpeedDerivative = flowSpeedDerivativeAt(config, time);
+  const wakeReferenceSpeed = projectedArea > 0 ? Math.abs(flowSpeed) : 0;
+  const reynolds = wakeReferenceSpeed * diameter / config.fluid.kinematicViscosity;
+  const omegaReference = derived.naturalAngularFrequency > 0
+    ? derived.naturalAngularFrequency
+    : 1 / config.rom.zeroFlowWakeDecayTime;
+  const velocityRatio = config.geometry.bottomDistance * Math.abs(state.omega)
+    / Math.max(wakeReferenceSpeed, config.rom.calibrationVelocityFloor);
+  const normalizedInflowRate = Math.abs(flowSpeedDerivative)
+    / (Math.max(wakeReferenceSpeed, config.rom.calibrationVelocityFloor) * omegaReference);
+  const point: RuntimeDomainPoint = {
+    flowSpeedMps: Math.abs(flowSpeed),
+    waterDepthM: config.geometry.waterDepth,
+    pivotHeightM: config.geometry.pivotHeight,
+    reynolds,
+    wetSpanM: wetSpan,
+    absThetaRad: Math.abs(state.theta),
+    velocityRatio,
+    normalizedInflowRate,
+  };
+  const strictWetContract = (config.rom.wetSupportMode ?? "legacy-unqualified") !== "legacy-unqualified";
+  const contractIssues = wetContractIssues(config.rom);
+  const support = config.rom.jointCalibrationSupport;
+  return {
+    strictWetContract,
+    contractIssues,
+    projectedArea,
+    wetSpan,
+    wetBranch: wet.branch,
+    flowSpeed,
+    flowSpeedDerivative,
+    wakeReferenceSpeed,
+    reynolds,
+    velocityRatio,
+    normalizedInflowRate,
+    jointCalibrationMargin: strictWetContract && support !== undefined
+      ? jointCalibrationMargin(support, point)
+      : null,
+    point,
+  };
+}
+
+function wetDomainGuards(config: SimulationConfig, domain: ForwardDomainEvaluation): ForwardGuard[] {
+  if (!domain.strictWetContract) return [];
+  if (domain.contractIssues.length > 0) return [{
+    id: "wet-contract",
+    code: "WET-COVERAGE-MISSING",
+    margin: -1,
+    boundary: "open",
+    priority: WET_GUARD_PRIORITY,
+    message: `湿区定量契约不完整：${domain.contractIssues.join("；")}`,
+  }];
+  const areaScale = Math.max(
+    derivedWetAreaScale(config),
+    Number.MIN_VALUE,
+  );
+  return [
+    {
+      id: "positive-wet-area",
+      code: "WET-DOMAIN-EXIT",
+      margin: domain.projectedArea / areaScale,
+      boundary: "open",
+      priority: WET_GUARD_PRIORITY,
+      message: "湿投影面积到达零；正式四状态湿态预测在有效侧终止。",
+    },
+    {
+      id: "minimum-calibrated-wet-span",
+      code: "WET-DOMAIN-EXIT",
+      margin: domain.wetSpan - (config.rom.calibrationMinWetSpan ?? Number.POSITIVE_INFINITY),
+      boundary: "closed",
+      priority: WET_GUARD_PRIORITY + 1,
+      message: "实际湿跨低于系数包独立标定覆盖的闭下界。",
+    },
+    {
+      id: "joint-calibration-support",
+      code: "COEFFICIENT-OOD",
+      margin: domain.jointCalibrationMargin ?? Number.NEGATIVE_INFINITY,
+      boundary: "closed",
+      priority: WET_GUARD_PRIORITY + 2,
+      message: "运行工况离开有依据的八坐标联合标定单元。",
+    },
+  ];
+}
+
+function derivedWetAreaScale(config: SimulationConfig): number {
+  return 2 * config.geometry.radius
+    * (config.geometry.bottomDistance - config.geometry.topDistance);
+}
+
+export function firstInvalidForwardWetGuard(
+  config: SimulationConfig,
+  domain: ForwardDomainEvaluation,
+): ForwardGuard | undefined {
+  return wetDomainGuards(config, domain)
+    .filter((guard) => !guardIsValid(guard))
+    .sort((left, right) => left.priority - right.priority)[0];
+}
+
 /**
  * Piecewise-smooth physical right-hand side (the dry/wet wake switch is not
  * a calibrated re-entry law). No integration tolerances, time-step
@@ -94,17 +263,19 @@ export function evaluateForward(
   time: number,
   state: ForwardState,
   derived: DerivedParameters = deriveParameters(config),
+  selectedMode?: StickSlipMode,
 ): ForwardEvaluation {
   if (!Number.isFinite(time) || !finiteState(state)) {
     throw new RangeError("forward RHS requires a finite time and state");
   }
+  const domain = evaluateForwardDomain(config, time, state, derived);
+  const wetViolation = firstInvalidForwardWetGuard(config, domain);
+  if (wetViolation !== undefined) {
+    throw new ForwardDomainViolation(time, { ...state }, wetViolation);
+  }
   const p0 = geometry(config);
-  const flowSpeed = flowSpeedAt(config, time);
-  const flowSpeedDerivative = flowSpeedDerivativeAt(config, time);
-  const projectedArea = integrateWetProjection(state.theta, p0, () => 1);
-  const wakeReferenceSpeed = projectedArea > 1e-15 ? flowSpeed : 0;
+  const { flowSpeed, flowSpeedDerivative, wakeReferenceSpeed, reynolds } = domain;
   const diameter = derived.cylinderDiameter;
-  const reynolds = wakeReferenceSpeed * diameter / config.fluid.kinematicViscosity;
 
   const activationScale = config.rom.wakeActivationSpeed;
   const wakeActivation = wakeReferenceSpeed ** 2
@@ -138,7 +309,11 @@ export function evaluateForward(
         return relativeSpeed > 0 ? r * wakeReferenceSpeed / relativeSpeed : 0;
       })
     : 0;
-  const dragTorque = -0.5
+  const dragTorque = isDirectionalDragModel(config) ? evaluateDirectionalDrag({
+    theta: state.theta, omega: state.omega, geometry: p0,
+    density: config.fluid.density, streamwiseSpeed: flowSpeed,
+    dragCoefficient: config.rom.sectionalDragCoefficient,
+  }).torque : -0.5
     * config.fluid.density
     * config.rom.sectionalDragCoefficient
     * state.omega
@@ -148,12 +323,27 @@ export function evaluateForward(
   // The baseline coefficient package has no independently calibrated C_M.
   const pitchingTorque = 0;
   const dynamicFluidTorque = liftTorque + dragTorque + pitchingTorque;
-  const mechanics = evaluateMechanics(
+  let mechanics = (isStickSlipModel(config) ? evaluateMechanicsWithoutAxisFriction : evaluateMechanics)(
     config,
     state.theta,
     state.omega,
     dynamicFluidTorque,
   );
+  let frictionMode: StickSlipMode | "smooth" = "smooth";
+  let staticMargin: number | null = null;
+  if (isStickSlipModel(config)) {
+    const staticTorque = config.support.staticFrictionTorque!;
+    frictionMode = selectedMode ?? selectInitialStickSlipMode(state.omega, mechanics.drivingTorque, staticTorque);
+    const friction = evaluateStickSlipMechanics(frictionMode, {
+      omega: state.omega, drivingTorque: mechanics.drivingTorque,
+      effectiveInertia: mechanics.effectiveInertia,
+      staticFrictionTorque: staticTorque,
+      kineticFrictionTorque: config.support.kineticFrictionTorque!,
+      viscousDamping: config.support.viscousDamping,
+    });
+    mechanics = applyAxisFriction(mechanics, friction);
+    staticMargin = friction.staticFrictionMargin;
+  }
 
   const omegaReference = derived.naturalAngularFrequency > 0
     ? derived.naturalAngularFrequency
@@ -177,14 +367,13 @@ export function evaluateForward(
     + accelerationForcing.imaginary;
   const wakeMagnitudeSquared = state.wakeReal ** 2 + state.wakeImaginary ** 2;
 
-  const velocityRatio = config.geometry.bottomDistance * Math.abs(state.omega)
-    / Math.max(wakeReferenceSpeed, config.rom.calibrationVelocityFloor);
-  const normalizedInflowRate = Math.abs(flowSpeedDerivative)
-    / (Math.max(wakeReferenceSpeed, config.rom.calibrationVelocityFloor) * omegaReference);
+  const { velocityRatio, normalizedInflowRate } = domain;
 
   return {
+    frictionMode,
+    staticFrictionMargin: staticMargin,
     derivative: {
-      theta: state.omega,
+      theta: frictionMode === "stick" ? 0 : state.omega,
       omega: mechanics.acceleration,
       wakeReal: wakeGrowthRate * state.wakeReal
         - sheddingAngularFrequency * state.wakeImaginary
@@ -197,6 +386,7 @@ export function evaluateForward(
         - wakeCubicImaginary * wakeMagnitudeSquared * state.wakeReal
         + forcingImaginary,
     },
+    domain,
     mechanics,
     flowSpeed,
     flowSpeedDerivative,
@@ -226,19 +416,33 @@ export function evaluateForwardGuards(
   evaluated?: ForwardEvaluation,
 ): ForwardGuard[] {
   if (!Number.isFinite(time) || !finiteState(state)) return [{
+    id: "finite-input-state",
     code: "NONFINITE-STATE",
     margin: -1,
+    boundary: "open",
+    priority: PHYSICAL_GUARD_PRIORITY,
     message: "状态或时间出现 NaN/Inf。",
   }];
-  let value: ForwardEvaluation;
+  let domain: ForwardDomainEvaluation;
   try {
-    value = evaluated ?? evaluateForward(config, time, state);
+    domain = evaluated?.domain ?? evaluateForwardDomain(config, time, state);
   } catch (error) {
     return [{
+      id: "finite-domain-input",
       code: "NONFINITE-INPUT",
       margin: -1,
+      boundary: "open",
+      priority: PHYSICAL_GUARD_PRIORITY,
       message: error instanceof Error ? error.message : String(error),
     }];
+  }
+  let value = evaluated;
+  if (value === undefined && firstInvalidForwardWetGuard(config, domain) === undefined) {
+    try {
+      value = evaluateForward(config, time, state);
+    } catch {
+      value = undefined;
+    }
   }
   const p0 = geometry(config);
   const midpoint = cylinderMidpoint(state.theta, p0);
@@ -252,56 +456,88 @@ export function evaluateForwardGuards(
     + midpoint.z
     - verticalExtent;
   const calibration = config.rom;
+  let guardMechanics: MechanicalEvaluation | undefined = value?.mechanics;
+  if (guardMechanics === undefined) {
+    try {
+      guardMechanics = evaluateMechanics(config, state.theta, state.omega, 0);
+    } catch {
+      guardMechanics = undefined;
+    }
+  }
   const finiteMargin = [
-    value.mechanics.effectiveInertia,
-    value.reynolds,
-    value.velocityRatio,
-    value.normalizedInflowRate,
-    value.derivative.theta,
-    value.derivative.omega,
-    value.derivative.wakeReal,
-    value.derivative.wakeImaginary,
+    guardMechanics?.effectiveInertia,
+    domain.reynolds,
+    domain.velocityRatio,
+    domain.normalizedInflowRate,
+    ...(value === undefined ? [] : [
+      value.derivative.theta,
+      value.derivative.omega,
+      value.derivative.wakeReal,
+      value.derivative.wakeImaginary,
+    ]),
   ].every(Number.isFinite) ? 1 : -1;
   return [
+    ...wetDomainGuards(config, domain),
     {
+      id: "angle-limit",
       code: "ANGLE-LIMIT",
       margin: config.geometry.maximumAngle - Math.abs(state.theta),
+      boundary: "open",
+      priority: PHYSICAL_GUARD_PRIORITY,
       message: "摆角到达 P0 模型的机械/角域边界。",
     },
     {
+      id: "solid-contact",
       code: "SOLID-CONTACT",
       margin: Math.min(sideGap, bottomGap),
+      boundary: "open",
+      priority: PHYSICAL_GUARD_PRIORITY + 1,
       message: "有限圆柱与水槽侧壁或槽底发生几何接触。",
     },
     {
+      id: "inertia-positive",
       code: "INERTIA-SINGULAR",
-      margin: value.mechanics.effectiveInertia
+      margin: (guardMechanics?.effectiveInertia ?? Number.NEGATIVE_INFINITY)
         - INERTIA_RELATIVE_FLOOR * config.body.dryMomentOfInertia,
+      boundary: "open",
+      priority: PHYSICAL_GUARD_PRIORITY + 2,
       message: "有效转动惯量到达正定性下限。",
     },
     {
+      id: "legacy-calibration-envelope",
       code: "COEFFICIENT-OOD",
       margin: Math.min(
-        value.reynolds - calibration.calibrationMinReynolds,
-        calibration.calibrationMaxReynolds - value.reynolds,
+        domain.reynolds - calibration.calibrationMinReynolds,
+        calibration.calibrationMaxReynolds - domain.reynolds,
         calibration.calibrationMaxAbsAngle - Math.abs(state.theta),
-        calibration.calibrationMaxVelocityRatio - value.velocityRatio,
+        calibration.calibrationMaxVelocityRatio - domain.velocityRatio,
       ),
+      boundary: "closed",
+      priority: CLOSURE_GUARD_PRIORITY,
       message: "Re、摆角或体动速度比离开当前系数包标定闭包。",
     },
     {
+      id: "cubic-saturation",
       code: "CUBIC-NONSATURATING",
       margin: calibration.cubicSaturation,
+      boundary: "open",
+      priority: CLOSURE_GUARD_PRIORITY + 1,
       message: "SL 立方实部不再提供饱和，且未声明五次闭合。",
     },
     {
+      id: "normalized-inflow-rate",
       code: "RAPID-INFLOW",
-      margin: calibration.calibrationMaxNormalizedInflowRate - value.normalizedInflowRate,
+      margin: calibration.calibrationMaxNormalizedInflowRate - domain.normalizedInflowRate,
+      boundary: "closed",
+      priority: CLOSURE_GUARD_PRIORITY + 2,
       message: "来流变化率离开当前系数包标定闭包。",
     },
     {
+      id: "finite-right-hand-side",
       code: "NONFINITE-STATE",
       margin: finiteMargin,
+      boundary: "open",
+      priority: PHYSICAL_GUARD_PRIORITY + 3,
       message: "物理右端产生 NaN/Inf。",
     },
   ];
@@ -312,13 +548,17 @@ export function forwardSample(
   time: number,
   state: ForwardState,
   derived: DerivedParameters = deriveParameters(config),
+  selectedMode?: StickSlipMode,
 ): SimulationSample {
-  const evaluated = evaluateForward(config, time, state, derived);
+  const evaluated = evaluateForward(config, time, state, derived, selectedMode);
   const { mechanics } = evaluated;
   const observationRadius = config.geometry.observationDistance;
   const wakeAmplitude = Math.hypot(state.wakeReal, state.wakeImaginary);
   return {
     time,
+    frictionMode: evaluated.frictionMode,
+    axisFrictionTorque: mechanics.axisFrictionTorque,
+    staticFrictionMargin: evaluated.staticFrictionMargin,
     theta: state.theta,
     omega: state.omega,
     angularAcceleration: mechanics.acceleration,
@@ -364,6 +604,7 @@ export function forwardSample(
     flowSpeed: evaluated.flowSpeed,
     reynolds: evaluated.reynolds,
     wetBranch: mechanics.wet.branch,
+    valid: firstInvalidForwardWetGuard(config, evaluated.domain) === undefined,
   };
 }
 

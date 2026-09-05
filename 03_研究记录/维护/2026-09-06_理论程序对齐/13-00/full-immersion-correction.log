@@ -1,0 +1,28 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+stdout | tests/forward-wet-domain.test.ts > 13-A wet exits through the production integrator > finds the first dry exit with output cadence x4 and four actual step refinements
+WET_EXIT_REFINEMENT {"referenceAlgorithm":"RK4 + analytic cylinder support","reference":0.020547175651721317,"exits":[0.020547175649900537,0.020547175659088635,0.020547175661188778,0.02054717563540081,0.020547175661887723,0.02054717566658571,0.020547175651678882,0.0205471756825601]}
+
+ ✓ tests/forward-wet-domain.test.ts (10 tests) 12146ms
+   ✓ 13-A wet exits through the production integrator > finds the first dry exit with output cadence x4 and four actual step refinements  3158ms
+   ✓ 13-A wet exits through the production integrator > detects a dry interval inside a step even when the historical endpoints are wet  5904ms
+   ✓ 13-A wet exits through the production integrator > rejects a coarse out-of-domain RK stage without inventing a physical event  2904ms
+stdout | tests/forward-solver.test.ts > wetting transition timestamps > locates a full-to-partial transition independently of output and maximum step
+FULL_TO_PARTIAL_ANALYTIC_GEOMETRY {
+  rootAngle: 0.2511139206000496,
+  reference: 0.016360206752624427,
+  event: 0.016360212326049804
+}
+
+ ✓ tests/forward-solver.test.ts (7 tests) 17312ms
+   ✓ VP-FWD-P0-SL1-v1 executable model > runs the default model on an exact uniform output grid  302ms
+   ✓ VP-FWD-P0-SL1-v1 executable model > closes the conservative mechanical energy ledger under refinement  14920ms
+   ✓ VP-FWD-P0-SL1-v1 executable model > keeps the final physical state invariant to the requested output grid  1323ms
+   ✓ wetting transition timestamps > locates a full-to-partial transition independently of output and maximum step  696ms
+
+ Test Files  2 passed (2)
+      Tests  17 passed (17)
+   Start at  02:43:24
+   Duration  17.60s (transform 151ms, setup 0ms, collect 313ms, tests 29.46s, environment 0ms, prepare 73ms)
+

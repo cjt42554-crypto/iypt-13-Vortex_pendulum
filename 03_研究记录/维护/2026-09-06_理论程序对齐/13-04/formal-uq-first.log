@@ -1,0 +1,29 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+stdout | tests/forward-uncertainty.test.ts > propagates a complete coefficient package through the builder, solver and statistical report
+FORMAL_UQ_SMALL_NOISE {
+  counts: { 'COMPLETED/smooth/no-breakaway': 128 },
+  variance: 1.002002558792492e-12,
+  sampleVariance: 1.0670504303274776e-12,
+  relativeSamplingBound: 0.5019646441105269,
+  convertedVariance: 1.002002558788815e-12,
+  covarianceHandling: 'transformed-joint-covariance'
+}
+
+stdout | tests/forward-uncertainty.test.ts > keeps cross-breakaway, no-breakaway and invalid-input realizations without a Gaussian claim
+FORMAL_UQ_BREAKAWAY {
+  'COMPLETED/slip+/breakaway': 15,
+  'evaluation-error': 6,
+  'COMPLETED/stick/no-breakaway': 3
+}
+
+ ✓ tests/forward-uncertainty.test.ts (2 tests) 6806ms
+   ✓ propagates a complete coefficient package through the builder, solver and statistical report  4966ms
+   ✓ keeps cross-breakaway, no-breakaway and invalid-input realizations without a Gaussian claim  1840ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  02:24:35
+   Duration  7.38s (transform 157ms, setup 0ms, collect 174ms, tests 6.81s, environment 0ms, prepare 151ms)
+

@@ -1,0 +1,7 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 test:e2e
+> node scripts/e2e.mjs
+
+E2E_BASELINE {"elapsedMs":18418.776061,"runState":"completed","termination":"COMPLETED","consoleErrors":[],"workers":["http://127.0.0.1:4174/assets/simulation.worker-Pff3HDY3.js"]}
+E2E_ALIGNMENT {"modelId":"VP-FWD-P0-SL1-SS-DW-v1","samples":42,"events":1,"maxError":1.219403768206244e-16,"emptyTermination":"WET-DOMAIN-EXIT","elapsedMs":21782.655978}
+E2E PASS: bidirectional visual parameters, five evidence-contract badges, incompatible-overlay gate, applied/diagnostic CFD summary, stable field rendering, light monochrome UI/plots, and blue-orange scene palette verified.

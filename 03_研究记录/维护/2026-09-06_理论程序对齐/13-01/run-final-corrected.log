@@ -1,0 +1,18 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 simulate:forward
+> vite-node scripts/run-forward.ts --config ../03_研究记录/维护/2026-09-06_理论程序对齐/13-01/aligned-frozen-final/SYN-HOLDOUT-01.json --output ../03_研究记录/维护/2026-09-06_理论程序对齐/13-01/aligned-result.json --csv ../03_研究记录/维护/2026-09-06_理论程序对齐/13-01/aligned-result.csv
+
+{
+  "configPath": "/home/cjt/Desktop/iypt/13 涡流摆/03_研究记录/维护/2026-09-06_理论程序对齐/13-01/aligned-frozen-final/SYN-HOLDOUT-01.json",
+  "outputPath": "/home/cjt/Desktop/iypt/13 涡流摆/03_研究记录/维护/2026-09-06_理论程序对齐/13-01/aligned-result.json",
+  "csvPath": "/home/cjt/Desktop/iypt/13 涡流摆/03_研究记录/维护/2026-09-06_理论程序对齐/13-01/aligned-result.csv",
+  "terminationCode": "COMPLETED",
+  "complete": true,
+  "finalTime": 0.2,
+  "sampleCount": 21,
+  "acceptedSteps": 41,
+  "rejectedSteps": 0,
+  "rhsEvaluations": 287,
+  "energyClosureRelativeRms": 8.99255087010442e-16,
+  "elapsedMilliseconds": 515.045235
+}

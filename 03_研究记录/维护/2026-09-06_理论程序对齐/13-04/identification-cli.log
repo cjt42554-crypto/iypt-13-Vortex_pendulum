@@ -1,0 +1,46 @@
+
+> iypt-vortex-pendulum-lab@1.0.0 diagnose:identifiability
+> vite-node scripts/diagnose-identifiability.ts --input experiments/examples/synthetic-alignment/identification-design.json --output ../03_研究记录/维护/2026-09-06_理论程序对齐/13-04/identification-report.json
+
+{
+  "source": {
+    "role": "calibration-design",
+    "sourcePath": "identification-design.json",
+    "bytes": 11547,
+    "sha256": "54ad2ebe9645dea4389fbb289b3a1cc61754946c48cacb3ea0ba403344abf082"
+  },
+  "classification": "synthetic-only",
+  "wakeGaugeId": "two-real-reference-output-v1",
+  "diagnostic": {
+    "rowCount": 32,
+    "columnCount": 3,
+    "rank": 3,
+    "fullColumnRank": true,
+    "singularValues": [
+      1.354309654156831,
+      0.989444542027994,
+      0.4322555481525013
+    ],
+    "relativeSingularValues": [
+      1,
+      0.7305895952163205,
+      0.3191703956519574
+    ],
+    "conditionNumber": 3.1331226630757456,
+    "columnNorms": [
+      0.04062401578916204,
+      0.1491565049460821,
+      0.7317012423469045
+    ],
+    "zeroColumns": [],
+    "correlatedColumns": [],
+    "nullDirections": [],
+    "unknownInitialWake": {
+      "realDeclared": false,
+      "imaginaryDeclared": false,
+      "complete": false
+    }
+  },
+  "claim": "rank of the supplied design only; no optimizer or physical identification claim",
+  "initialWakeStatus": "unknown initial wake not resolved by this design; required before joint fitting"
+}

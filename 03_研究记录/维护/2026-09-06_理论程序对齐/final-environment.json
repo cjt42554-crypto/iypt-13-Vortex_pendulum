@@ -1,0 +1,53 @@
+{
+  "sourceBaseline": "2ec36bf67fd637bee08f8ddf7286aa8852c9666b",
+  "sourcePatch": "source.patch",
+  "workingDirectory": "/home/cjt/Desktop/iypt/13 涡流摆",
+  "node": "v24.19.0",
+  "npm": "11.17.0",
+  "python": "3.12.3",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.39",
+  "cpu": "AMD Ryzen 9 9955HX 16-Core Processor",
+  "dependencies": {
+    "version": "1.0.0",
+    "name": "iypt-vortex-pendulum-lab",
+    "dependencies": {
+      "@playwright/test": {
+        "version": "1.62.1",
+        "resolved": "https://registry.npmjs.org/@playwright/test/-/test-1.62.1.tgz",
+        "overridden": false
+      },
+      "@types/node": {
+        "version": "24.13.3",
+        "resolved": "https://registry.npmjs.org/@types/node/-/node-24.13.3.tgz",
+        "overridden": false
+      },
+      "@vitest/coverage-v8": {
+        "version": "3.2.7",
+        "resolved": "https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-3.2.7.tgz",
+        "overridden": false
+      },
+      "typescript": {
+        "version": "5.9.3",
+        "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+        "overridden": false
+      },
+      "vite": {
+        "version": "7.3.6",
+        "resolved": "https://registry.npmjs.org/vite/-/vite-7.3.6.tgz",
+        "overridden": false
+      },
+      "vitest": {
+        "version": "3.2.7",
+        "resolved": "https://registry.npmjs.org/vitest/-/vitest-3.2.7.tgz",
+        "overridden": false
+      }
+    }
+  },
+  "seed": 20260905,
+  "scienceConclusion": "NONE",
+  "latestUserConstraints": [
+    "no subagents after explicit change; all remain interrupted",
+    "short personal use: bounded validation, no new fitting platform or large computation"
+  ],
+  "validation": "validate-first.log: 170 tests plus build, desktop check, E2E and docs all pass"
+}

@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "VP-EXPERIMENT-PREDICTION-PLAN-v1",
+  "planId": "SYNTHETIC-ALIGNED-PREDICTION-PLAN-v2",
+  "classification": "synthetic-only",
+  "apparatusId": "SYNTHETIC-APPARATUS-NOT-PHYSICAL",
+  "apparatusRevision": "SYNTH-v1",
+  "quantitativeBackend": "forward",
+  "cfd2dRole": "qualitative-only",
+  "holdoutPolicy": {
+    "freezeBeforeCollection": true,
+    "outcomesUnreadDuringFit": true,
+    "conditionBlockSplit": "whole-block"
+  },
+  "channels": {
+    "theta": {
+      "required": true,
+      "unit": "rad",
+      "standardUncertainty": 0.0001
+    },
+    "flowSpeed": {
+      "required": true,
+      "unit": "m/s",
+      "standardUncertainty": 0.0001
+    },
+    "waterLevel": {
+      "required": true,
+      "unit": "m",
+      "standardUncertainty": 0.0001
+    },
+    "temperature": {
+      "required": true,
+      "unit": "K",
+      "standardUncertainty": 0.1
+    },
+    "torque": {
+      "required": false,
+      "unit": "N*m",
+      "standardUncertainty": null
+    }
+  },
+  "pilotBlocks": [
+    {
+      "conditionBlockId": "SYN-PILOT-01",
+      "role": "pilot",
+      "flowSpeedMps": 0.01,
+      "waterDepthM": 0.12,
+      "pivotHeightM": 0.07,
+      "initialThetaRad": 0.01,
+      "initialOmegaRadPerS": 0,
+      "initialWakeReal": 0.0005,
+      "initialWakeImaginary": 0.0,
+      "flowRampTimeS": 0,
+      "durationS": 0.2,
+      "replicates": 3,
+      "releaseProtocol": "synthetic deterministic release",
+      "wakeGaugeId": "two-real-reference-output-v1"
+    }
+  ],
+  "calibrationBlocks": [
+    {
+      "conditionBlockId": "SYN-CAL-01",
+      "role": "calibration",
+      "flowSpeedMps": 0.012,
+      "waterDepthM": 0.12,
+      "pivotHeightM": 0.07,
+      "initialThetaRad": 0.01,
+      "initialOmegaRadPerS": 0,
+      "initialWakeReal": 0.0005,
+      "initialWakeImaginary": 0.0,
+      "flowRampTimeS": 0,
+      "durationS": 0.2,
+      "replicates": 3,
+      "releaseProtocol": "synthetic deterministic release",
+      "wakeGaugeId": "two-real-reference-output-v1"
+    },
+    {
+      "conditionBlockId": "SYN-CAL-02",
+      "role": "calibration",
+      "flowSpeedMps": 0.017,
+      "waterDepthM": 0.12,
+      "pivotHeightM": 0.07,
+      "initialThetaRad": 0.01,
+      "initialOmegaRadPerS": 0,
+      "initialWakeReal": 0.0005,
+      "initialWakeImaginary": 0.0,
+      "flowRampTimeS": 0,
+      "durationS": 0.2,
+      "replicates": 3,
+      "releaseProtocol": "synthetic deterministic release",
+      "wakeGaugeId": "two-real-reference-output-v1"
+    },
+    {
+      "conditionBlockId": "SYN-CAL-03",
+      "role": "calibration",
+      "flowSpeedMps": 0.024,
+      "waterDepthM": 0.12,
+      "pivotHeightM": 0.07,
+      "initialThetaRad": 0.02,
+      "initialOmegaRadPerS": 0,
+      "initialWakeReal": 0.0005,
+      "initialWakeImaginary": 0.0,
+      "flowRampTimeS": 0,
+      "durationS": 0.2,
+      "replicates": 3,
+      "releaseProtocol": "synthetic deterministic release",
+      "wakeGaugeId": "two-real-reference-output-v1"
+    }
+  ],
+  "holdoutBlocks": [
+    {
+      "conditionBlockId": "SYN-HOLDOUT-01",
+      "role": "holdout",
+      "flowSpeedMps": 0.015,
+      "waterDepthM": 0.12,
+      "pivotHeightM": 0.07,
+      "initialThetaRad": 0.015,
+      "initialOmegaRadPerS": 0,
+      "initialWakeReal": 0.0005,
+      "initialWakeImaginary": 0.0,
+      "flowRampTimeS": 0,
+      "durationS": 0.2,
+      "replicates": 3,
+      "releaseProtocol": "synthetic deterministic release",
+      "wakeGaugeId": "two-real-reference-output-v1"
+    },
+    {
+      "conditionBlockId": "SYN-HOLDOUT-02",
+      "role": "holdout",
+      "flowSpeedMps": 0.021,
+      "waterDepthM": 0.12,
+      "pivotHeightM": 0.07,
+      "initialThetaRad": 0.025,
+      "initialOmegaRadPerS": 0,
+      "initialWakeReal": 0.0005,
+      "initialWakeImaginary": 0.0,
+      "flowRampTimeS": 0,
+      "durationS": 0.2,
+      "replicates": 3,
+      "releaseProtocol": "synthetic deterministic release",
+      "wakeGaugeId": "two-real-reference-output-v1"
+    }
+  ],
+  "acceptance": {
+    "growthTrend": {
+      "signMustMatch": true,
+      "confidenceLevel": 0.95
+    },
+    "dominantFrequency": {
+      "relativeErrorMaximum": 0.05,
+      "uncertaintyMultiplier": 3
+    },
+    "amplitude": {
+      "relativeErrorMaximum": 0.15,
+      "uncertaintyMultiplier": 3
+    },
+    "onsetSpeed": {
+      "relativeErrorMaximum": 0.1,
+      "uncertaintyMultiplier": 3
+    },
+    "establishmentTime": {
+      "relativeErrorMaximum": 0.2,
+      "uncertaintyMultiplier": 3
+    },
+    "phase": {
+      "required": false,
+      "enabledOnlyWithTorqueChannel": true,
+      "absoluteErrorRadMaximum": 0.2,
+      "uncertaintyMultiplier": 3
+    },
+    "meanPowerSign": {
+      "required": false,
+      "enabledOnlyWithTorqueChannel": true,
+      "confidenceLevel": 0.95
+    }
+  },
+  "modelEscalation": {
+    "oneMechanismAtATime": true,
+    "requiresSystematicHoldoutResidual": true,
+    "cfdCannotCalibrateQuantitatively": true
+  },
+  "freeze": {
+    "frozenAt": "2026-01-01T00:00:00Z",
+    "holdoutOutcomesUnread": true
+  }
+}

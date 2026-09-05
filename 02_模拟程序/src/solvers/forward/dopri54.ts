@@ -11,6 +11,20 @@ export interface Dopri54Step {
   denseState: (fraction: number) => number[];
 }
 
+/** Preserve the failing RK stage and completed RHS count for structured recovery. */
+export class OdeStageError extends Error {
+  constructor(
+    readonly stage: number,
+    readonly time: number,
+    readonly state: number[],
+    readonly rhsEvaluations: number,
+    readonly cause: unknown,
+  ) {
+    super(`DOPRI54 stage ${stage} failed: ${cause instanceof Error ? cause.message : String(cause)}`);
+    this.name = "OdeStageError";
+  }
+}
+
 // Quartic continuous extension of the Dormand-Prince pair (Shampine, 1986).
 // The rational P coefficients agree with scipy.integrate.RK45; no extra RHS
 // calls are required. Event accuracy still depends on integration refinement.
@@ -38,11 +52,21 @@ function linearCombination(
   });
 }
 
-function checkedRhs(rhs: OdeRhs, time: number, state: readonly number[], size: number): number[] {
-  const value = [...rhs(time, state)];
-  if (value.length !== size) throw new RangeError("ODE right-hand side changed vector dimension");
-  if (!value.every(Number.isFinite)) throw new RangeError("ODE right-hand side produced NaN/Inf");
-  return value;
+function checkedRhs(
+  rhs: OdeRhs,
+  time: number,
+  state: readonly number[],
+  size: number,
+  stage: number,
+): number[] {
+  try {
+    const value = [...rhs(time, state)];
+    if (value.length !== size) throw new RangeError("ODE right-hand side changed vector dimension");
+    if (!value.every(Number.isFinite)) throw new RangeError("ODE right-hand side produced NaN/Inf");
+    return value;
+  } catch (error) {
+    throw new OdeStageError(stage, time, [...state], stage, error);
+  }
 }
 
 export function dormandPrince54Step(
@@ -58,26 +82,26 @@ export function dormandPrince54Step(
     throw new RangeError("DOPRI54 requires a finite non-empty state");
   }
   const size = state.length;
-  const k1 = checkedRhs(rhs, time, state, size);
+  const k1 = checkedRhs(rhs, time, state, size, 1);
   const k2 = checkedRhs(rhs, time + step / 5, linearCombination(state, step, [
     [1 / 5, k1],
-  ]), size);
+  ]), size, 2);
   const k3 = checkedRhs(rhs, time + 3 * step / 10, linearCombination(state, step, [
     [3 / 40, k1], [9 / 40, k2],
-  ]), size);
+  ]), size, 3);
   const k4 = checkedRhs(rhs, time + 4 * step / 5, linearCombination(state, step, [
     [44 / 45, k1], [-56 / 15, k2], [32 / 9, k3],
-  ]), size);
+  ]), size, 4);
   const k5 = checkedRhs(rhs, time + 8 * step / 9, linearCombination(state, step, [
     [19372 / 6561, k1], [-25360 / 2187, k2], [64448 / 6561, k3], [-212 / 729, k4],
-  ]), size);
+  ]), size, 5);
   const k6 = checkedRhs(rhs, time + step, linearCombination(state, step, [
     [9017 / 3168, k1], [-355 / 33, k2], [46732 / 5247, k3], [49 / 176, k4], [-5103 / 18656, k5],
-  ]), size);
+  ]), size, 6);
   const fifthOrder = linearCombination(state, step, [
     [35 / 384, k1], [500 / 1113, k3], [125 / 192, k4], [-2187 / 6784, k5], [11 / 84, k6],
   ]);
-  const k7 = checkedRhs(rhs, time + step, fifthOrder, size);
+  const k7 = checkedRhs(rhs, time + step, fifthOrder, size, 7);
   const fourthOrder = linearCombination(state, step, [
     [5179 / 57600, k1], [7571 / 16695, k3], [393 / 640, k4],
     [-92097 / 339200, k5], [187 / 2100, k6], [1 / 40, k7],

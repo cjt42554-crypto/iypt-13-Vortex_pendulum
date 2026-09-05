@@ -1,0 +1,17 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+ ✓ tests/geometry.test.ts (6 tests) 6ms
+stdout | tests/forward-wet-domain.test.ts > 13-A wet exits through the production integrator > finds the first dry exit with output cadence x4 and four actual step refinements
+WET_EXIT_REFINEMENT {"referenceAlgorithm":"RK4 + analytic cylinder support","reference":0.020547175651721317,"exits":[0.020547174579564564,0.020547175764609488,0.02054717572693063,0.020547175716040717,0.02054717585720022,0.020547175836916596,0.020547175723183576,0.02054717573217245]}
+
+ ✓ tests/forward-wet-domain.test.ts (10 tests) 8043ms
+   ✓ 13-A wet exits through the production integrator > finds the first dry exit with output cadence x4 and four actual step refinements  1987ms
+   ✓ 13-A wet exits through the production integrator > detects a dry interval inside a step even when the historical endpoints are wet  3977ms
+   ✓ 13-A wet exits through the production integrator > rejects a coarse out-of-domain RK stage without inventing a physical event  1962ms
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  02:04:17
+   Duration  8.33s (transform 128ms, setup 0ms, collect 161ms, tests 8.05s, environment 0ms, prepare 110ms)
+

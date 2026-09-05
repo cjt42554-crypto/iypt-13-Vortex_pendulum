@@ -1,0 +1,41 @@
+COMMAND
+cd '02_模拟程序'
+npx tsc --noEmit
+
+EXIT_CODE
+2
+
+OUTPUT
+src/experiments/identifiability.ts(110,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(111,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(113,31): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(114,31): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(117,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(118,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(121,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(122,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(128,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(128,9): error TS2322: Type 'number' is not assignable to type '0 | 1'.
+src/experiments/identifiability.ts(129,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(129,9): error TS2322: Type 'number' is not assignable to type '0 | 1'.
+src/experiments/identifiability.ts(160,39): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(160,60): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(162,11): error TS2532: Object is possibly 'undefined'.
+src/experiments/identifiability.ts(162,32): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(89,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(90,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(92,31): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(93,31): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(96,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(97,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(100,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(101,7): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(107,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(107,9): error TS2322: Type 'number' is not assignable to type '0 | 1'.
+src/experiments/uncertainty.ts(108,9): error TS2532: Object is possibly 'undefined'.
+src/experiments/uncertainty.ts(108,9): error TS2322: Type 'number' is not assignable to type '0 | 1'.
+src/experiments/uncertainty.ts(435,54): error TS2322: Type 'number' is not assignable to type '0 | 1'.
+src/solvers/forward/index.ts(568,5): error TS2304: Cannot find name 'currentEvaluation'.
+
+BOUNDARY
+These paths belong to other concurrent alignment stages. No TypeScript diagnostic refers to src/problems/vortex-pendulum/directional-drag.ts or tests/directional-drag.test.ts. This failure is retained and is not reported as a repository build pass.

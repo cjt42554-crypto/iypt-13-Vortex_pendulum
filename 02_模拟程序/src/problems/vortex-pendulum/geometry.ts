@@ -358,10 +358,11 @@ export function evaluateWetGeometry(
       1 + clamp(section.d / radius, -1, 1));
 
   const volumeTolerance = Math.max(1, fullArea * cylinderLength) * 1e-12;
-  const fullVolume = fullArea * cylinderLength;
-  const branch: WetBranch = displacedVolume <= volumeTolerance
+  // Labels follow the exact supporting planes. A small but positive immersed
+  // cap must not be relabelled dry by an absolute volume display tolerance.
+  const branch: WetBranch = bottomDistance * cosine + radius * beta <= pivotHeight
     ? "dry"
-    : fullVolume - displacedVolume <= volumeTolerance
+    : topDistance * cosine - radius * beta >= pivotHeight
       ? "full"
       : "partial";
 

@@ -13,6 +13,11 @@ import type {
 } from "./types";
 import { stableCanonicalJson } from "./canonical";
 
+import { wetContractIssues } from "./wet-domain";
+import { FORWARD_MODEL_IDS, forwardModelId, isDirectionalDragModel, isStickSlipModel } from "./forward-contract";
+import { validateWakeGaugeMetadata } from "./wake-gauge";
+import { validateJointUncertaintyModel } from "../experiments/uncertainty";
+
 export const DEFAULT_CONFIG: SimulationConfig = {
   schemaVersion: "3.0.0",
   problemId: "iypt-2027-vortex-pendulum",
@@ -173,7 +178,7 @@ export const PARAMETER_SPECS: readonly ParameterSpec[] = [
   n("support.linearStiffness", "线性扭转刚度", "N·m/rad", "support", 0, 20, 1e-4, "独立静态标定的线性扭转刚度。", { symbol: "k_θ" }),
   n("support.cubicStiffness", "立方扭转刚度", "N·m/rad³", "support", -100, 100, 0.001, "仅在无流多幅标定支持时启用。", { symbol: "k₃" }),
   n("support.viscousDamping", "轴系黏性阻尼", "N·m·s/rad", "support", 0, 2, 1e-6, "空气/静水自由衰减独立辨识的结构阻尼。", { symbol: "c_θ" }),
-  n("support.coulombFriction", "库仑摩擦矩", "N·m", "support", 0, 2, 1e-6, "滑动摩擦闭合；本版不模拟静摩擦粘住活动集。", { symbol: "τ_c" }),
+  n("support.coulombFriction", "库仑摩擦矩", "N·m", "support", 0, 2, 1e-6, "平滑基线的库仑摩擦闭合；SS 分支由导入配置的静/动阈值替换。", { symbol: "τ_c" }),
   n("support.frictionSmoothingSpeed", "摩擦平滑角速度", "rad/s", "support", 1e-6, 2, 1e-4, "tanh 库仑摩擦正则化尺度；不是静摩擦阈值。", { symbol: "ω_ε" }),
 
   n("rom.addedMassCoefficient", "截面附加质量系数", "1", "rom", 0, 5, 0.01, "ROM-energy 分支的条带势流候选闭合。", { symbol: "C_A", backends: ["forward"] }),
@@ -423,6 +428,66 @@ export function validateConfig(config: SimulationConfig): ValidationIssue[] {
   if (config.backend !== "forward" && config.backend !== "highFidelity") {
     issues.push({ severity: "error", path: "backend", message: "未知计算后端。" });
   }
+  if (config.backend === "forward") {
+    if (!FORWARD_MODEL_IDS.includes(forwardModelId(config))) {
+      issues.push({ severity: "error", path: "rom.modelId", message: "未知前向物理分支。" });
+    }
+    for (const message of wetContractIssues(rom)) {
+      issues.push({ severity: "error", path: "rom.wetSupportMode", message });
+    }
+    if (rom.wakeGauge !== undefined) {
+      for (const issue of validateWakeGaugeMetadata(rom.wakeGauge).issues) {
+        issues.push({ severity: "error", path: `rom.${issue.path}`, message: issue.message });
+      }
+      if (rom.wakeGauge.modelId !== forwardModelId(config)
+        || rom.wakeGauge.output?.kind !== "sectional-lift-coefficient"
+        || rom.wakeGauge.output?.unit !== "1"
+        || rom.wakeGauge.output?.expression !== "finiteSpanCoherence*Re(liftOutput*A)"
+        || rom.wakeGauge.parameterNormalizationIdentity !== "VP-FWD-P0-SL1-production-normalization-v1"
+        || rom.wakeGauge.finiteSpanCoherence?.representation !== "constant-factor") {
+        issues.push({ severity: "error", path: "rom.wakeGauge",
+          message: "规范身份必须匹配当前物理分支、无量纲截面输出和明示常数跨距闭合。" });
+      }
+    } else if (rom.wetSupportMode !== undefined && rom.wetSupportMode !== "legacy-unqualified") {
+      issues.push({ severity: "error", path: "rom.wakeGauge", message: "新湿区运行必须显式记录尾流坐标与输出规范。" });
+    }
+    if (rom.jointUncertainty !== undefined) {
+      try {
+        validateJointUncertaintyModel(rom.jointUncertainty, { requireFormalParameterPaths: true });
+        for (const [index, path] of rom.jointUncertainty.parameterPaths.entries()) {
+          const value = path.split(".").reduce<any>((v, key) => v?.[key], config);
+          const mean = rom.jointUncertainty.means[index]!;
+          if (typeof value !== "number" || Math.abs(value - mean) > 1e-12 * Math.max(1, Math.abs(value), Math.abs(mean))) {
+            throw new Error(`联合均值与配置值不匹配：${path}`);
+          }
+        }
+        if (rom.wakeGauge?.covarianceIdentity !== rom.jointUncertainty.basisId) {
+          throw new Error("尾流规范的 covarianceIdentity 与联合协方差 basisId 不匹配。");
+        }
+      } catch (error) {
+        issues.push({ severity: "error", path: "rom.jointUncertainty", message: String(error) });
+      }
+    } else if (rom.wakeGauge?.covarianceIdentity != null) {
+      issues.push({ severity: "error", path: "rom.jointUncertainty", message: "规范声明了协方差身份，但缺少绑定矩阵。" });
+    }
+    if (forwardModelId(config) !== "VP-FWD-P0-SL1-v1"
+      && (rom.wetSupportMode === undefined || rom.wetSupportMode === "legacy-unqualified")) {
+      issues.push({ severity: "error", path: "rom.wetSupportMode", message: "新分支必须显式声明完整湿区，不能继承 legacy 适用域。" });
+    }
+    const width = isDirectionalDragModel(config) ? "relative-flow-normal-wet-width" : "streamwise-wet-width";
+    if ((rom.dragWidthDefinition !== undefined && rom.dragWidthDefinition !== width)
+      || (isDirectionalDragModel(config) && rom.dragWidthDefinition !== width)) {
+      issues.push({ severity: "error", path: "rom.dragWidthDefinition", message: "阻力系数参考湿宽与选择的模型分支不匹配。" });
+    }
+    if (isStickSlipModel(config)) {
+      if (typeof s.staticFrictionTorque !== "number" || !Number.isFinite(s.staticFrictionTorque)
+        || typeof s.kineticFrictionTorque !== "number" || !Number.isFinite(s.kineticFrictionTorque)
+        || s.kineticFrictionTorque < 0 || s.staticFrictionTorque < s.kineticFrictionTorque) {
+        issues.push({ severity: "error", path: "support.staticFrictionTorque",
+          message: "SS 必须给出有限静/动阈值，且静阈值≥动阈值≥0（N m）。" });
+      }
+    }
+  }
   try {
     validateP0Geometry(g);
   } catch (error) {
@@ -438,7 +503,6 @@ export function validateConfig(config: SimulationConfig): ValidationIssue[] {
     [f.kinematicViscosity, "fluid.kinematicViscosity", "运动黏度"],
     [f.surfaceTension, "fluid.surfaceTension", "表面张力"],
     [f.gravity, "fluid.gravity", "重力加速度"],
-    [s.frictionSmoothingSpeed, "support.frictionSmoothingSpeed", "摩擦平滑角速度"],
     [rom.strouhalNumber, "rom.strouhalNumber", "Strouhal 数"],
     [rom.referenceHopfReynolds, "rom.referenceHopfReynolds", "参考 Hopf Reynolds 数"],
     [rom.cubicSaturation, "rom.cubicSaturation", "SL 立方饱和系数"],
@@ -461,6 +525,9 @@ export function validateConfig(config: SimulationConfig): ValidationIssue[] {
     [solver.eventTimeTolerance, "solver.eventTimeTolerance", "事件时间容差"],
     [solver.energyTolerance, "solver.energyTolerance", "能量容差"],
   ] as const) requireFinitePositive(issues, value, path, label);
+  if (config.backend !== "forward" || !isStickSlipModel(config)) {
+    requireFinitePositive(issues, s.frictionSmoothingSpeed, "support.frictionSmoothingSpeed", "摩擦平滑角速度");
+  }
 
   if (!(g.maximumAngle > 0 && g.maximumAngle < Math.PI / 2)) {
     issues.push({ severity: "error", path: "geometry.maximumAngle", message: "机械止挡角必须位于 (0,π/2)。" });
@@ -513,6 +580,16 @@ export function validateConfig(config: SimulationConfig): ValidationIssue[] {
     [initial.omega, "initial.omega"],
     [initial.wakeReal, "initial.wakeReal"],
     [initial.wakeImaginary, "initial.wakeImaginary"],
+    [rom.couplingThetaReal, "rom.couplingThetaReal"],
+    [rom.couplingThetaImaginary, "rom.couplingThetaImaginary"],
+    [rom.couplingOmegaReal, "rom.couplingOmegaReal"],
+    [rom.couplingOmegaImaginary, "rom.couplingOmegaImaginary"],
+    [rom.couplingAccelerationReal, "rom.couplingAccelerationReal"],
+    [rom.couplingAccelerationImaginary, "rom.couplingAccelerationImaginary"],
+    [rom.liftOutputReal, "rom.liftOutputReal"],
+    [rom.liftOutputImaginary, "rom.liftOutputImaginary"],
+    [rom.nonlinearFrequencyShift, "rom.nonlinearFrequencyShift"],
+    [rom.finiteSpanCoherence, "rom.finiteSpanCoherence"],
   ] as const) {
     if (!Number.isFinite(value)) issues.push({ severity: "error", path, message: "初值必须有限。" });
   }
@@ -636,11 +713,16 @@ export function applicabilityFor(config: SimulationConfig): ApplicabilityReport 
   const d = deriveParameters(config);
   const findings: ApplicabilityFinding[] = [];
   if (config.backend === "forward") {
-    const calibratedSource = config.rom.coefficientSource !== "literature-prior";
-    if (!calibratedSource) findings.push({
+    const calibratedSource = ["measured", "prescribed-motion"].includes(config.rom.coefficientSource)
+      && config.rom.wetSupportMode === "calibrated" && wetContractIssues(config.rom).length === 0;
+    if (config.rom.coefficientSource === "literature-prior") findings.push({
       severity: "warning",
       code: "FORWARD-COEFFICIENTS-PRIOR",
       message: "当前 SL、升力、附加惯量和有限跨系数仅为文献先验，未在本装置上标定。",
+    });
+    if (!calibratedSource && config.rom.coefficientSource !== "literature-prior") findings.push({
+      severity: "warning", code: "FORWARD-CALIBRATION-NOT-QUALIFIED",
+      message: "当前输入为合成、历史或缺少完整湿区与联合覆盖身份；系数来源标签本身不构成装置标定。",
     });
     if (d.reynolds < config.rom.calibrationMinReynolds
       || d.reynolds > config.rom.calibrationMaxReynolds) {

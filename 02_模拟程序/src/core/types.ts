@@ -1,4 +1,27 @@
+import type { WakeGaugeMetadata } from "./wake-gauge";
+import type { JointUncertaintyModel } from "../experiments/uncertainty";
+
 export type BackendId = "forward" | "highFidelity";
+
+export type ForwardModelId = "VP-FWD-P0-SL1-v1" | "VP-FWD-P0-SL1-SS-v1"
+  | "VP-FWD-P0-SL1-DW-v1" | "VP-FWD-P0-SL1-SS-DW-v1";
+
+export interface CalibrationRange { minimum: number; maximum: number }
+export interface RuntimeCalibrationCell {
+  flowSpeedMps: CalibrationRange;
+  waterDepthM: CalibrationRange;
+  pivotHeightM: CalibrationRange;
+  reynolds: CalibrationRange;
+  wetSpanM: CalibrationRange;
+  absThetaRad: CalibrationRange;
+  velocityRatio: CalibrationRange;
+  normalizedInflowRate: CalibrationRange;
+}
+export interface RuntimeCalibrationSupport {
+  kind: "covered-cells";
+  evidence: string;
+  cells: RuntimeCalibrationCell[];
+}
 
 export type RunState =
   | "ready"
@@ -49,6 +72,9 @@ export interface SupportParameters {
   coulombFriction: number;
   /** Smooth sign regularisation speed omega_epsilon [rad/s]. */
   frictionSmoothingSpeed: number;
+  /** SS branch thresholds [N m]; absent in legacy smooth configs. */
+  staticFrictionTorque?: number;
+  kineticFrictionTorque?: number;
 }
 
 /**
@@ -57,6 +83,16 @@ export interface SupportParameters {
  */
 export interface RomParameters {
   model: "complex-stuart-landau";
+  /** Absent fields preserve the explicitly unqualified historical baseline. */
+  modelId?: ForwardModelId;
+  inputClassification?: "synthetic-only" | "calibrated-input-unheldout" | "legacy-unqualified";
+  wetSupportMode?: "legacy-unqualified" | "synthetic-only" | "calibrated";
+  wetSpanDefinition?: "streamwise-projected-area-over-diameter";
+  calibrationMinWetSpan?: number;
+  jointCalibrationSupport?: RuntimeCalibrationSupport;
+  dragWidthDefinition?: "streamwise-wet-width" | "relative-flow-normal-wet-width";
+  wakeGauge?: WakeGaugeMetadata;
+  jointUncertainty?: JointUncertaintyModel;
   coefficientSetId: string;
   coefficientSource:
     | "literature-prior"
@@ -323,6 +359,8 @@ export interface SimulationSample {
   hydrostaticPotential: number;
   elasticPotential: number;
   mechanicalEnergy: number;
+  /** Integrated on accepted mode-local RK steps; not a physical fifth state. */
+  cumulativeNetWork?: number;
   effectiveInertia: number;
   addedInertia: number;
   displacedVolume: number;
@@ -332,6 +370,11 @@ export interface SimulationSample {
   flowSpeed: number;
   reynolds: number;
   wetBranch: "dry" | "partial" | "full";
+  frictionMode?: "smooth" | "stick" | "slip+" | "slip-";
+  axisFrictionTorque?: number;
+  staticFrictionMargin?: number | null;
+  /** Whether this sample lies in the selected forward model's valid wet domain. */
+  valid?: boolean;
 }
 
 export interface FieldFrame {
@@ -352,6 +395,9 @@ export interface FieldFrame {
 
 export type TerminationCode =
   | "COMPLETED"
+  | "WET-DOMAIN-EXIT"
+  | "WET-COVERAGE-MISSING"
+  | "SS-MODE-UNRESOLVED"
   | "ANGLE-LIMIT"
   | "INERTIA-SINGULAR"
   | "COEFFICIENT-OOD"
@@ -372,13 +418,21 @@ export type TerminationCode =
 
 export interface RunEvent {
   time: number;
-  kind: "warning" | "wetting" | "limit" | "numerical" | "info";
+  kind: "warning" | "wetting" | "mode" | "limit" | "numerical" | "info";
   code: string;
   message: string;
+  bracket?: { validTime: number; invalidTime: number };
+  validBefore?: boolean;
+  validAfter?: boolean;
+  modeBefore?: "smooth" | "stick" | "slip+" | "slip-";
+  modeAfter?: "smooth" | "stick" | "slip+" | "slip-";
 }
 
 /** Generic time-series summaries only; structural classification belongs to phase 4. */
 export interface RunMetrics {
+  /** Empty invalid-initial-state results have no estimable trajectory metrics. */
+  available?: boolean;
+  sampleCount?: number;
   windowStartTime: number;
   peakAmplitude: number;
   dimensionlessAmplitude: number;
@@ -449,6 +503,8 @@ export interface SimulationResult {
   derived: DerivedParameters;
   applicability: ApplicabilityReport;
   samples: SimulationSample[];
+  validSampleMask?: boolean[];
+  lastValidSampleIndex?: number | null;
   fields: FieldFrame[];
   metrics: RunMetrics;
   numerical: NumericalDiagnostics;
@@ -457,7 +513,7 @@ export interface SimulationResult {
   provenance: {
     solver: string;
     solverVersion: string;
-    modelId: "VP-FWD-P0-SL1-v1" | "VP-HF-CFD2D-v1";
+    modelId: ForwardModelId | "VP-HF-CFD2D-v1";
     createdAt: string;
     configHash: string;
     sharedPhysicalInputHash: string;

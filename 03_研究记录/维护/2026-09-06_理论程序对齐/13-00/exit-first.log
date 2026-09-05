@@ -1,0 +1,39 @@
+
+ RUN  v3.2.7 /home/cjt/Desktop/iypt/13 涡流摆/02_模拟程序
+
+stdout | tests/forward-wet-domain.test.ts > 13-A wet exits through the production integrator > finds the first dry exit with output cadence x4 and four actual step refinements
+WET_EXIT_REFINEMENT {"referenceAlgorithm":"RK4 + analytic cylinder support","reference":0.020547175651721317,"exits":[0.020547174579564564,0.020547175764609488,0.02054717572693063,0.020547175716040717,0.02054717585720022,0.020547175836916596,0.020547175723183576,0.02054717573217245]}
+
+ ❯ tests/forward-wet-domain.test.ts (10 tests | 1 failed) 4224ms
+   ✓ 13-A strict wet-domain entry > returns an empty, explicitly invalid result when the cylinder starts fully dry 7ms
+   ✓ 13-A strict wet-domain entry > distinguishes wet zero-flow operation from a dry cylinder 21ms
+   ✓ 13-A strict wet-domain entry > terminates at t=0 when a positive wet span lies below independent coverage 3ms
+   ✓ 13-A strict wet-domain entry > rejects a strict package whose minimum wet-span evidence is absent 1ms
+   ✓ 13-A strict wet-domain entry > accepts equality at the closed minimum-span and joint-cell boundaries 15ms
+   ✓ 13-A strict wet-domain entry > uses complete eight-coordinate cells instead of a Cartesian union of marginals 3ms
+   ✓ 13-A wet exits through the production integrator > finds the first dry exit with output cadence x4 and four actual step refinements  2067ms
+   × 13-A wet exits through the production integrator > detects a dry interval inside a step even when the historical endpoints are wet 32ms
+     → expected 0 to be greater than 0
+   ✓ 13-A wet exits through the production integrator > rejects a coarse out-of-domain RK stage without inventing a physical event  2011ms
+   ✓ 13-A run classification > marks legacy, synthetic and calibrated input identities without filename heuristics 65ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/forward-wet-domain.test.ts > 13-A wet exits through the production integrator > detects a dry interval inside a step even when the historical endpoints are wet
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/forward-wet-domain.test.ts:309:56
+    307|     const continued = await runForward(legacy);
+    308|     expect(continued.samples[0]!.projectedWetArea).toBeGreaterThan(0);
+    309|     expect(continued.samples.at(-1)!.projectedWetArea).toBeGreaterThan…
+       |                                                        ^
+    310|     const result = await runForward(config);
+    311|     expect(result.terminationCode).toBe("WET-DOMAIN-EXIT");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  01:59:58
+   Duration  4.51s (transform 101ms, setup 0ms, collect 119ms, tests 4.22s, environment 0ms, prepare 57ms)
+

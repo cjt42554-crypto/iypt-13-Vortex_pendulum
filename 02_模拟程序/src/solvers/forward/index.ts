@@ -6,6 +6,7 @@ import {
   validateConfig,
 } from "../../core/config";
 import { provenanceContractHashes } from "../../core/provenance";
+import { forwardModelId, isStickSlipModel } from "../../core/forward-contract";
 import type {
   NumericalDiagnostics,
   RunEvent,
@@ -18,13 +19,18 @@ import type {
 import {
   dormandPrince54Step,
   nextStepFactor,
+  OdeStageError,
   scaledErrorNorm,
   type OdeRhs,
 } from "./dopri54";
 import {
   evaluateForward,
+  evaluateForwardDomain,
   evaluateForwardGuards,
+  firstInvalidForwardWetGuard,
   forwardSample,
+  ForwardDomainViolation,
+  guardIsValid,
   stateToVector,
   vectorToState,
   type ForwardGuard,
@@ -32,8 +38,9 @@ import {
 } from "./model";
 
 import { eventInspectionFractions } from "./dense-events";
+import { locateStickSlipEvent, type StickSlipMode } from "./stick-slip";
 
-const SOLVER_VERSION = "2.1.0";
+const SOLVER_VERSION = "2.2.0";
 const TIME_EPSILON_FACTOR = 64;
 
 const NO_CONTROL: SolverControl = {
@@ -46,7 +53,10 @@ const NO_CONTROL: SolverControl = {
 
 interface LocatedEvent {
   time: number;
-  state: ForwardState;
+  validTime: number;
+  invalidTime: number;
+  validState: ForwardState;
+  invalidState: ForwardState;
   guard: ForwardGuard;
   rhsEvaluations: number;
 }
@@ -58,13 +68,12 @@ function makeRunId(): string {
   return `forward-${Date.now().toString(36)}`;
 }
 
-function guardAt(guards: readonly ForwardGuard[], code: ForwardGuard["code"]): ForwardGuard | undefined {
-  return guards.find((guard) => guard.code === code);
+function guardAt(guards: readonly ForwardGuard[], id: string): ForwardGuard | undefined {
+  return guards.find((guard) => guard.id === id);
 }
 
 function initiallyTriggered(guard: ForwardGuard): boolean {
-  if (guard.code === "COEFFICIENT-OOD") return guard.margin < 0;
-  return guard.margin <= 0;
+  return !guardIsValid(guard);
 }
 
 function crossingGuards(
@@ -72,11 +81,19 @@ function crossingGuards(
   right: readonly ForwardGuard[],
 ): ForwardGuard[] {
   return right.filter((rightGuard) => {
-    const leftGuard = guardAt(left, rightGuard.code);
-    if (leftGuard === undefined) return rightGuard.margin <= 0;
-    return (leftGuard.margin > 0 && rightGuard.margin <= 0)
-      || (leftGuard.margin === 0 && rightGuard.margin < 0);
+    const leftGuard = guardAt(left, rightGuard.id);
+    return !guardIsValid(rightGuard)
+      && (leftGuard === undefined || guardIsValid(leftGuard));
   });
+}
+
+function compareLocatedEvents(
+  left: LocatedEvent,
+  right: LocatedEvent,
+  tolerance: number,
+): number {
+  if (Math.abs(left.time - right.time) > tolerance) return left.time - right.time;
+  return left.guard.priority - right.guard.priority;
 }
 
 function locateGuardRoot(
@@ -88,20 +105,20 @@ function locateGuardRoot(
   guard: ForwardGuard,
 ): LocatedEvent {
   let lowTime = leftTime;
+  let lowState = stateAt(leftTime);
   let highTime = rightTime;
   let highState = rightState;
-  let evaluations = 0;
   while (highTime - lowTime > config.solver.eventTimeTolerance) {
     const midpoint = 0.5 * (lowTime + highTime);
     if (midpoint === lowTime || midpoint === highTime) break;
     const midpointState = stateAt(midpoint);
     const midpointGuard = guardAt(
       evaluateForwardGuards(config, midpoint, midpointState),
-      guard.code,
+      guard.id,
     );
-    if (midpointGuard !== undefined && (guard.code === "COEFFICIENT-OOD"
-      ? midpointGuard.margin >= 0 : midpointGuard.margin > 0)) {
+    if (midpointGuard !== undefined && guardIsValid(midpointGuard)) {
       lowTime = midpoint;
+      lowState = midpointState;
     } else {
       highTime = midpoint;
       highState = midpointState;
@@ -109,9 +126,30 @@ function locateGuardRoot(
   }
   const finalGuard = guardAt(
     evaluateForwardGuards(config, highTime, highState),
-    guard.code,
+    guard.id,
   ) ?? guard;
-  return { time: highTime, state: highState, guard: finalGuard, rhsEvaluations: evaluations };
+  return {
+    time: highTime,
+    validTime: lowTime,
+    invalidTime: highTime,
+    validState: lowState,
+    invalidState: highState,
+    guard: finalGuard,
+    rhsEvaluations: 0,
+  };
+}
+
+function domainViolationFrom(error: unknown): {
+  violation: ForwardDomainViolation;
+  rhsEvaluations: number;
+} | undefined {
+  if (error instanceof ForwardDomainViolation) {
+    return { violation: error, rhsEvaluations: 1 };
+  }
+  if (error instanceof OdeStageError && error.cause instanceof ForwardDomainViolation) {
+    return { violation: error.cause, rhsEvaluations: error.rhsEvaluations };
+  }
+  return undefined;
 }
 
 function appendDistinctSample(samples: SimulationSample[], sample: SimulationSample): void {
@@ -124,20 +162,32 @@ function appendDistinctSample(samples: SimulationSample[], sample: SimulationSam
   }
 }
 
-function integratedNetPower(samples: readonly SimulationSample[]): number {
-  let integral = 0;
-  for (let index = 1; index < samples.length; index += 1) {
-    const left = samples[index - 1];
-    const right = samples[index];
-    if (left === undefined || right === undefined) continue;
-    const leftPower = left.fluidPower + left.controlPower - left.dampingPower;
-    const rightPower = right.fluidPower + right.controlPower - right.dampingPower;
-    integral += 0.5 * (right.time - left.time) * (leftPower + rightPower);
-  }
-  return integral;
+function emptyRunMetrics() {
+  return {
+    available: false,
+    sampleCount: 0,
+    windowStartTime: 0,
+    peakAmplitude: 0,
+    dimensionlessAmplitude: 0,
+    rmsDisplacement: 0,
+    dominantFrequency: 0,
+    meanFluidPower: 0,
+    meanAppliedRawMechanicalPower: null,
+    meanAppliedRawLinePower: null,
+    meanDampingPower: 0,
+    energyClosureRelativeRms: 0,
+    appliedMechanicalEnergyLedgerResidual: null,
+    appliedMechanicalEnergyLedgerRelativeResidual: null,
+  };
 }
 
-function terminalEvent(code: TerminationCode, time: number, message: string): RunEvent {
+function terminalEvent(
+  code: TerminationCode,
+  time: number,
+  message: string,
+  bracket?: { validTime: number; invalidTime: number },
+  validity?: { validBefore: boolean; validAfter: boolean },
+): RunEvent {
   return {
     time,
     kind: code === "MINIMUM-STEP" || code === "MAXIMUM-STEPS" || code === "NONFINITE-STATE"
@@ -145,6 +195,8 @@ function terminalEvent(code: TerminationCode, time: number, message: string): Ru
       : "limit",
     code,
     message,
+    ...(bracket === undefined ? {} : { bracket }),
+    ...(validity === undefined ? {} : validity),
   };
 }
 
@@ -168,10 +220,21 @@ export async function runForward(
     config.solver.absoluteToleranceOmega,
     config.solver.absoluteToleranceWake,
     config.solver.absoluteToleranceWake,
+    1e-12, // absolute work-quadrature tolerance [J]
   ];
-  const rhs: OdeRhs = (time, vector) => stateToVector(
-    evaluateForward(config, time, vectorToState(vector), derived).derivative,
-  );
+  let mode: StickSlipMode | undefined;
+  let netWork = 0;
+  let lastModeEventTime = -Infinity;
+  let unresolvedSwitches = 0;
+  const rhs: OdeRhs = (time, vector) => {
+    const physical = vectorToState(vector.slice(0, 4));
+    const evaluated = evaluateForward(config, time, physical, derived, mode);
+    return [...stateToVector(evaluated.derivative),
+      (evaluated.dynamicFluidTorque + evaluated.mechanics.axisFrictionTorque) * physical.omega];
+  };
+  const sample = (time: number, state: ForwardState): SimulationSample => ({
+    ...forwardSample(config, time, state, derived, mode), cumulativeNetWork: netWork,
+  });
   let time = 0;
   let state: ForwardState = {
     theta: config.initial.theta,
@@ -189,15 +252,21 @@ export async function runForward(
   let terminationCode: TerminationCode = "COMPLETED";
   const events: RunEvent[] = [];
   const samples: SimulationSample[] = [];
-  let currentEvaluation = evaluateForward(config, time, state, derived);
-  let currentGuards = evaluateForwardGuards(config, time, state, currentEvaluation);
-  let wetBranch = currentEvaluation.mechanics.wet.branch;
-  appendDistinctSample(samples, forwardSample(config, time, state, derived));
-
+  const initialDomain = evaluateForwardDomain(config, time, state, derived);
+  let currentGuards = evaluateForwardGuards(config, time, state);
+  let wetBranch = initialDomain.wetBranch;
   const initialGuard = currentGuards.find(initiallyTriggered);
   if (initialGuard !== undefined) {
     terminationCode = initialGuard.code;
-    events.push(terminalEvent(initialGuard.code, time, initialGuard.message));
+    events.push(terminalEvent(initialGuard.code, time, initialGuard.message, undefined, {
+      validBefore: false,
+      validAfter: false,
+    }));
+  } else {
+    const currentEvaluation = evaluateForward(config, time, state, derived);
+    if (isStickSlipModel(config)) mode = currentEvaluation.frictionMode as StickSlipMode;
+    currentGuards = evaluateForwardGuards(config, time, state, currentEvaluation);
+    appendDistinctSample(samples, sample(time, state));
   }
 
   let nextOutputIndex = 1;
@@ -226,28 +295,68 @@ export async function runForward(
     const remaining = target - time;
     if (remaining <= timeEpsilon) {
       time = target;
-      appendDistinctSample(samples, forwardSample(config, time, state, derived));
+      appendDistinctSample(samples, sample(time, state));
       if (target >= config.solver.duration - timeEpsilon) break;
       nextOutputIndex += 1;
       continue;
     }
     const attemptedStep = Math.min(step, config.solver.maximumStep, remaining);
     let trial: ReturnType<typeof dormandPrince54Step> | undefined;
+    let domainTerminal: LocatedEvent | undefined;
     let errorNorm = Number.POSITIVE_INFINITY;
     try {
-      trial = dormandPrince54Step(rhs, time, stateToVector(state), attemptedStep);
+      trial = dormandPrince54Step(rhs, time, [...stateToVector(state), netWork], attemptedStep);
       rhsEvaluations += trial.rhsEvaluations;
       errorNorm = scaledErrorNorm(
-        stateToVector(state),
+        [...stateToVector(state), netWork],
         trial.fifthOrder,
         trial.error,
         absoluteTolerances,
         config.solver.relativeTolerance,
       );
-    } catch {
-      // A stage left the finite/domain-safe coordinate chart.  Retrying with a
-      // smaller step lets the explicit event surface be reached and located.
-      errorNorm = Number.POSITIVE_INFINITY;
+    } catch (error) {
+      const failed = domainViolationFrom(error);
+      if (failed !== undefined) {
+        rhsEvaluations += failed.rhsEvaluations;
+        rejectedSteps += 1;
+        // An invalid internal RK stage is not proof that the actual solution
+        // reaches that boundary. Reject and recompute from the last accepted
+        // state; a coarse-stage excursion may disappear under refinement.
+        // Event localization may go below the LTE minimum step because it
+        // evaluates no undefined derivative and has a separate time tolerance.
+        if (attemptedStep > config.solver.eventTimeTolerance) {
+          step = attemptedStep * 0.5;
+          continue;
+        }
+        domainTerminal = {
+          time: failed.violation.time,
+          validTime: time,
+          invalidTime: failed.violation.time,
+          validState: state,
+          invalidState: failed.violation.state,
+          guard: failed.violation.guard,
+          rhsEvaluations: 0,
+        };
+      } else {
+        // Non-domain RHS failures remain numerical rejections and eventually
+        // terminate through minimumStep rather than being mislabelled physical.
+        errorNorm = Number.POSITIVE_INFINITY;
+      }
+    }
+
+    if (domainTerminal !== undefined) {
+      time = domainTerminal.validTime;
+      state = domainTerminal.validState;
+      terminationCode = domainTerminal.guard.code;
+      events.push(terminalEvent(
+        domainTerminal.guard.code,
+        domainTerminal.time,
+        domainTerminal.guard.message,
+        { validTime: domainTerminal.validTime, invalidTime: domainTerminal.invalidTime },
+        { validBefore: true, validAfter: false },
+      ));
+      appendDistinctSample(samples, sample(time, state));
+      break;
     }
 
     if (trial === undefined || !(errorNorm <= 1)) {
@@ -265,8 +374,8 @@ export async function runForward(
     const candidateTime = Math.abs(time + attemptedStep - target) <= timeEpsilon
       ? target
       : time + attemptedStep;
-    const candidateState = vectorToState(trial.fifthOrder);
-    const candidateEvaluation = evaluateForward(config, candidateTime, candidateState, derived);
+    const candidateState = vectorToState(trial.fifthOrder.slice(0, 4));
+    const candidateEvaluation = evaluateForward(config, candidateTime, candidateState, derived, mode);
     const candidateGuards = evaluateForwardGuards(
       config,
       candidateTime,
@@ -277,7 +386,7 @@ export async function runForward(
     const acceptedTrial = trial;
     const stateAt = (query: number) => vectorToState(acceptedTrial.denseState(
       Math.min(1, Math.max(0, (query - stepStart) / attemptedStep)),
-    ));
+    ).slice(0, 4));
     // Mechanical extrema catch exit-and-reentry even when the endpoints are
     // legal. The additional angles are extrema of finite-cylinder support.
     const criticalAngles = [0];
@@ -286,7 +395,17 @@ export async function runForward(
         criticalAngles.push(angle, -angle);
       }
     }
-    const fractions = eventInspectionFractions(acceptedTrial, criticalAngles);
+    let fractions = eventInspectionFractions(acceptedTrial, criticalAngles);
+    const modeEvent = mode === undefined ? undefined : locateStickSlipEvent(mode, stateAt,
+      (t, s) => evaluateForward(config, t, s, derived, mode).mechanics.drivingTorque,
+      fractions.map((f) => stepStart + attemptedStep * f), config.support.staticFrictionTorque!,
+      config.solver.eventTimeTolerance);
+    // Only inspect the selected branch up to its first mode event. Physical
+    // exits tied within the root tolerance take precedence over that restart.
+    if (modeEvent !== undefined) {
+      const endFraction = Math.min(1, (modeEvent.rightTime - stepStart) / attemptedStep);
+      fractions = [...fractions.filter((f) => f < endFraction), endFraction];
+    }
     let inspectedTime = time;
     let inspectedGuards = currentGuards;
     let inspectedWet = wetBranch;
@@ -295,16 +414,21 @@ export async function runForward(
       if (fraction <= 0) continue;
       const probeTime = fraction === 1 ? candidateTime : stepStart + attemptedStep * fraction;
       const probeState = fraction === 1 ? candidateState : stateAt(probeTime);
-      const probeEvaluation = fraction === 1 ? candidateEvaluation : evaluateForward(config, probeTime, probeState, derived);
-      const probeGuards = fraction === 1 ? candidateGuards : evaluateForwardGuards(config, probeTime, probeState, probeEvaluation);
+      const probeGuards = fraction === 1
+        ? candidateGuards
+        : evaluateForwardGuards(config, probeTime, probeState);
       const crossed = crossingGuards(inspectedGuards, probeGuards);
       if (crossed.length) {
         terminal = crossed.map((guard) => locateGuardRoot(config, stateAt, inspectedTime,
-          probeTime, probeState, guard)).sort((a, b) => a.time - b.time)[0];
+          probeTime, probeState, guard)).sort((left, right) => compareLocatedEvents(
+            left,
+            right,
+            config.solver.eventTimeTolerance,
+          ))[0];
       }
       const endTime = terminal?.time ?? probeTime;
-      const endWet = terminal === undefined ? probeEvaluation.mechanics.wet.branch
-        : evaluateForward(config, endTime, terminal.state, derived).mechanics.wet.branch;
+      const endState = terminal?.invalidState ?? probeState;
+      const endWet = evaluateForwardDomain(config, endTime, endState, derived).wetBranch;
       // Locate label transitions separately from output/accepted step times.
       // At most dry -> partial -> full (or the reverse) on each monotone piece.
       let wetLeft = inspectedTime;
@@ -313,11 +437,11 @@ export async function runForward(
         while (high - low > config.solver.eventTimeTolerance) {
           const middle = .5 * (low + high);
           if (middle === low || middle === high) break;
-          const branch = evaluateForward(config, middle, stateAt(middle), derived).mechanics.wet.branch;
+          const branch = evaluateForwardDomain(config, middle, stateAt(middle), derived).wetBranch;
           if (branch === inspectedWet) low = middle;
           else high = middle;
         }
-        const nextWet = evaluateForward(config, high, stateAt(high), derived).mechanics.wet.branch;
+        const nextWet = evaluateForwardDomain(config, high, stateAt(high), derived).wetBranch;
         if (nextWet === inspectedWet) break;
         events.push({ time: high, kind: "wetting",
           code: `WET-${inspectedWet.toUpperCase()}-TO-${nextWet.toUpperCase()}`,
@@ -326,24 +450,61 @@ export async function runForward(
         wetLeft = high;
       }
       if (terminal !== undefined) break;
+      const probeEvaluation = fraction === 1
+        ? candidateEvaluation
+        : evaluateForward(config, probeTime, probeState, derived, mode);
       inspectedTime = probeTime;
       inspectedGuards = probeGuards;
-      inspectedWet = probeEvaluation.mechanics.wet.branch;
+      inspectedWet = probeEvaluation.domain.wetBranch;
     }
     if (terminal !== undefined) {
-      time = terminal.time;
-      state = terminal.state;
+      time = terminal.validTime;
+      state = terminal.validState;
+      netWork = acceptedTrial.denseState((time - stepStart) / attemptedStep)[4]!;
       terminationCode = terminal.guard.code;
-      events.push(terminalEvent(terminal.guard.code, time, terminal.guard.message));
-      appendDistinctSample(samples, forwardSample(config, time, state, derived));
+      events.push(terminalEvent(
+        terminal.guard.code,
+        terminal.time,
+        terminal.guard.message,
+        { validTime: terminal.validTime, invalidTime: terminal.invalidTime },
+        { validBefore: true, validAfter: false },
+      ));
+      appendDistinctSample(samples, sample(time, state));
       break;
     }
     wetBranch = inspectedWet;
+    if (modeEvent !== undefined) {
+      const before = mode!;
+      netWork = acceptedTrial.denseState((modeEvent.time - stepStart) / attemptedStep)[4]!;
+      time = modeEvent.time;
+      state = modeEvent.state;
+      mode = modeEvent.nextMode;
+      acceptedSteps += 1;
+      minimumAcceptedStep = Math.min(minimumAcceptedStep, time - stepStart);
+      maximumAcceptedStep = Math.max(maximumAcceptedStep, time - stepStart);
+      maximumAcceptedErrorNorm = Math.max(maximumAcceptedErrorNorm, errorNorm);
+      events.push({ time, kind: "mode", code: `SS-${before}-TO-${mode}`,
+        message: "首次模式边界定位；无冲量，尾流不重置。",
+        bracket: { validTime: modeEvent.leftTime, invalidTime: modeEvent.rightTime },
+        modeBefore: before, modeAfter: mode, validBefore: true, validAfter: true });
+      unresolvedSwitches = time - lastModeEventTime <= config.solver.eventTimeTolerance
+        ? unresolvedSwitches + 1 : 0;
+      lastModeEventTime = time;
+      appendDistinctSample(samples, sample(time, state));
+      if (unresolvedSwitches > 8) {
+        terminationCode = "SS-MODE-UNRESOLVED";
+        events.push(terminalEvent(terminationCode, time, "事件分辨率内反复切换；停止而不引入速度死区。"));
+        break;
+      }
+      currentGuards = evaluateForwardGuards(config, time, state);
+      step = Math.min(config.solver.maximumStep, attemptedStep);
+      continue;
+    }
 
     const previousTime = time;
     time = candidateTime;
     state = candidateState;
-    currentEvaluation = candidateEvaluation;
+    netWork = trial.fifthOrder[4]!;
     currentGuards = candidateGuards;
     acceptedSteps += 1;
     minimumAcceptedStep = Math.min(minimumAcceptedStep, time - previousTime);
@@ -356,7 +517,7 @@ export async function runForward(
 
     if (time >= target - timeEpsilon) {
       time = target;
-      const output = forwardSample(config, time, state, derived);
+      const output = sample(time, state);
       appendDistinctSample(samples, output);
       control.report(time / config.solver.duration, output);
       if (target < config.solver.duration - timeEpsilon) {
@@ -371,18 +532,20 @@ export async function runForward(
   }
   if (terminationCode === "COMPLETED") {
     time = config.solver.duration;
-    appendDistinctSample(samples, forwardSample(config, time, state, derived));
+    appendDistinctSample(samples, sample(time, state));
   }
 
-  const metrics = computeRunMetrics(samples, config, derived);
+  const metrics = samples.length === 0
+    ? emptyRunMetrics()
+    : { ...computeRunMetrics(samples, config, derived), available: true, sampleCount: samples.length };
   const firstEnergy = samples[0]?.mechanicalEnergy ?? 0;
   const finalEnergy = samples.at(-1)?.mechanicalEnergy ?? firstEnergy;
-  const finalEnergyBalanceResidual = finalEnergy - firstEnergy - integratedNetPower(samples);
+  const finalEnergyBalanceResidual = finalEnergy - firstEnergy - netWork;
   const warnings = [
     ...validation.filter((issue) => issue.severity !== "error").map((issue) => `${issue.path}: ${issue.message}`),
     ...applicability.findings.map((finding) => `${finding.code}: ${finding.message}`),
   ];
-  if (metrics.energyClosureRelativeRms > config.solver.energyTolerance) {
+  if (samples.length > 0 && metrics.energyClosureRelativeRms > config.solver.energyTolerance) {
     warnings.push(
       `ENERGY-CLOSURE: relative RMS ${metrics.energyClosureRelativeRms.toExponential(3)} exceeds ${config.solver.energyTolerance.toExponential(3)}; reduce outputInterval/tolerances before quantitative use.`,
     );
@@ -408,6 +571,8 @@ export async function runForward(
     derived,
     applicability,
     samples,
+    validSampleMask: samples.map(() => true),
+    lastValidSampleIndex: samples.length > 0 ? samples.length - 1 : null,
     fields: [],
     metrics,
     numerical,
@@ -416,14 +581,14 @@ export async function runForward(
     provenance: {
       solver: "adaptive-dopri54-forward",
       solverVersion: SOLVER_VERSION,
-      modelId: "VP-FWD-P0-SL1-v1",
+      modelId: forwardModelId(config),
       createdAt: new Date().toISOString(),
       configHash: hashConfig(config),
       ...contractHashes,
       backendDisplayName: "forward-theory-numerical",
       forceContractId: "VP-FWD-FLUID-TORQUE-v1",
       loadDefinition: "quasisteady-drag-plus-single-complex-stuart-landau-wake",
-      couplingAlgorithm: "monolithic-four-state-adaptive-dormand-prince-5-4",
+      couplingAlgorithm: "four-physical-states-mode-local-dopri54-with-work-quadrature",
       spanClosure: "finite-wet-span-rom-coherence-input-unvalidated",
       geometryModel: "P0-flat-free-surface-finite-cylinder",
       coefficientSetId: config.rom.coefficientSetId,
@@ -431,15 +596,16 @@ export async function runForward(
       dimensionality: "P0-reduced-order",
       nativeLoadType: "three-dimensional-generalized-torque",
       evidenceLevel: "forward-numerically-verified",
-      epistemicClassification: /synthetic/iu.test(config.rom.coefficientSetId)
+      epistemicClassification: (config.rom.wetSupportMode === "synthetic-only" || config.rom.inputClassification === "synthetic-only")
         ? "synthetic-only"
-        : config.rom.coefficientSource === "literature-prior"
+        : config.rom.wetSupportMode === "calibrated"
+            && (config.rom.coefficientSource === "measured"
+              || config.rom.coefficientSource === "prescribed-motion")
+          ? "rom-calibrated-input-unheldout"
+          : config.rom.coefficientSource === "literature-prior"
           ? "illustrative-literature-prior"
-          : config.rom.coefficientSource === "measured"
-              || config.rom.coefficientSource === "prescribed-motion"
-            ? "rom-calibrated-input-unheldout"
-            : "unvalidated-coefficient-source",
-      holdoutStatus: /synthetic/iu.test(config.rom.coefficientSetId)
+          : "unvalidated-coefficient-source",
+      holdoutStatus: (config.rom.wetSupportMode === "synthetic-only" || config.rom.inputClassification === "synthetic-only")
         ? "not-applicable-synthetic"
         : "not-bound-in-standalone-run",
       evidenceClaims: {
@@ -451,7 +617,9 @@ export async function runForward(
         spanClosure: "unvalidated-model-input",
         apparatusPrediction: "no-go-until-calibrated-and-held-out",
       },
-      legacyStatus: "not-legacy",
+      legacyStatus: (config.rom.wetSupportMode ?? "legacy-unqualified") === "legacy-unqualified"
+        ? "legacy-exploratory-invalidated-for-load-validation"
+        : "not-legacy",
       knownDefects: [
         "dense-event-checkpoints-and-mechanical-extrema-do-not-prove-arbitrary-guard-completeness",
         "dry-wet-wake-switch-not-calibrated-as-a-reentry-law",
@@ -464,7 +632,7 @@ export async function runForward(
         "flat undisturbed free-surface geometry",
         "single complex Stuart-Landau wake mode",
         "direct pitching-moment channel fixed to zero",
-        "no impact, stick-slip, breaking-wave, ventilation, or multimode continuation law",
+        "no impact, breaking-wave, ventilation, or multimode wake continuation law",
       ],
     },
   };

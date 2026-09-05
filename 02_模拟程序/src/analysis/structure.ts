@@ -1,3 +1,4 @@
+import { forwardModelId } from "../core/forward-contract";
 import { deriveParameters } from "../core/config";
 import type { SimulationConfig } from "../core/types";
 import {
@@ -253,6 +254,9 @@ export function linearizeForwardAtSymmetricState(
 ): { config: SimulationConfig; jacobian: number[][]; residualNorm: number } {
   if (!(flowSpeed >= 0) || !Number.isFinite(flowSpeed)) {
     throw new RangeError("flow speed must be finite and nonnegative");
+  }
+  if (forwardModelId(config) !== "VP-FWD-P0-SL1-v1") {
+    throw new RangeError("smooth baseline structural linearization is not qualified for SS/DW branches");
   }
   const frozen = steadyConfig(config, flowSpeed);
   const center = stateToVector(ZERO_STATE);

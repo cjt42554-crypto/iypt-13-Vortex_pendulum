@@ -145,7 +145,7 @@ export function computeRunMetrics(
   const dominantFrequency = spectralWindow.times.length >= 4
     ? hannSpectrum(spectralWindow.times, spectralWindow.values).dominantFrequency
     : 0;
-  const closure = window.length >= 2
+  let closure = window.length >= 2
     ? energyClosure(
         times,
         window.map((sample) => sample.mechanicalEnergy),
@@ -153,6 +153,14 @@ export function computeRunMetrics(
         window.map((sample) => sample.dampingPower),
       ).relativeRms
     : 0;
+  if (window.every((sample) => sample.cumulativeNetWork !== undefined)) {
+    const initial = window[0]!;
+    const residuals = window.map((sample) => sample.mechanicalEnergy - initial.mechanicalEnergy
+      - (sample.cumulativeNetWork! - initial.cumulativeNetWork!));
+    const energyScale = Math.max(1e-12, Math.abs(initial.mechanicalEnergy),
+      ...window.map((sample) => Math.abs(sample.cumulativeNetWork! - initial.cumulativeNetWork!)));
+    closure = Math.hypot(...residuals) / Math.sqrt(window.length) / energyScale;
+  }
   const firstExchange = window[0]?.interfaceExchange;
   const lastExchange = window.at(-1)?.interfaceExchange;
   const windowDuration = (times.at(-1) ?? 0) - (times[0] ?? 0);

@@ -1,5 +1,6 @@
 import {
   APPARATUS_PARAMETERS,
+  apparatusParameterUnits,
   INPUT_CLASSIFICATIONS,
   isObject,
   pushIssue,
@@ -16,7 +17,7 @@ import type {
 
 export function validateApparatusRecord(
   record: unknown,
-  { requireReady = true, allowSynthetic = false }: ExperimentValidationOptions = {},
+  { requireReady = true, allowSynthetic = false, supportModel = "smooth" }: ExperimentValidationOptions = {},
 ): ExperimentValidationResult {
   const issues: ExperimentValidationIssue[] = [];
   if (!isObject(record)) {
@@ -44,7 +45,7 @@ export function validateApparatusRecord(
   if (!isObject(record.parameters)) {
     pushIssue(issues, "PARAMETERS-INVALID", "parameters", "parameters 必须是对象。");
   } else {
-    for (const [path, unit] of Object.entries(APPARATUS_PARAMETERS)) {
+    for (const [path, unit] of Object.entries(apparatusParameterUnits(supportModel))) {
       const entry = record.parameters[path];
       validateMeasuredEntry(
         entry,
