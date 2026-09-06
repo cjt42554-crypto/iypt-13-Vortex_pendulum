@@ -1,3 +1,2 @@
-# Preserve raw command output and patch context without whitespace rewriting.
+# Preserve raw command output without whitespace rewriting.
 *.log -whitespace
-*.patch -whitespace

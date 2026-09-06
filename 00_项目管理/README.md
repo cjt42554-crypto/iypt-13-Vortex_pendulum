@@ -25,9 +25,9 @@
 
 ## 旧路径与旧规则
 
-旧候选区的 current/history 已移到本目录；旧材料按“专题、维护、归档”移到研究记录区。精确路径与哈希见 [迁移清单](../03_研究记录/维护/2026-09-05_目录重组/migration.json)。旧报告、`ACTIVE.md`、审批口令和机器配置仅反映其原版本，不作为当前工作权限；其中仍有效的科学限制不能删去。
+旧候选区的 current/history 已移到本目录；旧材料曾按“专题、维护、归档”移到研究记录区，现仅保留必要证据；精简范围和历史恢复见 [研究证据索引](../03_研究记录/README.md)。精确路径与哈希见 [迁移清单](../03_研究记录/维护/2026-09-05_目录重组/migration.json)。旧报告、`ACTIVE.md`、审批口令和机器配置仅反映其原版本，不作为当前工作权限；其中仍有效的科学限制不能删去。
 
-冻结脚本和报告中的旧路径不批量改写，以免破坏原始字节和校验关系。查旧位置可运行 `python tools/resolve_legacy_path.py '<旧仓库相对路径>'`；复现历史计算应检出记录所绑定的原 commit，而不是假定历史脚本自动适用于当前源码。未完成事项继续看 current，不从“归档”或目录名推断研究问题已解决。
+冻结脚本和报告中的旧路径不批量改写，以免破坏原始字节和校验关系。查旧位置可运行 `python3 tools/resolve_legacy_path.py '<旧仓库相对路径>'`；复现历史计算应检出记录所绑定的原 commit，而不是假定历史脚本自动适用于当前源码。未完成事项继续看 current，不从“归档”或目录名推断研究问题已解决。
 
 `交接说明_history.md` 保持空文件。Git 追溯使用 `git log --follow -- 00_项目管理/交接说明_current.md`；源文件、配置、数据和实际日志优先于摘要。
 
@@ -36,8 +36,8 @@
 在仓库根目录运行：
 
 ```bash
-python -m unittest discover -s tools -p 'test_repository_docs.py' -v
-python tools/check_repository_docs.py
+python3 -m unittest discover -s tools -p 'test_repository_docs.py' -v
+python3 tools/check_repository_docs.py
 ```
 
 求解器安装和回归命令见 [程序入口](../02_模拟程序/README.md)。软件测试、数值收敛、物理标定和留出实验验证分别报告，不用一个 PASS 混为一谈。
