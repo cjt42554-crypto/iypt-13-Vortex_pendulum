@@ -15,7 +15,7 @@
 | v2 输入与冻结 | [最终冻结集](13-01/aligned-frozen-final/)、[构建命令](13-01/build-final.log)、[运行命令](13-01/run-final-corrected.log)、[正式结果](13-01/aligned-result.json) |
 | 辨识与 UQ | [辨识命令](13-04/identification-cli.log)、[辨识报告](13-04/identification-report.json)、[传播命令](13-04/uncertainty-cli.log)、[传播报告](13-04/uncertainty-report.json) |
 
-源级回归固定种子及参考：120 组复规范、180 组独立方向几何、150 组笛卡尔力矩、SS 解析停转/脱粘及四档时间细化、128 个小噪声相关样本和 24 个跨模式情景。四分支及真实页面/Worker/CLI/导出一致，SS-DW 最大物理差异约 1.2e-16。具体阈值和算法见正式测试及 [验收依据](../../../00_项目管理/理论程序对齐_任务单与验收.md)，不以本摘要替代它们。
+源级回归固定种子及参考：120 组复规范、180 组独立方向几何、150 组笛卡尔力矩、SS 解析停转/脱粘及四档时间细化、128 个小噪声相关样本和 24 个跨模式情景。四分支及真实页面/Worker/CLI/导出一致，SS-DW 最大物理差异约 1.2e-16。具体阈值和算法见正式测试及 [验收依据](https://github.com/cjt42554-crypto/iypt-13-Vortex_pendulum/blob/7f4081ca4793aa55cb5ebcbabcec379fa5b69a02/00_项目管理/理论程序对齐_任务单与验收.md)，不以本摘要替代它们。
 
 ## 关键失败与边界
 
